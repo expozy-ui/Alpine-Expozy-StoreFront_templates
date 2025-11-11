@@ -1,0 +1,260 @@
+<!-- Site Header -->
+<header class="bg-gray-900/90 backdrop-blur-sm border-b border-purple-900/50 shadow-lg sticky top-0 z-50">
+    <!-- Top Bar with Announcement -->
+    <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 px-4 text-center text-sm relative overflow-hidden md:py-2 md:px-4 md:text-sm">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative h-6 overflow-hidden flex items-center" x-data="{ currentAnnouncement: 0 }" x-init="setInterval(() => { currentAnnouncement = currentAnnouncement === 0 ? 1 : 0 }, 5000)">
+            <p x-show="currentAnnouncement === 0" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-full" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-full" class="absolute w-full h-full top-0 left-0 flex items-center justify-center">
+                🎉 Безплатна доставка за поръчки над 0.01 BTC! Използвайте код: <span class="font-bold ml-1 [text-shadow:0_0_5px_rgba(168,85,247,0.7),0_0_10px_rgba(168,85,247,0.5),0_0_15px_rgba(168,85,247,0.3),0_0_20px_rgba(168,85,247,0.2)]">FREESHIP</span>
+            </p>
+            <p x-show="currentAnnouncement === 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-full" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-full" class="absolute w-full h-full top-0 left-0 flex items-center justify-center">
+                🔥 Нова колекция български продукти! <span class="font-bold ml-1 [text-shadow:0_0_5px_rgba(168,85,247,0.7),0_0_10px_rgba(168,85,247,0.5),0_0_15px_rgba(168,85,247,0.3),0_0_20px_rgba(168,85,247,0.2)]">Разгледайте сега</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+        <!-- Main Header -->
+        <div class="flex justify-between items-center">
+            <!-- Mobile Menu Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-300 hover:text-white transition-colors cursor-pointer flex items-center justify-center h-10 w-10 magnetic-btn" @mousedown="handleButtonClick">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <!-- Logo -->
+            <h1 class="text-2xl md:text-3xl font-bold text-white flex items-center">
+                <span class="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-[length:200%_auto] animate-text-shimmer bg-clip-text text-transparent">Bulgarian</span>
+                <span class="relative" data-text="Market">
+                    Market
+                    <span class="absolute -top-1 -right-2 w-2 h-2 bg-purple-400 rounded-full animate-ping"></span>
+                    <span class="absolute top-0 left-0 w-full h-full before:content-[attr(data-text)] before:absolute before:top-0 before:left-[2px] before:text-shadow-[-1px_0_#ec4899] before:clip-[rect(44px,450px,56px,0)] before:animate-glitch-anim after:content-[attr(data-text)] after:absolute after:top-0 after:left-[-2px] after:text-shadow-[-1px_0_#8b5cf6] after:clip-[rect(44px,450px,56px,0)] after:animate-glitch-anim2"></span>
+                </span>
+            </h1>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1 group cursor-pointer">
+                    <span>Начало</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400"></span>
+                </a>
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" @click.away="open = false" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1 group cursor-pointer">
+                        <span>Категории</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" :class="{'rotate-180': open}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400"></span>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="absolute left-0 mt-2 w-48 bg-gray-800/90 backdrop-blur-md rounded-lg shadow-xl z-20 border border-gray-700" x-cloak="">
+                        <div class="py-2 px-3">
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Електроника</a>
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Храни и напитки</a>
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Облекло</a>
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Козметика</a>
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Сувенири</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1 group cursor-pointer">
+                    <span>За нас</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400"></span>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-1 group cursor-pointer">
+                    <span>Контакти</span>
+                    <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400"></span>
+                </a>
+            </div>
+
+            <!-- User Actions -->
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <!-- Search Button -->
+                <button @click="searchOpen = !searchOpen; handleButtonClick($event)" class="text-gray-300 hover:text-white transition-colors relative flex items-center justify-center h-10 w-10 magnetic-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+
+                <!-- Notifications -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open; handleButtonClick($event)" @click.away="open = false" class="text-gray-300 hover:text-white transition-colors relative flex items-center justify-center h-10 w-10 magnetic-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <span x-show="notifications.filter(n => !n.read).length > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse-slow" x-text="notifications.filter(n => !n.read).length"></span>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="absolute right-0 mt-2 w-80 bg-gray-800/90 backdrop-blur-md rounded-lg shadow-xl z-20 border border-gray-700" x-cloak="">
+                        <div class="py-2 px-3">
+                            <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-2">
+                                <h3 class="font-semibold text-white [text-shadow:0_0_5px_rgba(168,85,247,0.7),0_0_10px_rgba(168,85,247,0.5),0_0_15px_rgba(168,85,247,0.3),0_0_20px_rgba(168,85,247,0.2)]">Известия</h3>
+                                <button @click="notifications.forEach(n => n.read = true)" class="text-xs text-purple-400 hover:text-purple-300 cursor-pointer">Маркирай всички като прочетени</button>
+                            </div>
+                            <div class="max-h-60 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(31,41,55,0.5)_rgba(31,41,55,0.5)] [&amp;::-webkit-scrollbar]:w-[6px] [&amp;::-webkit-scrollbar-track]:bg-gray-800/50 [&amp;::-webkit-scrollbar-track]:rounded-[10px] [&amp;::-webkit-scrollbar-thumb]:bg-gradient-to-b [&amp;::-webkit-scrollbar-thumb]:from-purple-500 [&amp;::-webkit-scrollbar-thumb]:to-pink-500 [&amp;::-webkit-scrollbar-thumb]:rounded-[10px] [&amp;::-webkit-scrollbar-thumb:hover]:from-purple-600 [&amp;::-webkit-scrollbar-thumb:hover]:to-pink-600">
+                                <template x-for="notification in notifications" :key="notification.id">
+                                    <div class="py-2 px-3 hover:bg-gray-700 rounded-lg transition-colors flex items-start hover:scale-105 transform duration-200" :class="{'bg-purple-900/10': !notification.read}">
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-300" x-text="notification.text"></p>
+                                            <p class="text-xs text-gray-500 mt-1">Преди 2 часа</p>
+                                        </div>
+                                        <button @click="notification.read = true" class="text-gray-400 hover:text-white cursor-pointer" x-show="!notification.read">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-gray-700 text-center">
+                                <a href="#" class="text-sm text-purple-400 hover:text-purple-300 cursor-pointer">Виж всички известия</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Button -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open; handleButtonClick($event)" @click.away="open = false" class="text-gray-300 hover:text-white transition-colors relative flex items-center justify-center h-10 w-10 magnetic-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span x-show="cart.items > 0" class="absolute -top-2 -right-2 bg-purple-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse-slow" x-text="cart.items"></span>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="absolute right-0 mt-2 w-80 bg-gray-800/90 backdrop-blur-md rounded-lg shadow-xl z-20 border border-gray-700" x-cloak="">
+                        <div class="py-2 px-3">
+                            <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-2">
+                                <h3 class="font-semibold text-white [text-shadow:0_0_5px_rgba(168,85,247,0.7),0_0_10px_rgba(168,85,247,0.5),0_0_15px_rgba(168,85,247,0.3),0_0_20px_rgba(168,85,247,0.2)]">Кошница</h3>
+                                <span class="text-sm text-gray-400" x-text="`${cart.items} продукта`"></span>
+                            </div>
+                            <div class="max-h-60 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(31,41,55,0.5)_rgba(31,41,55,0.5)] [&amp;::-webkit-scrollbar]:w-[6px] [&amp;::-webkit-scrollbar-track]:bg-gray-800/50 [&amp;::-webkit-scrollbar-track]:rounded-[10px] [&amp;::-webkit-scrollbar-thumb]:bg-gradient-to-b [&amp;::-webkit-scrollbar-thumb]:from-purple-500 [&amp;::-webkit-scrollbar-thumb]:to-pink-500 [&amp;::-webkit-scrollbar-thumb]:rounded-[10px] [&amp;::-webkit-scrollbar-thumb:hover]:from-purple-600 [&amp;::-webkit-scrollbar-thumb:hover]:to-pink-600">
+                                <div class="py-2 flex items-center space-x-3 border-b border-gray-700 hover:bg-gray-700/50 rounded-lg transition-all duration-300 p-2 hover:scale-105 transform">
+                                    <img src="/placeholder.svg?height=64&amp;width=64" alt="Product" class="w-16 h-16 object-cover rounded-md">
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-medium text-white">Български мед от манов</h4>
+                                        <p class="text-xs text-gray-400">1 x 0.005 BTC</p>
+                                    </div>
+                                    <button class="text-gray-400 hover:text-white cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="py-2 flex items-center space-x-3 border-b border-gray-700 hover:bg-gray-700/50 rounded-lg transition-all duration-300 p-2 hover:scale-105 transform">
+                                    <img src="/placeholder.svg?height=64&amp;width=64" alt="Product" class="w-16 h-16 object-cover rounded-md">
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-medium text-white">Розово масло 100% натурално</h4>
+                                        <p class="text-xs text-gray-400">1 x 0.01 BTC</p>
+                                    </div>
+                                    <button class="text-gray-400 hover:text-white cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="py-2 flex items-center space-x-3 hover:bg-gray-700/50 rounded-lg transition-all duration-300 p-2 hover:scale-105 transform">
+                                    <img src="/placeholder.svg?height=64&amp;width=64" alt="Product" class="w-16 h-16 object-cover rounded-md">
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-medium text-white">Традиционна шопска салата</h4>
+                                        <p class="text-xs text-gray-400">1 x 0.002 BTC</p>
+                                    </div>
+                                    <button class="text-gray-400 hover:text-white cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-2 border-t border-gray-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-sm text-gray-400">Общо:</span>
+                                    <span class="text-lg font-bold text-white bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 bg-[length:200%_auto] animate-text-shimmer bg-clip-text text-transparent" x-text="cart.total + ' BTC'"></span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white text-center py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer hover:scale-105 transform duration-200 hover:[transform:translateY(-5px)] hover:[box-shadow:0_10px_25px_-5px_rgba(168,85,247,0.4)]">Кошница</a>
+                                    <a href="#" class="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-center py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer hover:scale-105 transform duration-200 after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:w-[300px] after:h-[300px] after:bg-white/10 after:rounded-[40%] after:-translate-x-1/2 after:-translate-y-1/2 after:scale-0 after:transition-transform after:duration-500 hover:after:scale-150 hover:[transform:translateY(-5px)] hover:[box-shadow:0_10px_25px_-5px_rgba(168,85,247,0.4)]">Плащане</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu - Hidden on smallest screens -->
+                <div x-data="{ open: false }" class="relative hidden sm:block">
+                    <button @click="open = !open; handleButtonClick($event)" @click.away="open = false" class="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2 rounded-full transition-colors text-sm font-medium shadow-md hover:shadow-purple-500/20 flex items-center cursor-pointer magnetic-btn after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:w-[300px] after:h-[300px] after:bg-white/10 after:rounded-[40%] after:-translate-x-1/2 after:-translate-y-1/2 after:scale-0 after:transition-transform after:duration-500 hover:after:scale-150 hover:[transform:translateY(-5px)] hover:[box-shadow:0_10px_25px_-5px_rgba(168,85,247,0.4)]">
+                        <span>Вход</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" :class="{'rotate-180': open}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="absolute right-0 mt-2 w-48 bg-gray-800/90 backdrop-blur-md rounded-lg shadow-xl z-20 border border-gray-700" x-cloak="">
+                        <div class="py-2 px-3">
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Вход</a>
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Регистрация</a>
+                            <div class="border-t border-gray-700 my-2"></div>
+                            <a href="#" class="block py-2 px-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Помощ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu - Improved for mobile -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="md:hidden mt-4 bg-gray-800/90 backdrop-blur-md rounded-lg p-4 max-h-[80vh] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:rgba(31,41,55,0.5)_rgba(31,41,55,0.5)] [&amp;::-webkit-scrollbar]:w-[6px] [&amp;::-webkit-scrollbar-track]:bg-gray-800/50 [&amp;::-webkit-scrollbar-track]:rounded-[10px] [&amp;::-webkit-scrollbar-thumb]:bg-gradient-to-b [&amp;::-webkit-scrollbar-thumb]:from-purple-500 [&amp;::-webkit-scrollbar-thumb]:to-pink-500 [&amp;::-webkit-scrollbar-thumb]:rounded-[10px] [&amp;::-webkit-scrollbar-thumb:hover]:from-purple-600 [&amp;::-webkit-scrollbar-thumb:hover]:to-pink-600" x-cloak="">
+            <nav class="grid gap-2">
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white p-3 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Начало</a>
+                <div x-data="{ open: false }">
+                    <button @click="open = !open" class="w-full text-left text-gray-300 hover:bg-gray-700 hover:text-white p-3 rounded-lg transition-colors flex justify-between items-center cursor-pointer hover:scale-105 transform duration-200">
+                        <span>Категории</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" :class="{'rotate-180': open}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" class="pl-4 mt-2 space-y-2" x-collapse="">
+                        <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white p-2 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Електроника</a>
+                        <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white p-2 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Храни и напитки</a>
+                        <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white p-2 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Облекло</a>
+                        <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white p-2 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Козметика</a>
+                        <a href="#" class="block text-gray-300 hover:bg-gray-700 hover:text-white p-2 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Сувенири</a>
+                    </div>
+                </div>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white p-3 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">За нас</a>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white p-3 rounded-lg transition-colors cursor-pointer hover:scale-105 transform duration-200">Контакти</a>
+
+                <!-- Login button for mobile -->
+                <div class="mt-2 pt-2 border-t border-gray-700">
+                    <a href="#" class="block text-center relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-3 rounded-lg transition-colors text-sm font-medium shadow-md hover:shadow-purple-500/20 cursor-pointer mt-2 hover:scale-105 transform duration-200 after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:w-[300px] after:h-[300px] after:bg-white/10 after:rounded-[40%] after:-translate-x-1/2 after:-translate-y-1/2 after:scale-0 after:transition-transform after:duration-500 hover:after:scale-150 hover:[transform:translateY(-5px)] hover:[box-shadow:0_10px_25px_-5px_rgba(168,85,247,0.4)]">
+                        Вход
+                    </a>
+                    <a href="#" class="block text-center bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-lg transition-colors text-sm font-medium cursor-pointer mt-2 hover:scale-105 transform duration-200 hover:[transform:translateY(-5px)] hover:[box-shadow:0_10px_25px_-5px_rgba(168,85,247,0.4)]">
+                        Регистрация
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Search Overlay -->
+        <div x-show="searchOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-start justify-center pt-20" x-cloak="">
+            <div @click.away="searchOpen = false" class="bg-gray-800/90 backdrop-blur  x-cloak>
+                <div @click.away=" searchopen="false&quot;">
+                <div class="relative">
+                    <input type="text" placeholder="Търсете продукти..." class="w-full bg-gray-800 border-none py-4 px-6 text-white text-lg focus:outline-none focus:ring-0" x-ref="searchInput" x-init="$nextTick(() => { $refs.searchInput.focus() })">
+                    <button @click="searchOpen = false" class="absolute right-4 top-4 text-gray-400 hover:text-white cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="border-t border-gray-700 py-4 px-6">
+                    <h3 class="text-sm font-medium text-gray-400 mb-3">Популярни търсения</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-colors cursor-pointer hover:scale-110 transform duration-200">Розово масло</a>
+                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-colors cursor-pointer hover:scale-110 transform duration-200">Български мед</a>
+                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-colors cursor-pointer hover:scale-110 transform duration-200">Лютеница</a>
+                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-colors cursor-pointer hover:scale-110 transform duration-200">Вино</a>
+                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-colors cursor-pointer hover:scale-110 transform duration-200">Сувенири</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

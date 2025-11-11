@@ -1,0 +1,162 @@
+<div class="w-full dark:bg-gray-900">
+
+    <div class="container mx-auto my-[50px]  border-slate-900 bg-neutral-50 dark:bg-gray-950" apidata="Shop.get_orders" keyname="order" :data-id="data.pageUrl.id" class="mt-[10px] md:mt-[35px] ">
+        <div class="w-full flex flex-col justify-center items-center  p-5">
+            <div class="w-full flex items-center flex-col gap-1">
+                <p class="text-xl uppercase text-slate-600 dark:text-gray-200"><i class="fa-solid fa-check mr-3 text-[22px]"></i> Поръчката е завършена !</p>
+
+            </div>
+
+        </div>
+
+        <div class="w-full grid grid-cols-1 bg-white dark:bg-gray-950 drop-shadow dark:text-gray-200">
+            <div class="grid grid-cols-4">
+                <div class="w-full flex  flex-col   p-5">
+                    <p class="mb-2 pb-2 text-slate-700 uppercase w-fit dark:text-gray-200">Информация за поръчката</p>
+
+                    <p>
+                        <span>Поръчка номер :</span>
+                        <span x-text="data.order.number"></span>
+                    </p>
+
+                    <p>
+                        <span>Дата :</span>
+                        <span x-text="data.order.date_created"></span>
+                    </p>
+
+                    <p>
+                        <span>Статус на поръчката :</span>
+                        <span x-text="data.order.status.title"></span>
+                    </p>
+
+                </div>
+
+                <div class="w-full flex  flex-col   p-5">
+                    <p class="mb-2 pb-2 text-slate-700 uppercase w-fit dark:text-gray-200">Данни за клиента</p>
+                    <p>
+                        <span>Име и Фамилия :</span>
+                        <span x-text="data.order.first_name + ' ' + data.order.last_name"></span>
+                    </p>
+
+                    <p>
+                        <span>Телефон :</span>
+                        <span x-text="data.order.phone"></span>
+                    </p>
+
+                    <p>
+                        <span>Имейл :</span>
+                        <span x-text="data.order.email"></span>
+                    </p>
+                </div>
+
+                <div class="w-full flex  flex-col   p-5 ">
+                    <p class="mb-2 pb-2 text-slate-700 uppercase w-fit dark:text-gray-200">Данни за доставка</p>
+                    <p>
+                        <span>Адрес :</span>
+                        <span x-text="data.order.address.shipping_address"></span>
+                    </p>
+
+                    <p>
+                        <span>Град :</span>
+                        <span x-text="data.order.address.city"></span>
+                    </p>
+
+                    <p>
+                        <span>Пощенски код :</span>
+                        <span x-text="data.order.address.post_code"></span>
+                    </p>
+                </div>
+
+                <div class="w-full flex  flex-col   p-5">
+                    <p class="mb-2 pb-2 text-slate-700 uppercase w-fit dark:text-gray-200">Плащане</p>
+
+                    <p>
+                        <span>Начин на плащане :</span>
+                        <span x-text="data.order.payment_method.title"></span>
+                    </p>
+
+                    <p>
+                        <span>Доставка :</span>
+                        <span x-text="data.order.shipping_price"></span>
+                        <span x-text="data.order.currency.symbol"></span>
+                    </p>
+
+                    <p>
+                        <span>Цена на продуктите :</span>
+
+                        <span x-text="data.order.price.toFixed(2)"></span>
+                        <span x-text="data.order.currency.symbol"></span>
+                    </p>
+
+                    <p>
+                        <span>Общо :</span>
+                        <span x-text="data.order.total_price.toFixed(2)"></span>
+                        <span x-text="data.order.currency.symbol"></span>
+                    </p>
+
+                </div>
+            </div>
+            <div class=" shadow bg-white dark:bg-gray-950 dark:text-gray-200">
+                <div>
+
+                    <div class="flex h-full flex-col  " x-data="{cartCheckoutShow: true}">
+                        <div class="flex-1  px-4 py-6 sm:px-6 w-full ">
+                            <div class="flex items-start justify-between cursor-pointer " @click="cartCheckoutShow =! cartCheckoutShow">
+                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-200" id="slide-over-title">Продукти</h2>
+                                <div class="ml-3 flex h-7 items-center">
+                                    <i :class="cartCheckoutShow ? 'fa-chevron-up' : 'fa-chevron-down' " class="fa-solid"></i>
+                                </div>
+
+                            </div>
+
+                            <div x-show="cartCheckoutShow" x-transition="" class="mt-8">
+                                <div class="flow-root">
+
+                                    <ul role="list" class="-my-6 divide-y divide-gray-200">
+
+                                        <template x-for="product in data.order.products">
+
+                                            <li class="flex py-6">
+                                                <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                                    <img :src="product.images[0] ? product.images[0].image_10x10 : data.settings.logo" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+                                                </div>
+
+                                                <div class="ml-4 flex flex-1 flex-col">
+                                                    <div>
+
+                                                        <p class="mt-1 text-sm text-gray-500 line-clamp-3 dark:text-gray-200" :title="product.title" x-text="product.title">Salmon</p>
+                                                    </div>
+                                                    <div class="flex flex-1 items-end justify-between text-sm">
+
+                                                        <div class="flex">
+                                                            <p x-text="product.quantity" class="text-slate-500"></p>
+                                                            <p class="text-slate-500">x</p>
+                                                            <p x-text="product.variation.selling_price.toFixed(2)" class="text-slate-500">$90.00</p>
+                                                            <p x-text="product.variation.currency" class="text-slate-500"></p>
+                                                        </div>
+                                                        <div class="flex justify-between text-base font-medium text-gray-900">
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </template>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container my-10">
+        <button @click="forceChange('/')" name="button" class=" w-fit py-2 px-5 bg-stone-900 hover:bg-stone-800 text-white dark:bg-gray-950 dark:hover:text-orange-400"><i class="fa-solid fa-arrow-left mr-3"></i> Назад</button>
+    </div>
+
+</div>

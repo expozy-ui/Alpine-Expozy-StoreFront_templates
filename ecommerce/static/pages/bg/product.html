@@ -1,0 +1,454 @@
+<section class="py-12 sm:py-16 w-full dark:!bg-gray-900" apidata="Shop.get_products" :data-id="data.corePage.target_id" keyname="product">
+    <div apidata="Reviews.get_product_comments" :data-product_id="data.corePage.target_id" keyname="productReviews">
+
+        <div class="container mx-auto px-4">
+
+            <div class=" gap-12  grid grid-cols-1  lg:grid-cols-6   mt-8">
+                <div class="lg:col-span-3" x-data="{ mainImage: '' }">
+                    <template x-if="data.product.images[0] ? mainImage = data.product.images[0].image : mainImage =  data.settings.logo"></template>
+                    <div class="lg:flex lg:items-start">
+                        <div class="lg:order-2 lg:ml-5">
+                            <div class="max-w-xl overflow-hidden rounded-lg">
+                                <template x-if="mainImage != ''">
+                                    <img class="h-full w-full max-w-full object-cover" :src="mainImage">
+                                    <!-- <div class="bg-neutral-100 animate-pulse shadow animate-infinite animate-duration-[3000ms] min-h-[300px] min-w-[400px] p-5 w-full h-full">
+  
+                                  </div> -->
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="lg:w-[200px]">
+                            <div class="flex flex-wrap gap-1 md:grid md:grid-cols-2">
+                                <template x-for="(image, index) in data.product.images" key="index">
+                                    <button @click="mainImage = image.url" type="button" class="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-neutral-300 text-center">
+
+                                        <img class="h-full w-full object-cover" :src="image.url">
+                                        <!-- <div class="bg-neutral-100 animate-pulse shadow animate-infinite animate-duration-[3000ms]  w-full h-full"></div> -->
+                                    </button>
+                                </template>
+                                <template x-if="!data.product.images[0]">
+                                    <button type="button" class="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-neutral-300 text-center">
+
+                                        <img class="h-full w-full object-cover" :src="data.settings.logo">
+                                        <!-- <div class="bg-neutral-100 animate-pulse shadow animate-infinite animate-duration-[3000ms]  w-full h-full"></div> -->
+                                    </button>
+                                </template>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1 md:block hidden"></div>
+
+                <div class="lg:col-span-2 bg-neutral-50 dark:bg-gray-800 h-fit shadow p-5 ">
+                    <form x-data="{selectedVariation: 0}">
+
+                        <h1 class=" text-2xl font-bold text-neutral-900 dark:text-gray-200" x-text="data.product.title"></h1>
+
+                        <template x-if="data.product.categories[0]">
+                            <h2 class="py-1">
+                                <a class="text-[14px] font-bold text-neutral-900 hover:text-orange-400 dark:text-gray-200" :href="data.product.categories[0].url" x-text="data.product.categories[0].title"></a>
+                            </h2>
+                        </template>
+
+                        <div class="py-3">
+                            <template x-if="data.product.variations[selectedVariation].promoprice != 0">
+                                <div class="flex flex-col">
+                                    <p>
+                                        <span class="text-3xl font-bold text-red-600" x-text="data.product.variations[selectedVariation].selling_price.toFixed(2)"></span>
+                                        <span class="text-base font-bold text-red-600" x-text="data.product.variations[selectedVariation].currency"></span>
+                                    </p>
+
+                                    <p class="text-lg font-bold dark:text-gray-200">
+                                        <s>
+                                            <span x-text="data.product.variations[selectedVariation].price.toFixed(2)"></span>
+                                            <span x-text="data.product.variations[selectedVariation].currency"></span>
+                                        </s>
+                                    </p>
+                                </div>
+                            </template>
+
+                            <template x-if="data.product.variations[selectedVariation].promoprice == 0">
+                                <div class="flex items-end">
+                                    <p class="text-3xl font-bold dark:text-gray-200" x-text="data.product.variations[selectedVariation].selling_price.toFixed(2)"></p>
+                                    <span class="text-base font-bold dark:text-gray-200" x-text="data.product.variations[selectedVariation].currency"></span>
+                                </div>
+                            </template>
+
+                            <template x-if="data.product.variations[1]">
+                                <select class="border border-slate-300 px-3 mt-[20px] rounded-[5px] w-fit py-2" @change="selectedVariation = $event.target.value">
+                                    <template x-for="(variation, index) in data.product.variations" :key="index">
+                                        <option :value="index" class="flex gap-2">
+                                            <template x-for="attr in variation.attributes">
+                                                <span x-text="attr.title + ' ' + attr.values[0].value + '  ' "></span>
+                                            </template>
+                                        </option>
+                                    </template>
+
+                                </select>
+                            </template>
+                        </div>
+
+                        <template x-if="data.product.tags != ''">
+
+                            <div class=" flex gap-3 flex-wrap">
+                                <template x-for="tag in data.product.tags.split(',')">
+                                    <p class="px-5 py-1 border-stone-800 shadow bg-neutral-50 hover:text-white hover:bg-stone-900 cursor-pointer " @click="forceChange('/bg/products?tags[]='+tag)" x-text="tag"></p>
+                                </template>
+                            </div>
+                        </template>
+
+                        <template x-if="data.productReviews[0]">
+                            <div class="pt-6">
+                                <div class="">
+                                    <p class="flex dark:text-gray-200">
+                                        <span class="text-xs">Общо коментари - </span>
+                                        <span class="text-xs" x-text="data.productReviews.length"></span>
+                                    </p>
+                                </div>
+
+                                <template x-for="item in parseInt(data.product.rating)">
+                                    <span @mouseenter="temp = item" @mouseleave="temp = orig" class="text-yellow-300 text-[24px]  shadow-2xl drop-shadow">★</span>
+                                </template>
+                            </div>
+
+                        </template>
+
+                        <div class="mt-3 flex flex-col items-start  justify-between space-y-4 py-4 sm:space-y-0 gap-3">
+
+                            <input type="hidden" name="variation_id" :value="data.product.variations[selectedVariation].id" value="">
+
+                            <button @click="alpineListeners('Shop.post_carts', $event)" :data-product_id="data.product.id" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-stone-900 dark:bg-gray-950 dark:hover:bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-stone-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                                Купи
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-6" x-data="{tab : 'description'}">
+                <div class="border-b border-gray-300">
+                    <nav class="flex gap-4">
+                        <a @click="tab = 'description'" :class="tab == 'description' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class="dark:text-gray-200  py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"> Описание </a>
+
+                        <a @click="tab = 'reviews'" :class="tab == 'reviews' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class="dark:text-gray-200 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800">Коментари</a>
+                        <a @click="tab = 'qa'" :class="tab == 'qa' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class="dark:text-gray-200 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800">Запитване</a>
+
+                    </nav>
+                </div>
+
+                <div x-show="tab == 'description'" class="mt-8 flow-root sm:mt-12 dark:text-gray-200" x-html="data.product.description"></div>
+                <div x-show="tab == 'reviews'">
+                    <div class="p-3 rounded-lg max-w-xl  shadow mt-5" x-data="{reviewOpen:false}">
+                        <h2 @click="reviewOpen =! reviewOpen" class="text-base font-medium mb-2 cursor-pointer flex justify-between items-center px-5">Оставете коментар <i class="fa-solid fa-circle-plus text-[22px] text-stone-900"></i></h2>
+                        <form x-show="reviewOpen" class="py-3">
+
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-medium mb-2" for="name">Имейл</label>
+                                <input name="email" :value="data.user.email" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500" type="text" placeholder="">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-medium mb-2" for="name">Имена</label>
+                                <input name="user_name" :value="data.user.names" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500" type="text" placeholder="">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-medium mb-2" for="comment">Коментар</label>
+                                <textarea rows="4" name="comment" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"></textarea>
+                            </div>
+
+                            <label class="block text-gray-700 font-medium " for="comment">Оценете този продукт </label>
+                            <div x-data="{ temp: 0, orig: 0 }" class="flex cursor-pointer text-4xl mb-7" @click="orig = temp">
+                                <input type="number" name="rating" :value="orig" class="hidden">
+
+                                <template x-for="item in [1,2,3,4,5]">
+                                    <span @mouseenter="temp = item" @mouseleave="temp = orig" class="  shadow-2xl drop-shadow" :class=" temp >= item ? 'text-yellow-400' : 'text-gray-300' ">★</span>
+                                </template>
+                            </div>
+
+                            <div class="flex justify-start">
+                                <button @click="alpineListeners('Reviews.post_product_comments', $event)" :data-product_id="data.product.id" :options-clearForm="true" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-stone-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out hover:bg-stone-800">
+                                    Публикувай
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+                    <template x-if="data.productReviews[0]">
+
+                        <div class="my-10">
+                            <p class="text-base font-bold pt-[20px] pb-2 text-slate-700 uppercase border-b-2 border-slate-800 w-fit">Ревюта за този продукт</p>
+
+                            <template x-for="review in data.productReviews">
+
+                                <div class="flex border-t border-b py-7 ">
+                                    <div class="w-[250px] border-r pr-[20px] mr-[50px]">
+                                        <p x-text="review.user_name"></p>
+                                        <p x-text="review.email"></p>
+                                        <p x-text="review.date"></p>
+                                    </div>
+                                    <div class="w-2/4">
+
+                                        <p x-text="review.comment"></p>
+
+                                        <template x-for="item in review.rating">
+                                            <span @mouseenter="temp = item" @mouseleave="temp = orig" class="text-yellow-300 text-[24px]  shadow-2xl drop-shadow">★</span>
+                                        </template>
+
+                                    </div>
+                                </div>
+
+                            </template>
+
+                        </div>
+                    </template>
+
+                </div>
+                <div x-show="tab == 'qa'" x-cloak>
+
+                    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8  mt-5">
+                            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                                Направи Запитване
+                            </h1>
+                            <form>
+                                <input type="hidden" name="product_id" :value="data.corePage.target_id">
+                                <div>
+                                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <input type="text" :value="data.user.email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" data-gtm-form-interact-field-id="0">
+                                </div>
+                                <div>
+                                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Имена</label>
+                                    <input type="text" :value="data.user.names" name="user_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" data-gtm-form-interact-field-id="0">
+                                </div>
+
+                                <div>
+                                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Относно</label>
+                                    <input type="text" name="subject" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" data-gtm-form-interact-field-id="0">
+                                </div>
+
+                                <div>
+                                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Съобщение</label>
+                                    <textarea type="text" name="text" class="bg-gray-50 border border-gray-300 h-[100px] text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" data-gtm-form-interact-field-id="0"></textarea>
+
+                                </div>
+
+                                <button @click="alpineListeners('Qa.post_qa', $event)" class="w-full mt-3 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-stone-900 hover:bg-stone-800">Изпрати</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <template x-if="data.product">
+
+            <div class="w-full" x-data="{tab : 'promo'}">
+                <div class="">
+                    <nav class="container px-4 border-b border-gray-300 mb-10 flex gap-4 sm:mt-12">
+                        <a @click="tab = 'promo'" :class="tab == 'promo' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class="py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800 dark:text-gray-200">Промо </a>
+                        <a @click="tab = 'similar'" :class="tab == 'similar' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class=" py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800 dark:text-gray-200"> Подобни </a>
+                    </nav>
+                </div>
+
+                <template x-if="tab == 'promo'">
+                    <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="discountProducts" data-sort="discount" data-subcategories="true" data-only_instock="0" data-category_id="0">
+
+                        <div id="glidediscountProducts" class="glide !h-fit">
+                            <div class="glide__track " data-glide-el="track">
+                                <ul class="glide__slides" id="discountProductsSlider">
+                                </ul>
+                            </div>
+                            <div class="glide__arrows" data-glide-el="controls">
+                                <button class="glide__arrow glide__arrow--left !left-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir="<"><i class="fa-solid fa-circle-arrow-left text-stone-900 text-[32px] rounded-full"></i></button>
+                                <button class="glide__arrow glide__arrow--right bg-unset text-unset !right-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir=">"><i class="fa-solid fa-circle-arrow-right text-stone-900 text-[32px] rounded-full"></i></button>
+                            </div>
+
+                        </div>
+
+                        <template id="template" x-for="item in data.discountProducts.result">
+                            <template x-teleport="#discountProductsSlider">
+                                <li class="glide__slide py-5 px-2 ">
+                                    <div x-data="{product:item}" class="!h-[450px] relative text-center rounded-xl flex flex-col justify-between  bg-neutral-50 dark:bg-gray-950 drop-shadow ">
+
+                                        <template x-if="product.variations[0].promoprice != 0">
+                                            <div class="ribbon ribbon-secondary ribbon-clip !top-[10px]">Sale</div>
+                                        </template>
+                                        <div x-show="product.isNew" x-cloak="">
+                                            <div class="ribbon ribbon-success ribbon-clip " :class="product.variations[0].promoprice != 0 ? '!top-[55px]': '!top-[10px]'">New</div>
+                                        </div>
+
+                                        <div class="lg:p-10 hover:p-0 h-[300px]  bg-white">
+                                            <img :src="product.images[0] ? product.images[0].url : data.settings.logo" @click="forceChange(product.url)" alt="" class="!m-0 w-full h-full object-scale-down cursor-pointer">
+                                            <!-- <div class="bg-neutral-100 animate-pulse shadow animate-infinite animate-duration-[3000ms]  w-full h-full"></div> -->
+                                        </div>
+
+                                        <div class="px-3 ">
+                                            <p x-text="product.title" @click="forceChange(product.url)" class="pt-[15px] line-clamp-2 cursor-pointer hover:text-orange-400 dark:text-gray-200">Deba Fuji Ryutoku, Деба нож, 15 см, FC-572</p>
+                                            <template x-if="product.variations[0].promoprice != 0">
+                                                <div class="flex flex-wrap items-center justify-center py-1">
+                                                    <p class="text-lg font-bold text-red-400" x-text="product.variations[0].selling_price.toFixed(2)">750</p>
+                                                    <span class="text-base ml-2 text-red-400" x-text="product.variations[0].currency">лв.</span>
+                                                    <p class="text-base font-bold dark:text-gray-400">
+                                                        <s>
+                                                            <span x-text="product.variations[0].price">890</span>
+                                                            <span x-text="product.variations[0].currency">лв.</span>
+                                                        </s>
+                                                    </p>
+
+                                                </div>
+                                            </template>
+
+                                            <template x-if="product.variations[0].promoprice == 0">
+                                                <p x-text="product.variations[0].price.toFixed(2) + ' лв.'" class="  py-1 text-[17px] text-red-600 font-bold">80.00 BGN</p>
+                                            </template>
+                                        </div>
+
+                                        <div class="px-3 py-3 w-full">
+                                            <button @click="alpineListeners('Shop.post_carts', $event)" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" name="button" class="dark:text-gray-200 dark:bg-gray-900 flex items-center justify-center w-full py-2 bg-stone-900 text-white hover:bg-stone-800 ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                                </svg>
+                                                Купи
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </template>
+                        </template>
+
+                        <template class="dontSelect" x-if="data.discountProducts.result[0]">
+                            <div x-data="{init() {
+                    new Glide('#glidediscountProducts', {
+                      type: 'slider',
+                      startAt: 0,
+                      perView: 6,
+                      autoplay: false,
+                      animationDuration: 1500,
+                      perTouch:4,
+                      breakpoints: {
+                        1630: {
+                          perView: 4
+                        },
+                        886: {
+                          perView: 3
+                        },
+                        600: {
+                          perView:2
+                        },
+                        440: {
+                          perView: 1
+                        }
+                      }
+                    }).mount();
+                  }}"></div>
+                        </template>
+                    </div>
+                </template>
+
+                <template x-if="tab == 'similar'">
+                    <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="similarProducts" data-only_instock="0" :data-category_id="data.product.categories[0].id">
+                        <div id="glidesimilarProducts" class="glide !h-fit">
+                            <div class="glide__track " data-glide-el="track">
+                                <ul class="glide__slides" id="similarProductsSlider">
+                                </ul>
+                            </div>
+                            <div class="glide__arrows" data-glide-el="controls">
+                                <button class="glide__arrow glide__arrow--left !left-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir="<"><i class="fa-solid fa-circle-arrow-left text-stone-900 text-[32px] rounded-full"></i></button>
+                                <button class="glide__arrow glide__arrow--right bg-unset text-unset !right-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir=">"><i class="fa-solid fa-circle-arrow-right text-stone-900 text-[32px] rounded-full"></i></button>
+                            </div>
+
+                        </div>
+
+                        <template id="template" x-for="item in data.similarProducts.result">
+                            <template x-teleport="#similarProductsSlider">
+                                <li class="glide__slide py-5 px-2 ">
+                                    <div x-data="{product:item}" class="!h-[450px] relative text-center rounded-xl flex flex-col justify-between  bg-neutral-50 dark:bg-gray-950 drop-shadow ">
+
+                                        <template x-if="product.variations[0].promoprice != 0">
+                                            <div class="ribbon ribbon-secondary ribbon-clip !top-[10px]">Sale</div>
+                                        </template>
+                                        <div x-show="product.isNew" x-cloak="">
+                                            <div class="ribbon ribbon-success ribbon-clip " :class="product.variations[0].promoprice != 0 ? '!top-[55px]': '!top-[10px]'">New</div>
+                                        </div>
+
+                                        <div class="lg:p-10 hover:p-0 h-[300px]  bg-white">
+                                            <img :src="product.images[0] ? product.images[0].url : data.settings.logo" @click="forceChange(product.url)" alt="" class="!m-0 w-full h-full object-scale-down cursor-pointer">
+                                            <!-- <div class="bg-neutral-100 animate-pulse shadow animate-infinite animate-duration-[3000ms]  w-full h-full"></div> -->
+                                        </div>
+
+                                        <div class="px-3 ">
+                                            <p x-text="product.title" @click="forceChange(product.url)" class="pt-[15px] line-clamp-2 cursor-pointer hover:text-orange-400 dark:text-gray-200">Deba Fuji Ryutoku, Деба нож, 15 см, FC-572</p>
+                                            <template x-if="product.variations[0].promoprice != 0">
+                                                <div class="flex flex-wrap items-center justify-center py-1">
+                                                    <p class="text-lg font-bold text-red-400" x-text="product.variations[0].selling_price.toFixed(2)">750</p>
+                                                    <span class="text-base ml-2 text-red-400" x-text="product.variations[0].currency">лв.</span>
+                                                    <p class="text-base font-bold dark:text-gray-400">
+                                                        <s>
+                                                            <span x-text="product.variations[0].price">890</span>
+                                                            <span x-text="product.variations[0].currency">лв.</span>
+                                                        </s>
+                                                    </p>
+
+                                                </div>
+                                            </template>
+
+                                            <template x-if="product.variations[0].promoprice == 0">
+                                                <p x-text="product.variations[0].price.toFixed(2) + ' лв.'" class="  py-1 text-[17px] text-red-600 font-bold">80.00 BGN</p>
+                                            </template>
+                                        </div>
+
+                                        <div class="px-3 py-3 w-full">
+                                            <button @click="alpineListeners('Shop.post_carts', $event)" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" name="button" class="dark:text-gray-200 dark:bg-gray-900 flex items-center justify-center w-full py-2 bg-stone-900 text-white hover:bg-stone-800 ">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                                </svg>
+                                                Купи
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </template>
+                        </template>
+
+                        <template class="dontSelect" x-if="data.similarProducts.result[0]">
+                            <div x-data="{init() {
+                    new Glide('#glidesimilarProducts', {
+                      type: 'carousel',
+                      startAt: 0,
+                      perView: 6,
+                      autoplay: false,
+                      animationDuration: 1500,
+                      perTouch:4,
+                      breakpoints: {
+                        1630: {
+                          perView: 4
+                        },
+                        886: {
+                          perView: 3
+                        },
+                        600: {
+                          perView:2
+                        },
+                        440: {
+                          perView: 1
+                        }
+                      }
+                    }).mount();
+                  }}"></div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+        </template>
+    </div>
+</section>

@@ -1,0 +1,199 @@
+<div class="w-full dark:bg-gray-900 dark:text-gray-200" apidata="Blog.get_blogPosts" keyname="post" :data-id="data.corePage.target_id" data-test="true">
+    <div class="w-full z-30">
+        <img :src="data.post.images[0] ? data.post.images[0].url_10x10 : data.settings.logo" class="w-full h-[500px] object-cover " style="filter: brightness(0.7);" alt="">
+    </div>
+
+    <div class="mt-[-300px] mt-[-300px] w-[90%] mx-auto   ">
+        <div class="" style="filter: brightness(1);">
+            <div class="flex gap-2 items-center">
+                <i class="fa-regular fa-folder-closed text-white"></i>
+                <p x-text="data.post.category.title" class="text-white" @click="forceChange('data.post.category.url')"></p>
+            </div>
+            <div class="">
+                <p x-text="data.post.title" class="py-2 text-white  font-bold text-[2.25rem] leading-10" style="filter: brightness(1);"> </p>
+                <p x-text="data.post.seo_description " class="py-2 text-white text-base font-bold leading-10" style="filter: brightness(1);"> </p>
+            </div>
+        </div>
+
+        <div class="mt-[90px] bg-white dark:bg-gray-900 rounded-xl flex flex-wrap" style="filter: brightness(1);">
+            <div class="w-full md:!w-4/6 p-5 md:pr-20">
+                <div class="w-full flex flex-col-reverse md:flex-row justify-between">
+
+                    <div class="flex justify-between gap-2 py-2">
+                        <p><i class="fa-brands fa-facebook text-[20px] text-stone-900 mx-1 md:mx-3 dark:text-gray-200"></i>Facebook</p>
+                        <p><i class="fa-brands fa-x-twitter text-[20px] text-stone-900 mx-1 md:mx-3 dark:text-gray-200"></i>Twitter</p>
+                        <p><i class="fa-brands fa-linkedin text-[20px] text-stone-900 mx-1 md:mx-3 dark:text-gray-200"></i>LinedIn</p>
+                    </div>
+
+                    <div class="flex justify-between gap-2 py-2">
+                        <p><i class="fa-regular fa-clock  text-[20px] text-stone-900 mx-1 md:mx-3 dark:text-gray-200"></i><span x-text="data.post.read_time  != 0 ? data.post.read_time : '1' ""></span> <span>мин.</span></p>
+            <p><i class=" fa-regular fa-eye text-[20px] text-stone-900 mx-1 md:mx-3 dark:text-gray-200"></i><span x-text="data.post.views"></span></p>
+                        <p><i class="fa-regular fa-calendar-days text-[20px] text-stone-900 mx-1 md:mx-3 dark:text-gray-200"></i><span x-text=" new Date(data.post.date_created).toLocaleDateString('en-GB')"></span></p>
+                    </div>
+
+                </div>
+
+                <div class="" x-html="data.post.description"></div>
+
+                <div class="md:mt-10 md:mx-10 px-2 md:px-10 w-full md:!w-2/3 bg-neutral-50 dark:bg-gray-950">
+                    <template x-if="data.post">
+                        <div class="mt-6 mt-6 " x-init="alpineListeners('Blog.get_blogPosts', $el)" keyName="sameCategoryPosts">
+                            <p class="text-lg font-bold">По темата <span class="text-[72px] text-stone-700">.</span></p>
+
+                            <div class="py-5">
+                                <template x-for="sameCategoryPosts in data.sameCategoryPosts.result">
+                                    <template x-if="sameCategoryPosts.id != data.corePage.target_id">
+                                        <div class="py-1">
+                                            <p @click="forceChange(sameCategoryPosts.url)" class="text-base hover:text-stone-800 hover:font-bold cursor-pointer" x-text="sameCategoryPosts.title"></p>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+
+                        </div>
+                    </template>
+                </div>
+
+                <template x-if="data.post.tags[0]">
+                    <div class="mt-3 px-3 md:mt-10 md:px-10 ">
+                        <p class="text-lg font-bold">Тагове</p>
+                        <div class="flex gap-3 mt-3 flex-wrap">
+                            <template x-for="tag in data.post.tags">
+                                <p @click="forceChange('/bg/blog?tags[]='+tag)" class="px-5 py-1 bg-neutral-50 shadow border border-stone-700 hover:bg-stone-800 hover:text-white cursor-pointer" x-text="tag"></p>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <div class="mt-3 px-3 md:mt-10 md:px-10">
+
+                    <div apidata="Reviews.get_blog_comments" :data-subject_id="data.corePage.target_id" keyname="blogReviews">
+
+                        <div class="my-10">
+                            <p class="text-lg font-bold">Коментари</p>
+
+                            <template x-for="review in data.blogReviews">
+
+                                <div class="flex flex-wrap border-t border-b dark:border-gray-200 py-7 ">
+                                    <div class="w-[250px] border-r pr-[20px] mr-[50px]">
+                                        <p class="dark:text-gray-200" x-text="review.user_name"></p>
+                                        <p class="dark:text-gray-200" x-text="review.email"></p>
+                                        <p class="dark:text-gray-200" x-text="review.date"></p>
+                                    </div>
+                                    <div class="w-2/4">
+
+                                        <p class="dark:text-gray-200" x-text="review.comment"></p>
+
+                                        <template x-for="item in review.rating">
+                                            <span @mouseenter="temp = item" @mouseleave="temp = orig" class="text-yellow-300 text-[24px]  shadow-2xl drop-shadow">★</span>
+                                        </template>
+
+                                    </div>
+                                </div>
+
+                            </template>
+
+                        </div>
+
+                        <div class="p-3 rounded-lg max-w-xl  shadow mt-5 dark:bg-gray-950" x-data="{reviewOpen:false}">
+                            <h2 @click="reviewOpen =! reviewOpen" class="text-base font-medium mb-2 cursor-pointer flex justify-between items-center px-5">Оставете коментар <i class="fa-solid fa-circle-plus text-[22px] text-stone-900 dark:text-gray-200"></i></h2>
+                            <form x-show="reviewOpen" class="py-3">
+                                <input type="hidden" name="subject_id" :value="data.corePage.target_id">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2 dark:text-gray-200" for="name">Имейл</label>
+                                    <input name="email" :value="data.user.email" class="dark:bg-gray-900 dark:text-gray-200 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500" type="text" placeholder="">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2 dark:text-gray-200" for="name">Имена</label>
+                                    <input name="user_name" :value="data.user.names" class="dark:bg-gray-900 dark:text-gray-200 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500" type="text" placeholder="">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 font-medium mb-2 dark:text-gray-200" for="comment">Коментар</label>
+                                    <textarea rows="4" name="comment" class="dark:bg-gray-900 dark:text-gray-200 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"></textarea>
+                                </div>
+
+                                <label class="block text-gray-700 font-medium dark:text-gray-200" for="comment">Оценете този продукт </label>
+                                <div x-data="{ temp: 0, orig: 0 }" class="flex cursor-pointer text-4xl mb-7" @click="orig = temp">
+                                    <input type="number" name="rating" :value="orig" class="hidden">
+
+                                    <template x-for="item in [1,2,3,4,5]">
+                                        <span @mouseenter="temp = item" @mouseleave="temp = orig" class="  shadow-2xl drop-shadow" :class=" temp >= item ? 'text-yellow-400' : 'text-gray-300' ">★</span>
+                                    </template>
+                                </div>
+
+                                <div class="flex justify-start">
+                                    <button @click="alpineListeners('Reviews.post_blog_comments', $event)" :data-product_id="data.product.id" class="dark:bg-gray-900 dark:hover:bg-gray-800 inline-flex items-center justify-center rounded-md border-2 border-transparent bg-stone-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out hover:bg-stone-800">
+                                        Публикувай
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="w-full md:!w-2/6 p-5 flex flex-col items-center ">
+                <div class="">
+
+                    <template x-if="data.post.related_posts[0]">
+                        <div class="">
+                            <p class="text-lg font-bold">Свързани статии</p>
+                            <div class="divide-y divide-neutral-300">
+
+                                <template x-for="related in data.post.related_posts">
+                                    <div @click="forceChange(related.url)" class="flex flex-col md:flex-row gap-5 my-2 py-2  shadow p-3">
+                                        <img class="w-full h-full max-h-[200px] md:!w-[10rem] md:!h-[7rem] object-cover shrink-0 rounded" :src="related.images[0] ? related.images[0].url_10x10 : data.settings.logo" alt="">
+                                        <div class="flex flex-col justify-between">
+                                            <p class="text-lg font-bold line-clam-2" x-text="related.title"></p>
+                                            <p class="text-neutral-600 text-sm line-clamp-3" x-text="related.seo_description"></p>
+                                            <p>
+                                                <span> <i class="fa-regular fa-calendar-days text-stone-900"></i></span>
+                                                <span x-text="related.date_publish"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+
+                        </div>
+                    </template>
+
+                    <template x-if="data.post">
+                        <div class="mt-6" x-init="alpineListeners('Blog.get_blogPosts', $el)" :data-sort="newest" keyName="newestPosts">
+                            <p class="text-lg font-bold">Последно добавени </p>
+                            <div class="divide-y divide-neutral-300">
+
+                                <template x-for="newestPosts in data.newestPosts.result">
+                                    <template x-if="newestPosts.id != data.corePage.target_id">
+
+                                        <div @click="forceChange(newestPosts.url)" class="flex flex-col md:flex-row gap-5 my-2 py-2  shadow p-3">
+                                            <img class="w-full h-full max-h-[200px] md:!w-[10rem] md:!h-[7rem] object-cover shrink-0 rounded" :src="newestPosts.images[0] ? newestPosts.images[0].url_10x10 : data.settings.logo" alt="">
+                                            <div class="flex flex-col justify-between">
+                                                <p class="text-lg font-bold line-clam-2" x-text="newestPosts.title"></p>
+                                                <p class="text-neutral-600 text-sm line-clamp-3" x-text="newestPosts.seo_description"></p>
+                                                <p>
+                                                    <span><i class="fa-regular fa-calendar-days text-stone-900"></i></span>
+                                                    <span x-text="newestPosts.date_publish"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+
+                        </div>
+                    </template>
+
+                </div>
+            </div>
+        </div>
+        <!-- :data-category_id="data.post.category.id" -->
+        <div class="w-full p-5 mx-auto">
+
+        </div>
+
+    </div>
+
+</div>
