@@ -1,0 +1,603 @@
+<section class="section-banner w-full">
+    <div class="banner-image flex flex-wrap w-full justify-center sm:h-[400px] h-[300px] m-0 bg-[url('https://hotelviaserdika.com/assets/gallery/staq/19.webp')] bg-cover bg-center">
+        <div class="w-full sm:h-[400px] h-[300px] absolute bg-[#000000bf]"></div>
+        <div class="flex items-center justify-center text-center z-2">
+            <div class="mt-[65px] z-10">
+                <h2 class="mb-[12px] 2xl:text-[40px] xl:text-[38px] lg:text-[36px] md:text-[34px] sm:text-[30px] text-[28px] font-bold text-white">Conferences and events</h2>
+                <h5 class="text-[16px]">
+                    <span>
+                        <a href="index.html" class="text-[#fff] hover:text-[#fff]">Home</a>
+                    </span>
+
+                    <span class="font-bold text-white"> / </span>
+                    <span>
+                        <a href="javascript:void(0)" class="text-[#fff] hover:text-[#fff]">Conferences and events</a>
+                    </span>
+                </h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container px-4">
+
+    <form x-data="{type:0}">
+        <p class="text-gray-900 text-2xl  pt-4">Book</p>
+
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px]  my-4">
+
+        <p class="text-gray-800 text-lg pb-4 text-center">Conferences and Events Inquiry Form</p>
+
+        <!-- ===============  Step 1  ===============   -->
+        <div class="max-w-3xl mx-auto">
+            <p class="text-gray-800 text-base text-center mt-4 ">Step 1</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Event information</p>
+
+            <div class="grid md:gird-cols-2 gap-1 lg:gap-8">
+                <div class="md:col-span-2">
+                    <label for="EVENT_NAME" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event name <span class="text-red-600 font-semibold"> <span class="text-red-600 font-semibold"> *</span></span></label>
+                    <input type="text" name="Event name" id="EVENT_NAME" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                </div>
+
+                <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
+                    dateFormat: 'Y-m-d',
+                    minDate: 'today',})">
+                    <label for="date_start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> First day of the event <span class="text-red-600 font-semibold"> *</span></label>
+                    <div class="relative">
+                        <input name="Начало на събитието" id="date_start" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=" " type="text" readonly="readonly">
+                        <i class="fa-light fa-calendar-days absolute top-2 right-4 text-2xl text-gray-600"></i>
+                    </div>
+                </div>
+
+                <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
+                    dateFormat: 'Y-m-d',
+                    minDate: 'today',})">
+                    <label for="date_end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Last day of the event <span class="text-red-600 font-semibold"> *</span></label>
+                    <input name="Край на събитието" id="date_end" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=" " type="text" readonly="readonly">
+                    <!-- <div class="relative">
+                        <i class="fa-light fa-calendar-days absolute top-2 right-4 text-2xl text-gray-600"></i>
+                    </div> -->
+                </div>
+
+                <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: 'H:i',
+                    time_24hr: true
+                })">
+                    <label for="time_start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Start of the event <span class="text-red-600 font-semibold"> *</span></label>
+                    <div class="relative">
+                        <input name="Начален час на събитието" id="time_start" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=" " type="text" readonly="readonly">
+                        <i class=" fa-regular fa-clock absolute top-2 right-4 text-2xl text-gray-600"></i>
+
+                    </div>
+                </div>
+
+                <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: 'H:i',
+                    time_24hr: true
+                })">
+                    <label for="time_end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> End of event <span class="text-red-600 font-semibold"> *</span></label>
+                    <div class="relative">
+                        <input name="Краен час на събитието" id="time_end" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=" " type="text" readonly="readonly">
+                        <i class=" fa-regular fa-clock absolute top-2 right-4 text-2xl text-gray-600"></i>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="dateChange" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Is it possible to change the date? <span class="text-red-600 font-semibold"> *</span></label>
+                    <select name="Възможна ли е промяна на датата " class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="" id="">
+                        <option value="Не">No</option>
+                        <option value="Да">Yes</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <!-- ===============  END Step 1  ===============   -->
+
+        <!-- ===============  Step 2  ===============   -->
+
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px] mt-20 my-4">
+
+        <div class="max-w-3xl mx-auto">
+            <p class="text-gray-800 text-base text-center ">Step 2</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Type of your event <span class="text-red-600 font-semibold"> *</span></p>
+
+            <div x-data="{type: 0}" class="flex flex-wrap gap-6 lg:gap-10 justify-center ">
+
+                <div @click="type == 1 ? type = 0 : type = 1" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 1 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic1.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Conference</span>
+                    <template x-if="type == 1">
+                        <input name="Event Type" value="Conference" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 2 ? type = 0 : type = 2" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 2 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic2.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Workshop</span>
+                    <template x-if="type == 2">
+                        <input name="EVENT_TYPE" value="Workshop" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 3 ? type = 0 : type = 3" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 3 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic3.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Presentation</span>
+                    <template x-if="type == 3">
+                        <input name="EVENT_TYPE" value="Presentation" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 4 ? type = 0 : type = 4" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 4 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic4.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Exposition</span>
+                    <template x-if="type == 4">
+                        <input name="EVENT_TYPE" value="Exhibition" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 5 ? type = 0 : type = 5" class="text-center flex flex-col items-center justify-center">
+
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 5 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic5.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Gala dinner</span>
+                    <template x-if="type == 5">
+                        <input name="EVENT_TYPE" value="Conference" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 6 ? type = 0 : type = 6" class="text-center flex flex-col items-center justify-center">
+
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 6 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic6.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Cocktail</span>
+                    <template x-if="type == 6">
+                        <input name="EVENT_TYPE" value="Conference" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 7 ? type = 0 : type = 7" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 7 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic7.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Wedding</span>
+                    <template x-if="type == 7">
+                        <input name="EVENT_TYPE" value="Conference" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 8 ? type = 0 : type = 8" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 8 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic8.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Private Party</span>
+                    <template x-if="type == 8">
+                        <input name="EVENT_TYPE" value="Conference" type="hidden">
+                    </template>
+                </div>
+
+                <div @click="type == 9 ? type = 0 : type = 9" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="type == 9 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st2-ic9.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 lg:mt-4">Other</span>
+                    <template x-if="type == 9">
+                        <input name="EVENT_TYPE" value="Conference" type="hidden">
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-8">
+            <p name="typeError"></p>
+        </div>
+
+        <!-- ===============  END Step 2  ===============   -->
+
+        <!-- ===============  Step 3  ===============   -->
+
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px] mt-20 my-4">
+
+        <div class="max-w-3xl mx-auto">
+            <p class="text-gray-800 text-base text-center  ">Step 3</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Room arrangements and number of guests</p>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-10 mt-4">
+                <div class="">
+                    <label for="guests" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of expected guests <span class="text-red-600 font-semibold"> *</span></label>
+                    <input type="text" id="guests" name="Брой на гостите " class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Guests" required="">
+                </div>
+                <div class="">
+                    <label for="rooms" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of halls</label>
+                    <input type="number" id="rooms" name="Брой на залите" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Halls" required="">
+                </div>
+            </div>
+
+            <p class="text-center text-gray-900 mb-8">Hall arrangement <span class="text-red-600 font-semibold"> *</span></p>
+
+            <div x-data="{arrangement: 0}" class="flex flex-wrap gap-6 lg:gap-10 justify-center max-w-xl mx-auto">
+
+                <div @click="arrangement == 1 ? arrangement = 0 : arrangement = 1" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 1 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic1.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Театър</span>
+                    <template x-if="arrangement == 1">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+
+                <div @click="arrangement == 2 ? arrangement = 0 : arrangement = 2" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 2 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic2.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Classroom</span>
+                    <template x-if="arrangement == 2">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+
+                <div @click="arrangement == 3 ? arrangement = 0 : arrangement = 3" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 3 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic3.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">U-Shape</span>
+                    <template x-if="arrangement == 3">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+
+                <div @click="arrangement == 4 ? arrangement = 0 : arrangement = 4" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 4 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic4.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Board</span>
+                    <template x-if="arrangement == 4">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+
+                <div @click="arrangement == 5 ? arrangement = 0 : arrangement = 5" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 5 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic5.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Cocktail</span>
+                    <template x-if="arrangement == 5">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+
+                <div @click="arrangement == 6 ? arrangement = 0 : arrangement = 6" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 6 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic6.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Round tables</span>
+                    <template x-if="arrangement == 6">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+
+                <div @click="arrangement == 7 ? arrangement = 0 : arrangement = 7" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="arrangement == 7 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st3-ic7.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Other</span>
+                    <template x-if="arrangement == 7">
+                        <input type="hidden" value="Театър" name="Hall arrangement">
+                    </template>
+                </div>
+            </div>
+
+            <div class="text-center my-8">
+                <p name="arrangementError"></p>
+            </div>
+
+        </div>
+        <!-- ===============  END Step 3  ===============   -->
+
+        <!-- ===============  Step 4  ===============   -->
+
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px] mt-20 my-4">
+
+        <div class="max-w-4xl mx-auto">
+            <p class="text-gray-800 text-base text-center  ">Step 4</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Technical equipment</p>
+
+            <div class="gap-6 lg:gap-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic1.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Laptop and presenter</span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Laptop and presenter">
+                    </template>
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic2.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Screens / Projectors</span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Screens / Projectors">
+                    </template>
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic3.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Flipchart</span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Flipchart">
+                    </template>
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic4.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Sound system and microphones
+                    </span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Sound system and microphones">
+                    </template>
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic5.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Simultaneous translation </span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Simultaneous translation">
+                    </template>
+
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic6.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Video conference </span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Video conference">
+                    </template>
+
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic7.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Podium</span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Podium">
+                    </template>
+                </div>
+
+                <div @click="active =! active" x-data="{active : false}" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/st4-ic8.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700  lg:mt-4">Department</span>
+                    <template x-if="active">
+                        <input type="hidden" name="equipment[]" checked value="Department">
+                    </template>
+                </div>
+            </div>
+
+            <div class="text-center my-8">
+                <p name="equipmentError"></p>
+            </div>
+
+        </div>
+        <!-- ===============  END Step 4  ===============   -->
+
+        <!-- ===============  Step 5  ===============   -->
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px] mt-20 my-4">
+
+        <div x-data="{catering: 3}">
+            <p class="text-gray-800 text-base text-center  ">Step 5</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Catering services</p>
+
+            <div class="flex flex-wrap gap-20 justify-center">
+
+                <div @click="catering = 1 " class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="catering == 1  ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/ic-yes.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 ">Yes</span>
+                    <template x-if="catering == 1">
+                        <input type="hidden" name="catering" value="1">
+                    </template>
+                </div>
+
+                <div @click="catering = 0" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :data="catering" :class="catering == 0  ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/ic-no.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 ">No</span>
+                    <template x-if="catering == 0">
+                        <input type="hidden" name="catering" value="0">
+                    </template>
+                </div>
+            </div>
+
+            <template x-if="catering == 1">
+                <div class="md:flex gap-8 justify-center mt-8">
+                    <div class="flex items-start mb-5">
+                        <div class="flex items-center h-5">
+                            <input id="cat1" name="cateringOptions[]" type="checkbox" value="Loading the hall with drinks" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                        </div>
+                        <label for="cat1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Loading the hall with drinks</label>
+                    </div>
+                    <div class="flex items-start mb-5">
+                        <div class="flex items-center h-5">
+                            <input id="cat2" name="cateringOptions[]" type="checkbox" value="Coffee break" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                        </div>
+                        <label for="cat2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"> Coffee break </label>
+                    </div>
+                    <div class="flex items-start mb-5">
+                        <div class="flex items-center h-5">
+                            <input id="cat3" name="cateringOptions[]" type="checkbox" value="Обяд" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                        </div>
+                        <label for="cat3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Lunch </label>
+                    </div>
+                    <div class="flex items-start mb-5">
+                        <div class="flex items-center h-5">
+                            <input id="cat4" name="cateringOptions[]" type="checkbox" value="Вечеря" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                        </div>
+                        <label for="cat4" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dinner </label>
+                    </div>
+                    <div class="flex items-start mb-5">
+                        <div class="flex items-center h-5">
+                            <input id="cat5" name="cateringOptions[]" type="checkbox" value="Коктейл" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                        </div>
+                        <label for="cat5" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Cocktail </label>
+                    </div>
+                    <div class="flex items-start mb-5">
+                        <div class="flex items-center h-5">
+                            <input id="cat6" name="cateringOptions[]" type="checkbox" value="Други" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                        </div>
+                        <label for="cat6" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Others </label>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+        <!-- ===============  END Step 5  ===============   -->
+
+        <!-- ===============  Step 6  ===============   -->
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px] mt-20 my-4">
+
+        <div x-data="{accommodation: 3}">
+            <p class="text-gray-800 text-base text-center  ">Step 6</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Accommodation</p>
+
+            <div class="flex flex-wrap gap-20 justify-center">
+
+                <div @click="accommodation = 1" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="accommodation == 1  ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/ic-yes.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 ">Yes</span>
+                    <template x-if="accommodation == 1">
+                        <input type="hidden" name="accommodation" value="1">
+                    </template>
+                </div>
+
+                <div @click="accommodation = 0" class="text-center flex flex-col items-center justify-center">
+                    <div class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="accommodation == 0 ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                        <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/ic-no.png" alt="">
+                    </div>
+                    <span class="text-base text-gray-700 ">No</span>
+                    <template x-if="accommodation == 0">
+                        <input type="hidden" name="accommodation" value="0">
+                    </template>
+                </div>
+            </div>
+
+            <template x-if="accommodation == 1">
+
+                <div class="grid md:grid-cols-3 gap-8 mb-10 mt-8 max-w-6xl mx-auto">
+                    <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
+                        dateFormat: 'Y-m-d',
+                        minDate: 'today',})">
+                        <label for="accommodation_date_start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Check-in date <span class="text-red-600 font-semibold"> *</span></label>
+                        <div class="relative">
+                            <input name="accommodation_date_start" id="accommodation_date_start" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=" " type="text" readonly="readonly">
+                            <i class="fa-light fa-calendar-days absolute top-2 right-4 text-2xl text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
+                        dateFormat: 'Y-m-d',
+                        minDate: 'today',})">
+                        <label for="accommodation_date_end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Check-out date <span class="text-red-600 font-semibold"> *</span></label>
+                        <div class="relative">
+                            <input name="accommodation_date_end" id="accommodation_date_end" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=" " type="text" readonly="readonly">
+                            <i class="fa-light fa-calendar-days absolute top-2 right-4 text-2xl text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <label for="accommodation_rooms" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of rooms</label>
+                        <input type="number" name="accommodation_rooms" id="accommodation_rooms" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
+                    </div>
+                </div>
+            </template>
+        </div>
+        <!-- ===============  END Step 6  ===============   -->
+
+        <!-- ===============  Step 7  ===============   -->
+
+        <hr class="rounded-full !p-0 bg-gray-200 !max-w-1/2 mx-auto !h-[4px] mt-20 my-4">
+
+        <div class="max-w-6xl mx-auto">
+            <p class="text-gray-800 text-base text-center ">Step 7</p>
+            <p class="text-3xl text-gray-900 font-semibold text-center mb-8">Contact information</p>
+
+            <div class="grid grid-cols-2 gap-2 md:gap-8 ">
+                <div class="">
+                    <label for="names" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span class="text-red-600 font-semibold"> *</span></label>
+                    <input type="text" name="Customer name" id="names" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue- 500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                </div>
+
+                <div class="">
+                    <label for="company_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company <span class="text-red-600 font-semibold"> *</span></label>
+                    <input type="text" name="Company" id="company_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus :border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                </div>
+
+                <div class="">
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone <span class="text-red-600 font-semibold"> *</span></label>
+                    <input type="text" name="Phone" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus :border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                </div>
+
+                <div class="">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address <span class="text-red-600 font-semibold"> * </span></label>
+                    <input type="text" name="Email Address" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus: border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                </div>
+            </div>
+
+            <!-- <div x-data="{active: false}" class="text-center flex flex-col items-center justify-center my-8 mt-16">
+                <div @click="active =! active" class="rounded-full w-[90px] h-[90px] flex items-center cursor-pointer justify-center mb-2" :class="active ? 'bg-gray-200 border-4 border-gray-800' : 'border-2 border-gray-500 bg-gray-50'">
+                    <img class="w-[30px] md:w-[35px] lg:w-[45px]" src="https://www.bulgaria-hotel.com/img/icons/ic-yes.png" alt="">
+                </div>
+                <span class="text-base text-gray-700 ">Да</span>
+                <template x-if="active">
+                    <input type="hidden" value="1" name="subscribe">
+                </template>
+            </div>
+
+            <p class="text-sm text-gray-900 text-center max-w-[250px] mx-auto text-center">Съгласен съм да получавам новини и промоции от Hotel Bulgaria</p> -->
+
+        </div>
+        <!-- ===============  END Step 7  ===============   -->
+
+        <div class="mx-auto w-full text-center">
+            <p @click="alpineListeners('Contacts.post_events_request', $event)" class="border border-gray-900 rounded-lg text-center btn text-gray-900  hover:bg-gray-900 hover:text-white w-full lg:w-[400px] mx-auto my-4 lg:my-20">Send Inquiry</p>
+        </div>
+
+    </form>
+</div>
+
+<script src="/assets/plugins/datePicker/flatpicker.js"></script>
+<link rel="stylesheet" href="/assets/plugins/datePicker/flatpicker.css" />

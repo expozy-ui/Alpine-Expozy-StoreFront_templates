@@ -1,0 +1,107 @@
+<div class="w-full flex py-10 dark:bg-gray-900" apiData="Blog.get_blogPosts_filters">
+    <div class="lg:w-2/5 xl:w-1/5 hidden lg:block min-w-[450px] px-10 py-5 shadow mx-5 h-fit rounded" apiData="Blog.get_blogCategories" keyName="blogCategories">
+        <div class="">
+            <div class='max-w-md mx-auto border border-neutral-300'>
+                <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+                    <div class="grid place-items-center h-full w-12 text-gray-300 dark:bg-gray-950 dark:text-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+
+                    <form class="w-full h-full">
+                        <input class="peer h-full w-full outline-none text-sm text-gray-700 pr-2 dark:bg-gray-950 dark:text-gray-200" @input="alpineListeners('Blog.get_blogPosts', $event)" name="search" type="text" placeholder="" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="py-5 ">
+            <p class="text-xl font-bold  pb-2 text-slate-700 uppercase border-b-2 border-slate-800 ">Категории</p>
+            <ul class=" divide-y py-3">
+                <template x-for="category in data.blogCategories">
+
+                    <li @click="category.id != data.corePage.target_id ?  forceChange(category.url) : forceChange('/bg/blog')" class=" w-full  ">
+                        <div :class="data.pageUrl.category_id == category.id ? 'bg-stone-900 text-white dark:text-orange-400' : 'text-neutral-700 bg-white' " class="w-full dark:bg-gray-950 h-full px-2 flex  items-center justify-between cursor-pointer w-full h-full px-2 flex items-center justify-between cursor-pointer my-2 rounded-md shadow text-neutral-700 ">
+                            <a x-text="category.title" class="hover:text-orange-400 text-[14px] py-2 dark:text-gray-200">Tojiro Fuji</a>
+                        </div>
+                    </li>
+                </template>
+
+            </ul>
+        </div>
+
+        <div>
+            <p class="text-xl font-bold  pb-2 text-slate-700 uppercase border-b-2 border-slate-800">Тагове</p>
+            <form>
+                <div x-data="{activeTags : data.pageUrl['tags[]'] ?  data.pageUrl['tags[]'] : [] }" id="activeTags" x-init="$watch('activeTags', value => alpineListeners('Blog.get_blogPosts', $el))" class="flex flex-wrap ">
+
+                    <template x-if="!activeTags[0]">
+                        <input type="hidden" name="tags[]" value="empty">
+                    </template>
+
+                    <template x-for="tag in activeTags">
+                        <input type="hidden" name="tags[]" :value="tag">
+                    </template>
+
+                    <template x-for="tag in data.blogPosts_filters.tags">
+                        <p x-text="tag" @click="!activeTags.includes(tag) ? activeTags.push(tag) : activeTags = activeTags.filter(e => e !== tag); " class=" rounded  my-1 mr-2 p-2 shadow w-fit shrink-0 dark:bg-gray-950 dark:text-gray-200" :class="activeTags.includes(tag) ? 'bg-stone-900 text-white dark:text-orange-400' : 'bg-white ' "></p>
+                    </template>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="w-full lg:w-3/5 xl:w-4/5 px-3 lg:px-10">
+        <section class="relative  w-full" apidata="Blog.get_blogPosts" :data-category_id="data.corePage.target_id != 0 ? data.corePage.target_id : 'empty'" keyname="blogPosts" options-chnageurl="true">
+            <div class="container">
+                <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-[30px]">
+                    <template x-for="blog in data.blogPosts.result">
+                        <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden flex flex-col justify-between dark:bg-gray-950 dark:text-gray-200">
+                            <div class="">
+                                <img :src="blog.images[0] ? blog.images[0].url : data.settings.logo " alt="" style="height: 300px;width: 100%;object-fit: cover;margin:0px !important;">
+                                <a href="blog-detail.html" class=" px-6 pt-3 text-lg font-bold line-clamp-2  " :title="blog.title" x-text="blog.title">Design your apps in your own way</a>
+                            </div>
+                            <div class="px-6">
+                                <p class="text-base pt-2 line-clamp-4" :title="blog.seo_description" x-text="blog.seo_description">The phrasal sequence of the is now so that many campaign and benefit</p>
+                            </div>
+                            <div class="flex gap-3 px-6 justify-between">
+                                <p>
+                                    <span x-text="blog.views "></span>
+                                    <i class="fa-regular fa-eye ml-1"></i>
+                                </p>
+                                <p>
+                                    <span x-text="blog.read_time  != 0 ? blog.read_time : '1' "></span>
+                                    <span>мин.</span>
+                                    <i class="fa-regular fa-clock ml-1"></i>
+                                </p>
+
+                            </div>
+                            <div class="mt-4 px-6 pt-2 pb-4">
+                                <button @click="forceChange(blog.url)" class="w-fit  py-2 px-10 bg-stone-900 text-white  hover:bg-stone-800 dark:bg-gray-900 dark:text-gray-200">Прочети <i class="uil uil-arrow-right"></i></button>
+                            </div>
+
+                        </div>
+                    </template>
+
+                </div>
+                <!--end grid-->
+
+                <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
+                    <div class="md:col-span-12 text-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="inline-flex items-center -space-x-px">
+                                <template x-for="(page,index) in data.blogPosts.pagination.total_pages" :key="index">
+                                    <li>
+                                        <a @click="alpineListeners('Blog.get_blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-stone-900 text-white' : 'bg-white text-stone-900'" class="w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer hover:bg-stone-900 hover:text-white">1</a>
+                                    </li>
+                                </template>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+</div>
