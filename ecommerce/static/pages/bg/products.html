@@ -1,235 +1,234 @@
-<div class="w-full dark:bg-gray-900 dark:text-gray-200">
-    <div apiData="Shop.get_categories" keyname="currentCategory" :data-id="data.corePage.target_id" class="flex items-center flex-col p-[30px]">
-        <div class="hidden lg:block">
-            <span class="text-[13px] font-bold"><a href="/"> Начало </a></span>
-            <template x-for="parent in data.currentCategory.parents">
-                <a :href="parent.url"> > <span x-text="parent.title" class="text-[13px] font-bold"></span></a>
-            </template>
-            <span class="text-[13px] font-bold"> > <a x-text="data.currentCategory.title" :href="data.currentCategory.url"></a></span>
-        </div>
-        <div class="">
-            <h1 class="text-[32px] font-bold text-center"><a x-text="data.currentCategory.title" :href="data.currentCategory.url"></a></h1>
-        </div>
-    </div>
+<div class="w-full dark:bg-gray-900 dark:text-gray-200 bg-white">
+    <!-- <CHANGE> Enhanced breadcrumb and title section with premium styling -->
+    <div apiData="Shop.get_categories" keyname="currentCategory" :data-id="data.corePage.target_id" class="flex items-center flex-col p-2 bg-gradient-to-r from-slate-50 to-white dark:from-gray-900 dark:to-gray-800 border-b border-slate-200 dark:border-gray-700">
+        <div class="  w-full container mx-auto">
+            <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                <a href="/" class="hover:text-amber-600 transition-colors">Начало</a>
+                <span class="text-slate-400">/</span>
+                <a href="/bg/products" class="hover:text-amber-600 transition-colors">Продукти</a>
 
+                <template x-for="parent in data.currentCategory.parents">
+                    <div>
+                        <span class="text-slate-400">/</span>
+                        <a :href="parent.url" class="hover:text-amber-600 transition-colors" x-text="parent.title"></a>
+                    </div>
+                </template>
+                <span class="text-slate-400">/</span>
+                <span class="text-amber-600 font-semibold" x-text="data.currentCategory.title"></span>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-<div class="bg-neutral-50 w-full  flex dark:bg-gray-950 dark:text-gray-200">
-    <div class="lg:w-2/5 xl:w-1/5 hidden lg:block min-w-[450px]"></div>
-    <div class="w-full lg:w-3/5 xl:w-4/5 px-3 lg:px-10">
-        <div class="  flex flex-col lg:flex-row lg:gap-10 justify-end gap-3 p-2">
+<div class="w-full bg-white dark:bg-gray-900 dark:text-gray-200 py-2 border-b border-slate-200 dark:border-gray-700 px-4 md:px-0">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="hidden md:block text-4xl font-bold text-slate-900 dark:text-white text-center" x-text="data.corePage.target_id != 0 ? data.currentCategory.title : 'Всички продукти'"></h1>
 
-            <div class="flex gap-2 items-center">
-                <p>Подреди по : </p>
-                <select class="border-b border-slate-300 py-1 px-3  rounded-[5px] dark:bg-gray-900" name="" @change="alpineListeners('Shop.get_products', $event)">
-                    <option data-sort="newest" keyname="products" :selected="data.pageUrl.sort == 'newest'" value="">Най - нови</option>
-                    <option data-sort="min_price" keyname="products" :selected="data.pageUrl.sort == 'min_price'" value="">Цена възх.</option>
-                    <option data-sort="max_price" keyname="products" :selected="data.pageUrl.sort == 'max_price'" value="">Цена низх.</option>
+        <div class="flex flex-row lg:gap-6 justify-between md:justyify-end gap-4">
+            <!-- <CHANGE> Improved sorting and filtering controls with better styling -->
+            <div class="md:flex gap-3 items-center">
+                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Подреди по:</label>
+                <select class="text-xs border border-slate-300 dark:border-gray-600 py-2 px-4 rounded-lg dark:bg-gray-800 dark:text-gray-200 hover:border-amber-500 transition-colors focus:ring-2 focus:ring-amber-500 focus:border-transparent" name="" @change="alpineListeners('get.products', $event)">
+                    <option data-sort="newest" keyname="products" :selected="data.pageUrl.sort == 'newest'" value="">Най-нови</option>
+                    <option data-sort="min_price" keyname="products" :selected="data.pageUrl.sort == 'min_price'" value="">Цена възхождащо</option>
+                    <option data-sort="max_price" keyname="products" :selected="data.pageUrl.sort == 'max_price'" value="">Цена низходящо</option>
                     <option data-sort="discount" keyname="products" :selected="data.pageUrl.sort == 'discount'" value="">На промоция</option>
                 </select>
             </div>
 
-            <div class="flex gap-2 items-center">
-                <p>Продукти на страница : </p>
-                <select class="border-b border-slate-300 py-1 px-3  rounded-[5px] dark:bg-gray-900" name="" @change="alpineListeners('Shop.get_products', $event)">
+            <div class="md:flex gap-3 items-center">
+                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">На страница:</label>
+                <select class="text-xs border border-slate-300 dark:border-gray-600 py-2 px-4 rounded-lg dark:bg-gray-800 dark:text-gray-200 hover:border-amber-500 transition-colors focus:ring-2 focus:ring-amber-500 focus:border-transparent" name="" @change="alpineListeners('get.products', $event)">
                     <option data-limit="10" keyname="products" :selected="data.pageUrl.limit == 10" value="" selected="selected">10</option>
                     <option data-limit="20" keyname="products" :selected="data.pageUrl.limit == 20" value="">20</option>
                     <option data-limit="50" keyname="products" :selected="data.pageUrl.limit == 50" value="">50</option>
                 </select>
             </div>
-
         </div>
     </div>
-
 </div>
-<div class=" w-full  pt-10 flex justify-center dark:bg-gray-900 dark:text-gray-200" x-data="{activeCategory: 0, activeSubCategory: 0, test: 1}" apidata="Shop.get_categories" keyname="categories" data-droplist="true">
 
-    <div class="lg:w-2/5 xl:w-1/5 hidden lg:block min-w-[450px]" apiData="Shop.get_product_filters">
-        <div class=" mx-5 py-10 ">
-            <template x-if="data.categories.length > 1 ">
-                <div>
-                    <p class="text-xl font-bold  pb-2 text-slate-700 uppercase border-b-2 border-slate-800 dark:text-gray-200">Категории</p>
-                    <ul class=" divide-y py-3">
-                        <template x-for="category in data.categories">
-                            <li class=" w-full  ">
-                                <div class="w-full h-full px-2 flex  items-center justify-between cursor-pointer w-full h-full px-2 flex items-center justify-between cursor-pointer my-2 rounded-md shadow text-neutral-700 " @click="if(activeCategory == category.id) { activeCategory = 0; subCategory= 0} else{  activeCategory = category.id; activeSubCategory = 0}" :class="activeCategory == category.id ? 'bg-stone-900 dark:bg-gray-950 dark:text-orange-400   text-white' : 'dark:bg-gray-950 dark:text-gray-200 text-neutral-700 bg-white' ">
-                                    <a @click="forceChange(category.url)" x-text="category.title" class="hover:text-orange-400 text-[14px] py-2">Tojiro Fuji</a>
+<div class="w-full pt-8 bg-white dark:bg-gray-900 dark:text-gray-200" x-data="{activeCategory: 0, activeSubCategory: 0, test: 1}" apidata="Shop.get_categories" keyname="categories" data-droplist="true">
+    <div class="container mx-auto px-4 flex gap-8">
+        <!-- <CHANGE> Redesigned filters sidebar with premium styling -->
+        <div class="hidden lg:block w-80 flex-shrink-0 pb-20">
+            <div apiData="get.product_filters" class="space-y-8">
+                <!-- Categories Section -->
+                <template x-if="data.categories">
+                    <div>
+                        <h3 class="text-lg font-bold pb-4 text-slate-900 dark:text-white uppercase tracking-wide border-b-2 border-amber-600">Категории</h3>
+                        <ul class="space-y-2 pt-4">
+                            <template x-for="category in data.categories">
+                                <li class="w-full">
+                                    <div class="w-full px-4 py-3 flex items-center justify-between cursor-pointer rounded-lg transition-all duration-200" @click="if(activeCategory == category.id) { activeCategory = 0; subCategory= 0} else{  activeCategory = category.id; activeSubCategory = 0}" :class="activeCategory == category.id ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'">
+                                        <a @click="href(category.url)" x-text="category.title" class="text-sm font-medium"></a>
+                                        <template x-if="category.children">
+                                            <i class="fa-solid text-lg transition-transform" :class="activeCategory == category.id ? 'fa-chevron-up text-white' : 'fa-chevron-down'"></i>
+                                        </template>
+                                    </div>
+
+                                    <template x-if="if(category.id == data.corePage.target_id){ activeCategory = category.id }"></template>
                                     <template x-if="category.children">
-                                        <div class="">
-                                            <span><i class="fa-solid  text-[20px]" :class="activeCategory == category.id ? 'fa-circle-chevron-left text-white' : 'fa-circle-chevron-down text-stone-900'"></i></span>
+                                        <div x-show="activeCategory == category.id" class="mt-2 space-y-1 pl-4">
+                                            <template x-for="subCategory in category.children">
+                                                <div class="p-3 rounded-lg transition-all duration-200" :class="activeSubCategory == subCategory.id ? 'bg-amber-500 text-white' : 'bg-slate-50 dark:bg-gray-700 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-600'">
+                                                    <template x-if="if(subCategory.id == data.corePage.target_id){ activeCategory = category.id; activeSubCategory = subCategory.id  }"></template>
+                                                    <a x-text="subCategory.title" @click="href(subCategory.url)" class="text-sm font-medium cursor-pointer block"></a>
+                                                </div>
+                                            </template>
                                         </div>
                                     </template>
-                                </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
 
-                                <template x-if="if(category.id == data.corePage.target_id){ activeCategory = category.id }"></template>
-                                <template x-if="category.children">
-                                    <div x-show="activeCategory == category.id">
-                                        <div class=" bg-neutral-50 dark:bg-gray-950 px-1 drop-shadow border border-neutral-100">
-                                            <ul class="divide-y">
-                                                <template x-for="subCategory in category.children">
-                                                    <li class="p-1" :class="activeSubCategory == subCategory.id ? 'bg-stone-900 dark:bg-gray-950 text-white dark:text-orange-400' : 'bg-unset '">
-                                                        <template x-if="if(subCategory.id == data.corePage.target_id){ activeCategory = category.id; activeSubCategory = subCategory.id  }"></template>
-                                                        <a x-text="subCategory.title" @click="forceChange(subCategory.url)" class="hover:text-orange-400 text-[14px] cursor-pointer"></a>
-                                                    </li>
-                                                </template>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </template>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-            </template>
-
-            <template x-if="data.product_filters.brands.lenth > 1">
-
-                <div>
-                    <p class="text-xl font-bold  pb-2 text-slate-700 uppercase border-b-2 border-slate-800 dark:text-gray-200">Марка</p>
+                <!-- Brands Section -->
+                <template x-if="data.product_filters.brands.lenth > 1">
                     <div>
-                        <select class="border border-slate-300 px-3 my-[20px] rounded-[5px] w-full py-2 dark:bg-gray-950" name="" @change="alpineListeners('Shop.get_products', $event)">
+                        <h3 class="text-lg font-bold pb-4 text-slate-900 dark:text-white uppercase tracking-wide border-b-2 border-amber-600">Марка</h3>
+                        <select class="w-full border border-slate-300 dark:border-gray-600 px-4 py-2 mt-4 rounded-lg dark:bg-gray-800 dark:text-gray-200 hover:border-amber-500 transition-colors focus:ring-2 focus:ring-amber-500" name="" @change="alpineListeners('get.products', $event)">
                             <option data-brands="empty" :data-search="data.search.search" value="">Всички</option>
                             <template x-for="brand in data.product_filters.brands">
-                                <option :data-brands="brand.id" :selected="data.pageUrl.brands == brand.id" x-text="brand.title" :value="brand.id">10</option>
+                                <option :data-brands="brand.id" :selected="data.pageUrl.brands == brand.id" x-text="brand.title" :value="brand.id"></option>
                             </template>
                         </select>
                     </div>
+                </template>
+
+                <!-- Tags Section -->
+                <div>
+                    <h3 class="text-lg font-bold pb-4 text-slate-900 dark:text-white uppercase tracking-wide border-b-2 border-amber-600">Тагове</h3>
+                    <form>
+                        <div x-data="{activeTags : data.pageUrl['tags[]'] ?  data.pageUrl['tags[]'] : [] }" id="activeTags" x-init="$watch('activeTags', value => alpineListeners('get.products', $el))" class="flex flex-wrap gap-2 mt-4">
+                            <template x-if="!activeTags[0]">
+                                <input type="hidden" name="tags[]" value="empty">
+                            </template>
+                            <template x-for="tag in activeTags">
+                                <input type="hidden" name="tags[]" :value="tag">
+                            </template>
+
+                            <template x-for="tag in Object.values(data.product_filters.tags).slice(0,20)">
+                                <p x-text="tag" @click="!activeTags.includes(tag) ? activeTags.push(tag) : activeTags = activeTags.filter(e => e !== tag)" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer" :class="activeTags.includes(tag) ? 'bg-amber-600 text-white shadow-md' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'"></p>
+                            </template>
+                        </div>
+                    </form>
                 </div>
-            </template>
 
-            <p class="text-xl font-bold  pb-2 text-slate-700 uppercase border-b-2 border-slate-800 dark:text-gray-200">Тагове</p>
-            <div>
+                <!-- Price Range Section -->
                 <form>
-                    <div x-data="{activeTags : data.pageUrl['tags[]'] ?  data.pageUrl['tags[]'] : [] }" id="activeTags" x-init="$watch('activeTags', value => alpineListeners('Shop.get_products', $el))" class="flex flex-wrap">
-                        <template x-if="!activeTags[0]">
-                            <input type="hidden" name="tags[]" value="empty">
-                        </template>
-                        <template x-for="tag in activeTags">
-                            <input type="hidden" name="tags[]" :value="tag">
-                        </template>
-
-                        <template x-for="tag in data.product_filters.tags">
-                            <p x-text="tag" @click="!activeTags.includes(tag) ? activeTags.push(tag) : activeTags = activeTags.filter(e => e !== tag); " class=" rounded  my-1 mr-2 p-2 shadow w-fit shrink-0" :class="activeTags.includes(tag) ? 'bg-stone-900 dark:bg-gray-950 dark:text-orange-400 text-white' : 'bg-white dark:bg-gray-950  ' "></p>
-                        </template>
+                    <div class="border-t-2 border-amber-600 pt-6">
+                        <h3 class="text-lg font-bold pb-4 text-slate-900 dark:text-white uppercase tracking-wide">Цена</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm font-semibold text-slate-700 dark:text-gray-300 block mb-2">От:</label>
+                                <input @input.debounce.500="alpineListeners('get.products', $event)" keyname="products" type="number" min="0" max="1000" name="price_from" :value="data.pageUrl.price_from" class="w-full p-3 border border-slate-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="text-sm font-semibold text-slate-700 dark:text-gray-300 block mb-2">До:</label>
+                                <input @input.debounce.500="alpineListeners('get.products', $event)" keyname="products" type="number" min="0" max="1000" name="price_to" :value="data.pageUrl.price_to" class="w-full p-3 border border-slate-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
-
-            <form>
-
-                <div class="border-y py-2 border-y py-2 flex justify-between gap-3 my-4">
-                    <div class="w-full">
-                        <p class="dark:text-gray-200">Цена от </p>
-                        <input @input.debounce.500="alpineListeners('Shop.get_products', $event)" keyname="products" type="number" min="0" max="1000" name="price_from" :value="data.pageUrl.price_from" class="dark:bg-gray-950 dark:text-gray-200 block p-3 pl-10 w-full text-sm text-gray-900 bg-white rounded border border-gray-300 focus:ring-primary-500 focus:border-primary-500 ">
-                    </div>
-                    <div class="w-full">
-                        <p class="dark:text-gray-200">Цена до </p>
-                        <input @input.debounce.500="alpineListeners('Shop.get_products', $event)" keyname="products" type="number" min="0" max="1000" name="price_to" :value="data.pageUrl.price_to" class="dark:bg-gray-950 dark:text-gray-200 block p-3 pl-10 w-full text-sm text-gray-900 bg-white rounded border border-gray-300 focus:ring-primary-500 focus:border-primary-500 ">
-                    </div>
-                </div>
-
-            </form>
-
         </div>
-    </div>
 
-    <div class="w-full lg:w-3/5 xl:w-4/5 px-3 lg:px-10">
+        <!-- Products Grid -->
+        <div class="flex-1 pb-12">
+            <div class="mb-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-3 gap-6" apidata="get.products" data-show_filters="true" data-subcategories="true" data-only_instock="0" :data-category_id="data.corePage.target_id" keyname="products" options-pushurl="true">
+                    <!-- <CHANGE> Enhanced product cards with premium design and better hover effects -->
+                    <template x-for="product in data.products.result">
+                        <div class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer">
 
-        <div class="lg:mb-[100px]  ">
-            <div class="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-10 xl:grid-cols-4" apidata="Shop.get_products" data-show_filters="true" data-subcategories="true" data-only_instock="0" :data-category_id="data.corePage.target_id" keyname="products" options-chnageurl="true">
-                <template x-for="product in data.products.result">
+                            <!-- Image section with fixed height -->
+                            <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
+                                <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
 
-                    <div class="ribbon-wrapper relative  dark:text-gray-200">
-                        <template x-if="product.variations[0].promoprice != 0">
-                            <div class="ribbon ribbon-secondary ribbon-clip !top-[10px]">Sale</div>
-                        </template>
-                        <div x-show="product.isNew" x-cloak="">
-                            <div class="ribbon ribbon-success ribbon-clip " :class="product.variations[0].promoprice != 0 ? '!top-[55px]': '!top-[10px]'">New</div>
-                        </div>
+                                <template x-if="!product.isWishlisted">
+                                    <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                        <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                    </button>
+                                </template>
 
-                        <div class=" relative  text-center shadow-xl flex flex-col justify-between h-full bg-neutral-50 dark:bg-gray-950" x-data="{hover:false}" @mouseenter="hover = true" @mouseleave="hover = false">
-                            <div class="  lg:h-[300px] bg-white dark:bg-gray-950">
-                                <div class="absolute top-4 right-4 z-30" x-data="{wishlist: product.isWishlisted}">
-                                    <template x-if="!wishlist">
-                                        <i class="fa-regular fa-heart text-[22px] cursor-pointer drop-shadow-xl hover:text-red-600" @click="alpineListeners('Shop.post_wishlist', $event); wishlist =! wishlist" :data-object_id="product.id"></i>
-                                    </template>
+                                <template x-if="product.isWishlisted">
+                                    <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                        <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                    </button>
+                                </template>
 
-                                    <template x-if="wishlist">
-                                        <i class="fa-solid fa-heart text-red-600 fa-heart text-[22px] cursor-pointer drop-shadow-xl hover:text-red-600" @click="alpineListeners('Shop.delete_wishlist', $event); wishlist =! wishlist" :data-id="product.id"></i>
-                                    </template>
-
-                                </div>
-                                <a @click="forceChange(product.url)">
-                                    <img :src="product.images[0] ? product.images[0].url_10x10 : data.settings.logo" alt="" class="!m-0 w-full  lg:h-full lg:object-scale-down cursor-pointer">
-                                    <!-- <div class="bg-neutral-100 animate-pulse shadow animate-infinite animate-duration-[3000ms]  w-full h-full"></div> -->
-                                </a>
-                            </div>
-
-                            <div class="px-3 ">
-                                <a @click="forceChange(product.url)">
-                                    <p x-text="product.title" @click="forceChange(product.url)" class="pt-[15px]  cursor-pointer hover:text-orange-400">Deba Fuji Ryutoku, Деба нож, 15 см, FC-572</p>
-
-                                    <template x-if="product.variations[0].promoprice != 0">
-                                        <div class="flex items-center justify-center py-1">
-                                            <p class="text-lg font-bold text-red-400" x-text="product.variations[0].selling_price">750</p>
-                                            <span class="text-base ml-2 text-red-400" x-text="product.variations[0].currency">лв.</span>
-                                            <p class="text-base font-bold">
-                                                <s>
-                                                    <span x-text="product.variations[0].price">890</span>
-                                                    <span x-text="product.variations[0].currency">лв.</span>
-                                                </s>
-                                            </p>
-
+                                <!-- Sale badge showing discount percentage -->
+                                <template x-if="product.variations[0].promoprice != 0">
+                                    <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                        <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                                            <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
                                         </div>
-                                    </template>
+                                    </div>
+                                </template>
 
-                                    <template x-if="product.variations[0].promoprice == 0">
-                                        <p x-text="product.variations[0].price.toFixed(2) + ' лв.'" class=" py-1 text-[17px] text-red-600 font-bold">80.00 BGN</p>
-                                    </template>
-
-                                </a>
+                                <!-- New badge positioned below Sale badge if both exist -->
+                                <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
+                                    NEW
+                                </div>
                             </div>
 
-                            <div class="px-3 py-3 w-full">
-                                <button @click="alpineListeners('Shop.post_carts', $event)" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" name="button" class="flex items-center justify-center w-full py-2 bg-stone-900   dark:bg-gray-900 dark:hover:text-orange-400 text-white hover:bg-stone-800 ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                    </svg>
-                                    Купи
-                                </button>
+                            <!-- Content section with flex-grow and line-clamp for text truncation -->
+                            <div class="p-6 flex flex-col flex-grow">
 
+                                <!-- Title with line-clamp-2 to truncate long titles -->
+                                <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
+
+                                <!-- Description with line-clamp-3 to truncate long descriptions -->
+                                <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
+
+                                <!-- Price section with strikethrough original price and promo price -->
+                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                    <div class="flex flex-col gap-1">
+                                        <!-- Show both prices when promo price exists -->
+                                        <template x-if="product.variations[0].promoprice != 0">
+                                            <div class="flex flex-col">
+                                                <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
+                                                <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
+                                            </div>
+                                        </template>
+
+                                        <!-- Show only regular price when no promo -->
+                                        <template x-if="product.variations[0].promoprice == 0">
+                                            <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
+                                        </template>
+                                    </div>
+
+                                    <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                    </button>
+                                </div>
                             </div>
-
                         </div>
-                    </div>
-                </template>
+                    </template>
 
-                <template x-if="!data.products.result[0]">
-                    <p class=" mx-5 py-10 mt-10 px-5">Няма намерени продукти</p>
-                </template>
-
+                    <template x-if="!data.products.result[0]">
+                        <div class="col-span-full py-12 text-center text-slate-600 dark:text-gray-400">
+                            <p class="text-lg font-medium">Няма намерени продукти</p>
+                        </div>
+                    </template>
+                </div>
             </div>
-        </div>
 
-        <div class="grid md:grid-cols-12 grid-cols-1  py-[50px]">
-            <div class="md:col-span-12 text-center">
-                <nav aria-label="Page navigation example">
-                    <ul class="inline-flex items-center -space-x-px">
+            <!-- <CHANGE> Enhanced pagination with premium styling -->
+            <template x-if="data.products.pagination.pagesArray">
+                <div class="flex justify-center py-8">
+                    <ul class="flex items-center gap-1">
                         <template x-for="(page,index) in data.products.pagination.pagesArray" :key="index">
                             <li>
-                                <template x-if="page == '...'">
-                                    <p class="w-[40px] h-[40px] inline-flex justify-center  items-center">...</p>
-                                </template>
-                                <template x-if="page != '...'">
-                                    <a @click="alpineListeners('Shop.get_products', $event)" :data-page="page" options-scroll="true" keyname="products" x-text="page" :class="page == data.products.pagination.current_page ? 'bg-stone-900 dark:bg-gray-950 text-white' : 'bg-white text-neutral-700'" class="w-[40px] h-[40px] inline-flex justify-center cursor-pointer items-center  hover:text-white  border border-gray-100  hover:bg-stone-900 dark:bg-gray-950   ">1</a>
-                                </template>
+                                <button @click="alpineListeners('get.products', $event)" :data-page="page" options-scroll="true" keyname="products" x-text="page" :class="page == data.products.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
                             </li>
                         </template>
                     </ul>
-                </nav>
-            </div>
+                </div>
+            </template>
         </div>
-
     </div>
-
 </div>
