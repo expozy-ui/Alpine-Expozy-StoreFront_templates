@@ -1,0 +1,223 @@
+<div class="w-full bg-gray-50 h-fit py-4 md:py-[70px] px-4" apiData="Countries.get_countries">
+
+    <ol class="md:flex space-y-4 justify-between w-full md:w-2/4 mx-auto">
+        <li @click="href('/')" class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse gap-">
+            <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold  border rounded-full shrink-0 border-black cursor-pointer">
+                1
+            </span>
+            <span>
+                <h3 class="font-medium leading-tight lg:text-lg">Избор на дати</h3>
+                <p class="text-sm">Посочете периода на престоя.</p>
+            </span>
+        </li>
+        <li @click="href('/bg/accommodation')" class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse cursor-pointer">
+            <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold  border border-black rounded-full shrink-0 ">
+                2
+            </span>
+            <span>
+                <h3 class="font-medium leading-tight lg:text-lg">Избор на стая</h3>
+                <p class="text-sm">Изберете най-подходящата опция.</p>
+            </span>
+        </li>
+        <li @click="if(data.hotelCart.price_total != 0){href('/bg/checkout')}" class="flex items-center    space-x-2.5 rtl:space-x-reverse">
+            <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold bg-black text-white border border-black rounded-full shrink-0 ">
+                3
+            </span>
+            <span>
+                <h3 class="font-medium leading-tight lg:text-lg">Плащане и резервация</h3>
+                <p class="text-sm">Потвърдете и завършете процеса.</p>
+            </span>
+        </li>
+    </ol>
+</div>
+
+<form class="">
+    <div apiData="Hotel.post_hotel_calculate" keyName="hotelCart" class="lg:mt-[50px] my-6 px-4">
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <div class="col-span-2">
+                <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Въведете вашия имейл:</label>
+            </div>
+            <p class=" mt-2">Отстъпки и промоции свързани с потребителя ще бъдат приложени след въвеждане на имейла. </p>
+        </div>
+
+        <template x-for="(room, indexRoom) in data.hotelCart.rooms" :key="indexRoom">
+            <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4">
+
+                <div class="py-3 border-b border-gray-200">
+                    <p class="text-lg px-4">
+                        <span>Стая #</span>
+                        <span x-text="indexRoom + 1"></span>
+                    </p>
+                    <p x-text="room.title"></p>
+                </div>
+
+                <div class="p-4">
+                    <div class="grid md:grid-cols-3 gap-10">
+                        <div class="col-span-2 space-y-0.5">
+                            <p class="text-base font-semibold">Данни за резервацията</p>
+                            <p class="text-sm">
+                                <span x-text="Helpers.formatDate(room.date_start)">20 ян 2025</span>
+                                <span> - </span>
+                                <span x-text="Helpers.formatDate(room.date_end)">22 ян 2025</span>
+                            </p>
+                            <!-- <p class="text-sm">Настаняване с включена закуска</p> -->
+                            <p class="text-sm">Възрастни: <span x-text="room.guests"></span></p>
+
+                            <!-- <p class="text-sm">Гаранционна политика: Гаранционна политика </p> -->
+                        </div>
+
+                        <div class="space-y-0.5">
+                            <p class="text-base font-semibold">Цена</p>
+                            <p class="flex justify-between items-center text-sm">
+                                <span>Стая</span>
+                                <span x-amount="room.price_base_no_discount">BGN 243.60</span>
+                            </p>
+                            <template x-for="discount in room.discounts">
+                                <p class="flex justify-between items-center text-sm">
+                                    <span x-text="discount.title">Стая</span>
+                                    <span x-amount="discount.amount">BGN 243.60</span>
+                                </p>
+                            </template>
+                            <p class="flex justify-between items-center text-sm">
+                                <span>ДДС ( включено в цената )</span>
+                                <span x-amount="(room.price_total * 0.2)">BGN 20.11</span>
+                            </p>
+
+                            <div class="flex justify-between items-center mt-2 pt-1 border-t border-gray-300 text-base font-semibold">
+                                <span>Общо</span>
+                                <div>
+                                    <p x-amount="room.price_total">BGN 243.60</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-base font-semibold mt-4">Данни за Гостите</p>
+
+                        <template x-for="(i,indexGuests) in room.guests" :key="indexGuests">
+                            <div>
+                                <p class="font-semibold text-sm mt-4 mb-2">Гост <span x-text="indexGuests + 1"></span> </p>
+                                <div class="grid sm:grid-cols-3 gap-4">
+
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Име</label>
+                                        <input type="text" :name="`first_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Презиме</label>
+                                        <input type="text" :name="`middle_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Фамилия</label>
+                                        <input type="text" :name="`last_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div class="">
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Имейл</label>
+                                        <input type="text" :id="`email_${indexGuests}`" :name="`email[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div class="">
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Телефон</label>
+                                        <input type="text" :name="`phone[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Гражданство</label>
+
+                                        <select :name="`nationality[${indexRoom}][${indexGuests}]`" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="">
+                                            <template x-for="country in data.countries">
+                                                <option :value="country.title" x-text="country.title"></option>
+                                            </template>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </template>
+
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <div>
+                <p class="text-base font-medium">Имате нужда от повече стаи?</p>
+                <p class="text-base font-medium"> Добавете още!</p>
+                <p @click="href('/bg/accommodation')" class="bg-black btn mt-2  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">Добави стая</p>
+            </div>
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <lebal class="">Начин на плащане</lebal>
+
+            <div class="flex items-center my-2">
+                <input id="link-radio" type="radio" name="payment_code" checked value="mypos" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm  text-gray-900 ">С карта</label>
+            </div>
+
+            <div class="flex items-center my-2">
+                <input id="link-radio" type="radio" name="payment_code" value="bank_transfer" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm  text-gray-900 ">Банков превод</label>
+            </div>
+
+            <!-- <template x-for="(payment, index) in data.payment_methods" :key="index" apidata="Payments.get_payment_methods">
+                <div class="flex items-center my-2">
+                    <input id="link-radio" type="radio" name="payment_code" :checked="index == 0" :value="payment.code" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                    <label for="link-radio" class="ml-2 text-sm  text-gray-900 " x-text="payment.title">Наложен платеж</label>
+                </div>
+            </template> -->
+
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <p class="flex justify-between">
+                <span>Общо за плащане</span>
+                <span x-amount="data.hotelCart.price_total" class="text-lg font-semibold">BGN 550.20</span>
+            </p>
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4 space-y-3 mb-[100px]">
+            <div>
+                <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Забележки</label>
+                <textarea rows="4" name="note" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id=""></textarea>
+            </div>
+
+            <!-- <div class="flex items-start ">
+                <div class="flex items-center h-5">
+                    <input id="terms" name="emails" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                </div>
+                <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Съгласявам се да получавам маркетингови имейли</label>
+            </div> -->
+
+            <div>
+                <div class="flex items-start ">
+                    <div class="h-5">
+                        <input id="terms" name="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                    </div>
+                    <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Съгласявам се с <a href="/bg/terms-conditions" class="underline" target="_blank"> условията за резервиране и хотелската политика </a></label>
+                </div>
+                <div name="termAgreeError"></div>
+            </div>
+
+            <div class="py-6 !cursor-pointer">
+
+                <p @click="alpineListeners('Hotel.post_hotel_reservations', $event)" keyName="checkout" class="bg-black btn  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">
+                    Резервирай
+                </p>
+            </div>
+
+        </div>
+    </div>
+</form>
