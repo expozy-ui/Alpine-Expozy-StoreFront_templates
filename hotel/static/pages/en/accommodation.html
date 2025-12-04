@@ -28,13 +28,13 @@
                         <div class="grid grid-cols-2 gap-2  disabled block rounded-md  w-full text-sm text-gray-900 bg-white  ">
                             <div class="relative border border-gray-200 rounded-md">
                                 <input :value="data.date_start" name="date_start" id="date_start" keyName="hotel_room_types" class="disabled block  px-4 pb-2.5 pt-5 w-full text-sm  text-gray-900 bg-white rounded-l-lg  appearance-none focus:outline-none focus:ring-0 focus:border-black peer " placeholder=" " type="text" readonly="readonly">
-                                <label for="date_start" class="absolute pl-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Пристигане</label>
+                                <label for="date_start" class="absolute pl-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Arrival</label>
                                 <i class="fa-light fa-calendar-days absolute top-4 right-4 text-2xl text-gray-600" aria-hidden="true"></i>
                             </div>
 
                             <div class="relative border border-gray-200 rounded-md">
                                 <input :value="data.date_end" name="date_end" id="date_end" class="disabled block text-left px-4 pb-2.5 pt-5 w-full text-sm  text-gray-900 bg-white rounded-r-lg  appearance-none focus:outline-none focus:ring-0 focus:border-black peer " placeholder=" " type="text" readonly="readonly">
-                                <label for="date_end" class="absolute pr-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Заминаване</label>
+                                <label for="date_end" class="absolute pr-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Leave</label>
                                 <i class="fa-light fa-calendar-days absolute top-4 right-4 text-2xl text-gray-600" aria-hidden="true"></i>
                             </div>
                         </div>
@@ -143,11 +143,11 @@
                                     <p class="text-gray-800 text-sm flex gap-1 pb-1 items-start"><i class="fa-regular fa-credit-card"></i>Payment by bank transfer</p>
 
                                     <template x-if="!room.price">
-                                        <p @click="href(`/en/room?id=${room.id}`)" class="hover:bg-black border border-gray-400 text-gray-800 hover:text-white rounded-lg w-full btn py-1">Прочети Повече</p>
+                                        <p @click="href(`/en/room?id=${room.id}`)" class="hover:bg-black border border-gray-400 text-gray-800 hover:text-white rounded-lg w-full btn py-1">Read more</p>
                                     </template>
 
                                     <template x-if="room.price">
-                                        <p @click="data.addRoom = room;" class="hover:bg-black border border-gray-400 text-gray-800 hover:text-white rounded-lg w-full btn py-1">Изберете</p>
+                                        <p @click="data.addRoom = room;" class="hover:bg-black border border-gray-400 text-gray-800 hover:text-white rounded-lg w-full btn py-1">Book</p>
                                     </template>
 
                                 </div>
