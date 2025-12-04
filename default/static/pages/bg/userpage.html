@@ -1,0 +1,656 @@
+<div class="bg-slate-50 dark:bg-slate-900 w-full" x-data="{ tab: 'profile' }">
+    <!-- Updated container with better spacing -->
+    <div class="container mx-auto px-4 md:flex pb-16 gap-8">
+
+        <!-- Redesigned sidebar with premium styling -->
+        <div class="md:w-1/4 lg:w-1/5">
+            <!-- User Info Card -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-xl mb-6 mt-4 md:mt-10 border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white font-bold text-lg">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-slate-900 dark:text-white truncate" x-text="data.user.first_name + ' ' + data.user.last_name"></p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 truncate" x-text="data.user.email"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <nav class="p-3" id="nav_panel">
+                    <button :class="tab === 'profile' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'profile'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-user w-5"></i>
+                        <span>Профил</span>
+                    </button>
+
+                    <button :class="tab === 'invoice' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'invoice'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-file-invoice w-5"></i>
+                        <span>Фактура</span>
+                    </button>
+
+                    <button :class="tab === 'orders' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'orders'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-bag-shopping w-5"></i>
+                        <span>Поръчки</span>
+                    </button>
+
+                    <button :class="tab === 'addresses' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'addresses'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-location-dot w-5"></i>
+                        <span>Адреси</span>
+                    </button>
+
+                    <button :class="tab === 'passwords' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'passwords'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-lock w-5"></i>
+                        <span>Пароли</span>
+                    </button>
+
+                    <button :class="tab === 'loyalCard' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'loyalCard'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-certificate w-5"></i>
+                        <span>Лоялна карта</span>
+                    </button>
+
+                    <button :class="tab === 'services' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'services'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-tag w-5"></i>
+                        <span>Услуги</span>
+                    </button>
+
+                    <button :class="tab === 'digital' ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" x-on:click.prevent="tab = 'digital'" class="w-full text-left py-3 px-4 rounded-xl mb-2 font-medium transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-download w-5"></i>
+                        <span>Дигитални продукти</span>
+                    </button>
+
+                    <div class="border-t border-slate-200 dark:border-slate-700 my-3"></div>
+
+                    <a href="/logout" class="w-full text-left py-3 px-4 rounded-xl font-bold text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 flex items-center gap-3">
+                        <i class="fa-solid fa-right-from-bracket w-5"></i>
+                        <span>Изход</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Updated main content area -->
+        <div class="flex-1 mt-4 md:mt-10">
+
+            <!-- ============== PROFILE =============== -->
+            <div x-show="tab == 'profile'">
+                <div apidata="User.get_accounts" keyname="user">
+                    <form>
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200 dark:border-slate-700">
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                                <i class="fa-solid fa-user-circle text-amber-600"></i>
+                                Профил
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-envelope text-amber-600 mr-2"></i>Имейл
+                                    </label>
+                                    <input :value="data.user.email" type="text" disabled class="w-full px-4 py-3 bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-300 rounded-xl border-2 border-slate-200 dark:border-slate-700 cursor-not-allowed">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-phone text-amber-600 mr-2"></i>Телефон
+                                    </label>
+                                    <input :value="data.user.phone" type="text" name="phone" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-user text-amber-600 mr-2"></i>Име
+                                    </label>
+                                    <input :value="data.user.first_name" type="text" name="first_name" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-user text-amber-600 mr-2"></i>Фамилия
+                                    </label>
+                                    <input :value="data.user.last_name" type="text" name="last_name" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+                            </div>
+
+                            <div class="mt-8">
+                                <button @click="alpineListeners('User.put_accounts', $event)" keyname="user" type="button" class="px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                                    <i class="fa-solid fa-save mr-2"></i>Запиши промените
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END ============== PROFILE =============== -->
+
+            <!-- ============== INVOICE =============== -->
+            <div x-show="tab == 'invoice'">
+                <div>
+                    <form>
+                        <div apiData="get.my_company" keyName="my_company" class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200 dark:border-slate-700">
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                                <i class="fa-solid fa-file-invoice text-amber-600"></i>
+                                Данни за фактура
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-building text-amber-600 mr-2"></i>Име на компанията
+                                    </label>
+                                    <input :value="data.my_company.name" type="text" name="invoice_name" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div apidata="Countries.get_countries" keyname="countries">
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-globe text-amber-600 mr-2"></i>Държава
+                                    </label>
+
+                                    <template x-if="data.my_company && data.countries">
+                                        <select name="invoice_country" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                            <template x-for="country in data.countries">
+                                                <option :selected="country.id == data.my_company.country_id" x-text="country.title" :value="country.id"></option>
+                                            </template>
+                                        </select>
+                                    </template>
+
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-city text-amber-600 mr-2"></i>Град
+                                    </label>
+                                    <input :value="data.my_company.city" type="text" name="invoice_city" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-location-dot text-amber-600 mr-2"></i>Адрес
+                                    </label>
+                                    <input :value="data.my_company.address" type="text" name="invoice_address" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-phone text-amber-600 mr-2"></i>Телефон
+                                    </label>
+                                    <input :value="data.my_company.phone" type="text" name="invoice_phone" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-user-tie text-amber-600 mr-2"></i>МОЛ
+                                    </label>
+                                    <input :value="data.my_company.mol" type="text" name="invoice_mol" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                                        <i class="fa-solid fa-id-card text-amber-600 mr-2"></i>ЕИК
+                                    </label>
+                                    <input :value="data.my_company.vat" type="text" name="invoice_vat" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                </div>
+
+                                <div class="flex items-center">
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <template x-if="data.my_company.vat_registered == 1">
+                                            <input type="checkbox" name="invoice_vat_registered" value="1" checked x-on:click="if($el.value == 0){$el.value = 1}else{$el.value = 0}" class="w-5 h-5 text-amber-600 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-amber-500">
+                                        </template>
+                                        <template x-if="data.my_company.vat_registered == 0">
+                                            <input type="checkbox" name="invoice_vat_registered" value="0" x-on:click="if($el.value == 0){$el.value = 1}else{$el.value = 0}" class="w-5 h-5 text-amber-600 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-amber-500">
+                                        </template>
+                                        <span class="ml-3 text-sm font-semibold text-slate-700 dark:text-slate-300">Регистрирана по ДДС</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mt-8">
+                                <button @click="alpineListeners('put.company', $event)" keyname="user" type="button" class="px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                                    <i class="fa-solid fa-save mr-2"></i>Запиши промените
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END ============== INVOICE =============== -->
+
+            <!-- ============== ORDERS =============== -->
+            <div x-show="tab == 'orders'">
+                <div apidata="Shop.get_orders" keyName="orders">
+                    <template x-for="order in data.orders">
+                        <div x-data="{expanded: false}" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl mb-4 border border-slate-200 dark:border-slate-700 overflow-hidden">
+                            <!-- Redesigned order header -->
+                            <button @click="expanded = ! expanded" class="w-full px-6 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex-1">
+                                        <span class="font-bold text-slate-900 dark:text-white">Поръчка #</span>
+                                        <span class="font-bold text-amber-600" x-text="order.number"></span>
+                                        <span class="mx-2 text-slate-400">|</span>
+                                        <span class="text-slate-700 dark:text-slate-300">Общо: </span>
+                                        <span class="font-bold text-slate-900 dark:text-white" x-text="order.price"></span>
+                                        <span class="text-slate-700 dark:text-slate-300" x-text="order.currency.symbol"></span>
+                                    </div>
+                                    <div class="text-amber-600">
+                                        <i x-show="!expanded" class="fa-solid fa-chevron-down"></i>
+                                        <i x-show="expanded" class="fa-solid fa-chevron-up"></i>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <!-- Redesigned expanded order details -->
+                            <div x-show="expanded" class="border-t border-slate-200 dark:border-slate-700">
+                                <div class="p-6">
+                                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                                        <!-- Payment Info Card -->
+                                        <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-600">
+                                            <h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                                                <i class="fa-solid fa-credit-card text-amber-600"></i>
+                                                Плащане
+                                            </h3>
+                                            <div class="space-y-3">
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Дата:</span>
+                                                    <p class="text-slate-900 dark:text-white" x-text="order.date_created"></p>
+                                                </div>
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Метод:</span>
+                                                    <p class="text-slate-900 dark:text-white" x-text="order.payment_method.title"></p>
+                                                </div>
+
+                                                <div class="pt-2 border-t border-slate-300 dark:border-slate-600">
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Общо:</span>
+                                                    <p class="text-lg font-bold text-amber-600" x-amount="order.total_price"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Shipping Info Card -->
+                                        <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-600">
+                                            <h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                                                <i class="fa-solid fa-truck text-amber-600"></i>
+                                                Доставка
+                                            </h3>
+                                            <div class="space-y-3">
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Адрес:</span>
+                                                    <p class="text-slate-900 dark:text-white" x-text="order.address.shipping_address"></p>
+                                                </div>
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Телефон:</span>
+                                                    <p class="text-slate-900 dark:text-white" x-text="order.phone"></p>
+                                                </div>
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Статус:</span>
+                                                    <p class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400" x-text="order.status.title"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Customer Info Card -->
+                                        <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-700 dark:to-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-600">
+                                            <h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                                                <i class="fa-solid fa-user text-amber-600"></i>
+                                                Клиент
+                                            </h3>
+                                            <div class="space-y-3">
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Имейл:</span>
+                                                    <p class="text-slate-900 dark:text-white truncate" x-text="order.email"></p>
+                                                </div>
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Име:</span>
+                                                    <p class="text-slate-900 dark:text-white" x-text="order.first_name"></p>
+                                                </div>
+                                                <div>
+                                                    <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">Фамилия:</span>
+                                                    <p class="text-slate-900 dark:text-white" x-text="order.last_name"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Redesigned products list -->
+                                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+                                        <h3 class="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                                            <i class="fa-solid fa-box text-amber-600"></i>
+                                            Продукти
+                                        </h3>
+                                        <div class="space-y-3">
+                                            <template x-for="product in order.products">
+                                                <div class="bg-white dark:bg-slate-800 rounded-lg p-4 flex items-center gap-4 border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow duration-200">
+                                                    <img :src="product.images[0] ? product.images[0].url_10x10 : Helpers.image('product')" :alt="product.title" class="w-16 h-16 object-cover rounded-lg">
+                                                    <div class="flex-1">
+                                                        <p class="font-semibold text-slate-900 dark:text-white" x-text="product.title"></p>
+                                                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                                                            <span x-text="product.quantity"></span> x
+                                                            <span x-amount="product.variation.selling_price"></span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <p class="font-bold text-amber-600" x-amount="product.total"></p>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <!-- END ============== ORDERS =============== -->
+
+            <!-- ============== addresses =============== -->
+            <div x-show="tab == 'addresses'" x-data="{show_add_address:false}" apiData="get.my_addresses" keyName="my_addresses">
+                <div class="shadow-xl py-6 mb-4 px-6 bg-white dark:bg-slate-900 rounded-2xl">
+                    <div>
+                        <!-- Enhanced address cards grid with better spacing -->
+                        <div class="flex flex-wrap gap-4">
+                            <template x-for="address in data.my_addresses">
+                                <div class="rounded-2xl relative shadow-lg bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 dark:text-slate-200 w-[300px] p-6 border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow">
+                                    <div class="flex gap-3 mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                                        <p x-text="address.country.title"></p>
+                                        <p x-text="address.city"></p>
+                                        <p x-text="address.post_code"></p>
+                                    </div>
+                                    <p x-text="address.shipping_address" class="text-slate-600 dark:text-slate-400"></p>
+                                    <form>
+                                        <input type="hidden" name="id" :value="address.id">
+                                        <a @click="alpineListeners('User.delete_user_address', $event);" keyName="my_addresses" class="text-red-600 hover:text-red-700 dark:text-red-500 cursor-pointer font-bold absolute right-4 top-4 text-lg hover:scale-110 transition-transform">✕</a>
+                                    </form>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Modern add address form with improved styling -->
+                        <form class="max-w-2xl rounded-2xl shadow-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 dark:text-slate-200 mt-6 p-6 border border-slate-200 dark:border-slate-700">
+                            <input type="hidden" name="country_id" value="1">
+                            <input type="hidden" name="shipping_address2" value="a">
+
+                            <!-- Styled toggle button for add address -->
+                            <p @click="show_add_address = ! show_add_address" class="font-bold text-slate-800 dark:text-slate-200 flex justify-between items-center cursor-pointer hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                                <span class="text-lg">Добави нов адрес</span>
+                                <span class="w-10 h-10 rounded-full bg-amber-600 hover:bg-amber-500 flex items-center justify-center transition-colors">
+                                    <i x-show="!show_add_address" class="fa-solid fa-plus text-white" style="display: none;"></i>
+                                    <i x-show="show_add_address" class="fa-solid fa-minus text-white"></i>
+                                </span>
+                            </p>
+
+                            <!-- Enhanced form fields with better focus states -->
+                            <div x-show="show_add_address" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                                <div apidata="Countries.get_countries" keyname="countries" class="relative">
+                                    <label for="country" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Държава</label>
+                                    <select name="country_id" class="p-3 w-full bg-white dark:bg-slate-950 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none transition-colors duration-200">
+                                        <template x-for="country in data.countries">
+                                            <option :selected="country.id == 3" x-text="country.title" :value="country.id"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="city" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Град</label>
+                                    <input class="w-full p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none dark:bg-slate-950 dark:text-slate-200 transition-colors duration-200" type="text" name="city" value="" placeholder="Град">
+                                </div>
+
+                                <div>
+                                    <label for="address" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Адрес</label>
+                                    <input class="w-full p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none dark:bg-slate-950 dark:text-slate-200 transition-colors duration-200" type="text" name="shipping_address" value="" placeholder="Адрес">
+                                </div>
+
+                                <div>
+                                    <label for="post_code" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Пощенски код</label>
+                                    <input class="w-full p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none dark:bg-slate-950 dark:text-slate-200 transition-colors duration-200" type="text" name="post_code" value="" placeholder="Пощенски код">
+                                </div>
+
+                                <div>
+                                    <label for="streetName" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Улица</label>
+                                    <input class="w-full p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none dark:bg-slate-950 dark:text-slate-200 transition-colors duration-200" type="text" name="streetName" value="" placeholder="Улица">
+                                </div>
+
+                                <div>
+                                    <label for="streetNumber" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Улица №</label>
+                                    <input class="w-full p-3 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none dark:bg-slate-950 dark:text-slate-200 transition-colors duration-200" type="text" name="streetNumber" value="" placeholder="Улица №">
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <a @click="alpineListeners('User.post_user_address', $event)" keyName="my_addresses" class="flex items-center justify-center rounded-xl px-6 py-3 text-base bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 cursor-pointer font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
+                                        <i class="fa-solid fa-save mr-2"></i>
+                                        Запиши
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- END ============== addresses =============== -->
+
+            <!-- ============== passwords =============== -->
+            <div x-show="tab == 'passwords'">
+                <form>
+                    <!-- Enhanced password change form with modern design -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-8 flex flex-col w-full shadow-xl border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 flex items-center justify-center">
+                                <i class="fa-solid fa-lock text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-slate-900 dark:text-slate-200 text-2xl font-bold">Смяна на паролата</h2>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="password" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Нова парола</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-key text-slate-400"></i>
+                                </div>
+                                <input type="password" name="password" class="pl-12 p-3 w-full bg-white dark:bg-slate-950 rounded-xl border-2 border-slate-300 dark:border-slate-600 focus:border-amber-500 dark:focus:border-amber-500 outline-none transition-colors duration-200">
+                            </div>
+                        </div>
+
+                        <div>
+                            <button @click="alpineListeners('User.put_accounts', $event)" class="flex items-center justify-center rounded-xl px-6 py-3 text-base bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 cursor-pointer">
+                                <i class="fa-solid fa-check mr-2"></i>
+                                Запиши
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- END ============== passwords =============== -->
+
+            <!-- ============== Loyal Program =============== -->
+            <div x-show="tab == 'loyalCard'">
+                <!-- Premium loyalty card design -->
+                <div class="w-full md:w-1/2 shadow-xl bg-white dark:bg-slate-900 rounded-2xl w-fit p-10 border border-slate-200 dark:border-slate-800">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 flex items-center justify-center">
+                            <i class="fa-solid fa-star text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-slate-900 dark:text-slate-200 text-2xl font-bold">Лоялна програма</h2>
+                    </div>
+
+                    <div class="space-y-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 dark:text-slate-200 px-8 py-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-user text-amber-600 text-lg"></i>
+                            <div>
+                                <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase block">Клиент</span>
+                                <span class="text-base text-slate-700 dark:text-slate-200 font-bold" x-text="data.user.first_name + ' ' + data.user.last_name"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-amber-600 text-lg"></i>
+                            <div>
+                                <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase block">Email</span>
+                                <span class="text-base text-slate-700 dark:text-slate-200 font-bold" x-text="data.user.email"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-coins text-amber-600 text-lg"></i>
+                            <div>
+                                <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase block">Брой точки</span>
+                                <span class="text-2xl text-amber-600 dark:text-amber-500 font-bold" x-text="data.user.balance"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END ============== Loyal Program =============== -->
+
+            <!-- =============== START SERVICES ===============  -->
+            <div x-show="tab == 'services'">
+                <!-- Enhanced services grid with modern cards -->
+                <div apidata="Shop.get_orders" data-product_type='4' keyname="services" class="grid xl:grid-cols-2 grid-cols-1 gap-4">
+
+                    <template x-for="order in data.services">
+
+                        <template x-for="product in order.products">
+                            <div class="shadow-xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition-shadow">
+                                <div class="grid md:grid-cols-5 gap-4 p-6">
+                                    <div class="col-span-2">
+                                        <div class="w-full h-48 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                                            <img :src="product.images[0] ? product.images[0].url_10x10 : Helpers.image('product')" class="object-contain w-full h-full">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-3 flex flex-col">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <p x-text="product.title" class="font-bold text-slate-900 dark:text-slate-100 text-lg line-clamp-2"></p>
+                                            <span x-text="'№ '+order.number" class="font-bold text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-slate-800 px-3 py-1 rounded-lg text-sm whitespace-nowrap ml-2"></span>
+                                        </div>
+
+                                        <div class="flex justify-between items-center mb-3 text-sm">
+                                            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                                                <i class="fa-regular fa-credit-card text-amber-600"></i>
+                                                <span x-text="product.quantity" class="font-semibold"></span>
+                                                <span>×</span>
+                                                <span x-text="product.total" class="font-bold text-slate-900 dark:text-slate-100"></span>
+                                                <span x-text="product.variation.currency"></span>
+                                            </div>
+
+                                            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                                                <i class="fa-regular fa-calendar-days text-amber-600"></i>
+                                                <span x-text="new Date(product.date_created).toLocaleDateString('en-GB')"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700">
+                                            <p xtext="product.provider.title" class="font-bold text-slate-900 dark:text-slate-100 mb-2">Доставчик ООД</p>
+                                            <div class="space-y-1 text-sm text-slate-600 dark:text-slate-400">
+                                                <p class="flex items-center gap-2">
+                                                    <i class="fa-solid fa-location-dot text-amber-600"></i>
+                                                    <span xtext="product.provider.address">Бургас ул.твърдица 11</span>
+                                                </p>
+                                                <p class="flex items-center gap-2">
+                                                    <i class="fa-solid fa-phone text-amber-600"></i>
+                                                    <span xtext="product.provider.phone">08889 995 998</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <template x-if="product.description">
+                                    <div class="border-t border-slate-200 dark:border-slate-700" x-data="{showDescription: false}">
+                                        <div :class="!showDescription ? 'h-24' : 'h-auto'" class="overflow-hidden px-6 transition-all duration-300">
+                                            <div x-html="product.description" class="text-slate-600 dark:text-slate-400 text-sm py-4"></div>
+                                        </div>
+                                        <div class="text-center py-3 bg-slate-50 dark:bg-slate-800">
+                                            <button @click="showDescription = !showDescription" class="text-amber-600 hover:text-amber-500 transition-colors">
+                                                <i :class="showDescription ? 'fa-circle-up' : 'fa-circle-down'" class="fa-regular text-2xl"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+            <!-- =============== END SERVICES ===============  -->
+
+            <!-- =============== START DIGITAL PRODUCTS ===============  -->
+            <div x-show="tab == 'digital'">
+                <!-- Enhanced digital products grid with download button -->
+                <div apidata="Shop.get_orders" data-product_type='4' keyname="services" class="grid xl:grid-cols-2 grid-cols-1 gap-4">
+                    <template x-for="order in data.services">
+                        <template x-for="product in order.products">
+                            <div class="shadow-xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition-shadow">
+                                <div class="grid md:grid-cols-5 gap-4 p-6">
+                                    <div class="col-span-2">
+                                        <div class="w-full h-48 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                                            <img :src="product.images[0] ? product.images[0].url_10x10 : Helpers.image('product')" class="object-contain w-full h-full">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-3 flex flex-col">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <p x-text="product.title" class="font-bold text-slate-900 dark:text-slate-100 text-lg line-clamp-2"></p>
+                                            <span x-text="'№ '+order.number" class="font-bold text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-slate-800 px-3 py-1 rounded-lg text-sm whitespace-nowrap ml-2"></span>
+                                        </div>
+
+                                        <div class="flex justify-between items-center mb-3 text-sm">
+                                            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                                                <i class="fa-regular fa-credit-card text-amber-600"></i>
+                                                <span x-text="product.quantity" class="font-semibold"></span>
+                                                <span>×</span>
+                                                <span x-amount="product.total" class="font-bold text-slate-900 dark:text-slate-100"></span>
+                                            </div>
+
+                                            <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                                                <i class="fa-regular fa-calendar-days text-amber-600"></i>
+                                                <span x-text="new Date(product.date_created).toLocaleDateString('en-GB')"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700">
+                                            <p xtext="product.provider.title" class="font-bold text-slate-900 dark:text-slate-100 mb-2">Доставчик ООД</p>
+                                            <div class="space-y-1 text-sm text-slate-600 dark:text-slate-400 mb-4">
+                                                <p class="flex items-center gap-2">
+                                                    <i class="fa-solid fa-location-dot text-amber-600"></i>
+                                                    <span xtext="product.provider.address">Бургас ул.твърдица 11</span>
+                                                </p>
+                                                <p class="flex items-center gap-2">
+                                                    <i class="fa-solid fa-phone text-amber-600"></i>
+                                                    <span xtext="product.provider.phone">08889 995 998</span>
+                                                </p>
+                                            </div>
+
+                                            <!-- Styled download button -->
+                                            <a target="_blank" href="/" class="flex items-center justify-center rounded-xl px-4 py-2.5 text-sm bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
+                                                <i class="fa-solid fa-download mr-2"></i>
+                                                Изтегли
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Collapsible description with smooth animation -->
+                                <template x-if="product.description">
+
+                                    <div class="border-t border-slate-200 dark:border-slate-700" x-data="{showDescription: false}">
+                                        <div :class="!showDescription ? 'h-24' : 'h-auto'" class="overflow-hidden px-6 transition-all duration-300">
+                                            <div x-html="product.description" class="text-slate-600 dark:text-slate-400 text-sm py-4"></div>
+                                        </div>
+                                        <div class="text-center py-3 bg-slate-50 dark:bg-slate-800">
+                                            <button @click="showDescription = !showDescription" class="text-amber-600 hover:text-amber-500 transition-colors">
+                                                <i :class="showDescription ? 'fa-circle-up' : 'fa-circle-down'" class="fa-regular text-2xl"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+            <!-- =============== END DIGITAL PRODUCTS ===============  -->
+
+        </div>
+    </div>
+</div>
