@@ -42,9 +42,9 @@
                                             <input type="hidden" name="variation_id" :value="product.id" value="2503">
                                             <div x-data="{quantity: product.quantity}" x-init="$watch('quantity', value => alpineListeners('Shop.put_carts', $el))">
                                                 <div class="flex w-fit items-center border-2 border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
-                                                    <button @click="if(product.quantity > 1){product.quantity--; quantity--; }" type="button" class="bg-slate-50 dark:bg-gray-700 dark:text-white rounded-l-md px-3 py-1 text-slate-700 transition hover:bg-slate-200 dark:hover:bg-gray-600 font-bold">−</button>
+                                                    <p @click="if(product.quantity > 1){product.quantity--; quantity--; }" type="button" class="bg-slate-50 dark:bg-gray-700 dark:text-white rounded-l-md px-3 py-1 text-slate-700 transition hover:bg-slate-200 dark:hover:bg-gray-600 font-bold"><i class="fa-solid fa-minus"></i></p>
                                                     <input type="number" name="quantity" :value="product.quantity" class="h-8 w-12 border-0 bg-transparent dark:text-white text-center text-sm [-moz-appearance:_textfield] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none">
-                                                    <button @click="product.quantity++; quantity++; " type="button" class="bg-slate-50 dark:bg-gray-700 dark:text-white rounded-r-md px-3 py-1 text-slate-700 transition hover:bg-slate-200 dark:hover:bg-gray-600 font-bold">+</button>
+                                                    <p @click="product.quantity++; quantity++; " type="button" class="bg-slate-50 dark:bg-gray-700 dark:text-white rounded-r-md px-3 py-1 text-slate-700 transition hover:bg-slate-200 dark:hover:bg-gray-600 font-bold"><i class="fa-solid fa-plus"></i></p>
                                                 </div>
                                             </div>
                                         </form>

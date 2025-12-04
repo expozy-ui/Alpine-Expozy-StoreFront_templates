@@ -5,7 +5,7 @@
 
 <div apiData="Payments.get_payment_methods" keyName="payment_methods"></div>
 
-<div apiData="get.my_addresses" keyName="my_addresses" class="w-full dark:bg-gray-900" x-data="{ comment: '' }">
+<div apiData="User.get_my_addresses" keyName="my_addresses" class="w-full dark:bg-gray-900" x-data="{ comment: '' }">
 
     <div class="w-full lg:w-4/6 xl:w-3/6 bg-white dark:bg-gray-900 px-2 sm:px-10 lg:hidden">
         <div class="py-[30px] flex justify-center">
@@ -30,7 +30,7 @@
             <div class="flex justify-between items-center pb-6 border-b-2 border-slate-200 dark:border-slate-700 mb-6">
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Delivery address</h2>
                 <p class="text-sm text-slate-600 dark:text-slate-400" x-show="!data.user.logged_in">
-                    Have an account? <a class="text-amber-600 hover:text-amber-700 dark:text-amber-500 font-medium transition-colors" href="/bg/login">Login</a>
+                    Have an account? <a class="text-amber-600 hover:text-amber-700 dark:text-amber-500 font-medium transition-colors" href="/en/login">Login</a>
                 </p>
             </div>
 
@@ -260,14 +260,14 @@
                                 <div class="flex items-start gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
                                     <input type="checkbox" value="" name="terms" class="w-5 h-5 mt-0.5 text-amber-600 border-slate-300 dark:border-slate-600 rounded focus:ring-amber-500 cursor-pointer">
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                                        I agree to the <a href="/bg/terms-conditions" class="text-amber-600 hover:text-amber-700 hover:underline">Terms and Conditions</a>.
+                                        I agree to the <a href="/en/terms-conditions" class="text-amber-600 hover:text-amber-700 hover:underline">Terms and Conditions</a>.
                                     </label>
                                 </div>
 
                                 <div class="flex items-start gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
                                     <input type="checkbox" value="" name="gdpr" class="w-5 h-5 mt-0.5 text-amber-600 border-slate-300 dark:border-slate-600 rounded focus:ring-amber-500 cursor-pointer">
                                     <label class="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                                        I agree to the <a href="/bg/gdpr" class="text-amber-600 hover:text-amber-700 hover:underline">Privacy Policy</a>.
+                                        I agree to the <a href="/en/gdpr" class="text-amber-600 hover:text-amber-700 hover:underline">Privacy Policy</a>.
                                     </label>
                                 </div>
                             </div>
@@ -476,14 +476,14 @@
                                         <div class="flex items-start gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
                                             <input type="checkbox" value="" name="terms" class="w-5 h-5 mt-0.5 text-amber-600 border-slate-300 dark:border-slate-600 rounded focus:ring-amber-500 cursor-pointer">
                                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                                                I agree to the <a href="/bg/terms-conditions" class="text-amber-600 hover:text-amber-700 hover:underline">Terms and Conditions</a>.
+                                                I agree to the <a href="/en/terms-conditions" class="text-amber-600 hover:text-amber-700 hover:underline">Terms and Conditions</a>.
                                             </label>
                                         </div>
 
                                         <div class="flex items-start gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg">
                                             <input type="checkbox" value="" name="gdpr" class="w-5 h-5 mt-0.5 text-amber-600 border-slate-300 dark:border-slate-600 rounded focus:ring-amber-500 cursor-pointer">
                                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
-                                                I agree to the <a href="/bg/gdpr" class="text-amber-600 hover:text-amber-700 hover:underline">Privacy Policy</a>.
+                                                I agree to the <a href="/en/gdpr" class="text-amber-600 hover:text-amber-700 hover:underline">Privacy Policy</a>.
                                             </label>
                                         </div>
                                     </div>

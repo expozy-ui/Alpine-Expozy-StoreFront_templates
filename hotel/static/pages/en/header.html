@@ -1,43 +1,48 @@
-<nav x-show="data.openMobileMenu || data.screenWidth > 1024" class=" w-full  z-20 py-2 h-screen lg:h-fit  transition-all duration-300 bg-black lg:bg-transparent  shadow border border-gray-300 overflow-y-auto lg:overflow-visible" apiData="Hotel.post_hotel_calculate" keyName="hotelCart">
+<nav x-show="data.openMobileMenu || data.screenWidth > 1024" class=" w-full z-20 py-2 h-screen lg:h-fit transition-all duration-300 bg-black lg:bg-transparent shadow border border-gray-300 overflow-y-auto lg:overflow-visible" apiData="Hotel.post_hotel_calculate" keyName="hotelCart">
     <div class="container">
-        <div class="flex flex-col  lg:flex-row items-center justify-between">
+        <div class="flex flex-col lg:flex-row items-center justify-between">
 
             <template x-if="data.screenWidth > 1024">
-                <div :class2=" data.isScrolled  ? 'w-[100px]' : 'w-[50px]' " class="w-[150px] transition-all max-w-[150px] transition-all duration-700">
-                    <img @click="forceChange('/')" :src="data.settings.logo" class=" lg:block w-full transition-all duration-700" alt="website_logo">
+                <div :class2=" data.isScrolled ? 'w-[100px]' : 'w-[50px]' " class="w-[150px] transition-all max-w-[150px] transition-all duration-700">
+                    <img @click="href('/')" :src="data.settings.logo" class="lg:block w-full transition-all duration-700" alt="website_logo">
                 </div>
             </template>
 
             <template x-if="data.screenWidth <= 1024">
 
-                <img @click="forceChange('/')" :src="data.settings.logo" class="w-[150px] lg:block w-full transition-all duration-700" alt="website_logo">
+                <img @click="href('/')" :src="data.settings.logo" class="w-[150px] lg:block w-full transition-all duration-700" alt="website_logo">
             </template>
 
-            <div apiData="Menu.get_menu" class=" text-center lg:text-left w-full lg:w-fit lg:divide-none divide-y divide-gray-300  ease-in-out lg:flex space-y-2 lg:space-y-0 lg:text-center space-x-0 lg:space-x-3 xl:space-x-4 2xl:space-x-5 3xl:space-x-[24px] flex flex-col lg:flex-row  uppercase   py-3 lg:py-0 ">
+            <div apiData="Menu.get_menu" keyName="menu" class=" text-center items-center lg:text-left w-full lg:w-fit lg:divide-none divide-y divide-gray-300 ease-in-out lg:flex space-y-2 lg:space-y-0 lg:text-center space-x-0 lg:space-x-3 xl:space-x-4 2xl:space-x-5 3xl:space-x-[24px] flex flex-col lg:flex-row uppercase py-3 lg:py-0 ">
                 <template x-for="menu in data.menu">
-                    <p @click="forceChange(menu.link)" class=" m-6 py-2 lg:py-0 group relative w-full lg:w-fit  text-white lg:text-gray-800 cursor-pointer">
+                    <p @click="href(menu.link)" class=" m-6 py-2 lg:py-0 group relative w-full lg:w-fit text-white lg:text-gray-800 cursor-pointer">
                         <span class="tracking-wide text-base lg:text-lg font-medium" x-text="menu.title">Hover over me</span>
                         <span class="absolute -bottom-1 left-0 w-0 transition-all h-0.5 bg-gray-800 group-hover:w-full"></span>
                     </p>
                 </template>
 
-                <p @click="data.reserveCheck = true" class=" m-6 py-2 lg:py-0 group relative w-full lg:w-fit  text-white lg:text-gray-800 cursor-pointer">
+                <p @click="href('/en/accommodation')" class=" m-6 py-2 lg:py-0 group relative w-full lg:w-fit text-white lg:text-gray-800 cursor-pointer">
+                    <span class="tracking-wide text-base lg:text-lg font-medium">Accommodation</span>
+                    <span class="absolute -bottom-1 left-0 w-0 transition-all h-0.5 bg-gray-800 group-hover:w-full"></span>
+                </p>
+
+                <p @click="data.reserveCheck = true" class=" m-6 py-2 lg:py-0 group relative w-full lg:w-fit text-white lg:text-gray-800 cursor-pointer">
                     <span class="tracking-wide text-base lg:text-lg font-medium">My reservation</span>
                     <span class="absolute -bottom-1 left-0 w-0 transition-all h-0.5 bg-gray-800 group-hover:w-full"></span>
                 </p>
 
-                <p @click="changeLang('bg')" class="w-[20px] h-[20px] rounded-full overflow-hidden cursor-pointer !border-solid border border-gray-500">
-                    <img class="w-full h-full object-cover" src="https://r2.expozy.com/expozy/countries/bg.png" alt="">
+                <p @click="changeLang('en')" class="w-[20px] h-[20px] rounded-full overflow-hidden cursor-pointer !border-solid border border-gray-500">
+                    <img class="w-full h-full object-cover" src="https://r2.expozy.com/expozy/countries/gb.png" alt="">
                 </p>
 
             </div>
 
-            <div class=" lg:flex items-center">
+            <div class="lg:flex items-center">
 
-                <button @click="forceChange('/en/accommodation')" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3 bg-white lg:bg-black ">
+                <button @click="href('/en/accommodation')" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3 bg-white lg:bg-black ">
                     <span class="absolute left-0 top-0 h-32 w-32 -translate-y-2 translate-x-12 rotate-45 lg:bg-gray-800 opacity-[3%]"></span>
-                    <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45  bg-black lg:bg-white opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8"></span>
-                    <span class="relative w-full text-left lg:text-white transition-colors duration-200 ease-in-out lg:group-hover:text-black  text-black group-hover:text-white font-normal uppercase"><i class="fa-solid fa-calendar-days mr-2"></i> Book</span>
+                    <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-black lg:bg-white opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8"></span>
+                    <span class="relative w-full text-left lg:text-white transition-colors duration-200 ease-in-out lg:group-hover:text-black text-black group-hover:text-white font-normal uppercase"><i class="fa-solid fa-calendar-days mr-2"></i> Reserve</span>
                     <span class="absolute inset-0 rounded-md border border-gray-800"></span>
                 </button>
             </div>
@@ -47,12 +52,12 @@
 
 </nav>
 
-<div class=" top-6 right-6 absolute flex gap-1.5  lg:!hidden ">
+<div class=" top-6 right-6 absolute flex gap-1.5 lg:!hidden ">
 
     <template x-if="data.hotelCart.rooms != undefined && data.screenWidth < 1024">
-        <i class="fa-regular fa-cart-shopping  text-white block  text-[20px] z-50 cursor-pointer bg-black px-3 py-2 rounded-lg" @click="data.openCart =! data.openCart" aria-hidden="true"></i>
+        <i class="fa-regular fa-cart-shopping text-white block text-[20px] z-50 cursor-pointer bg-black px-3 py-2 rounded-lg" @click="data.openCart =! data.openCart" aria-hidden="true"></i>
     </template>
 
-    <i :class="data.openMobileMenu ? 'fa-xmark  ' : 'fa-bars ' " class="fa-solid text-white block text-[20px] z-50 cursor-pointer bg-black px-3 py-2 rounded-lg" @click="data.openMobileMenu =! data.openMobileMenu" aria-hidden="true"></i>
+    <i :class="data.openMobileMenu ? 'fa-xmark ' : 'fa-bars ' " class="fa-solid text-white block text-[20px] z-50 cursor-pointer bg-black px-3 py-2 rounded-lg" @click="data.openMobileMenu =! data.openMobileMenu" aria-hidden="true"></i>
 
 </div>

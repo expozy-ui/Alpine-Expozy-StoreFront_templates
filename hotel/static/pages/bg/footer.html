@@ -9,31 +9,31 @@
                         </div>
                         <ul>
                             <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/about" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">За хотела</a>
                             </li>
                             <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/accommodation" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">Настаняване</a>
                             </li>
-                            <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                            <!-- <li class="py-[5px]">
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/meetingsrooms" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">Срещи и конференции</a>
-                            </li>
+                            </li> -->
                             <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/contacts" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">Контакти</a>
                             </li>
                             <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/terms-conditions" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">Общи условия</a>
                             </li>
                             <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/gdpr" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">Политика за поверителност</a>
                             </li>
                             <li class="py-[5px]">
-                                <code class="text-[16px] text-accent">*</code>
+                                <code class="text-[16px] text-[#c3a460]">*</code>
                                 <a href="/bg/cancellation_policy" class="text-[14px] text-[#bfbfc0] hover:text-[#bfbfc0]">Политика за анулиране</a>
                             </li>
 
@@ -114,33 +114,33 @@
             <div class="row flex flex-col md:flex-row gap-3 border-t-[1px] py-2 border-solid border-[#808384]">
 
                 <div class="column third flex-col lg:flex-row flex items-center justify-start  gap-1 px-0">
-                    <span class="text-white ">Изработка: <a class="text-accent hover:text-accent " href="http://www.studioweb.bg">Studioweb.bg</a></span>
+                    <span class="text-white ">Изработка: <a class="text-[#c3a460] hover:text-[#c3a460] " href="http://www.studioweb.bg">Studioweb.bg</a></span>
                 </div>
 
                 <div class="column third flex items-center justify-center md:justify-center order-last md:order-none">
                     <p class="footer-copyright">
                         <span class="text-white ">Всички права запазени ©
                             <span x-text="new Date().getFullYear()">2025</span>
-                            <span class="text-accent">Expozy</span>
+                            <span class="text-[#c3a460]">Expozy</span>
                         </span>
                     </p>
                 </div>
 
                 <div class="column third flex items-center justify-center lg:justify-end gap-3  md:order-none px-0">
-                    <span class="text-white ">Използван софтуер: <a class="text-accent hover:text-accent " href="https://expozy.com/">Expozy</a></span>
+                    <span class="text-white ">Използван софтуер: <a class="text-[#c3a460] hover:text-[#c3a460] " href="https://expozy.com/">Expozy</a></span>
                 </div>
 
             </div>
 
             <!-- <div class="flex justify-center border-t-[1px] border-solid border-[#808384]">
                 <span class="text-[#fff] py-[10px] text-center">Всички права запазени @ <span x-text="new Date().getFullYear()">2025</span>
-                    <a href="/" class="text-accent hover:text-accent">HotelViaSerdika</a> </span>
+                    <a href="/" class="text-[#c3a460] hover:text-[#c3a460]">HotelViaSerdika</a> </span>
             </div> -->
         </div>
     </div>
 </footer>
 
-<div apiData="Hotel.get_hotel_room_types"></div>
+<div apiData="Hotel.get_hotel_room_types" keyName="hotel_room_types"></div>
 
 <!-- MODAL ROOM INFO -->
 
@@ -199,7 +199,7 @@
                             <span> на нощувка с включен данък</span>
                         </p>
 
-                        <button @click="await alpineListeners('Hotel.post_hotel_calculate', $event); forceChange('/bg/checkout')" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3.5 h-fit bg-black ">
+                        <button @click="await alpineListeners('Hotel.post_hotel_calculate', $event); href('/bg/checkout')" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3.5 h-fit bg-black ">
                             <span class="absolute left-0 top-0 h-32 w-32 -translate-y-2 translate-x-12 rotate-45 bg-gray-800 opacity-[3%]"></span>
                             <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-white opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8"></span>
                             <span class="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black font-normal uppercase"><i class="fa-solid fa-calendar-days mr-2"></i> Резервирай сега</span>
@@ -245,13 +245,15 @@
                             <input type="text" name="last_name" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
                         </div>
 
-                        <div class="relative " x-data="" x-init="flatpickrInstance = flatpickr($el.querySelector('input'), {
-                            dateFormat: 'Y-m-d',
-                         })">
+                        <div class="relative ">
                             <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Дата на резервация <span class="text-red-600 font-semibold"> *</span></label>
                             <div class="relative">
-                                <input name="date" id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 flatpickr-input active" placeholder=" " type="text" readonly="readonly">
-                                <i class="fa-light fa-calendar-days absolute top-2 right-4 text-2xl text-gray-600"></i>
+                                <div x-data="DateHelper.date()">
+                                    <input type="text" id="date" name="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 flatpickr-input active" placeholder="Избери дата">
+                                </div>
+
+                                <!-- <input name="date" id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 flatpickr-input active" placeholder=" " type="text" readonly="readonly">
+                                <i class="fa-light fa-calendar-days absolute top-2 right-4 text-2xl text-gray-600"></i> -->
                             </div>
                         </div>
                         <div>

@@ -13,7 +13,7 @@
                 <div class="bg-amber-600 rounded-lg p-2">
                     <i class="fa-regular fa-folder-closed text-white text-sm"></i>
                 </div>
-                <p x-text="data.post.category.title" class="text-white font-semibold cursor-pointer hover:text-amber-400 transition-colors" @click="href('data.post.category.url')"></p>
+                <p x-text="data.post.category.title" class="text-white font-semibold cursor-pointer hover:text-amber-400 transition-colors" @click="href(data.post.category.url)"></p>
             </div>
             <div>
                 <h1 x-text="data.post.title" class=" text-white font-bold text-4xl md:text-5xl leading-tight"></h1>
@@ -201,7 +201,7 @@
 
                     <!-- Newest Posts -->
                     <template x-if="data.post">
-                        <div x-init="alpineListeners('get.blogPosts', $el)" :data-sort="newest" keyName="newestPosts">
+                        <div x-init="alpineListeners('get.blogPosts', $el)" data-sort="newest" keyName="newestPosts">
                             <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">Последно добавени</h3>
                             <div class="space-y-4">
                                 <template x-for="newestPosts in data.newestPosts.result">

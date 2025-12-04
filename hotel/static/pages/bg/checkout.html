@@ -1,5 +1,5 @@
-<section class=" w-full" apiData="Countries.get_countries">
-    <div class=" flex flex-wrap w-full justify-center sm:h-[400px] h-[300px] m-0 bg-[url('https://hotelviaserdika.com/assets/gallery/staq/19.webp')] bg-cover bg-center">
+<section class=" w-full" apiData="Countries.get_countries" keyName="countries">
+    <div class=" flex flex-wrap w-full justify-center sm:h-[400px] h-[300px] m-0 bg-[url('/static/images/product.webp')] bg-cover bg-center">
         <div class="w-full sm:h-[400px] h-[300px] absolute bg-[#000000bf]"></div>
         <div class="flex items-center justify-center text-center z-2">
             <div class="mt-[65px] z-10">
@@ -19,13 +19,13 @@
 </section>
 
 <form class="">
-    <div apiData="Hotel.post_hotel_calculate" class="lg:mt-[50px] my-6 px-4">
+    <div apiData="Hotel.post_hotel_calculate" keyName="hotelCart" class="lg:mt-[50px] my-6 px-4">
 
         <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
 
             <div class="col-span-2">
                 <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Въведете вашия имейл:</label>
-                <input @input.debounce.1000="alpineListeners('Hotel.post_hotel_calculate', $event); document.getElementById('email_0').value = $el.value" type="text" name="owner_email" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <!-- <input @input.debounce.1000="alpineListeners('Hotel.post_hotel_calculate', $event); document.getElementById('email_0').value = $el.value" keyName="hotelCart" type="text" name="owner_email" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> -->
             </div>
             <p class=" mt-2">Отстъпки и промоции свързани с потребителя ще бъдат приложени след въвеждане на имейла. </p>
         </div>
@@ -46,9 +46,9 @@
                         <div class="col-span-2 space-y-0.5">
                             <p class="text-base font-semibold">Данни за резервацията</p>
                             <p class="text-sm">
-                                <span x-text="Helpers.formatCalendarDate(room.date_start)">20 ян 2025</span>
+                                <span x-text="Helpers.formatDate(room.date_start)">20 ян 2025</span>
                                 <span> - </span>
-                                <span x-text="Helpers.formatCalendarDate(room.date_end)">22 ян 2025</span>
+                                <span x-text="Helpers.formatDate(room.date_end)">22 ян 2025</span>
                             </p>
                             <!-- <p class="text-sm">Настаняване с включена закуска</p> -->
                             <p class="text-sm">Възрастни: <span x-text="room.guests"></span></p>
@@ -60,24 +60,23 @@
                             <p class="text-base font-semibold">Цена</p>
                             <p class="flex justify-between items-center text-sm">
                                 <span>Стая</span>
-                                <span x-text="room.price_base_no_discount.toFixed(2) + 'лв.'">BGN 243.60</span>
+                                <span x-amount="room.price_base_no_discount">BGN 243.60</span>
                             </p>
                             <template x-for="discount in room.discounts">
                                 <p class="flex justify-between items-center text-sm">
                                     <span x-text="discount.title">Стая</span>
-                                    <span x-text="'- '+ discount.amount.toFixed(2) + 'лв.'">BGN 243.60</span>
+                                    <span x-amount="discount.amount">BGN 243.60</span>
                                 </p>
                             </template>
                             <p class="flex justify-between items-center text-sm">
                                 <span>ДДС ( включено в цената )</span>
-                                <span x-text="(room.price_total * 0.2).toFixed(2) + 'лв.'">BGN 20.11</span>
+                                <span x-amount="(room.price_total * 0.2)">BGN 20.11</span>
                             </p>
 
                             <div class="flex justify-between items-center mt-2 pt-1 border-t border-gray-300 text-base font-semibold">
                                 <span>Общо</span>
                                 <div>
-                                    <p x-text="room.price_total.toFixed(2) + 'лв.'">BGN 243.60</p>
-                                    <p x-text="(room.price_total*data.rateEuro).toFixed(2) + '€'">BGN 243.60</p>
+                                    <p x-amount="room.price_total">BGN 243.60</p>
                                 </div>
                             </div>
 
@@ -142,7 +141,7 @@
             <div>
                 <p class="text-base font-medium">Имате нужда от повече стаи?</p>
                 <p class="text-base font-medium"> Добавете още!</p>
-                <p @click="forceChange('/bg/accommodation')" class="bg-black btn mt-2  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">Добави стая</p>
+                <p @click="href('/bg/accommodation')" class="bg-black btn mt-2  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">Добави стая</p>
             </div>
         </div>
 
@@ -173,7 +172,7 @@
 
             <p class="flex justify-between">
                 <span>Общо за плащане</span>
-                <span x-text="data.hotelCart.price_total.toFixed(2) +'лв.'" class="text-lg font-semibold">BGN 550.20</span>
+                <span x-amount="data.hotelCart.price_total" class="text-lg font-semibold">BGN 550.20</span>
             </p>
         </div>
 

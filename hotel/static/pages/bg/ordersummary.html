@@ -1,18 +1,11 @@
-<div class="is-section is-section-auto section  !h-[600px] !items-center">
+<div class="is-section is-box  is-section-50   min-height-60 last-box !p-0">
     <div class="is-overlay">
-        <div class="is-overlay-bg" style="background-image: url('https://hotelviaserdika.com/assets/gallery/staq/19.webp'); background-position: 50% 89%;">
-            <div class="absolute inset-0 bg-blend-overlay bg-[#000000cc]"></div>
-        </div>
+        <div class="is-overlay-bg brightness-50" style="background-image: url(&quot;/static/images/1920x1080.webp&quot;); background-position: 50% 60%;"></div>
     </div>
     <div class="!container is-container v2">
-        <div class="flex justify-center">
-            <img :src="data.settings.logo" class="w-[400px]" alt="">
-        </div>
-
-        <div class="container  relative">
-            <h1 class="mb-4 w-2/3 mx-auto center font-Cardo wordspac_15 2xl:text-[48px] xl:text-[42px] lg:text-[38px] md:text-[35px] sm:text-[30px] text-[24px] md:leading-[1.2857em] sm:leading-[42px] leading-[36px] font-bold sm:tracking-[2px] tracking-[1px] uppercase text-[#fff] aos-init aos-animate" data-aos="fade-up" data-aos-duration="1500">ВАШАТА РЕЗЕРВАЦИЯ В </br>ХОТЕЛ EXPOZY</h1>
-
-            <h5 class="text-[16px] text-center">
+        <div class="text-center">
+            <h2 class="mb-[12px] 2xl:text-[40px] xl:text-[38px] lg:text-[36px] md:text-[34px] sm:text-[30px] text-[28px] font-bold text-white">Настаняване</h2>
+            <h5 class="text-[16px]">
                 <span>
                     <a href="index.html" class="text-[#fff] hover:text-[#fff]">Начало</a>
                 </span>
@@ -22,7 +15,6 @@
                 </span>
             </h5>
         </div>
-
     </div>
 </div>
 
@@ -114,7 +106,7 @@
                         <p>2 гости</p>
                     </div> -->
                     <div>
-                        <p class="text-base text-right" x-text="room.price_total + ' лв.'"></p>
+                        <p class="text-base text-right" x-amount="room.price_total"></p>
 
                     </div>
                 </div>
@@ -125,12 +117,8 @@
         <div class="w-full border border-gray-300 bg-black text-white flex justify-between items-center p-1.5 py-2.5 text-base rounded-sm">
             <p>Крайна цена</p>
             <div>
-                <p x-text="data.order.price + ' лв.'" class="font-semibold">438 BGN</p>
-                <p>
-                    <span>(</span>
-                    <span x-text="(data.order.price * data.rateEuro).toFixed(2)"></span>
-                    <span>€)</span>
-                </p>
+                <p x-amount="data.order.price" class="font-semibold">438 BGN</p>
+
             </div>
 
         </div>
@@ -148,7 +136,7 @@
     <p class="font-semibold text-base !mt-4 ">Условия на отмяна</p>
     <p>Безплатна отмяна на резервация не е възможна. При отмяна на резервация ще бъдете таксувани стойността на първата нощувка.</p>
 
-    <p apiData="Payments.get_payment_methods" class="font-semibold text-base !mt-4 ">Начина на плащане</p>
+    <p apiData="Payments.get_payment_methods" keyName="payment_methods" class="font-semibold text-base !mt-4 ">Начина на плащане</p>
     <p x-text="data.payment_methods.find(obj => obj.code == data.order.reservations[0].payment_code).title"></p>
     <template x-if="data.order.reservations[0].payment_code == 'bank_transfer'">
         <div>
