@@ -271,7 +271,7 @@
     </div>
 </section>
 
-<div class="pb-16">
+<div class="pb-16 w-full">
     <template x-if="data.product">
 
         <div class="w-full" x-data="{tab : 'promo'}">
@@ -283,127 +283,243 @@
             </div>
 
             <template x-if="tab == 'promo'">
-                <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="discountProducts" data-sort="discount" data-subcategories="true" data-only_instock="0" data-category_id="0">
+                <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyName="discountProducts" data-sort="discount" data-subcategories="true" data-only_instock="0" data-category_id="0">
+                    <template x-if="data.discountProducts">
+                        <div x-data="discountProductsF()" x-init="init()" class="glide !h-fit !w-full" id="discountProductsGlide">
+                            <div class="glide__track " data-glide-el="track">
+                                <ul class="glide__slides">
+                                    <template x-for="item in data.discountProducts.result" :key="item.id">
+                                        <li class="glide__slide py-5 px-2 ">
+                                            <div x-data="{product:item}" class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer !h-[450px]">
 
-                    <div id="glidediscountProducts" class="glide !h-fit">
-                        <div class="glide__track " data-glide-el="track">
-                            <ul class="glide__slides" id="discountProductsSlider">
-                            </ul>
-                        </div>
-                        <div class="glide__arrows" data-glide-el="controls">
-                            <button class="glide__arrow glide__arrow--left !left-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir="<"><i class="fa-solid fa-circle-arrow-left text-stone-900 text-[32px] rounded-full"></i></button>
-                            <button class="glide__arrow glide__arrow--right bg-unset text-unset !right-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir=">"><i class="fa-solid fa-circle-arrow-right text-stone-900 text-[32px] rounded-full"></i></button>
-                        </div>
+                                                <!-- Image section with fixed height -->
+                                                <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
+                                                    <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
 
-                    </div>
+                                                    <template x-if="!product.isWishlisted">
+                                                        <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                            <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                        </button>
+                                                    </template>
 
-                    <template id="template" x-for="item in data.discountProducts.result">
-                        <template x-teleport="#discountProductsSlider">
-                            <li class="glide__slide py-5 px-2 ">
-                                <div x-data="{product:item}" class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer !h-[450px]">
+                                                    <template x-if="product.isWishlisted">
+                                                        <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                            <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                        </button>
+                                                    </template>
 
-                                    <!-- Image section with fixed height -->
-                                    <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
-                                        <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                                    <!-- Sale badge showing discount percentage -->
+                                                    <template x-if="product.variations[0].promoprice != 0">
+                                                        <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                                            <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                                                                <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
+                                                            </div>
+                                                        </div>
+                                                    </template>
 
-                                        <template x-if="!product.isWishlisted">
-                                            <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
-                                                <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
-                                            </button>
-                                        </template>
+                                                    <!-- New badge positioned below Sale badge if both exist -->
+                                                    <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
+                                                        NEW
+                                                    </div>
+                                                </div>
 
-                                        <template x-if="product.isWishlisted">
-                                            <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
-                                                <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
-                                            </button>
-                                        </template>
+                                                <!-- Content section with flex-grow and line-clamp for text truncation -->
+                                                <div class="p-6 flex flex-col flex-grow">
 
-                                        <!-- Sale badge showing discount percentage -->
-                                        <template x-if="product.variations[0].promoprice != 0">
-                                            <div class="absolute top-4 left-4 flex flex-col gap-2">
-                                                <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
-                                                    <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
+                                                    <!-- Title with line-clamp-2 to truncate long titles -->
+                                                    <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
+
+                                                    <!-- Description with line-clamp-3 to truncate long descriptions -->
+                                                    <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
+
+                                                    <!-- Price section with strikethrough original price and promo price -->
+                                                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                                        <div class="flex flex-col gap-1">
+                                                            <!-- Show both prices when promo price exists -->
+                                                            <template x-if="product.variations[0].promoprice != 0">
+                                                                <div class="flex flex-col">
+                                                                    <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
+                                                                    <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
+                                                                </div>
+                                                            </template>
+
+                                                            <!-- Show only regular price when no promo -->
+                                                            <template x-if="product.variations[0].promoprice == 0">
+                                                                <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
+                                                            </template>
+                                                        </div>
+
+                                                        <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </template>
 
-                                        <!-- New badge positioned below Sale badge if both exist -->
-                                        <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
-                                            NEW
-                                        </div>
-                                    </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                            <div class="glide__arrows" data-glide-el="controls">
+                                <button class="glide__arrow glide__arrow--left !left-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir="<"><i class="fa-solid fa-circle-arrow-left text-stone-900 text-[32px] rounded-full"></i></button>
+                                <button class="glide__arrow glide__arrow--right bg-unset text-unset !right-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir=">"><i class="fa-solid fa-circle-arrow-right text-stone-900 text-[32px] rounded-full"></i></button>
+                            </div>
 
-                                    <!-- Content section with flex-grow and line-clamp for text truncation -->
-                                    <div class="p-6 flex flex-col flex-grow">
-
-                                        <!-- Title with line-clamp-2 to truncate long titles -->
-                                        <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
-
-                                        <!-- Description with line-clamp-3 to truncate long descriptions -->
-                                        <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
-
-                                        <!-- Price section with strikethrough original price and promo price -->
-                                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
-                                            <div class="flex flex-col gap-1">
-                                                <!-- Show both prices when promo price exists -->
-                                                <template x-if="product.variations[0].promoprice != 0">
-                                                    <div class="flex flex-col">
-                                                        <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
-                                                        <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
-                                                    </div>
-                                                </template>
-
-                                                <!-- Show only regular price when no promo -->
-                                                <template x-if="product.variations[0].promoprice == 0">
-                                                    <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
-                                                </template>
-                                            </div>
-
-                                            <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
-                                                <i class="fa-solid fa-cart-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-                        </template>
+                        </div>
                     </template>
 
-                    <template class="dontSelect" x-if="data.discountProducts.result[0]">
-                        <div x-data="{init() {
-                    new Glide('#glidediscountProducts', {
-                      type: 'carousel',
-                      startAt: 0,
-                      perView: 6,
-                      autoplay: false,
-                      animationDuration: 1500,
-                      perTouch:4,
-                      breakpoints: {
-                        1630: {
-                          perView: 4
-                        },
-                        886: {
-                          perView: 3
-                        },
-                        600: {
-                          perView:2
-                        },
-                        440: {
-                          perView: 1
-                        }
-                      }
-                    }).mount();
-                  }}"></div>
-                    </template>
                 </div>
             </template>
 
+            <script>
+                function discountProductsF() {
+                    return {
+                        async init() {
+
+                            // 2. Чакаш Alpine да рендерира x-for
+                            await this.$nextTick();
+
+                            // 3. Инициализираш Glide, след като DOM е готов
+                            this.glide = new Glide('#discountProductsGlide', {
+                                type: 'slide',
+                                startAt: 0,
+                                perView: 6,
+                                autoplay: false,
+                                animationDuration: 1500,
+                                perTouch: 4,
+                                breakpoints: {
+                                    1630: {
+                                        perView: 4
+                                    },
+                                    886: {
+                                        perView: 3
+                                    },
+                                    600: {
+                                        perView: 2
+                                    },
+                                    440: {
+                                        perView: 1
+                                    }
+                                }
+                            });
+
+                            this.glide.mount();
+                        }
+                    }
+                }
+
+
+                function similarProductsF() {
+                    return {
+                        async init() {
+
+                            // 2. Чакаш Alpine да рендерира x-for
+                            await this.$nextTick();
+
+                            // 3. Инициализираш Glide, след като DOM е готов
+                            this.glide = new Glide('#similarProductsGlide', {
+                                type: 'slide',
+                                startAt: 0,
+                                perView: 6,
+                                autoplay: false,
+                                animationDuration: 1500,
+                                perTouch: 4,
+                                breakpoints: {
+                                    1630: {
+                                        perView: 4
+                                    },
+                                    886: {
+                                        perView: 3
+                                    },
+                                    600: {
+                                        perView: 2
+                                    },
+                                    440: {
+                                        perView: 1
+                                    }
+                                }
+                            });
+
+                            this.glide.mount();
+                        }
+                    }
+                }
+            </script>
+
             <template x-if="tab == 'similar'">
                 <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="similarProducts" data-only_instock="0" :data-category_id="data.product.categories[0].id">
-                    <div id="glidesimilarProducts" class="glide !h-fit">
+                    <div x-data="similarProductsF()" x-init="init()" id="similarProductsGlide" class="glide !h-fit">
                         <div class="glide__track " data-glide-el="track">
-                            <ul class="glide__slides" id="similarProductsSlider">
+                            <ul class="glide__slides">
+                                <template x-for="item in data.similarProducts.result">
+                                    <li class="glide__slide py-5 px-2 ">
+                                        <div x-data="{product:item}" class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer !h-[450px]">
+
+                                            <!-- Image section with fixed height -->
+                                            <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
+                                                <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+
+                                                <template x-if="!product.isWishlisted">
+                                                    <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                        <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                    </button>
+                                                </template>
+
+                                                <template x-if="product.isWishlisted">
+                                                    <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                        <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                    </button>
+                                                </template>
+
+                                                <!-- Sale badge showing discount percentage -->
+                                                <template x-if="product.variations[0].promoprice != 0">
+                                                    <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                                        <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                                                            <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+
+                                                <!-- New badge positioned below Sale badge if both exist -->
+                                                <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
+                                                    NEW
+                                                </div>
+                                            </div>
+
+                                            <!-- Content section with flex-grow and line-clamp for text truncation -->
+                                            <div class="p-6 flex flex-col flex-grow">
+
+                                                <!-- Title with line-clamp-2 to truncate long titles -->
+                                                <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
+
+                                                <!-- Description with line-clamp-3 to truncate long descriptions -->
+                                                <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
+
+                                                <!-- Price section with strikethrough original price and promo price -->
+                                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                                    <div class="flex flex-col gap-1">
+                                                        <!-- Show both prices when promo price exists -->
+                                                        <template x-if="product.variations[0].promoprice != 0">
+                                                            <div class="flex flex-col">
+                                                                <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
+                                                                <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
+                                                            </div>
+                                                        </template>
+
+                                                        <!-- Show only regular price when no promo -->
+                                                        <template x-if="product.variations[0].promoprice == 0">
+                                                            <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
+                                                        </template>
+                                                    </div>
+
+                                                    <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
+                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
                             </ul>
                         </div>
                         <div class="glide__arrows" data-glide-el="controls">
@@ -413,104 +529,6 @@
 
                     </div>
 
-                    <template id="template" x-for="item in data.similarProducts.result">
-                        <template x-teleport="#similarProductsSlider">
-                            <li class="glide__slide py-5 px-2 ">
-                                <div x-data="{product:item}" class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer !h-[450px]">
-
-                                    <!-- Image section with fixed height -->
-                                    <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
-                                        <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-
-                                        <template x-if="!product.isWishlisted">
-                                            <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
-                                                <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
-                                            </button>
-                                        </template>
-
-                                        <template x-if="product.isWishlisted">
-                                            <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
-                                                <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
-                                            </button>
-                                        </template>
-
-                                        <!-- Sale badge showing discount percentage -->
-                                        <template x-if="product.variations[0].promoprice != 0">
-                                            <div class="absolute top-4 left-4 flex flex-col gap-2">
-                                                <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
-                                                    <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
-                                                </div>
-                                            </div>
-                                        </template>
-
-                                        <!-- New badge positioned below Sale badge if both exist -->
-                                        <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
-                                            NEW
-                                        </div>
-                                    </div>
-
-                                    <!-- Content section with flex-grow and line-clamp for text truncation -->
-                                    <div class="p-6 flex flex-col flex-grow">
-
-                                        <!-- Title with line-clamp-2 to truncate long titles -->
-                                        <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
-
-                                        <!-- Description with line-clamp-3 to truncate long descriptions -->
-                                        <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
-
-                                        <!-- Price section with strikethrough original price and promo price -->
-                                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
-                                            <div class="flex flex-col gap-1">
-                                                <!-- Show both prices when promo price exists -->
-                                                <template x-if="product.variations[0].promoprice != 0">
-                                                    <div class="flex flex-col">
-                                                        <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
-                                                        <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
-                                                    </div>
-                                                </template>
-
-                                                <!-- Show only regular price when no promo -->
-                                                <template x-if="product.variations[0].promoprice == 0">
-                                                    <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
-                                                </template>
-                                            </div>
-
-                                            <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
-                                                <i class="fa-solid fa-cart-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </template>
-                    </template>
-
-                    <template class="dontSelect" x-if="data.similarProducts.result[0]">
-                        <div x-data="{init() {
-                    new Glide('#glidesimilarProducts', {
-                      type: 'carousel',
-                      startAt: 0,
-                      perView: 6,
-                      autoplay: false,
-                      animationDuration: 1500,
-                      perTouch:4,
-                      breakpoints: {
-                        1630: {
-                          perView: 4
-                        },
-                        886: {
-                          perView: 3
-                        },
-                        600: {
-                          perView:2
-                        },
-                        440: {
-                          perView: 1
-                        }
-                      }
-                    }).mount();
-                  }}"></div>
-                    </template>
                 </div>
             </template>
         </div>

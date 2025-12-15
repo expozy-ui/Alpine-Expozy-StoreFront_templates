@@ -81,11 +81,11 @@
                                     </span>
                                     <span class="flex items-center gap-2">
                                         <i class="fa-regular fa-clock"></i>
-                                        <span x-text="(blog.read_time != 0 ? blog.read_time : '1') + ' мин.'"></span>
+                                        <span x-text="(blog.read_time != 0 ? blog.read_time : '1') + ' min.'"></span>
                                     </span>
                                 </div>
 
-                                <a @click.prevent="href(blog.url)" class="inline-flex items-center gap-2 text-[#c3a460] font-semibold hover:text-amber-700 transition-colors cursor-pointer">Прочетете повече<i class="fa-solid fa-arrow-right text-sm"></i></a>
+                                <a @click.prevent="href(blog.url)" class="inline-flex items-center gap-2 text-[#c3a460] font-semibold hover:text-amber-700 transition-colors cursor-pointer">Read more<i class="fa-solid fa-arrow-right text-sm"></i></a>
 
                             </div>
                         </article>

@@ -1,0 +1,449 @@
+<!-- ========================== -->
+<!-- NEW CHECKOUT - VARIANT A  -->
+<!-- ========================== -->
+
+<div x-init="!data.cart.products[0] ? href('/') : ''" apiData="Payments.get_payment_methods" keyName="payment_methods"></div>
+
+<div apiData="Econt.get_offices" keyName="econt_offices"></div>
+<div apiData="Speedy.get_speedy" keyName="speedy_offices"></div>
+<div apiData="User.get_my_addresses" keyName="my_addresses"></div>
+
+<div class="w-full flex flex-col lg:flex-row min-h-screen bg-slate-50" x-data="{ shipTo: 'address',
+        courier: 'econt',
+        comment: '',
+        wantInvoice:false,
+        pickAddress:false,
+        addAddress:false,
+       selectedAddress:undefined
+       }">
+
+    <template x-if="data.my_addresses[0] && data.my_addresses[0].shipping_address != ''">
+        <div x-init="selectedAddress = data.my_addresses[0]"></div>
+    </template>
+
+    <!-- =================================== -->
+    <!-- LEFT SIDE (WHITE AREA)              -->
+    <!-- =================================== -->
+    <div class="w-full lg:w-3/5 bg-slate-50 p-6 sm:p-8 lg:p-16 flex justify-center lg:justify-end">
+
+        <div class="w-full max-w-2xl">
+            <form>
+                <input type="hidden" name="comment" x-text="comment">
+                <!-- LOGO -->
+                <div class="flex justify-center mb-8 lg:mb-12">
+                    <a @click="href('/')" class="transition-opacity hover:opacity-80">
+                        <img :src="data.settings.logo" class="h-16 lg:h-20 w-auto">
+                    </a>
+                </div>
+
+                <!-- ========================= -->
+                <!-- 1) USER DATA -->
+                <!-- ========================= -->
+                <div class="mb-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 hover:shadow-md transition-shadow">
+                    <h2 class="text-xl lg:text-2xl font-bold mb-6 text-slate-900 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-600 text-sm font-bold">1</span>
+                        Данни за клиента
+                    </h2>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" name="first_name" :value="data.user.first_name" placeholder="Име" class="border border-slate-300 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+
+                        <input type="text" name="last_name" :value="data.user.last_name" placeholder="Фамилия" class="border border-slate-300 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+
+                        <input type="text" name="email" :value="data.user.email" placeholder="Имейл" class="border border-slate-300 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+
+                        <input type="text" name="phone" :value="data.user.phone" placeholder="Телефон" class="border border-slate-300 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+                    </div>
+
+                    <!-- ФАКТУРА -->
+                    <div class="mt-6">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" @click="wantInvoice = !wantInvoice" class="w-5 h-5 text-amber-600 border-slate-300 rounded focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                            <span class="text-slate-700 group-hover:text-slate-900 transition-colors font-medium">Желая фактура</span>
+                        </label>
+                    </div>
+
+                    <template x-if="wantInvoice">
+                        <div class="mt-6 p-5 bg-amber-50 rounded-xl border border-amber-100">
+                            <input type="hidden" name="wantInvoice" value="1">
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <input type="text" name="invoice_company" :value="data.user.company.name" placeholder="Компания" class="border border-amber-200 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+                                <input type="text" name="invoice_mol" :value="data.user.company.mol" placeholder="МОЛ" class="border border-amber-200 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+
+                                <input type="text" name="invoice_city" :value="data.user.company.city" placeholder="Град" class="border border-amber-200 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+                                <input type="text" name="invoice_address" :value="data.user.company.address" placeholder="Адрес" class="border border-amber-200 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+
+                                <input type="text" name="invoice_phone" :value="data.user.company.phone" placeholder="Телефон" class="border border-amber-200 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+                                <input type="text" name="invoice_vat" :value="data.user.company.vat" placeholder="ЕИК" class="border border-amber-200 p-3.5 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none bg-white text-slate-900 placeholder-slate-400">
+
+                                <label class="flex items-center gap-3 col-span-1 sm:col-span-2 cursor-pointer group">
+                                    <input type="checkbox" name="vat_registered" :checked="data.user.company.vat_registered == 1" class="w-5 h-5 text-amber-600 border-amber-300 rounded focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                                    <span class="text-slate-700 group-hover:text-slate-900 transition-colors font-medium">Регистрирана по ДДС</span>
+                                </label>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- ========================= -->
+                <!-- 2) DELIVERY TYPE -->
+                <!-- ========================= -->
+                <div class="mb-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 hover:shadow-md transition-shadow">
+                    <h2 class="text-xl lg:text-2xl font-bold mb-6 text-slate-900 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-600 text-sm font-bold">2</span>
+                        Доставка
+                    </h2>
+
+                    <div class="inline-flex gap-1 p-1 bg-slate-100 rounded-xl mb-6 w-full sm:w-auto">
+                        <button type="button" @click="shipTo = 'address'" :class="shipTo == 'address' ? 'bg-amber-500 text-white shadow-md' : 'bg-transparent text-slate-700 hover:bg-slate-200'" class="flex-1 sm:flex-none px-6 py-3 rounded-lg font-semibold transition-all">
+                            До адрес
+                        </button>
+
+                        <button type="button" @click="shipTo = 'office'" :class="shipTo == 'office' ? 'bg-amber-500 text-white shadow-md' : 'bg-transparent text-slate-700 hover:bg-slate-200'" class="flex-1 sm:flex-none px-6 py-3 rounded-lg font-semibold transition-all">
+                            До офис
+                        </button>
+                    </div>
+
+                    <div x-show="shipTo == 'address'" x-transition:enter.duration.500ms x-transition:leave.duration.50ms x-cloack>
+                        <!-- ИЗБРАНИЯ АДРЕС ЗА ДОСТАВКА  -->
+                        <template x-if="shipTo == 'address'">
+                            <template x-if="selectedAddress != undefined">
+                                <div>
+                                    <input type="hidden" name="country" :value="selectedAddress.country.title">
+                                    <input type="hidden" name="country_code" :value="selectedAddress.country.code">
+                                    <input type="hidden" name="city" :value="selectedAddress.city">
+                                    <input type="hidden" name="post_code" :value="selectedAddress.post_code">
+                                    <input type="hidden" name="streetName" :value="selectedAddress.streetName">
+                                    <input type="hidden" name="streetNumber" :value="selectedAddress.streetNumber">
+                                    <input type="hidden" name="address" :value="selectedAddress.country.title + ' '+  selectedAddress.city + ' '+selectedAddress.post_code  + ' '+  selectedAddress.streetName + ' '+ selectedAddress.streetNumber">
+
+                                    <div @click="pickAddress =! pickAddress; addAddress = false" class="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200 text-slate-900 text-base rounded-xl w-full p-5 cursor-pointer hover:border-amber-400 hover:shadow-md transition-all gap-3 group">
+                                        <div class="flex-1">
+                                            <p class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                Адрес за доставка
+                                            </p>
+                                            <div class="flex gap-2 flex-wrap text-sm text-slate-600 font-medium">
+                                                <span x-text="selectedAddress.country.title"></span>
+                                                <span x-text="selectedAddress.post_code"></span>
+                                                <span x-text="selectedAddress.city"></span>
+                                                <span>,</span>
+                                                <span x-text="selectedAddress.streetName"></span>
+                                                <span x-text="selectedAddress.streetNumber"></span>
+                                            </div>
+                                        </div>
+                                        <p class="text-amber-600 group-hover:text-amber-700 font-semibold text-sm flex items-center gap-1">
+                                            Редактирай
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </p>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <!--END ИЗБРАНИЯ АДРЕС ЗА ДОСТАВКА  -->
+
+                        <!-- СПИСЪК С АДРЕСИ КОЙТО ПОТРЕБИТЕЛЯ ДА ИЗБЕРЕ  -->
+                        <div x-show="pickAddress" class="bg-white rounded-xl shadow-lg p-6 divide-y divide-slate-200 border-2 border-slate-200 mt-4">
+                            <div class="pb-4 mb-4">
+                                <p class="font-bold text-slate-900 text-sm uppercase tracking-wider">Изберете адрес</p>
+                            </div>
+                            <template x-for="(address, index) in data.my_addresses" :key="index">
+                                <label class="text-slate-700 w-full flex items-center justify-start gap-3 p-4 hover:bg-amber-50 cursor-pointer rounded-lg transition-all group" @click="selectedAddress = address; pickAddress = false; addAddress = false;">
+                                    <input type="radio" name="selectedAddress" :checked="index == 0" class="w-5 h-5 text-amber-500 border-slate-300 focus:ring-amber-500 cursor-pointer" />
+                                    <div class="ml-1 text-sm group-hover:text-slate-900 transition-colors">
+                                        <span x-text="address.country.title"></span>
+                                        <span x-text="address.post_code"></span>
+                                        <span x-text="address.city"></span>,
+                                        <span x-text="address.streetName"></span>
+                                        <span x-text="address.streetNumber"></span>
+                                    </div>
+                                </label>
+                            </template>
+                            <div class="pt-4">
+                                <p @click="addAddress = true; pickAddress = false" class="text-amber-600 hover:text-amber-700 p-3 cursor-pointer font-semibold transition-colors flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    Добави нов адрес
+                                </p>
+                            </div>
+                        </div>
+                        <!--END  СПИСЪК С АДРЕСИ КОЙТО ПОТРЕБИТЕЛЯ ДА ИЗБЕРЕ  -->
+
+                        <div x-show="!data.user.logged_in || selectedAddress == undefined  || (data.user.logged_in && addAddress)" :class="addAddress ? 'bg-slate-50 rounded-xl shadow-sm border border-slate-200 p-6 space-y-4 mt-4' : ''">
+
+                            <div class="col-span-2 pt-3">
+                                <div class="flex mb-2 gap-2">
+                                    <div class="relative w-full">
+                                        <template x-if="shipTo == 'address'">
+                                            <template x-if="!data.user.logged_in || data.user.logged_in && addAddress || data.user.logged_in && selectedAddress == undefined">
+                                                <input type="hidden" name="address" :value="data.location.country + ' ' + data.location.city + ' ' +  data.location.post_code  + ' ' + data.location.streetName  + ' ' + data.location.streetNumber">
+                                            </template>
+                                        </template>
+
+                                        <input type="text" id="address" name="addressGeo" value="" placeholder=" " class="block border-2 border-slate-300 text-slate-900 bg-white text-base rounded-xl w-full p-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 peer transition-all">
+
+                                        <label class="absolute text-sm text-slate-500 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 bg-white px-1 peer-focus:text-amber-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Въведете местоположение</label>
+                                    </div>
+                                    <button type="button" id="location" class="border-2 border-slate-300 bg-white text-slate-700 text-sm rounded-xl px-5 hover:bg-amber-50 hover:border-amber-400 transition-all">
+                                        <i class="fa-solid fa-crosshairs text-xl text-amber-600"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 pb-5 h-64 rounded-xl overflow-hidden border-2 border-slate-200 shadow-sm">
+                                <div id="map" class="h-full"></div>
+                            </div>
+
+                            <!-- АДРЕС ЗА ДОСТАВКА  -->
+                            <template x-if="shipTo == 'address'">
+                                <template x-if="!data.user.logged_in || data.user.logged_in && addAddress || data.user.logged_in && selectedAddress == undefined">
+                                    <div class="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+                                        <div class="relative">
+                                            <input type="text" :value="data.location.country" @change="data.location.country = $el.value" placeholder=" " name="country" id="country" class="block border-2 border-slate-300 text-slate-900 bg-white text-base rounded-xl w-full p-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 peer transition-all">
+                                            <label class="absolute text-sm text-slate-500 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 bg-white px-1 peer-focus:text-amber-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Държава</label>
+                                        </div>
+
+                                        <div class="relative">
+                                            <input type="text" :value="data.location.post_code" @change="data.location.post_code = $el.value" placeholder=" " name="post_code" id="post_code" class="block border-2 border-slate-300 text-slate-900 bg-white text-base rounded-xl w-full p-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 peer transition-all">
+                                            <label class="absolute text-sm text-slate-500 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 bg-white px-1 peer-focus:text-amber-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Пощенски код</label>
+                                        </div>
+
+                                        <div class="relative">
+                                            <input type="text" :value="data.location.city" @change="data.location.city = $el.value" placeholder=" " name="city" id="city" class="block border-2 border-slate-300 text-slate-900 bg-white text-base rounded-xl w-full p-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 peer transition-all">
+                                            <label class="absolute text-sm text-slate-500 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 bg-white px-1 peer-focus:text-amber-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Град</label>
+                                        </div>
+
+                                        <div class="relative sm:col-span-2">
+                                            <input type="text" :value="data.location.streetName" @change="data.location.streetName = $el.value" placeholder=" " name="streetName" id="streetName" class="block border-2 border-slate-300 text-slate-900 bg-white text-base rounded-xl w-full p-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 peer transition-all">
+                                            <label class="absolute text-sm text-slate-500 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 bg-white px-1 peer-focus:text-amber-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Улица</label>
+                                        </div>
+
+                                        <div class="relative">
+                                            <input type="text" :value="data.location.streetNumber" @change="data.location.streetNumber = $el.value" placeholder=" " name="streetNumber" id="streetNumber" class="block border-2 border-slate-300 text-slate-900 bg-white text-base rounded-xl w-full p-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 peer transition-all">
+                                            <label class="absolute text-sm text-slate-500 duration-300 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-2.5 bg-white px-1 peer-focus:text-amber-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Номер</label>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                            <!-- ЕНД АДРЕС ЗА ДОСТАВКА  -->
+                        </div>
+
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- 4) OFFICE DELIVERY -->
+                    <!-- ========================= -->
+                    <template x-if="shipTo == 'office'">
+                        <div class="p-6 border-2 border-slate-200 rounded-xl bg-slate-50">
+
+                            <!-- Курирер -->
+                            <h3 class="text-base font-bold mb-5 text-slate-900 uppercase tracking-wide flex items-center gap-2">
+                                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                </svg>
+                                Изберете куриер
+                            </h3>
+
+                            <div class="flex gap-3 mb-6">
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="radio" name="courier" value="econt" checked @click="courier = 'econt'" class="w-5 h-5 text-amber-500 border-slate-300 focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                                    <span class="text-slate-700 font-semibold group-hover:text-slate-900 transition-colors">Еконт</span>
+                                </label>
+
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="radio" name="courier" value="speedy" @click="courier = 'speedy'" class="w-5 h-5 text-amber-500 border-slate-300 focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                                    <span class="text-slate-700 font-semibold group-hover:text-slate-900 transition-colors">Спиди</span>
+                                </label>
+                            </div>
+
+                            <!-- Офис ЕКОНТ -->
+                            <template x-if="courier == 'econt'">
+                                <div class="relative" @click.outside="open=false" x-data="{ text:'', officeId:0, selectedOffice:'', open:false }">
+
+                                    <input type="hidden" name="addressEkontOfis" :value="officeId">
+
+                                    <input type="text" @click="open = true" x-model="text" :value="selectedOffice" placeholder="Изберете офис на Еконт" class="w-full border-2 border-slate-300 p-4 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none cursor-pointer bg-white text-slate-900 placeholder-slate-400">
+
+                                    <template x-if="open">
+                                        <div class="absolute left-0 right-0 bg-white max-h-60 mt-2 border-2 border-slate-200 rounded-xl overflow-y-auto z-50 shadow-xl">
+                                            <template x-for="office in data.econt_offices">
+                                                <div class="p-3 hover:bg-amber-50 cursor-pointer transition-colors border-b border-slate-100 last:border-b-0 text-slate-700 hover:text-slate-900" x-show="office.address.toLowerCase().includes(text.toLowerCase())" @click="
+                                                officeId = office.officeCode;
+                                                selectedOffice = office.address;
+                                                open = false
+                                            " x-text="office.address"></div>
+                                            </template>
+                                        </div>
+                                    </template>
+
+                                </div>
+                            </template>
+
+                            <!-- Офис СПИДИ -->
+                            <template x-if="courier == 'speedy'">
+                                <div class="relative" @click.outside="open=false" x-data="{ text:'', officeId:0, selectedOffice:'', open:false }">
+
+                                    <input type="hidden" name="addressSpeedyOfis" :value="officeId">
+
+                                    <input type="text" @click="open = true" x-model="text" :value="selectedOffice" placeholder="Изберете офис на Спиди" class="w-full border-2 border-slate-300 p-4 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none cursor-pointer bg-white text-slate-900 placeholder-slate-400">
+
+                                    <template x-if="open">
+                                        <div class="absolute left-0 right-0 bg-white max-h-60 mt-2 border-2 border-slate-200 rounded-xl overflow-y-auto z-50 shadow-xl">
+                                            <template x-for="office in data.speedy_offices">
+                                                <div class="p-3 hover:bg-amber-50 cursor-pointer transition-colors border-b border-slate-100 last:border-b-0 text-slate-700 hover:text-slate-900" x-show="office.address.toLowerCase().includes(text.toLowerCase())" @click="
+                                                officeId = office.office_id;
+                                                selectedOffice = office.address;
+                                                open = false
+                                            " x-text="office.address"></div>
+                                            </template>
+                                        </div>
+                                    </template>
+
+                                </div>
+                            </template>
+
+                        </div>
+                    </template>
+                </div>
+
+                <!-- ========================= -->
+                <!-- 5) PAYMENT -->
+                <!-- ========================= -->
+                <div class="mb-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 hover:shadow-md transition-shadow">
+                    <h2 class="text-xl lg:text-2xl font-bold mb-6 text-slate-900 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-600 text-sm font-bold">3</span>
+                        Начин на плащане
+                    </h2>
+
+                    <div class="space-y-3">
+                        <template x-for="(payment, index) in data.payment_methods">
+                            <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-amber-400 hover:bg-amber-50 transition-all group">
+                                <input type="radio" name="payment_method" :checked="index==0" :value="payment.code" class="w-5 h-5 text-amber-500 border-slate-300 focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                                <span class="text-slate-700 font-semibold group-hover:text-slate-900 transition-colors" x-text="payment.title"></span>
+                            </label>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- ========================= -->
+                <!-- 6) GDPR + TERMS -->
+                <!-- ========================= -->
+                <div class="mb-8 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8 space-y-4 hover:shadow-md transition-shadow">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" name="terms" class="w-5 h-5 mt-0.5 text-amber-600 border-slate-300 rounded focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                        <span class="text-slate-700 group-hover:text-slate-900 transition-colors">Съгласен съм с <a href="/bg/terms-conditions" class="font-semibold text-amber-600 underline decoration-2 underline-offset-2">Общите условия</a></span>
+                    </label>
+
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" name="gdpr" class="w-5 h-5 mt-0.5 text-amber-600 border-slate-300 rounded focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                        <span class="text-slate-700 group-hover:text-slate-900 transition-colors">Съгласен съм с <a href="/bg/gdpr" class="font-semibold text-amber-600 underline decoration-2 underline-offset-2">Политика за поверителност</a></span>
+                    </label>
+                </div>
+
+                <!-- ========================= -->
+                <!-- 7) SUBMIT BUTTON -->
+                <!-- ========================= -->
+                <button @click="alpineListeners('Shop.post_orders', $event)" class="w-full py-5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-100">
+                    Приключване на поръчката
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- =================================== -->
+    <!-- RIGHT SIDE (AMBER CART AREA) -->
+    <!-- =================================== -->
+    <div class="w-full lg:w-2/5 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 text-white p-6 sm:p-8 lg:p-16 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+        <div class="max-w-xl mx-auto lg:mx-0">
+
+            <h2 class="text-2xl lg:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+                <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+                Вашата поръчка
+            </h2>
+
+            <div class="space-y-4 mb-8">
+                <template x-for="product in data.cart.products">
+                    <div class="flex items-start gap-4 p-4 bg-white bg-opacity-5 backdrop-blur-sm rounded-xl hover:bg-opacity-10 transition-all border border-white border-opacity-10 hover:border-amber-400 hover:border-opacity-30">
+                        <img :src="product.images[0] ? product.images[0].image_10x10 : data.settings.logo" class="w-20 h-20 rounded-lg object-cover shadow-lg ring-2 ring-white ring-opacity-10">
+
+                        <div class="flex flex-col flex-grow min-w-0">
+                            <p class="font-semibold text-lg mb-1 truncate text-white" x-text="product.title"></p>
+                            <p class="text-sm text-slate-300 mb-2" x-text="product.variation.sku"></p>
+                            <p class="text-sm text-slate-300">
+                                <span class="font-medium text-amber-400" x-text="product.quantity"></span> ×
+                                <span x-text="product.variation.selling_price"></span>
+                                <span x-text="product.variation.currency"></span>
+                            </p>
+                        </div>
+
+                        <p x-text="product.total + ' ' + product.variation.currency" class="font-bold text-lg whitespace-nowrap text-amber-400"></p>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Бележка -->
+            <div class="mb-6">
+                <textarea x-model="comment" placeholder="Добавете бележка към поръчката (по избор)" rows="3" class="w-full p-4 rounded-xl border-2 border-white border-opacity-10 bg-white bg-opacity-5 backdrop-blur-sm text-white placeholder-slate-400 focus:border-amber-400 focus:border-opacity-50 focus:bg-opacity-10 transition-all outline-none resize-none"></textarea>
+            </div>
+
+            <!-- Промокод -->
+            <div class="mb-8">
+                <form>
+
+                    <template x-if="data.cart.promocode_id == 0">
+                        <div class="flex gap-2">
+                            <input type="text" name="promocode" placeholder="Имате промокод?" class="flex-grow p-4 rounded-xl border-2 border-white border-opacity-10 bg-white bg-opacity-5 backdrop-blur-sm text-white placeholder-slate-400 focus:border-amber-400 focus:border-opacity-50 focus:bg-opacity-10 transition-all outline-none">
+                            <button @click="alpineListeners('Shop.post_promocode', $event)" keyname="cart" class="px-6 py-4 bg-amber-500 text-white font-bold rounded-xl hover:bg-amber-600 transition-all shadow-lg whitespace-nowrap">
+                                Приложи
+                            </button>
+                        </div>
+                    </template>
+
+                    <template x-if="data.cart.promocode_id != 0">
+                        <form class="flex items-center justify-between p-4 bg-amber-500 bg-opacity-20 border-2 border-slate-400 border-opacity-30 rounded-xl backdrop-blur-sm">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-tag text-amber-400"></i>
+                                <p class="font-semibold text-white" x-text="data.cart.promocode_info.promocode"></p>
+                            </div>
+                            <button @click="alpineListeners('Shop.delete_promocode', $event)" keyname="cart" type="button" class="px-3 py-1 text-xs font-medium text-red-400 hover:text-red-300 transition-colors">Премахни</button>
+                        </form>
+                    </template>
+
+                </form>
+            </div>
+
+            <!-- Суми -->
+            <div class="space-y-4 pt-8 border-t-2 border-white border-opacity-10">
+                <div class="flex justify-between items-center text-lg">
+                    <span class="text-slate-300">Междинна сума:</span>
+                    <span class="font-semibold text-white" x-text="data.cart.subtotal + ' ' + data.cart.products[0].variation.currency"></span>
+                </div>
+
+                <div class="flex justify-between items-center text-lg">
+                    <span class="text-slate-300">Отстъпка:</span>
+                    <span class="font-semibold text-amber-400" x-text="'- ' + data.cart.discount + ' ' + data.cart.products[0].variation.currency"></span>
+                </div>
+
+                <div class="flex justify-between items-center text-2xl lg:text-3xl font-bold pt-4 border-t-2 border-white border-opacity-10">
+                    <span class="text-white">Общо:</span>
+                    <span class="text-amber-400" x-text="data.cart.total.toFixed(2) + ' ' + data.cart.products[0].variation.currency"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv3FNDZvaRSCPmk1LF5QsW5OhiJyPGkoE&callback=initMap&libraries=places&v=weekly&language=bg" defer></script>
+<link rel="stylesheet" href="/assets/plugins/google_map/geolocation.css">
+<script src="/assets/plugins/google_map/geolocation.js" charset="utf-8"></script>

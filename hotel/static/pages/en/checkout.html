@@ -25,7 +25,6 @@
 
             <div class="col-span-2">
                 <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Enter your email:</label>
-                <!-- <input @input.debounce.1000="alpineListeners('Hotel.post_hotel_calculate', $event); document.getElementById('email_0').value = $el.value" keyName="hotelCart" type="text" name="owner_email" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> --> -->
             </div>
             <p class=" mt-2">Discounts and promotions related to the user will be applied after entering the email. </p>
         </div>
@@ -150,13 +149,13 @@
             <lebal class="">Payment method</lebal>
 
             <div class="flex items-center my-2">
-                <input id="link-radio" type="radio" name="payment_code" checked value="mypos" class="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                <label for="link-radio" class="ml-2 text-sm text-gray-900 ">With map</label>
+                <input id="link-radio" type="radio" name="payment_code" value="bank_transfer" class="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm text-gray-900 ">Bank transfer</label>
             </div>
 
             <div class="flex items-center my-2">
-                <input id="link-radio" type="radio" name="payment_code" value="bank_transfer" class="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                <label for="link-radio" class="ml-2 text-sm text-gray-900 ">Bank transfer</label>
+                <input id="link-radio" type="radio" name="payment_code" checked value="mypos" class="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm text-gray-900 ">With card</label>
             </div>
 
             <!-- <template x-for="(payment, index) in data.payment_methods" :key="index" apidata="Payments.get_payment_methods">

@@ -31,9 +31,21 @@
                     <span class="absolute -bottom-1 left-0 w-0 transition-all h-0.5 bg-gray-800 group-hover:w-full"></span>
                 </p>
 
-                <p @click="changeLang('en')" class="w-[20px] h-[20px] rounded-full overflow-hidden cursor-pointer !border-solid border border-gray-500">
-                    <img class="w-full h-full object-cover" src="https://r2.expozy.com/expozy/countries/gb.png" alt="">
-                </p>
+                <div x-data="{openLang:false}" class="relative">
+                    <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="openLang =! openLang">
+                        <i class="fa-solid fa-globe text-xl text-slate-700 dark:text-gray-200"></i>
+                    </div>
+                    <div x-show="openLang" x-cloak @click.outside="openLang = false" class="absolute right-0 mt-2 w-48 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-slate-200 dark:border-gray-700 z-50">
+                        <ul class="divide-y divide-slate-200 dark:divide-gray-700">
+                            <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('en'); openLang = false">
+                                <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">English</a>
+                            </li>
+                            <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('bg'); openLang = false">
+                                <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">Български</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
             </div>
 

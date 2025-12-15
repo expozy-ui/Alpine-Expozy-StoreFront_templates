@@ -10,7 +10,7 @@
     <div class="w-full lg:w-4/6 xl:w-3/6 bg-white dark:bg-gray-900 px-2 sm:px-10 lg:hidden">
         <div class="py-[30px] flex justify-center">
             <a @click="href('/')">
-                <img :src="data.settings.logo" src="" alt="" width="auto" class="!m-0 h-[100px] w-auto">
+                <img :src="data.settings.logo" src="" alt="" width="auto" class="!m-0 h-[60px] w-auto">
             </a>
         </div>
     </div>
@@ -22,7 +22,7 @@
             <!-- Updated desktop header -->
             <div class="py-8 hidden lg:block">
                 <a @click="href('/')">
-                    <img :src="data.settings.logo" alt="" width="auto" class="!m-0 h-24 w-auto">
+                    <img :src="data.settings.logo" alt="" width="auto" class="!m-0 h-[60px] w-auto">
                 </a>
             </div>
 
@@ -35,7 +35,7 @@
             </div>
 
             <div x-data="{shipTo: '', wantInvoice: false, pickAddress: false, addAddress:false, selectedAddress:undefined }">
-                <template x-if="data.my_addresses[0]">
+                <template x-if="data.my_addresses[0] && data.my_addresses[0].shipping_address != '']">
                     <div x-init="selectedAddress = data.my_addresses[0]"></div>
                 </template>
 
@@ -184,7 +184,7 @@
                             <!--END LIST OF ADDRESSES FOR THE USER TO CHOOSE -->
 
                             <!-- Updated add address form -->
-                            <div x-show="!data.user.logged_in || !data.my_addresses[0] || (data.user.logged_in && addAddress)" :class="addAddress ? 'bg-white dark:bg-slate-800 rounded-xl shadow-lg p-5 space-y-4' : ''">
+                            <div x-show="!data.user.logged_in || selectedAddress == undefined || (data.user.logged_in && addAddress)" :class="addAddress ? 'bg-white dark:bg-slate-800 rounded-xl shadow-lg p-5 space-y-4' : ''">
 
                                 <div class="col-span-2 pt-3">
                                     <div class="flex mb-2 gap-2">
@@ -365,7 +365,7 @@
 
                                         <div class="flex items-center p-3 bg-white dark:bg-slate-800 rounded-lg hover:bg-amber-50 dark:hover:bg-slate-700 transition-colors">
                                             <input @click="courier = 'econt'" type="radio" name="courier" checked value="econt" class="w-5 h-5 text-amber-600 bg-slate-100 border-slate-300 focus:ring-amber-500 dark:bg-slate-700 dark:border-slate-600 cursor-pointer">
-                                            <label class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300 cursor-pointer">Ekont</label>
+                                            <label class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300 cursor-pointer">Econt</label>
                                         </div>
 
                                         <div class="flex items-center p-3 bg-white dark:bg-slate-800 rounded-lg hover:bg-amber-50 dark:hover:bg-slate-700 transition-colors">
@@ -540,7 +540,7 @@
 
                                     <form>
                                         <input type="hidden" name="variation_id" :value="product.id" value="2503">
-                                        <div x-data="{quantity: product.quantity}" x-init="$watch('quantity', value => alpineListeners('Shop.put_carts', $el))">
+                                        <div x-data="{quantity: product.quantity}" keyName="cart" x-init="$watch('quantity', value => alpineListeners('Shop.put_carts', $el))">
 
                                             <!-- Modern quantity selector with gradient buttons -->
                                             <div class="flex w-fit items-center border-2 border-slate-300 dark:border-gray-600 rounded-lg overflow-hidden shadow-sm">
@@ -590,7 +590,7 @@
 
                             <div class="flex justify-between items-center text-base text-slate-700 dark:text-slate-300">
                                 <p class="font-medium">Subtotal</p>
-                                <p x-amount="data.cart.subtotal_without_disc" class="font-bold text-lg"></p>
+                                <p x-amount="data.cart.subtotal" class="font-bold text-lg"></p>
                             </div>
 
                             <div class="flex justify-between items-center text-base text-green-600 dark:text-green-400">

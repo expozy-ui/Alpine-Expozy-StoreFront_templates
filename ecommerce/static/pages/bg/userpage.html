@@ -1,3 +1,5 @@
+<div x-init="!data.user.logged_in ? href('/') : '' "></div>
+
 <div class="bg-slate-50 dark:bg-slate-900 w-full" x-data="{ tab: 'profile' }">
     <!-- Updated container with better spacing -->
     <div class="container mx-auto px-4 md:flex pb-16 gap-8">
@@ -97,6 +99,66 @@
                                     </label>
                                     <input :value="data.user.phone" type="text" name="phone" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
+
+                                <template x-if="data.countries && data.user">
+
+                                    <div>
+                                        <div x-data="phoneCode()" class="flex w-full flex-col gap-1">
+                                            <label for="phoneNumber" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 ">Телефон</label>
+
+                                            <div class="relative flex w-full" x-on:keydown="handleKeydownOnOptions($event)" x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false" x-init="(options = allOptions)">
+
+                                                <div>
+                                                    <input type="hidden" name="phone_code" :value="selectedOption.phoneCode">
+
+                                                    <button type="button" class="block rounded-l-xl px-1.5 md:px-6 h-full py-3 w-full shrink-0 flex items-center gap-2 text-sm  text-gray-900 bg-white  border-2 border-slate-200 appearance-none  focus:outline-none focus:ring-0 focus:border-primary peer" role="combobox" aria-controls="countriesList" aria-haspopup="listbox" x-on:click="isOpen = ! isOpen" x-on:keydown.down.prevent="openedWithKeyboard = true" x-on:keydown.enter.prevent="openedWithKeyboard = true" x-on:keydown.space.prevent="openedWithKeyboard = true" x-bind:aria-expanded="isOpen || openedWithKeyboard" x-bind:aria-label="selectedOption ? selectedOption.title : 'Please Select'">
+                                                        <img class="h-3.5 w-5 hidden md:block" :alt="selectedOption.title" :src="selectedOption.flag" />
+                                                        <span c x-text="'(+'+selectedOption.phoneCode+')'"></span>
+                                                        <i class="fa-solid fa-chevron-down  hidden md:block"></i>
+                                                    </button>
+
+                                                    <!-- Dropdown  -->
+                                                    <div x-show="isOpen || openedWithKeyboard" id="countriesList" class="absolute left-0 top-11 z-10 w-full overflow-hidden rounded-xl border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800" role="listbox" aria-label="countries list" x-on:click.outside="isOpen = false, openedWithKeyboard = false" x-on:keydown.down.prevent="$focus.wrap().next()" x-on:keydown.up.prevent="$focus.wrap().previous()" x-transition x-trap="openedWithKeyboard">
+                                                        <!-- Search  -->
+                                                        <div class="relative">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" class="absolute left-4 top-1/2 h-[20px] -translate-y-1/2 text-slate-700/50 dark:text-slate-300/50" aria-hidden="true">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                                            </svg>
+                                                            <input type="text" class="w-full border-b borderslate-300 bg-slate-100 py-2.5 pl-11 pr-4 text-sm text-slate-700 focus:outline-none focus-visible:border-blue-700 disabled:cursor-not-allowed disabled:opacity-75 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:focus-visible:border-blue-600" name="searchField" aria-label="Search" x-on:input="getFilteredOptions($el.value)" x-ref="searchField" placeholder="Search" />
+                                                        </div>
+                                                        <!-- Options  -->
+                                                        <ul class="flex max-h-44 flex-col overflow-y-auto">
+                                                            <li class="hidden px-4 py-2 text-sm text-slate-700 dark:text-slate-300" x-ref="noResultsMessage">
+                                                                <span>Няма намерени резултати</span>
+                                                            </li>
+                                                            <template x-for="(item, index) in options" :key="item.title">
+                                                                <li class="inline-flex cursor-pointer justify-between gap-6 bg-slate-100 px-4 py-2 text-sm text-slate-700 hover:bg-slate-800/5 hover:text-black focus-visible:bg-slate-800/5 focus-visible:text-black focus-visible:outline-none dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-100/5 dark:hover:text-white dark:focus-visible:bg-slate-100/10 dark:focus-visible:text-white" role="option" x-on:click="setSelectedOption(item)" x-on:keydown.enter="setSelectedOption(item)" x-bind:id="'option-' + index" tabindex="0">
+                                                                    <div class="flex items-center gap-2">
+                                                                        <!-- Flag Image  -->
+                                                                        <img class="h-3.5 w-5" alt="" aria-hidden="true" :src="item.flag" />
+                                                                        <!-- Label  -->
+                                                                        <span x-bind:class="selectedOption == item ? 'font-bold' : null" x-text="item.title"></span>
+                                                                        <span class="font-bold" x-text="'( +' + item.phoneCode + ')'"></span>
+                                                                        <!-- Screen reader 'selected' indicator  -->
+                                                                        <span class="sr-only" x-text="selectedOption == item ? 'selected' : null"></span>
+                                                                    </div>
+                                                                    <!-- Checkmark  -->
+                                                                    <svg x-show="selectedOption == item" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" class="h-[20px]" aria-hidden="true">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                                    </svg>
+                                                                </li>
+                                                            </template>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <input :value="data.user.phone" name="phone" placeholder=" 88 123 4567" type="tel" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-r-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </template>
 
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
@@ -654,3 +716,49 @@
         </div>
     </div>
 </div>
+
+<script>
+    function phoneCode() {
+        let fData = {
+            allOptions: Object.values(data.countries),
+            options: [],
+            isOpen: true,
+            openedWithKeyboard: false,
+            selectedOption: null,
+            init() {
+                debugger;
+                if (data.user.phone_code != undefined && data.user.phone_code != '') {
+                    this.setSelectedOption(Object.values(data.countries).find(obj => obj.phoneCode == data.user.phone_code))
+                } else {
+                    this.setSelectedOption(data.countries[0]);
+                }
+            },
+            setSelectedOption(option) {
+                this.selectedOption = option
+                this.isOpen = false
+                this.openedWithKeyboard = false
+            },
+
+            getFilteredOptions(query) {
+                this.options = this.allOptions.filter(
+                    (option) =>
+                        option.title.toLowerCase().includes(query.toLowerCase()) ||
+                        option.phoneCode.includes(query.toLowerCase()),
+                )
+                if (this.options.length === 0) {
+                    this.$refs.noResultsMessage.classList.remove('hidden')
+                } else {
+                    this.$refs.noResultsMessage.classList.add('hidden')
+                }
+            },
+            handleKeydownOnOptions(event) {
+                // if the user presses backspace or the alpha-numeric keys, focus on the search field
+                if ((event.keyCode >= 65 && event.keyCode <= 90) || (event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode === 8) {
+                    this.$refs.searchField.focus()
+                }
+            },
+        }
+        debugger;
+        return fData;
+    }
+</script>

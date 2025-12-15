@@ -28,13 +28,13 @@
                         <div class="grid grid-cols-2 gap-2  disabled block rounded-md  w-full text-sm text-gray-900 bg-white  ">
                             <div class="relative border border-gray-200 rounded-md">
                                 <input :value="data.date_start" name="date_start" id="date_start" keyName="hotel_room_types" class="disabled block  px-4 pb-2.5 pt-5 w-full text-sm  text-gray-900 bg-white rounded-l-lg  appearance-none focus:outline-none focus:ring-0 focus:border-black peer " placeholder=" " type="text" readonly="readonly">
-                                <label for="date_start" class="absolute pl-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Arrival</label>
+                                <label for="date_start" class="absolute pl-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Пристигане</label>
                                 <i class="fa-light fa-calendar-days absolute top-4 right-4 text-2xl text-gray-600" aria-hidden="true"></i>
                             </div>
 
                             <div class="relative border border-gray-200 rounded-md">
                                 <input :value="data.date_end" name="date_end" id="date_end" class="disabled block text-left px-4 pb-2.5 pt-5 w-full text-sm  text-gray-900 bg-white rounded-r-lg  appearance-none focus:outline-none focus:ring-0 focus:border-black peer " placeholder=" " type="text" readonly="readonly">
-                                <label for="date_end" class="absolute pr-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Leave</label>
+                                <label for="date_end" class="absolute pr-2 text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4  ">Заминаване</label>
                                 <i class="fa-light fa-calendar-days absolute top-4 right-4 text-2xl text-gray-600" aria-hidden="true"></i>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
 
                         <div class="py-2 text-center mt-4">
                             <p class="text-right text-2xl pt-2 pb-8 font-semibold flex justify-between ">
-                                <span>Общо</span>
+                                <span>Total</span>
                                 <span x-amount="data.hotelCart.price_total"></span>
                             </p>
 

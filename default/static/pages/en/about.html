@@ -140,6 +140,32 @@
             <div class="my-16">
                 <div class="h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-700"></div>
             </div>
+
+            <section class="w-full py-6 lg:pb-24 px-4 container lock" apiData="get.gallery_categories" keyName="gallery">
+                <template x-if="data.gallery">
+                    <div x-init="data.selectedGallery = data.gallery.result[0]"></div>
+                </template>
+
+                <div class=" w-full">
+                    <ul class="mt-7 flex justify-center flex-row gap-1 overflow-auto whitespace-nowrap pb-2.5 pl-1">
+                        <template x-for="category in data.gallery.result">
+                            <li>
+                                <button x-text="category.title" @click="data.selectedGallery = category" type="button" :class="data.selectedGallery.id == category.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white' : 'border border-gray-400 text-black' " class="w-fit min-w-unset px-4 text-xs lg:text-base md:min-w-[150px] py-2 rounded-xl capitalize  ">Лоби</button>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <div class="projects mt-4 lg:mt-8 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 aos-init aos-animate" data-aos="fade-up" :data-aos-duration="data.screenWidth > 1024 ? '1000' : '300' ">
+                        <template x-for="image in data.selectedGallery.gallery">
+                            <div data-aos="zoom-in-up" class="project group relative overflow-hidden rounded-xl block shadow-xl ">
+                                <img @click="alpineListeners('Gallery.open', $event)" :data-images="JSON.stringify(data.selectedGallery.gallery.flatMap(item => item.image))" :src="image.image.url != '' ? 'image.image.url' : Helpers.image('product')" class="h-full w-full object-cover" alt="">
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+            </section>
+
         </div>
     </div>
 </div>
