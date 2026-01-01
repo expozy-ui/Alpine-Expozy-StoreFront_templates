@@ -192,7 +192,7 @@
     </div>
 </section>
 
-<div class="is-section is-section-auto section !py-20">
+<div class="is-section is-section-auto section !py-20" apiData="get.meeting_calendars">
     <div class="is-overlay">
         <div class="is-overlay-bg bg-gray-50"></div>
     </div>
@@ -202,12 +202,12 @@
             <p class="text-lg text-gray-600 mb-8">Свържете се с нас днес и нека обсъдим как можем да помогнем на вашия бизнес</p>
             <!-- Enhanced CTA buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/bg/contacts" class="group inline-flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-lg font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:scale-105 duration-200">
+                <button @click="callModal($el)" data-modal="meeting" class="group inline-flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-lg font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:scale-105 duration-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    Свържете се с нас
-                </a>
+                    Запази оналйн консултация
+                </button>
                 <a href="/bg//about" class="group inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-lg font-medium border-2 border-gray-900 hover:bg-gray-900 hover:text-white transition-all shadow-md hover:shadow-lg hover:scale-105 duration-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -217,4 +217,249 @@
             </div>
         </div>
     </div>
+</div>
+
+<div x-data="{
+                           selectedCalendarId: 'empty',
+                            selectedDate: null,
+                            selectedSlot: null,
+                            availableDates: [],
+                            showCalendar: false
+                        }">
+
+    <div class="w-7xl mx-auto">
+        <template x-if="data.modals.meeting">
+            <div x-show="data.modals.meeting" x-cloak x-transition:enter.duration.500ms="" x-transition:leave.duration.100ms="" class="backdrop-blur bg-gray-950/70 fixed block md:flex items-center top-0 left-0 w-full h-full z-50 overflow-auto">
+                <div class="flex flex-row justify-center w-full max-h-full h-full md:!h-fit">
+                    <div class="w-full md:w-[600px] relative">
+                        <p @click="callModal($el)" class="cursor-pointer text-white text-[24px] absolute top-4 right-5">
+                            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                        </p>
+
+                        <div class="bg-white shadow-lg rounded-lg h-full md:h-fit">
+                            <div class="text-2xl rounded-t-lg py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
+                                Запазете среща
+                            </div>
+
+                            <form class="space-y-4 grid grid-cols-2 gap-x-6 px-4 py-8">
+
+                                <input type="hidden" name="calendar_id" value="1">
+
+                                <!-- Услуга -->
+                                <div class="relative col-span-2">
+                                    <label for="calendar_id" class="absolute pl-2 text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-[#1d78be] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                        Услуга
+                                    </label>
+
+                                    <select name="calendar_id" x-model="selectedCalendarId" id="service" class="block rounded-lg px-4 pb-2.5 pt-5 w-full text-sm shadow text-gray-900 bg-white border border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-[#1d78be] peer" placeholder=" " @change="
+                                showCalendar = false
+                                if (selectedCalendarId === 'empty') {
+                                    availableDates = []
+                                    return
+                                }
+                                availableDates = Object.values(data.meeting_calendars).find(c => c.id == selectedCalendarId)?.days || []
+                                $nextTick(() => showCalendar = true)">
+
+                                        <option value="empty">Изберете услуга</option>
+                                        <template x-for="calendar in data.meeting_calendars">
+                                            <option x-text="calendar.title" :value="calendar.id"></option>
+                                        </template>
+                                    </select>
+
+                                </div>
+
+                                <!-- Име -->
+                                <div class="relative col-span-2">
+                                    <label for="name" class="absolute pl-2 text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-[#1d78be] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                        Име
+                                    </label>
+                                    <input type="text" name="name" id="name" class="block rounded-lg px-4 pb-2.5 pt-5 w-full text-sm shadow text-gray-900 bg-white border border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-[#1d78be] peer" placeholder=" " />
+
+                                </div>
+
+                                <!-- Имейл -->
+                                <div class="relative">
+                                    <label for="email" class="absolute pl-2 text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-[#1d78be] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                        Имейл
+                                    </label>
+                                    <input type="text" name="email" id="email" class="block rounded-lg px-4 pb-2.5 pt-5 w-full text-sm shadow text-gray-900 bg-white border border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-[#1d78be] peer" placeholder=" " />
+
+                                </div>
+
+                                <!-- Телефон -->
+                                <div class="relative">
+                                    <label for="phone" class="absolute pl-2 text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-[#1d78be] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                        Телефон
+                                    </label>
+                                    <input type="text" name="phone" id="phone" class="block rounded-lg px-4 pb-2.5 pt-5 w-full text-sm shadow text-gray-900 bg-white border border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-[#1d78be] peer" placeholder=" " />
+
+                                </div>
+
+                                <!-- Дата -->
+                                <template x-if="showCalendar">
+                                    <div class="col-span-2">
+                                        <div x-data="DateHelper.date({
+                                    dateFormat: 'Y-m-d',
+                                    enable: availableDates
+                                        .filter(d => d.time_slots?.some(s => s.status_id == 1))
+                                        .map(d => d.date),
+                                    minDate: 'today',
+                                    maxDate: 'today+29'
+                                })">
+                                            <input type="text" name="date_start" class="block rounded-lg px-4 py-4 w-full text-sm shadow text-gray-900 bg-white border border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-[#1d78be] peer" placeholder="Избери дата" @change="selectedDate = $el.value; selectedSlot = null">
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <!-- Часове -->
+                                <div x-show="selectedDate != 'empty'" class="col-span-2 flex flex-wrap gap-4">
+                                    <template x-for="slot in availableDates.find(obj => obj.date == selectedDate).time_slots">
+                                        <div :class="{
+                                    'bg-gray-300 cursor-not-allowed': slot.status_id == 2,
+                                    'bg-[#1d78be] !text-white': slot.id == selectedSlot.id
+                                }" @click="slot.status_id == 1 ? selectedSlot = slot : ''" class="cursor-pointer text-gray-800 flex gap-2 px-4 py-2 shadow rounded-lg border-gray-200">
+                                            <p class="text-sm" x-text="slot.time_start + ' - '"></p>
+                                            <p class="text-sm" x-text="slot.time_end"></p>
+                                        </div>
+                                    </template>
+                                    <input type="hidden" name="timeSlot_id" :value="selectedSlot.id">
+                                </div>
+
+                                <!-- Съобщение -->
+                                <div class="mb-4 col-span-2 relative">
+                                    <label for="message" class="absolute pl-2 text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-[#1d78be] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                        Допълнително съобщение
+                                    </label>
+                                    <textarea name="message" id="message" rows="4" class="block rounded-lg px-4 pb-2.5 pt-5 w-full text-sm shadow text-gray-900 bg-white border border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-[#1d78be] peer" placeholder=""></textarea>
+
+                                </div>
+
+                                <!-- Бутон -->
+                                <button type="button" @click="alpineListeners('post.meetings', $el)" keyName="meetingSuccess" @success="console.log('success');callModal($el)" data-modal="meetingSuccess" class="btn !mt-8 text-white bg-gray-900 !mr-2">
+                                    Резервирай сега
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- SUCCESS MEETING MODAL -->
+    <div x-show="data.modals.meetingSuccess" x-cloak x-transition:enter.duration.400ms x-transition:leave.duration.150ms class="backdrop-blur bg-gray-950/70 fixed block md:flex items-center justify-center top-0 left-0 w-full h-full z-50 overflow-auto">
+
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl relative">
+
+            <!-- Close -->
+            <button @click="callModal($el)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="flex flex-col items-center text-center px-6 pt-8 pb-6 border-b">
+                <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-check text-green-600 text-2xl"></i>
+                </div>
+
+                <h3 class="text-xl font-semibold text-gray-900">
+                    Срещата е запазена успешно
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-2">
+                    Получихме вашата заявка. По-долу ще намерите детайлите за срещата.
+                </p>
+            </div>
+
+            <!-- Content -->
+            <div class="px-6 py-6 space-y-4">
+
+                <!-- Service -->
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-briefcase text-gray-900 mt-1"></i>
+                    <div>
+                        <p class="text-xs text-gray-500">Услуга</p>
+                        <p x-text="Object.values(data.meeting_calendars).find(obj => obj.id == data.meetingSuccess.calendar_id).title" class="text-sm font-medium text-gray-900"></p>
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-calendar-days text-gray-900 mt-1"></i>
+                    <div>
+                        <p class="text-xs text-gray-500">Дата</p>
+                        <p x-text="selectedDate" class="text-sm font-medium text-gray-900">
+                            24 март 2025
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Time -->
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-clock text-gray-900 mt-1"></i>
+                    <div>
+                        <p class="text-xs text-gray-500">Час</p>
+                        <p class="text-sm font-medium text-gray-900">
+                            <span x-text="selectedSlot.time_start"></span> – <span x-text="selectedSlot.time_end"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Meeting link -->
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-video text-gray-900 mt-1"></i>
+                    <div class="flex-1">
+                        <p class="text-xs text-gray-500">Линк за срещата</p>
+                        <a :href="Object.values(data.meeting_calendars).find(obj => obj.id == data.meetingSuccess.calendar_id).link" x-text="Object.values(data.meeting_calendars).find(obj => obj.id == data.meetingSuccess.calendar_id).link" class="text-sm font-medium text-[#1d78be] hover:underline break-all">
+                            https://meet.example.com/abc-123
+                        </a>
+                    </div>
+                </div>
+                <button type="button" @click="
+        (() => {
+            const calendar = Object.values(data.meeting_calendars)
+                .find(c => c.id == data.meetingSuccess.calendar_id);
+
+            if (!calendar || !selectedDate || !selectedSlot) return;
+
+            const title = calendar.title;
+            const link  = calendar.link ?? '';
+
+            const format = (date, time) => {
+                const [y, m, d] = date.split('-');
+                const [hh, mm]  = time.split(':');
+                return `${y}${m}${d}T${hh}${mm}00`;
+            };
+
+            const start = format(selectedDate, selectedSlot.time_start);
+            const end   = format(selectedDate, selectedSlot.time_end);
+
+            const url =
+                'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+                `&text=${encodeURIComponent(title)}` +
+                `&dates=${start}/${end}` +
+                `&details=${encodeURIComponent('Линк за срещата: ' + link)}` +
+                `&location=${encodeURIComponent(link)}` +
+                `&ctz=Europe/Sofia`;
+
+            window.open(url, '_blank');
+        })()
+    " class="w-fit rounded-lg bg-green-100 gap-1 text-green-600 px-4 py-2 text-sm font-medium text-start px-4 py-2.5 hover:bg-green-200 transition">
+                    <i class="fa-solid fa-calendar-plus mr-2"></i>
+                    Добави в Google Calendar
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 pb-6 pt-2 flex gap-3">
+
+                <button @click="callModal($el)" class="w-full rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white text-center hover:bg-gray-800 transition">
+                    Затвори
+                </button>
+            </div>
+
+        </div>
+    </div>
+
 </div>
