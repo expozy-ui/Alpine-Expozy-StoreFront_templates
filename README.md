@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/expozy-ui-templates-logo.png" alt="Expozy Themes" width="400">
+  <img src="expozy-ui-templates-logo.png" alt="Expozy Themes" width="400">
 </p>
 
 <h1 align="center">Expozy Themes Collection</h1>
