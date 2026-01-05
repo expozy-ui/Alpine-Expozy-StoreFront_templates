@@ -1,0 +1,277 @@
+<!-- Pricing Page Hero Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div class="container mx-auto px-4 py-16 lg:py-24">
+        <div class="text-center max-w-3xl mx-auto">
+            <span class="inline-block px-4 py-2 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4">Ценообразуване</span>
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-6">Прости и прозрачни цени</h1>
+            <p class="text-lg text-slate-300 leading-relaxed">Изберете плана, който отговаря на вашите нужди. Без скрити такси, без изненади.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Pricing Cards Section -->
+<div class="is-section bg-slate-50 dark:bg-gray-900 py-16 lg:py-24" x-data="{billingPeriod: 'monthly'}">
+    <div class="container mx-auto px-4">
+        <!-- Billing Toggle -->
+        <div class="flex items-center justify-center gap-4 mb-12">
+            <span class="font-medium transition-colors" :class="billingPeriod === 'monthly' ? 'text-amber-600 dark:text-amber-500' : 'text-slate-600 dark:text-slate-400'">Месечно</span>
+            <button @click="billingPeriod = billingPeriod === 'monthly' ? 'yearly' : 'monthly'" class="relative w-16 h-8 rounded-full transition-colors" :class="billingPeriod === 'yearly' ? 'bg-amber-600' : 'bg-slate-300 dark:bg-gray-700'">
+                <span class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300" :class="billingPeriod === 'yearly' ? 'translate-x-8' : ''"></span>
+            </button>
+            <span class="font-medium transition-colors" :class="billingPeriod === 'yearly' ? 'text-amber-600 dark:text-amber-500' : 'text-slate-600 dark:text-slate-400'">
+                Годишно
+                <span class="ml-1 text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full">Спестете 20%</span>
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Starter Plan -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-slate-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                <div class="p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-gray-700 flex items-center justify-center">
+                            <i class="fa-solid fa-rocket text-slate-600 dark:text-slate-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Стартов</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">За индивидуални потребители</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-bold text-slate-900 dark:text-white" x-text="billingPeriod === 'monthly' ? '29 лв.' : '23 лв.'">29 лв.</span>
+                            <span class="text-slate-600 dark:text-slate-400">/месец</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-slate-500 mt-1" x-show="billingPeriod === 'yearly'">Таксувано годишно (276 лв./година)</p>
+                    </div>
+
+                    <a href="/bg/registration" class="block w-full py-3 px-6 text-center bg-slate-100 dark:bg-gray-700 text-slate-900 dark:text-white font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-gray-600 transition-colors">
+                        Започнете
+                    </a>
+                </div>
+
+                <div class="border-t border-slate-200 dark:border-gray-700 p-8">
+                    <p class="font-semibold text-slate-900 dark:text-white mb-4">Включено в Стартов:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">До 100 продукта</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Основни анализи</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Имейл поддръжка</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">SSL сертификат</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Мобилен респонсив</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Professional Plan (Featured) -->
+            <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-2xl overflow-hidden relative transform scale-105 z-10">
+                <div class="absolute top-0 right-0 bg-white text-amber-600 px-4 py-1 rounded-bl-xl font-bold text-sm">
+                    Най-популярен
+                </div>
+                <div class="p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                            <i class="fa-solid fa-gem text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Професионален</h3>
+                            <p class="text-sm text-amber-100">За растящи бизнеси</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-bold text-white" x-text="billingPeriod === 'monthly' ? '79 лв.' : '63 лв.'">79 лв.</span>
+                            <span class="text-amber-100">/месец</span>
+                        </div>
+                        <p class="text-sm text-amber-100 mt-1" x-show="billingPeriod === 'yearly'">Таксувано годишно (756 лв./година)</p>
+                    </div>
+
+                    <a href="/bg/registration" class="block w-full py-3 px-6 text-center bg-white text-amber-600 font-semibold rounded-xl hover:bg-amber-50 transition-colors">
+                        Започнете
+                    </a>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8">
+                    <p class="font-semibold text-slate-900 dark:text-white mb-4">Включено в Професионален:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Неограничени продукти</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Разширени анализи</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Приоритетна поддръжка</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Персонализиран домейн</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Маркетинг автоматизация</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Възстановяване на изоставени колички</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-slate-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                <div class="p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-gray-700 flex items-center justify-center">
+                            <i class="fa-solid fa-building text-slate-600 dark:text-slate-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Корпоративен</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">За големи организации</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-bold text-slate-900 dark:text-white" x-text="billingPeriod === 'monthly' ? '249 лв.' : '199 лв.'">249 лв.</span>
+                            <span class="text-slate-600 dark:text-slate-400">/месец</span>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-slate-500 mt-1" x-show="billingPeriod === 'yearly'">Таксувано годишно (2388 лв./година)</p>
+                    </div>
+
+                    <a href="/bg/contacts" class="block w-full py-3 px-6 text-center bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold rounded-xl hover:bg-slate-800 dark:hover:bg-white transition-colors">
+                        Свържете се с нас
+                    </a>
+                </div>
+
+                <div class="border-t border-slate-200 dark:border-gray-700 p-8">
+                    <p class="font-semibold text-slate-900 dark:text-white mb-4">Включено в Корпоративен:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Всичко от Професионален</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Персонален мениджър</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">24/7 телефонна поддръжка</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">Персонализирани интеграции</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                            <span class="text-slate-600 dark:text-slate-400">SLA гаранция</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="is-section bg-white dark:bg-gray-800 py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4">Въпроси за ценообразуването</h2>
+            <p class="text-slate-600 dark:text-slate-400">Често задавани въпроси за нашите цени и планове.</p>
+        </div>
+
+        <div class="max-w-3xl mx-auto space-y-4" x-data="{openFaq: null}">
+            <!-- FAQ 1 -->
+            <div class="bg-slate-50 dark:bg-gray-900 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                <button @click="openFaq === 1 ? openFaq = null : openFaq = 1" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-slate-900 dark:text-white pr-4">Мога ли да сменя плана си по всяко време?</span>
+                    <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 1 ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="openFaq === 1" x-collapse x-cloak class="px-6 pb-5">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Да! Можете да надградите или понижите плана си по всяко време. При надграждане промяната влиза в сила незабавно и ще бъдете таксувани пропорционално за остатъка от периода. При понижаване промяната ще влезе в сила в началото на следващия период на таксуване.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-slate-50 dark:bg-gray-900 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                <button @click="openFaq === 2 ? openFaq = null : openFaq = 2" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-slate-900 dark:text-white pr-4">Има ли безплатен пробен период?</span>
+                    <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 2 ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="openFaq === 2" x-collapse x-cloak class="px-6 pb-5">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Да, предлагаме 14-дневен безплатен пробен период за всички планове. Не се изисква кредитна карта за започване. Ще имате пълен достъп до всички функции през пробния период.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-slate-50 dark:bg-gray-900 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                <button @click="openFaq === 3 ? openFaq = null : openFaq = 3" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-slate-900 dark:text-white pr-4">Какви методи на плащане приемате?</span>
+                    <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 3 ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="openFaq === 3" x-collapse x-cloak class="px-6 pb-5">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Приемаме всички основни кредитни карти (Visa, Mastercard, American Express), PayPal и банкови преводи за годишни планове. Корпоративни клиенти могат също да плащат с фактура.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="bg-slate-50 dark:bg-gray-900 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                <button @click="openFaq === 4 ? openFaq = null : openFaq = 4" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="font-semibold text-slate-900 dark:text-white pr-4">Предлагате ли възстановяване на средства?</span>
+                    <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 4 ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="openFaq === 4" x-collapse x-cloak class="px-6 pb-5">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Предлагаме 30-дневна гаранция за връщане на парите за всички планове. Ако не сте доволни от услугата по каквато и да е причина, свържете се с нас в рамките на 30 дни от покупката за пълно възстановяване.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="is-section bg-gradient-to-r from-amber-500 to-amber-600 py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">Готови да започнете?</h2>
+        <p class="text-lg text-amber-100 max-w-2xl mx-auto mb-8">
+            Присъединете се към хиляди бизнеси, които ни се доверяват за техния онлайн успех.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/bg/registration" class="px-8 py-4 bg-white text-amber-600 font-bold rounded-xl hover:bg-amber-50 transition-all shadow-lg transform hover:scale-105">
+                Започнете безплатен пробен период
+            </a>
+            <a href="/bg/contacts" class="px-8 py-4 bg-amber-700 text-white font-bold rounded-xl hover:bg-amber-800 transition-all">
+                Свържете се с нас
+            </a>
+        </div>
+    </div>
+</div>

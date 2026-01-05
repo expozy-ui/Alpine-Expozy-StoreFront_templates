@@ -1,0 +1,297 @@
+<!-- FAQ Page Hero Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div class="container mx-auto px-4 py-16 lg:py-24">
+        <div class="text-center max-w-3xl mx-auto">
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-6">Frequently Asked Questions</h1>
+            <p class="text-lg text-slate-300 leading-relaxed">Find answers to common questions about our products, shipping, returns, and more.</p>
+
+            <!-- Search FAQ -->
+            <div class="mt-8 max-w-xl mx-auto">
+                <div class="relative">
+                    <input type="text" placeholder="Search questions..." class="w-full px-6 py-4 pl-14 bg-white dark:bg-gray-800 text-slate-900 dark:text-white rounded-xl border-2 border-transparent focus:border-amber-500 focus:ring-0 shadow-lg transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Categories Navigation -->
+<div class="is-section bg-white dark:bg-gray-900 border-b border-slate-200 dark:border-gray-800 sticky top-0 z-30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-center gap-2 py-4 overflow-x-auto" x-data="{activeCategory: 'orders'}">
+            <button @click="activeCategory = 'orders'" :class="activeCategory === 'orders' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-box mr-2"></i>Orders
+            </button>
+            <button @click="activeCategory = 'shipping'" :class="activeCategory === 'shipping' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-truck mr-2"></i>Shipping
+            </button>
+            <button @click="activeCategory = 'returns'" :class="activeCategory === 'returns' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-rotate-left mr-2"></i>Returns
+            </button>
+            <button @click="activeCategory = 'payments'" :class="activeCategory === 'payments' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-credit-card mr-2"></i>Payments
+            </button>
+            <button @click="activeCategory = 'account'" :class="activeCategory === 'account' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-user mr-2"></i>Account
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Accordion Section -->
+<div class="is-section bg-slate-50 dark:bg-gray-900 py-16 lg:py-24">
+    <div class="container mx-auto px-4 max-w-4xl">
+
+        <!-- Orders FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-box text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Orders</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 1 ? openFaq = null : openFaq = 1" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">How do I place an order?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 1 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Placing an order is simple! Browse our products, add items to your cart, and proceed to checkout. You'll need to provide your shipping address and payment information. Once confirmed, you'll receive an order confirmation email with your order details and tracking information.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 2 ? openFaq = null : openFaq = 2" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Can I modify or cancel my order?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 2 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            You can modify or cancel your order within 1 hour of placing it. After that, the order enters processing and cannot be changed. Contact our customer support team immediately if you need to make changes. For orders already shipped, you'll need to wait for delivery and then initiate a return.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 3 ? openFaq = null : openFaq = 3" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">How can I track my order?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 3 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Once your order ships, you'll receive an email with a tracking number and link. You can also track your order by logging into your account and visiting the "Orders" section. Real-time tracking updates are provided by our shipping partners.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-truck text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Shipping</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 4 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 4 ? openFaq = null : openFaq = 4" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">What are the shipping options?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 4 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 4" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-3">We offer several shipping options:</p>
+                        <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 space-y-2">
+                            <li><strong>Standard Shipping:</strong> 5-7 business days</li>
+                            <li><strong>Express Shipping:</strong> 2-3 business days</li>
+                            <li><strong>Next Day Delivery:</strong> Order by 2 PM for next business day</li>
+                            <li><strong>Free Shipping:</strong> Available on orders over $50</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 5 ? openFaq = null : openFaq = 5" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Do you ship internationally?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 5 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 5" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Yes, we ship to over 100 countries worldwide! International shipping times vary by destination, typically ranging from 7-21 business days. Please note that international orders may be subject to customs duties and taxes, which are the responsibility of the recipient.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 6 ? openFaq = null : openFaq = 6" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">What if my package is lost or damaged?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 6 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 6" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            We take full responsibility for lost or damaged packages. Contact our customer support within 48 hours of delivery (or expected delivery date for lost packages). We'll either reship your order at no additional cost or provide a full refund, whichever you prefer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Returns FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-rotate-left text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Returns & Refunds</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 7 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 7 ? openFaq = null : openFaq = 7" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">What is your return policy?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 7 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 7" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            We offer a 30-day return policy for most items. Products must be unused, in original packaging, and with all tags attached. Some items like personalized products, intimate apparel, and sale items may have different return conditions. Contact us to initiate a return.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 8 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 8 ? openFaq = null : openFaq = 8" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">How long do refunds take?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 8 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 8" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Once we receive your returned item, we'll inspect it within 2-3 business days. If approved, your refund will be processed and credited to your original payment method within 5-7 business days. Please note that your bank may take additional time to post the credit to your account.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-credit-card text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Payments</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 9 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 9 ? openFaq = null : openFaq = 9" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">What payment methods do you accept?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 9 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 9" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-3">We accept a wide variety of payment methods:</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Visa</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Mastercard</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">American Express</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">PayPal</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Apple Pay</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Google Pay</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Bank Transfer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 10 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 10 ? openFaq = null : openFaq = 10" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Is my payment information secure?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 10 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 10" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Absolutely! We use industry-standard SSL encryption to protect your personal and payment information. We never store your complete credit card details on our servers. All transactions are processed through secure, PCI-compliant payment gateways.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-user text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Account</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 11 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 11 ? openFaq = null : openFaq = 11" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">How do I create an account?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 11 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 11" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Creating an account is easy and free! Click the "Sign Up" button at the top of the page, enter your email address and create a password. You can also sign up using your Google or Facebook account for faster registration.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 12 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 12 ? openFaq = null : openFaq = 12" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">I forgot my password. What do I do?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 12 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 12" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            No worries! Click the "Forgot Password" link on the login page and enter your email address. We'll send you a password reset link that's valid for 24 hours. Click the link and create a new password. If you don't receive the email, check your spam folder or contact support.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Still Have Questions CTA -->
+<div class="is-section bg-white dark:bg-gray-800 py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-headset text-white text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Still have questions?</h2>
+            <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">
+                Can't find the answer you're looking for? Our friendly customer support team is here to help!
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/en/contacts" class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <i class="fa-solid fa-envelope mr-2"></i>Contact Support
+                </a>
+                <a href="tel:0888999888" class="px-8 py-4 bg-slate-100 dark:bg-gray-700 text-slate-900 dark:text-white font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-gray-600 transition-all">
+                    <i class="fa-solid fa-phone mr-2"></i>Call Us
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

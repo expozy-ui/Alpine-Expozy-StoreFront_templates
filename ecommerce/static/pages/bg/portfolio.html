@@ -1,0 +1,257 @@
+<!-- Portfolio Page Hero Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div class="container mx-auto px-4 py-16 lg:py-24">
+        <div class="text-center max-w-3xl mx-auto">
+            <span class="inline-block px-4 py-2 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4">Нашата работа</span>
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-6">Портфолио и казуси</h1>
+            <p class="text-lg text-slate-300 leading-relaxed">Разгледайте нашите най-нови проекти и вижте как помогнахме на бизнесите да постигнат целите си.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Section -->
+<div class="is-section bg-white dark:bg-gray-900 py-8 border-b border-slate-200 dark:border-gray-800 sticky top-0 z-30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-center gap-2 flex-wrap" x-data="{activeFilter: 'all'}">
+            <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Всички проекти
+            </button>
+            <button @click="activeFilter = 'ecommerce'" :class="activeFilter === 'ecommerce' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Електронна търговия
+            </button>
+            <button @click="activeFilter = 'web'" :class="activeFilter === 'web' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Уеб дизайн
+            </button>
+            <button @click="activeFilter = 'branding'" :class="activeFilter === 'branding' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Брандинг
+            </button>
+            <button @click="activeFilter = 'marketing'" :class="activeFilter === 'marketing' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Маркетинг
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Portfolio Grid Section -->
+<div class="is-section bg-slate-50 dark:bg-gray-900 py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Portfolio Item 1 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1115&q=80" alt="Модна търговия" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Електронна търговия</span>
+                                <h3 class="text-xl font-bold text-white">Редизайн на модна търговия</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Редизайн на модна търговия</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Пълен редизайн на електронна търговия, довел до 150% увеличение на конверсиите.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Shopify</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">UX Дизайн</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 2 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Технологичен стартъп" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Уеб дизайн</span>
+                                <h3 class="text-xl font-bold text-white">Уебсайт за технологичен стартъп</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Уебсайт за технологичен стартъп</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Модерна SaaS лендинг страница с интерактивни функции и форми за генериране на потенциални клиенти.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">React</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Tailwind</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 3 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Ресторант брандинг" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Брандинг</span>
+                                <h3 class="text-xl font-bold text-white">Ребрандиране на ресторант</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Ребрандиране на ресторант</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Пълна промяна на идентичността на марката, включително лого, дизайн на менюто и маркетингови материали.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Брандинг</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Печат</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 4 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Фитнес магазин" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Електронна търговия</span>
+                                <h3 class="text-xl font-bold text-white">Магазин за фитнес оборудване</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Магазин за фитнес оборудване</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Персонализирано решение за електронна търговия с управление на абонаменти и проследяване на инвентара.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">WooCommerce</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Custom</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 5 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Дигитална кампания" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Маркетинг</span>
+                                <h3 class="text-xl font-bold text-white">Кампания в социалните мрежи</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Кампания в социалните мрежи</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Интегрирана стратегия за социални медии, която увеличи ангажираността с 300%.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Social</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">PPC</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 6 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Корпоративен портал" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Уеб дизайн</span>
+                                <h3 class="text-xl font-bold text-white">Корпоративен портал</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Корпоративен портал</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Корпоративно интранет решение с управление на документи и екипно сътрудничество.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Vue.js</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Node.js</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button class="px-8 py-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-white transition-all shadow-lg transform hover:scale-105">
+                Зареди още проекти
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="is-section bg-white dark:bg-gray-800 py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">250+</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Завършени проекти</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">98%</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Удовлетвореност на клиентите</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">15+</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Индустриални награди</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">50+</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Активни клиенти</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-16 lg:py-24">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Готови да започнете вашия проект?</h2>
+        <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
+            Нека създадем нещо невероятно заедно. Свържете се с нас, за да обсъдим изискванията на вашия проект.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/bg/contacts" class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg transform hover:scale-105">
+                <i class="fa-solid fa-paper-plane mr-2"></i>Започнете проект
+            </a>
+            <a href="/bg/services" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-xl hover:bg-white/20 transition-all border border-white/20">
+                <i class="fa-solid fa-list mr-2"></i>Вижте услугите
+            </a>
+        </div>
+    </div>
+</div>

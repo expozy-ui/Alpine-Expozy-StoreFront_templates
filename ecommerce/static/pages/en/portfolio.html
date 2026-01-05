@@ -1,0 +1,336 @@
+<!-- Portfolio Page Hero Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div class="container mx-auto px-4 py-16 lg:py-24">
+        <div class="text-center max-w-3xl mx-auto">
+            <span class="inline-block px-4 py-2 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-4">Our Work</span>
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-6">Portfolio & Case Studies</h1>
+            <p class="text-lg text-slate-300 leading-relaxed">Explore our latest projects and see how we've helped businesses achieve their goals.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Section -->
+<div class="is-section bg-white dark:bg-gray-900 py-8 border-b border-slate-200 dark:border-gray-800 sticky top-0 z-30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-center gap-2 flex-wrap" x-data="{activeFilter: 'all'}">
+            <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                All Projects
+            </button>
+            <button @click="activeFilter = 'ecommerce'" :class="activeFilter === 'ecommerce' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                E-commerce
+            </button>
+            <button @click="activeFilter = 'web'" :class="activeFilter === 'web' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Web Design
+            </button>
+            <button @click="activeFilter = 'branding'" :class="activeFilter === 'branding' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Branding
+            </button>
+            <button @click="activeFilter = 'marketing'" :class="activeFilter === 'marketing' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all">
+                Marketing
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Portfolio Grid Section -->
+<div class="is-section bg-slate-50 dark:bg-gray-900 py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Portfolio Item 1 -->
+            <div class="group cursor-pointer" x-data="{showModal: false}">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1115&q=80" alt="Fashion Store" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">E-commerce</span>
+                                <h3 class="text-xl font-bold text-white">Fashion Store Redesign</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Fashion Store Redesign</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Complete e-commerce platform redesign resulting in 150% increase in conversions.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Shopify</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">UX Design</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 2 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Tech Startup" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Web Design</span>
+                                <h3 class="text-xl font-bold text-white">Tech Startup Website</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Tech Startup Website</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Modern SaaS landing page with interactive features and lead generation forms.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">React</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Tailwind</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 3 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Restaurant Brand" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Branding</span>
+                                <h3 class="text-xl font-bold text-white">Restaurant Rebrand</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Restaurant Rebrand</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Complete brand identity overhaul including logo, menu design, and marketing collateral.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Branding</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Print</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 4 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Fitness App" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">E-commerce</span>
+                                <h3 class="text-xl font-bold text-white">Fitness Equipment Store</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Fitness Equipment Store</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Custom e-commerce solution with subscription management and inventory tracking.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">WooCommerce</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Custom</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 5 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Digital Campaign" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Marketing</span>
+                                <h3 class="text-xl font-bold text-white">Social Media Campaign</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Social Media Campaign</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Integrated social media strategy that increased engagement by 300%.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Social</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">PPC</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 6 -->
+            <div class="group cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Corporate Website" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="inline-block px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full mb-2">Web Design</span>
+                                <h3 class="text-xl font-bold text-white">Corporate Portal</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Corporate Portal</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">Enterprise-level intranet solution with document management and team collaboration.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Vue.js</span>
+                                <span class="px-2 py-1 bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-400 text-xs rounded">Node.js</span>
+                            </div>
+                            <button class="text-amber-600 hover:text-amber-700 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button class="px-8 py-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-white transition-all shadow-lg transform hover:scale-105">
+                Load More Projects
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="is-section bg-white dark:bg-gray-800 py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">250+</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Projects Completed</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">98%</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Client Satisfaction</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">15+</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Industry Awards</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl lg:text-5xl font-bold text-amber-600 mb-2">50+</div>
+                <p class="text-slate-600 dark:text-slate-400 font-medium">Active Clients</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Case Study -->
+<div class="is-section bg-slate-50 dark:bg-gray-900 py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="inline-block px-4 py-2 bg-amber-600/20 text-amber-600 dark:text-amber-500 rounded-full text-sm font-semibold mb-4">Featured Case Study</span>
+            <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4">How We Helped TechCorp Increase Sales by 300%</h2>
+        </div>
+
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Case Study" class="w-full h-full object-cover min-h-[300px]">
+                        <div class="absolute inset-0 bg-gradient-to-r from-amber-600/90 to-amber-500/70 flex items-center justify-center lg:hidden">
+                            <div class="text-center text-white p-6">
+                                <div class="text-5xl font-bold mb-2">300%</div>
+                                <p class="text-lg">Sales Increase</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 lg:p-12">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://images.unsplash.com/photo-1572021335469-31706a17ber?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="TechCorp Logo" class="w-16 h-16 rounded-xl object-cover">
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white">TechCorp Industries</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Technology & Software</p>
+                            </div>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">The Challenge</h4>
+                        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                            TechCorp was struggling with an outdated e-commerce platform that couldn't keep up with their growing customer base. They needed a complete digital transformation.
+                        </p>
+
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Our Solution</h4>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                <span class="text-slate-600 dark:text-slate-400">Custom e-commerce platform with headless architecture</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                <span class="text-slate-600 dark:text-slate-400">Integrated marketing automation system</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                <span class="text-slate-600 dark:text-slate-400">Mobile-first responsive design</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                <span class="text-slate-600 dark:text-slate-400">Advanced analytics dashboard</span>
+                            </li>
+                        </ul>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-4 bg-slate-50 dark:bg-gray-700 rounded-xl">
+                                <div class="text-2xl font-bold text-amber-600">300%</div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400">Sales Growth</p>
+                            </div>
+                            <div class="text-center p-4 bg-slate-50 dark:bg-gray-700 rounded-xl">
+                                <div class="text-2xl font-bold text-amber-600">50%</div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400">Cost Reduction</p>
+                            </div>
+                            <div class="text-center p-4 bg-slate-50 dark:bg-gray-700 rounded-xl">
+                                <div class="text-2xl font-bold text-amber-600">2x</div>
+                                <p class="text-xs text-slate-600 dark:text-slate-400">Faster Load Time</p>
+                            </div>
+                        </div>
+
+                        <a href="#" class="inline-flex items-center gap-2 text-amber-600 font-semibold hover:gap-3 transition-all">
+                            Read Full Case Study <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-16 lg:py-24">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Ready to Start Your Project?</h2>
+        <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
+            Let's create something amazing together. Get in touch to discuss your project requirements.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/en/contacts" class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg transform hover:scale-105">
+                <i class="fa-solid fa-paper-plane mr-2"></i>Start a Project
+            </a>
+            <a href="/en/services" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-xl hover:bg-white/20 transition-all border border-white/20">
+                <i class="fa-solid fa-list mr-2"></i>View Services
+            </a>
+        </div>
+    </div>
+</div>

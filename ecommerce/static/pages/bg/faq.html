@@ -1,0 +1,244 @@
+<!-- FAQ Page Hero Section -->
+<div class="is-section bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div class="container mx-auto px-4 py-16 lg:py-24">
+        <div class="text-center max-w-3xl mx-auto">
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-6">Често задавани въпроси</h1>
+            <p class="text-lg text-slate-300 leading-relaxed">Намерете отговори на често задавани въпроси за нашите продукти, доставка, връщане и други.</p>
+
+            <!-- Search FAQ -->
+            <div class="mt-8 max-w-xl mx-auto">
+                <div class="relative">
+                    <input type="text" placeholder="Търсене на въпроси..." class="w-full px-6 py-4 pl-14 bg-white dark:bg-gray-800 text-slate-900 dark:text-white rounded-xl border-2 border-transparent focus:border-amber-500 focus:ring-0 shadow-lg transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Categories Navigation -->
+<div class="is-section bg-white dark:bg-gray-900 border-b border-slate-200 dark:border-gray-800 sticky top-0 z-30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-center gap-2 py-4 overflow-x-auto" x-data="{activeCategory: 'orders'}">
+            <button @click="activeCategory = 'orders'" :class="activeCategory === 'orders' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-box mr-2"></i>Поръчки
+            </button>
+            <button @click="activeCategory = 'shipping'" :class="activeCategory === 'shipping' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-truck mr-2"></i>Доставка
+            </button>
+            <button @click="activeCategory = 'returns'" :class="activeCategory === 'returns' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-rotate-left mr-2"></i>Връщане
+            </button>
+            <button @click="activeCategory = 'payments'" :class="activeCategory === 'payments' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-credit-card mr-2"></i>Плащания
+            </button>
+            <button @click="activeCategory = 'account'" :class="activeCategory === 'account' ? 'bg-amber-600 text-white shadow-lg' : 'bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="px-6 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap">
+                <i class="fa-solid fa-user mr-2"></i>Профил
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Accordion Section -->
+<div class="is-section bg-slate-50 dark:bg-gray-900 py-16 lg:py-24">
+    <div class="container mx-auto px-4 max-w-4xl">
+
+        <!-- Orders FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-box text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Поръчки</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 1 ? openFaq = null : openFaq = 1" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Как да направя поръчка?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 1 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Поръчването е лесно! Разгледайте нашите продукти, добавете артикули в кошницата и продължете към плащане. Ще трябва да предоставите адрес за доставка и информация за плащане. След потвърждение ще получите имейл с подробности за поръчката и информация за проследяване.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 2 ? openFaq = null : openFaq = 2" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Мога ли да променя или отменя поръчката си?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 2 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Можете да промените или отмените поръчката си в рамките на 1 час след нейното направяне. След това поръчката влиза в обработка и не може да бъде променена. Свържете се незабавно с нашия екип за поддръжка, ако трябва да направите промени.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 3 ? openFaq = null : openFaq = 3" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Как мога да проследя поръчката си?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 3 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            След като поръчката ви бъде изпратена, ще получите имейл с номер за проследяване и линк. Можете също да проследите поръчката си, като влезете в профила си и посетите секцията "Поръчки". Актуализации в реално време се предоставят от нашите партньори за доставка.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-truck text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Доставка</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 4 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 4 ? openFaq = null : openFaq = 4" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Какви са опциите за доставка?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 4 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 4" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-3">Предлагаме няколко опции за доставка:</p>
+                        <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 space-y-2">
+                            <li><strong>Стандартна доставка:</strong> 5-7 работни дни</li>
+                            <li><strong>Експресна доставка:</strong> 2-3 работни дни</li>
+                            <li><strong>Доставка на следващия ден:</strong> Поръчайте до 14:00 за доставка на следващия работен ден</li>
+                            <li><strong>Безплатна доставка:</strong> При поръчки над 50 лв.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 5 ? openFaq = null : openFaq = 5" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Доставяте ли в чужбина?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 5 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 5" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Да, доставяме в над 100 държави по света! Сроковете за международна доставка варират в зависимост от дестинацията, обикновено от 7 до 21 работни дни. Моля, имайте предвид, че международните поръчки могат да бъдат облагани с мита и данъци.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Returns FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-rotate-left text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Връщане и възстановяване</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 7 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 7 ? openFaq = null : openFaq = 7" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Каква е политиката ви за връщане?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 7 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 7" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Предлагаме 30-дневна политика за връщане за повечето артикули. Продуктите трябва да са неизползвани, в оригинална опаковка и с всички етикети. Някои артикули като персонализирани продукти и артикули в намаление могат да имат различни условия за връщане.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 8 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 8 ? openFaq = null : openFaq = 8" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Колко време отнема възстановяването на сумата?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 8 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 8" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            След като получим върнатия артикул, ще го прегледаме в рамките на 2-3 работни дни. Ако бъде одобрен, възстановяването ще бъде обработено и преведено към оригиналния ви метод на плащане в рамките на 5-7 работни дни.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments FAQ -->
+        <div class="mb-12" x-data="{openFaq: null}">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-credit-card text-white text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Плащания</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 9 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 9 ? openFaq = null : openFaq = 9" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Какви методи на плащане приемате?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 9 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 9" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-3">Приемаме различни методи на плащане:</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Visa</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Mastercard</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">PayPal</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Наложен платеж</span>
+                            <span class="px-3 py-1.5 bg-slate-100 dark:bg-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300">Банков превод</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 10 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-slate-200 dark:border-gray-700">
+                    <button @click="openFaq === 10 ? openFaq = null : openFaq = 10" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-gray-750 transition-colors">
+                        <span class="font-semibold text-slate-900 dark:text-white pr-4">Защитена ли е информацията ми за плащане?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform duration-300" :class="openFaq === 10 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 10" x-collapse x-cloak class="px-6 pb-5">
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Абсолютно! Използваме стандартно SSL криптиране за защита на личната ви информация и данни за плащане. Никога не съхраняваме пълните данни на кредитните ви карти на нашите сървъри. Всички транзакции се обработват чрез сигурни платежни шлюзове.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Still Have Questions CTA -->
+<div class="is-section bg-white dark:bg-gray-800 py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-headset text-white text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Все още имате въпроси?</h2>
+            <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">
+                Не можете да намерите отговора, който търсите? Нашият екип за поддръжка е тук, за да помогне!
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/bg/contacts" class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <i class="fa-solid fa-envelope mr-2"></i>Свържете се с нас
+                </a>
+                <a href="tel:0888999888" class="px-8 py-4 bg-slate-100 dark:bg-gray-700 text-slate-900 dark:text-white font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-gray-600 transition-all">
+                    <i class="fa-solid fa-phone mr-2"></i>Обадете ни се
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
