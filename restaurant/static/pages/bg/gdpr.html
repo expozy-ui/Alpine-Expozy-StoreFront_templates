@@ -1,0 +1,109 @@
+<!-- Restaurant Privacy Policy / GDPR Page - Bulgarian -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-amber-600 to-amber-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Политика за поверителност</h1>
+            <p class="text-amber-100">Последна актуализация: Януари 2024</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 md:p-12">
+                <!-- Table of Contents -->
+                <div class="mb-12 p-6 bg-stone-100 dark:bg-stone-700 rounded-xl">
+                    <h3 class="font-bold text-stone-800 dark:text-white mb-4">Съдържание</h3>
+                    <ul class="space-y-2 text-amber-600">
+                        <li><a href="#introduction" class="hover:text-amber-700">1. Въведение</a></li>
+                        <li><a href="#data-collection" class="hover:text-amber-700">2. Данни, които събираме</a></li>
+                        <li><a href="#data-use" class="hover:text-amber-700">3. Как използваме данните</a></li>
+                        <li><a href="#your-rights" class="hover:text-amber-700">4. Вашите права</a></li>
+                        <li><a href="#contact" class="hover:text-amber-700">5. Свържете се с нас</a></li>
+                    </ul>
+                </div>
+
+                <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:text-stone-800 dark:prose-headings:text-white prose-p:text-stone-600 dark:prose-p:text-stone-400">
+
+                    <h2 id="introduction">1. Въведение</h2>
+                    <p>
+                        Добре дошли в нашата Политика за поверителност. Ние уважаваме вашата поверителност и сме ангажирани да защитаваме личните ви данни. Тази политика обяснява как събираме, използваме и защитаваме вашата информация.
+                    </p>
+                    <p>
+                        Тази Политика за поверителност е в съответствие с Общия регламент за защита на данните (GDPR) и други приложими закони за защита на данните.
+                    </p>
+
+                    <h2 id="data-collection">2. Данни, които събираме</h2>
+                    <p>Може да събираме и обработваме следните категории лични данни:</p>
+
+                    <h3>Информация, която предоставяте</h3>
+                    <ul>
+                        <li><strong>Данни за контакт:</strong> Име, имейл адрес, телефонен номер, пощенски адрес</li>
+                        <li><strong>Детайли за резервация:</strong> Дата, час, брой гости, специални изисквания, диетични нужди</li>
+                        <li><strong>Информация за акаунт:</strong> Потребителско име, парола, предпочитания</li>
+                        <li><strong>Платежна информация:</strong> Данни за кредитна карта (обработвани сигурно чрез нашия доставчик на плащания)</li>
+                    </ul>
+
+                    <h2 id="data-use">3. Как използваме вашите данни</h2>
+                    <p>Използваме личните ви данни за следните цели:</p>
+                    <ul>
+                        <li><strong>Резервации:</strong> За обработка и управление на резервациите ви</li>
+                        <li><strong>Предоставяне на услуги:</strong> За да ви предоставим услугите, които сте заявили</li>
+                        <li><strong>Комуникация:</strong> За изпращане на потвърждения, напомняния и отговори на запитвания</li>
+                        <li><strong>Маркетинг:</strong> За изпращане на промоционални материали (с ваше съгласие)</li>
+                        <li><strong>Подобрение:</strong> За анализ и подобряване на нашите услуги и уебсайт</li>
+                    </ul>
+
+                    <h2 id="your-rights">4. Вашите права</h2>
+                    <p>Съгласно GDPR, имате следните права:</p>
+                    <ul>
+                        <li><strong>Право на достъп:</strong> Да поискате копие от личните си данни</li>
+                        <li><strong>Право на коригиране:</strong> Да поискате корекция на неточни данни</li>
+                        <li><strong>Право на изтриване:</strong> Да поискате изтриване на вашите данни („право да бъдеш забравен")</li>
+                        <li><strong>Право на ограничаване на обработката:</strong> Да поискате ограничаване на обработката на данни</li>
+                        <li><strong>Право на преносимост на данните:</strong> Да получите данните си в преносим формат</li>
+                        <li><strong>Право на възражение:</strong> Да възразите срещу обработката въз основа на легитимни интереси</li>
+                        <li><strong>Право на оттегляне на съгласието:</strong> Да оттеглите съгласието си по всяко време</li>
+                    </ul>
+                </div>
+
+                <!-- Rights Request Form -->
+                <div class="my-8 p-6 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+                    <h4 class="font-bold text-stone-800 dark:text-white mb-2">Упражнете правата си</h4>
+                    <p class="text-stone-600 dark:text-stone-400 text-sm mb-4">
+                        За да упражните някое от правата си, моля подайте заявка чрез бутона по-долу или се свържете с нас директно.
+                    </p>
+                    <button @click="alpineListeners('GDPR.open_request_form', $event)"
+                        class="px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors">
+                        Подайте заявка за данни
+                    </button>
+                </div>
+
+                <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:text-stone-800 dark:prose-headings:text-white prose-p:text-stone-600 dark:prose-p:text-stone-400">
+                    <h2 id="contact">5. Свържете се с нас</h2>
+                    <p>
+                        Ако имате въпроси относно тази Политика за поверителност или нашите практики за данни, моля свържете се с нашето Длъжностно лице по защита на данните:
+                    </p>
+                    <ul>
+                        <li><strong>Имейл:</strong> <a href="mailto:dpo@restaurant.bg" class="text-amber-600 hover:text-amber-700">dpo@restaurant.bg</a></li>
+                        <li><strong>Телефон:</strong> +359 2 123 4567</li>
+                        <li><strong>Адрес:</strong> бул. Витоша 123, София, 1000</li>
+                    </ul>
+                    <p>
+                        Имате също право да подадете жалба до надзорен орган, ако смятате, че правата ви за защита на данните са нарушени.
+                    </p>
+                </div>
+
+                <!-- Related Links -->
+                <div class="mt-12 pt-8 border-t border-stone-200 dark:border-stone-700">
+                    <h3 class="font-bold text-stone-800 dark:text-white mb-4">Свързани политики</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/bg/cookies" class="text-amber-600 hover:text-amber-700 font-semibold">Политика за бисквитки</a>
+                        <a href="/bg/terms-conditions" class="text-amber-600 hover:text-amber-700 font-semibold">Условия за ползване</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

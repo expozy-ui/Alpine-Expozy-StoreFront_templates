@@ -1,0 +1,92 @@
+<!-- Образователна платформа Блог страница -->
+<div class="min-h-screen bg-white" apidata="get.blog_posts" keyname="posts">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-indigo-600 font-semibold text-sm uppercase tracking-wider">Ресурси за обучение</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mt-2">Нашият блог</h1>
+            <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Съвети, уроци и прозрения за вашето обучение.</p>
+        </div>
+    </section>
+
+    <!-- Категории -->
+    <section class="py-8 bg-white sticky top-32 z-30 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-3" x-data="{ activeCategory: 'all' }">
+                <button @click="activeCategory = 'all'"
+                    :class="activeCategory === 'all' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                    Всички статии
+                </button>
+                <button @click="activeCategory = 'tutorials'"
+                    :class="activeCategory === 'tutorials' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                    Уроци
+                </button>
+                <button @click="activeCategory = 'career'"
+                    :class="activeCategory === 'career' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                    Кариерни съвети
+                </button>
+                <button @click="activeCategory = 'productivity'"
+                    :class="activeCategory === 'productivity' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                    Продуктивност
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Мрежа с блог публикации -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="post in data.posts?.items || []" :key="post.id">
+                    <a :href="'/bg/blog/' + post.slug" class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-slate-100 group">
+                        <div class="h-48 overflow-hidden">
+                            <img :src="post.image" :alt="post.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded" x-text="post.category"></span>
+                                <span class="text-slate-400 text-sm" x-text="post.readTime + ' мин. четене'"></span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors line-clamp-2" x-text="post.title"></h3>
+                            <p class="text-slate-600 text-sm mb-4 line-clamp-2" x-text="post.excerpt"></p>
+                            <div class="flex items-center gap-3">
+                                <img :src="post.author.avatar" :alt="post.author.name" class="w-8 h-8 rounded-full object-cover">
+                                <div>
+                                    <p class="text-slate-800 text-sm font-semibold" x-text="post.author.name"></p>
+                                    <p class="text-slate-400 text-xs" x-text="post.date"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="px-8 py-4 bg-slate-100 text-slate-700 font-semibold rounded-full hover:bg-indigo-600 hover:text-white transition-colors">
+                    Зареди още статии
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Бюлетин -->
+    <section class="py-16 bg-indigo-600">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Бъдете информирани</h2>
+                <p class="text-indigo-100 mb-8">Абонирайте се за последните съвети за обучение и актуализации на курсове.</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Въведете имейл"
+                        class="flex-1 px-6 py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-white">
+                    <button type="submit" class="px-8 py-4 bg-white text-indigo-700 font-semibold rounded-full hover:bg-slate-100 transition-colors">
+                        Абонирай се
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>

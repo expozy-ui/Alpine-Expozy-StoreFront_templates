@@ -1,0 +1,147 @@
+<!-- Образователна платформа Контакти страница -->
+<div class="min-h-screen bg-white">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-indigo-600 font-semibold text-sm uppercase tracking-wider">Свържете се с нас</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mt-2">Контакти</h1>
+            <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Имате въпроси? Тук сме, за да ви помогнем в обучението.</p>
+        </div>
+    </section>
+
+    <!-- Контактни карти -->
+    <section class="py-8 -mt-8 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-location-dot text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Адрес</h3>
+                    <p class="text-slate-600 text-sm">ул. Образование 123<br>1000 София</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Телефон</h3>
+                    <p class="text-slate-600 text-sm">+359 2 123 4567</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-envelope text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Имейл</h3>
+                    <p class="text-slate-600 text-sm">info@learnhub.bg</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-headset text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Поддръжка</h3>
+                    <p class="text-slate-600 text-sm">24/7 Чат на живо</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма и информация -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Контактна форма -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Изпратете съобщение</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Име</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Фамилия</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Имейл</label>
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Тема</label>
+                            <select name="subject"
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                                <option value="">Изберете тема</option>
+                                <option value="general">Общо запитване</option>
+                                <option value="courses">Въпроси за курсове</option>
+                                <option value="technical">Техническа поддръжка</option>
+                                <option value="billing">Плащания</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Съобщение</label>
+                            <textarea name="message" rows="5" required
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"></textarea>
+                        </div>
+                        <button @click="alpineListeners('Contact.submit', $event)" type="button"
+                            class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition-colors">
+                            Изпрати съобщение
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Често задавани въпроси -->
+                <div class="space-y-8">
+                    <div class="bg-slate-50 rounded-2xl p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6">Често задавани въпроси</h2>
+                        <div class="space-y-4" x-data="{ openFaq: null }">
+                            <div class="border-b border-slate-200 pb-4">
+                                <button @click="openFaq = openFaq === 1 ? null : 1" class="w-full flex items-center justify-between text-left">
+                                    <span class="font-semibold text-slate-800">Как да получа достъп до курсовете?</span>
+                                    <i class="fa-solid fa-chevron-down transition-transform" :class="openFaq === 1 ? 'rotate-180' : ''"></i>
+                                </button>
+                                <p x-show="openFaq === 1" x-collapse class="text-slate-600 mt-3">
+                                    След покупка на курс можете да го достъпите веднага чрез таблото си. Просто влезте и отидете на "Моите курсове".
+                                </p>
+                            </div>
+                            <div class="border-b border-slate-200 pb-4">
+                                <button @click="openFaq = openFaq === 2 ? null : 2" class="w-full flex items-center justify-between text-left">
+                                    <span class="font-semibold text-slate-800">Предлагате ли възстановяване?</span>
+                                    <i class="fa-solid fa-chevron-down transition-transform" :class="openFaq === 2 ? 'rotate-180' : ''"></i>
+                                </button>
+                                <p x-show="openFaq === 2" x-collapse class="text-slate-600 mt-3">
+                                    Да, предлагаме 30-дневна гаранция за връщане на парите за всички курсове. Ако не сте доволни, свържете се с нас.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 rounded-2xl p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6">Бързи връзки</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="/bg/courses" class="flex items-center gap-3 text-slate-700 hover:text-indigo-600">
+                                <i class="fa-solid fa-book text-indigo-600"></i>
+                                <span>Разгледай курсове</span>
+                            </a>
+                            <a href="/bg/instructors" class="flex items-center gap-3 text-slate-700 hover:text-indigo-600">
+                                <i class="fa-solid fa-chalkboard-user text-indigo-600"></i>
+                                <span>Инструктори</span>
+                            </a>
+                            <a href="/bg/login" class="flex items-center gap-3 text-slate-700 hover:text-indigo-600">
+                                <i class="fa-solid fa-user text-indigo-600"></i>
+                                <span>Портал за студенти</span>
+                            </a>
+                            <a href="/bg/blog" class="flex items-center gap-3 text-slate-700 hover:text-indigo-600">
+                                <i class="fa-solid fa-newspaper text-indigo-600"></i>
+                                <span>Блог</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

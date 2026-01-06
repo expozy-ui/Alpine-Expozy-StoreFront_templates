@@ -1,0 +1,140 @@
+<!-- Fitness/Gym Membership Page -->
+<div class="min-h-screen bg-slate-900" apidata="get.membership_plans" keyname="plans">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 py-16 relative">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase">Membership Plans</h1>
+            <p class="text-slate-300 text-xl">Choose the perfect plan for your fitness journey</p>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <template x-for="plan in data.plans || []" :key="plan.id">
+                    <div class="bg-slate-800 rounded-2xl p-8 relative"
+                        :class="plan.popular ? 'border-2 border-orange-500 transform scale-105' : ''">
+                        <template x-if="plan.popular">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-orange-500 text-white text-sm font-bold uppercase rounded-full">
+                                Most Popular
+                            </div>
+                        </template>
+                        <h3 class="text-2xl font-black text-white mb-2 uppercase" x-text="plan.name"></h3>
+                        <div class="text-5xl font-black text-orange-500 mb-1">
+                            $<span x-text="plan.price"></span>
+                            <span class="text-lg text-slate-400 font-normal">/month</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6" x-text="plan.description"></p>
+                        <ul class="space-y-4 mb-8">
+                            <template x-for="feature in plan.features || []" :key="feature">
+                                <li class="flex items-center gap-3 text-slate-300">
+                                    <i class="fa-solid fa-check text-orange-500"></i>
+                                    <span x-text="feature"></span>
+                                </li>
+                            </template>
+                        </ul>
+                        <a :href="'/en/signup?plan=' + plan.slug"
+                            class="block w-full py-4 text-center font-bold uppercase rounded-lg transition-colors"
+                            :class="plan.popular ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-slate-700 text-orange-500 hover:bg-orange-500 hover:text-white'">
+                            Get Started
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section class="py-20 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">All Plans Include</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-2 uppercase">Premium Amenities</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-dumbbell text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Free Weights Zone</h3>
+                    <p class="text-slate-400 text-sm">Complete selection of dumbbells, barbells, and kettlebells</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-heart-pulse text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Cardio Equipment</h3>
+                    <p class="text-slate-400 text-sm">Treadmills, bikes, ellipticals, and rowing machines</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-shower text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Locker Rooms</h3>
+                    <p class="text-slate-400 text-sm">Clean facilities with showers, saunas, and lockers</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-wifi text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Free WiFi</h3>
+                    <p class="text-slate-400 text-sm">Stay connected while you work out</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-white uppercase">Membership FAQ</h2>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4" x-data="{ openFaq: 1 }">
+                <div class="bg-slate-800 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 1 ? null : 1" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Can I freeze my membership?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 1 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse class="px-6 pb-6 text-slate-400">
+                        Yes! You can freeze your membership for up to 3 months per year at no additional cost. Just let us know at least 7 days in advance.
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 2 ? null : 2" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Is there a joining fee?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 2 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse class="px-6 pb-6 text-slate-400">
+                        We often run promotions with no joining fee. Contact us to learn about current offers!
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 3 ? null : 3" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">What's your cancellation policy?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 3 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse class="px-6 pb-6 text-slate-400">
+                        You can cancel your membership with 30 days notice. No hidden fees or long-term contracts for monthly plans.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-orange-500 relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-black text-white mb-4 uppercase">Start Your Free Week Today</h2>
+            <p class="text-orange-100 mb-8 max-w-2xl mx-auto">
+                No commitment required. Experience everything we have to offer with a complimentary 7-day trial.
+            </p>
+            <a href="/en/signup?trial=true" class="inline-block px-8 py-4 bg-white text-orange-600 font-bold uppercase rounded-lg hover:bg-slate-100 transition-colors">
+                Claim Your Free Week
+            </a>
+        </div>
+    </section>
+</div>

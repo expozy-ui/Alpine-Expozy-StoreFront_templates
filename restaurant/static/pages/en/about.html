@@ -1,0 +1,267 @@
+<!-- Restaurant About Page -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900">
+    <!-- Hero Section -->
+    <section class="relative h-[50vh] bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1920');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative h-full flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Our Story</h1>
+                <p class="text-xl text-stone-300">A passion for exceptional cuisine since 1995</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <div>
+                    <span class="text-amber-600 font-semibold tracking-wider uppercase">Our Beginning</span>
+                    <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2 mb-6">From Humble Origins to Culinary Excellence</h2>
+                    <div class="space-y-4 text-stone-600 dark:text-stone-400 leading-relaxed">
+                        <p>
+                            What began as a small family kitchen in 1995 has blossomed into one of the city's most beloved dining destinations. Our founders, Maria and Giovanni, brought their grandmother's recipes from the rolling hills of Tuscany, infusing each dish with generations of culinary tradition.
+                        </p>
+                        <p>
+                            Today, while we've grown and evolved, our commitment to those original values remains unchanged: fresh, locally-sourced ingredients, time-honored cooking techniques, and an unwavering dedication to creating memorable dining experiences.
+                        </p>
+                        <p>
+                            Every dish that leaves our kitchen tells a story – of the farmers who grew the produce, the artisans who crafted the ingredients, and the passion of our chefs who bring it all together.
+                        </p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800" alt="Restaurant Interior" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-8 -left-8 bg-amber-600 text-white p-6 rounded-xl shadow-xl">
+                        <div class="text-4xl font-bold">29+</div>
+                        <div class="text-amber-100">Years of Excellence</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">What We Believe</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Our Core Values</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white dark:bg-stone-700 p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-leaf text-3xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-4">Farm to Table</h3>
+                    <p class="text-stone-600 dark:text-stone-400">
+                        We partner with local farmers and producers to bring you the freshest, seasonal ingredients at their peak of flavor.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-heart text-3xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-4">Made with Love</h3>
+                    <p class="text-stone-600 dark:text-stone-400">
+                        Every dish is crafted with passion and attention to detail, honoring traditional recipes passed down through generations.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-users text-3xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-4">Community First</h3>
+                    <p class="text-stone-600 dark:text-stone-400">
+                        We're more than a restaurant – we're a gathering place where memories are made and connections are forged.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Team -->
+    <section class="py-20" apidata="get.team" keyname="team">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">The People Behind the Magic</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Meet Our Team</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <template x-for="member in data.team || []" :key="member.id">
+                    <div class="group">
+                        <div class="relative overflow-hidden rounded-2xl mb-4">
+                            <img :src="member.image" :alt="member.name" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-4 left-4 right-4">
+                                    <div class="flex justify-center gap-3">
+                                        <a :href="member.social?.instagram" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-amber-600 transition-colors">
+                                            <i class="fa-brands fa-instagram"></i>
+                                        </a>
+                                        <a :href="member.social?.linkedin" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-amber-600 transition-colors">
+                                            <i class="fa-brands fa-linkedin-in"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-stone-800 dark:text-white" x-text="member.name"></h3>
+                        <p class="text-amber-600 font-semibold" x-text="member.role"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Head Chef Spotlight -->
+    <section class="py-20 bg-stone-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800" alt="Executive Chef" class="rounded-2xl shadow-2xl">
+                </div>
+                <div>
+                    <span class="text-amber-500 font-semibold tracking-wider uppercase">Executive Chef</span>
+                    <h2 class="text-4xl font-bold text-white mt-2 mb-6">Chef Alessandro Rossi</h2>
+                    <div class="space-y-4 text-stone-300 leading-relaxed">
+                        <p>
+                            With over 20 years of culinary experience across three continents, Chef Alessandro brings a unique perspective to our kitchen. Trained at Le Cordon Bleu in Paris and having worked in Michelin-starred restaurants in Italy and Japan, he combines classical techniques with innovative approaches.
+                        </p>
+                        <p>
+                            "Cooking is about telling stories. Every ingredient has a history, and every dish should transport you somewhere meaningful. My goal is to create food that not only satisfies the palate but also touches the soul."
+                        </p>
+                    </div>
+                    <div class="flex gap-4 mt-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-amber-500">3</div>
+                            <div class="text-stone-400 text-sm">Michelin Stars</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-amber-500">20+</div>
+                            <div class="text-stone-400 text-sm">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-amber-500">15</div>
+                            <div class="text-stone-400 text-sm">Awards Won</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">Our Journey</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Milestones</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-amber-200 dark:bg-amber-900"></div>
+
+                    <!-- Timeline Items -->
+                    <div class="space-y-12">
+                        <div class="relative flex items-center">
+                            <div class="w-1/2 pr-8 text-right">
+                                <h3 class="text-2xl font-bold text-stone-800 dark:text-white">1995</h3>
+                                <p class="text-stone-600 dark:text-stone-400">Our doors opened for the first time with just 20 seats</p>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-600 rounded-full border-4 border-white dark:border-stone-900"></div>
+                            <div class="w-1/2 pl-8"></div>
+                        </div>
+
+                        <div class="relative flex items-center">
+                            <div class="w-1/2 pr-8"></div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-600 rounded-full border-4 border-white dark:border-stone-900"></div>
+                            <div class="w-1/2 pl-8">
+                                <h3 class="text-2xl font-bold text-stone-800 dark:text-white">2003</h3>
+                                <p class="text-stone-600 dark:text-stone-400">Expanded to our current location with outdoor terrace</p>
+                            </div>
+                        </div>
+
+                        <div class="relative flex items-center">
+                            <div class="w-1/2 pr-8 text-right">
+                                <h3 class="text-2xl font-bold text-stone-800 dark:text-white">2010</h3>
+                                <p class="text-stone-600 dark:text-stone-400">Awarded "Best Fine Dining" by Restaurant Magazine</p>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-600 rounded-full border-4 border-white dark:border-stone-900"></div>
+                            <div class="w-1/2 pl-8"></div>
+                        </div>
+
+                        <div class="relative flex items-center">
+                            <div class="w-1/2 pr-8"></div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-600 rounded-full border-4 border-white dark:border-stone-900"></div>
+                            <div class="w-1/2 pl-8">
+                                <h3 class="text-2xl font-bold text-stone-800 dark:text-white">2018</h3>
+                                <p class="text-stone-600 dark:text-stone-400">Chef Alessandro joins as Executive Chef</p>
+                            </div>
+                        </div>
+
+                        <div class="relative flex items-center">
+                            <div class="w-1/2 pr-8 text-right">
+                                <h3 class="text-2xl font-bold text-stone-800 dark:text-white">Today</h3>
+                                <p class="text-stone-600 dark:text-stone-400">Continuing to create unforgettable dining experiences</p>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-amber-600 rounded-full border-4 border-white dark:border-stone-900"></div>
+                            <div class="w-1/2 pl-8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards -->
+    <section class="py-20 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">Recognition</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Awards & Accolades</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-award text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Best Restaurant</h4>
+                    <p class="text-stone-500 text-sm">City Awards 2023</p>
+                </div>
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-star text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Michelin Star</h4>
+                    <p class="text-stone-500 text-sm">Since 2019</p>
+                </div>
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-utensils text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Top 50</h4>
+                    <p class="text-stone-500 text-sm">World's Best 2022</p>
+                </div>
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-certificate text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Excellence</h4>
+                    <p class="text-stone-500 text-sm">Wine Spectator</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-amber-600 to-amber-700">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Experience Our Story Firsthand</h2>
+            <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
+                Join us for an unforgettable culinary journey. Reserve your table today.
+            </p>
+            <a href="/en/reservation" class="inline-block px-8 py-4 bg-white text-amber-700 font-semibold rounded-lg hover:bg-stone-100 transition-colors">
+                Make a Reservation
+            </a>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,330 @@
+<!-- Fitness/Gym User Dashboard Page -->
+<div class="min-h-screen bg-slate-900" x-data="{ activeTab: 'overview' }" apidata="get.user_dashboard" keyname="user">
+    <!-- Dashboard Header -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="relative">
+                    <img :src="data.user?.avatar || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=200'"
+                        alt="Profile" class="w-24 h-24 rounded-full object-cover border-4 border-orange-500">
+                    <button class="absolute bottom-0 right-0 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm hover:bg-orange-600">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+                <div class="text-center md:text-left">
+                    <h1 class="text-2xl font-black text-white uppercase" x-text="'Welcome, ' + (data.user?.firstName || 'Member')"></h1>
+                    <p class="text-slate-300" x-text="data.user?.membershipType + ' Member'"></p>
+                    <p class="text-orange-500 text-sm">Member since <span x-text="data.user?.memberSince"></span></p>
+                </div>
+                <div class="md:ml-auto flex gap-4">
+                    <a href="/en/schedule" class="px-6 py-3 bg-orange-500 text-white font-bold uppercase text-sm rounded-lg hover:bg-orange-600 transition-colors">
+                        <i class="fa-solid fa-calendar-plus mr-2"></i>Book Class
+                    </a>
+                    <button @click="alpineListeners('Auth.logout', $event)" class="px-6 py-3 bg-slate-700 text-white font-bold uppercase text-sm rounded-lg hover:bg-slate-600 transition-colors">
+                        <i class="fa-solid fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Tabs -->
+    <section class="py-4 bg-slate-800 sticky top-20 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap gap-2">
+                <button @click="activeTab = 'overview'"
+                    :class="activeTab === 'overview' ? 'bg-orange-500 text-white' : 'bg-slate-700 text-slate-300'"
+                    class="px-4 py-2 rounded-lg font-bold text-sm hover:bg-orange-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chart-line mr-2"></i>Overview
+                </button>
+                <button @click="activeTab = 'bookings'"
+                    :class="activeTab === 'bookings' ? 'bg-orange-500 text-white' : 'bg-slate-700 text-slate-300'"
+                    class="px-4 py-2 rounded-lg font-bold text-sm hover:bg-orange-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-calendar-check mr-2"></i>My Bookings
+                </button>
+                <button @click="activeTab = 'workouts'"
+                    :class="activeTab === 'workouts' ? 'bg-orange-500 text-white' : 'bg-slate-700 text-slate-300'"
+                    class="px-4 py-2 rounded-lg font-bold text-sm hover:bg-orange-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-dumbbell mr-2"></i>Workout Log
+                </button>
+                <button @click="activeTab = 'membership'"
+                    :class="activeTab === 'membership' ? 'bg-orange-500 text-white' : 'bg-slate-700 text-slate-300'"
+                    class="px-4 py-2 rounded-lg font-bold text-sm hover:bg-orange-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-id-card mr-2"></i>Membership
+                </button>
+                <button @click="activeTab = 'settings'"
+                    :class="activeTab === 'settings' ? 'bg-orange-500 text-white' : 'bg-slate-700 text-slate-300'"
+                    class="px-4 py-2 rounded-lg font-bold text-sm hover:bg-orange-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-cog mr-2"></i>Settings
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <!-- Overview Tab -->
+            <div x-show="activeTab === 'overview'" class="space-y-8">
+                <!-- Stats Cards -->
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-fire text-xl text-orange-500"></i>
+                            </div>
+                            <span class="text-green-500 text-sm font-semibold">+12%</span>
+                        </div>
+                        <div class="text-3xl font-black text-white" x-text="data.user?.stats?.workoutsThisMonth || 0"></div>
+                        <div class="text-slate-400 text-sm">Workouts This Month</div>
+                    </div>
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-clock text-xl text-orange-500"></i>
+                            </div>
+                            <span class="text-green-500 text-sm font-semibold">+8%</span>
+                        </div>
+                        <div class="text-3xl font-black text-white" x-text="(data.user?.stats?.totalHours || 0) + 'h'"></div>
+                        <div class="text-slate-400 text-sm">Total Hours</div>
+                    </div>
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-bolt text-xl text-orange-500"></i>
+                            </div>
+                            <span class="text-green-500 text-sm font-semibold">+5%</span>
+                        </div>
+                        <div class="text-3xl font-black text-white" x-text="(data.user?.stats?.caloriesBurned || 0).toLocaleString()"></div>
+                        <div class="text-slate-400 text-sm">Calories Burned</div>
+                    </div>
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-trophy text-xl text-orange-500"></i>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-black text-white" x-text="data.user?.stats?.currentStreak || 0"></div>
+                        <div class="text-slate-400 text-sm">Day Streak</div>
+                    </div>
+                </div>
+
+                <!-- Progress & Next Class -->
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Weekly Progress -->
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Weekly Goal Progress</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Workouts</span>
+                                    <span class="text-white font-semibold" x-text="(data.user?.progress?.workouts || 0) + '/5'"></span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-3">
+                                    <div class="bg-orange-500 h-3 rounded-full" :style="'width: ' + ((data.user?.progress?.workouts || 0) / 5 * 100) + '%'"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Classes Attended</span>
+                                    <span class="text-white font-semibold" x-text="(data.user?.progress?.classes || 0) + '/3'"></span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-3">
+                                    <div class="bg-green-500 h-3 rounded-full" :style="'width: ' + ((data.user?.progress?.classes || 0) / 3 * 100) + '%'"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span class="text-slate-400">Active Minutes</span>
+                                    <span class="text-white font-semibold" x-text="(data.user?.progress?.minutes || 0) + '/300'"></span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-3">
+                                    <div class="bg-blue-500 h-3 rounded-full" :style="'width: ' + ((data.user?.progress?.minutes || 0) / 300 * 100) + '%'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Next Class -->
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Upcoming Class</h3>
+                        <template x-if="data.user?.nextClass">
+                            <div class="flex gap-4">
+                                <div class="w-20 h-20 bg-orange-500/20 rounded-xl flex flex-col items-center justify-center">
+                                    <span class="text-2xl font-black text-orange-500" x-text="data.user.nextClass.day"></span>
+                                    <span class="text-xs text-slate-400" x-text="data.user.nextClass.month"></span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-white font-bold" x-text="data.user.nextClass.name"></h4>
+                                    <p class="text-slate-400 text-sm" x-text="data.user.nextClass.time + ' • ' + data.user.nextClass.duration + ' min'"></p>
+                                    <p class="text-orange-500 text-sm" x-text="'with ' + data.user.nextClass.trainer"></p>
+                                </div>
+                                <button class="px-4 py-2 bg-red-500/20 text-red-500 font-bold text-sm rounded-lg hover:bg-red-500 hover:text-white transition-colors h-fit">
+                                    Cancel
+                                </button>
+                            </div>
+                        </template>
+                        <template x-if="!data.user?.nextClass">
+                            <div class="text-center py-8">
+                                <i class="fa-solid fa-calendar-xmark text-4xl text-slate-600 mb-4"></i>
+                                <p class="text-slate-400 mb-4">No upcoming classes</p>
+                                <a href="/en/schedule" class="inline-block px-6 py-3 bg-orange-500 text-white font-bold text-sm rounded-lg hover:bg-orange-600 transition-colors">
+                                    Book a Class
+                                </a>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookings Tab -->
+            <div x-show="activeTab === 'bookings'" x-cloak class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-white">My Class Bookings</h2>
+                    <a href="/en/schedule" class="px-4 py-2 bg-orange-500 text-white font-bold text-sm rounded-lg hover:bg-orange-600 transition-colors">
+                        Book New Class
+                    </a>
+                </div>
+                <div class="space-y-4">
+                    <template x-for="booking in data.user?.bookings || []" :key="booking.id">
+                        <div class="bg-slate-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="md:w-32">
+                                <div class="text-lg font-bold text-orange-500" x-text="booking.date"></div>
+                                <div class="text-slate-400 text-sm" x-text="booking.time"></div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-white font-bold" x-text="booking.className"></h3>
+                                <p class="text-slate-400 text-sm" x-text="'with ' + booking.trainer + ' • ' + booking.room"></p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1 rounded-full text-sm font-semibold"
+                                    :class="booking.status === 'confirmed' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'"
+                                    x-text="booking.status"></span>
+                                <button class="px-4 py-2 bg-slate-700 text-slate-300 font-bold text-sm rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Workout Log Tab -->
+            <div x-show="activeTab === 'workouts'" x-cloak class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-white">Workout History</h2>
+                    <button class="px-4 py-2 bg-orange-500 text-white font-bold text-sm rounded-lg hover:bg-orange-600 transition-colors">
+                        <i class="fa-solid fa-plus mr-2"></i>Log Workout
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <template x-for="workout in data.user?.workoutHistory || []" :key="workout.id">
+                        <div class="bg-slate-800 rounded-xl p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-white font-bold" x-text="workout.type"></h3>
+                                    <p class="text-slate-400 text-sm" x-text="workout.date"></p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-orange-500 font-bold" x-text="workout.duration + ' min'"></div>
+                                    <div class="text-slate-400 text-sm" x-text="workout.calories + ' cal'"></div>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-sm" x-text="workout.notes"></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Membership Tab -->
+            <div x-show="activeTab === 'membership'" x-cloak class="space-y-6">
+                <div class="bg-slate-800 rounded-xl p-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+                        <div>
+                            <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Current Plan</span>
+                            <h2 class="text-3xl font-black text-white mt-2" x-text="data.user?.membership?.planName || 'Basic'"></h2>
+                            <p class="text-slate-400" x-text="'$' + (data.user?.membership?.price || 0) + '/month'"></p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <p class="text-slate-400">Next billing date</p>
+                            <p class="text-white font-bold" x-text="data.user?.membership?.nextBilling"></p>
+                        </div>
+                    </div>
+                    <hr class="border-slate-700 my-6">
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/en/membership" class="px-6 py-3 bg-orange-500 text-white font-bold uppercase text-sm rounded-lg hover:bg-orange-600 transition-colors">
+                            Upgrade Plan
+                        </a>
+                        <button class="px-6 py-3 bg-slate-700 text-slate-300 font-bold uppercase text-sm rounded-lg hover:bg-slate-600 transition-colors">
+                            Freeze Membership
+                        </button>
+                        <button class="px-6 py-3 bg-slate-700 text-slate-300 font-bold uppercase text-sm rounded-lg hover:bg-slate-600 transition-colors">
+                            Update Payment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div x-show="activeTab === 'settings'" x-cloak class="max-w-2xl space-y-6">
+                <div class="bg-slate-800 rounded-xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-6">Profile Settings</h3>
+                    <form class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-slate-300 font-semibold mb-2">First Name</label>
+                                <input type="text" :value="data.user?.firstName" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 font-semibold mb-2">Last Name</label>
+                                <input type="text" :value="data.user?.lastName" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Email</label>
+                            <input type="email" :value="data.user?.email" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Phone</label>
+                            <input type="tel" :value="data.user?.phone" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Fitness Goal</label>
+                            <select class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="strength">Build Strength</option>
+                                <option value="endurance">Improve Endurance</option>
+                                <option value="general">General Fitness</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-slate-800 rounded-xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-6">Change Password</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Current Password</label>
+                            <input type="password" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">New Password</label>
+                            <input type="password" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Confirm New Password</label>
+                            <input type="password" class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-slate-700 text-white font-bold uppercase rounded-lg hover:bg-slate-600 transition-colors">
+                            Update Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

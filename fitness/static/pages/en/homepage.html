@@ -1,0 +1,286 @@
+<!-- Fitness/Gym Homepage -->
+<div class="min-h-screen bg-slate-900">
+    <!-- Hero Section -->
+    <section class="relative min-h-[700px] flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-orange-900">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920')] bg-cover bg-center opacity-30"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl">
+                <span class="inline-block px-4 py-2 bg-orange-500 text-white font-bold uppercase text-sm rounded mb-6">Transform Your Life</span>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight uppercase">
+                    Build Your <span class="text-orange-500">Strongest</span> Self
+                </h1>
+                <p class="text-xl text-slate-300 mb-8">
+                    Join our elite fitness community and achieve your goals with world-class trainers, cutting-edge equipment, and programs designed for results.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="/en/membership" class="px-8 py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                        Start Your Journey
+                    </a>
+                    <a href="/en/classes" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold uppercase rounded-lg hover:bg-white/10 transition-colors">
+                        Explore Classes
+                    </a>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="flex flex-wrap gap-8 mt-12 text-white">
+                    <div>
+                        <div class="text-4xl font-black text-orange-500">10K+</div>
+                        <div class="text-slate-400 uppercase text-sm">Active Members</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-black text-orange-500">50+</div>
+                        <div class="text-slate-400 uppercase text-sm">Expert Trainers</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-black text-orange-500">100+</div>
+                        <div class="text-slate-400 uppercase text-sm">Classes Weekly</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white animate-bounce">
+            <i class="fa-solid fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Featured Classes -->
+    <section class="py-20 bg-slate-800" apidata="get.featured_classes" keyname="classes">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Our Programs</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-2 uppercase">Popular Classes</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <template x-for="cls in data.classes || []" :key="cls.id">
+                    <div class="bg-slate-900 rounded-2xl overflow-hidden group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="relative h-64 overflow-hidden">
+                            <img :src="cls.image" :alt="cls.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <span class="px-3 py-1 bg-orange-500 text-white text-xs font-bold uppercase rounded" x-text="cls.intensity"></span>
+                                <h3 class="text-xl font-bold text-white mt-2" x-text="cls.name"></h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-slate-400 text-sm mb-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-clock text-orange-500"></i>
+                                    <span x-text="cls.duration + ' min'"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-fire text-orange-500"></i>
+                                    <span x-text="cls.calories + ' cal'"></span>
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="cls.description"></p>
+                            <a :href="'/en/class/' + cls.slug" class="block w-full py-3 text-center bg-slate-800 text-orange-500 font-bold uppercase rounded-lg hover:bg-orange-500 hover:text-white transition-colors">
+                                View Class
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/en/classes" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-orange-500 text-orange-500 font-bold uppercase rounded-lg hover:bg-orange-500 hover:text-white transition-colors">
+                    View All Classes <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600" alt="Gym Training" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-8 -right-8 bg-orange-500 text-white p-8 rounded-2xl shadow-xl hidden md:block">
+                        <div class="text-5xl font-black">15+</div>
+                        <div class="text-orange-100 uppercase text-sm">Years Experience</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Why Choose Us</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-white mt-2 mb-6 uppercase">More Than Just a Gym</h2>
+                    <p class="text-slate-400 mb-8">
+                        We're committed to helping you achieve your fitness goals with personalized attention, state-of-the-art facilities, and a supportive community that motivates you to be your best.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-dumbbell text-xl text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white mb-1">Top-Tier Equipment</h3>
+                                <p class="text-slate-400 text-sm">Latest fitness machines and free weights for every workout style</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-user-tie text-xl text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white mb-1">Expert Trainers</h3>
+                                <p class="text-slate-400 text-sm">Certified professionals dedicated to your success</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-users text-xl text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white mb-1">Supportive Community</h3>
+                                <p class="text-slate-400 text-sm">Join a family of like-minded fitness enthusiasts</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-clock text-xl text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white mb-1">Flexible Hours</h3>
+                                <p class="text-slate-400 text-sm">Open early morning to late night, 7 days a week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Plans -->
+    <section class="py-20 bg-slate-800" apidata="get.membership_plans" keyname="plans">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Membership</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-2 uppercase">Choose Your Plan</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <template x-for="plan in data.plans || []" :key="plan.id">
+                    <div class="bg-slate-900 rounded-2xl p-8 relative"
+                        :class="plan.popular ? 'border-2 border-orange-500 transform scale-105' : ''">
+                        <template x-if="plan.popular">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-orange-500 text-white text-sm font-bold uppercase rounded-full">
+                                Most Popular
+                            </div>
+                        </template>
+                        <h3 class="text-xl font-bold text-white mb-2" x-text="plan.name"></h3>
+                        <div class="text-4xl font-black text-orange-500 mb-1">
+                            $<span x-text="plan.price"></span>
+                            <span class="text-lg text-slate-400 font-normal">/month</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6" x-text="plan.description"></p>
+                        <ul class="space-y-3 mb-8">
+                            <template x-for="feature in plan.features || []" :key="feature">
+                                <li class="flex items-center gap-3 text-slate-300">
+                                    <i class="fa-solid fa-check text-orange-500"></i>
+                                    <span x-text="feature"></span>
+                                </li>
+                            </template>
+                        </ul>
+                        <a :href="'/en/membership?plan=' + plan.slug"
+                            class="block w-full py-4 text-center font-bold uppercase rounded-lg transition-colors"
+                            :class="plan.popular ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-slate-800 text-orange-500 hover:bg-orange-500 hover:text-white'">
+                            Get Started
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Trainers -->
+    <section class="py-20 bg-slate-900" apidata="get.trainers" keyname="trainers">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Our Team</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-2 uppercase">Meet Our Trainers</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <template x-for="trainer in (data.trainers || []).slice(0, 4)" :key="trainer.id">
+                    <div class="bg-slate-800 rounded-2xl overflow-hidden group">
+                        <div class="relative h-80 overflow-hidden">
+                            <img :src="trainer.image" :alt="trainer.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4 flex gap-3">
+                                <a :href="trainer.instagram" class="w-10 h-10 bg-slate-900/80 rounded-full flex items-center justify-center text-white hover:bg-orange-500 transition-colors">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a :href="trainer.twitter" class="w-10 h-10 bg-slate-900/80 rounded-full flex items-center justify-center text-white hover:bg-orange-500 transition-colors">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white" x-text="trainer.name"></h3>
+                            <p class="text-orange-500 font-semibold" x-text="trainer.specialty"></p>
+                            <p class="text-slate-400 text-sm mt-2" x-text="trainer.experience + ' years experience'"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/en/trainers" class="inline-flex items-center gap-2 text-orange-500 font-bold uppercase hover:text-orange-400">
+                    View All Trainers <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-slate-800" apidata="get.testimonials" keyname="testimonials">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Testimonials</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-2 uppercase">Success Stories</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <template x-for="testimonial in data.testimonials || []" :key="testimonial.id">
+                    <div class="bg-slate-900 rounded-2xl p-8">
+                        <div class="flex items-center gap-1 mb-4">
+                            <template x-for="i in 5">
+                                <i class="fa-solid fa-star text-orange-500"></i>
+                            </template>
+                        </div>
+                        <p class="text-slate-300 mb-6 italic" x-text="'\"' + testimonial.content + '\"'"></p>
+                        <div class="flex items-center gap-4">
+                            <img :src="testimonial.author.image" :alt="testimonial.author.name" class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <div class="font-bold text-white" x-text="testimonial.author.name"></div>
+                                <div class="text-orange-500 text-sm" x-text="testimonial.author.result"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-orange-500 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-4 uppercase">Ready to Transform?</h2>
+            <p class="text-orange-100 mb-8 max-w-2xl mx-auto text-lg">
+                Start your fitness journey today. Get your first week FREE when you sign up for any membership plan.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/en/membership" class="px-8 py-4 bg-white text-orange-600 font-bold uppercase rounded-lg hover:bg-slate-100 transition-colors">
+                    Claim Free Week
+                </a>
+                <a href="/en/contacts" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold uppercase rounded-lg hover:bg-white/10 transition-colors">
+                    Book a Tour
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

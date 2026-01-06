@@ -1,0 +1,153 @@
+<!-- Restaurant Header with Elegant Design -->
+<div class="is-section w-full lock bg-stone-900 dark:bg-stone-950 shadow-lg" x-data="{openMobileMenu: false, openReservation: false}" apidata="get.menu" keyname="menu">
+    <!-- Top bar -->
+    <div class="hidden lg:block border-b border-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-2 text-sm">
+                <div class="flex items-center gap-6 text-stone-400">
+                    <span><i class="fa-solid fa-clock mr-2 text-amber-500"></i>Mon-Sun: 11:00 AM - 11:00 PM</span>
+                    <span><i class="fa-solid fa-phone mr-2 text-amber-500"></i>+1 (555) 123-4567</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-stone-400 hover:text-amber-500 transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="text-stone-400 hover:text-amber-500 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="text-stone-400 hover:text-amber-500 transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a @click="href('/')">
+                    <img src="/placeholder.svg" :src="data.settings.logo" alt="Restaurant Logo" class="h-12 lg:h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity">
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-8">
+                <template x-for="menu in data.menu">
+                    <a @click="href(menu.link)" x-text="menu.title" class="text-stone-200 hover:text-amber-500 font-medium tracking-wide cursor-pointer transition-colors uppercase text-sm"></a>
+                </template>
+            </nav>
+
+            <!-- Right Side Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Reservation Button -->
+                <button @click="openReservation = true" class="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all shadow-lg">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Book a Table</span>
+                </button>
+
+                <!-- Dark Mode Toggle -->
+                <button @click="data.darkMode = !data.darkMode" class="p-2 text-stone-400 hover:text-amber-500 transition-colors">
+                    <i :class="data.darkMode ? 'fa-sun' : 'fa-moon'" class="fa-solid text-xl"></i>
+                </button>
+
+                <!-- Language Switcher -->
+                <div x-data="{openLang: false}" class="relative">
+                    <button @click="openLang = !openLang" class="p-2 text-stone-400 hover:text-amber-500 transition-colors">
+                        <i class="fa-solid fa-globe text-xl"></i>
+                    </button>
+                    <div x-show="openLang" x-cloak @click.outside="openLang = false" class="absolute right-0 mt-2 w-40 bg-stone-800 rounded-lg shadow-xl border border-stone-700 z-50 overflow-hidden">
+                        <a @click="changeLang('en'); openLang = false" class="block px-4 py-2 text-stone-200 hover:bg-stone-700 hover:text-amber-500 cursor-pointer transition-colors">English</a>
+                        <a @click="changeLang('bg'); openLang = false" class="block px-4 py-2 text-stone-200 hover:bg-stone-700 hover:text-amber-500 cursor-pointer transition-colors">Български</a>
+                    </div>
+                </div>
+
+                <!-- User Account -->
+                <a @click="data.user.logged_in ? href('/en/userpage') : href('/en/login')" class="p-2 text-stone-400 hover:text-amber-500 transition-colors cursor-pointer">
+                    <i class="fa-solid fa-circle-user text-xl"></i>
+                </a>
+
+                <!-- Mobile Menu Toggle -->
+                <button @click="openMobileMenu = !openMobileMenu" class="lg:hidden p-2 text-stone-400 hover:text-amber-500 transition-colors">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div x-show="openMobileMenu" x-cloak x-transition class="lg:hidden fixed inset-0 bg-stone-900/95 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center mb-8">
+                <img :src="data.settings.logo" alt="Logo" class="h-12 w-auto">
+                <button @click="openMobileMenu = false" class="p-2 text-stone-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <template x-for="menu in data.menu">
+                    <a @click="href(menu.link); openMobileMenu = false" x-text="menu.title" class="block text-xl text-stone-200 hover:text-amber-500 font-medium py-3 border-b border-stone-800 cursor-pointer transition-colors"></a>
+                </template>
+                <button @click="openReservation = true; openMobileMenu = false" class="w-full mt-6 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-lg text-lg">
+                    <i class="fa-solid fa-calendar-check mr-2"></i>Book a Table
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Reservation Modal -->
+    <template x-if="openReservation">
+        <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4" @click.self="openReservation = false">
+            <div class="bg-stone-900 rounded-2xl shadow-2xl max-w-lg w-full p-8 border border-stone-700">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Reserve a Table</h2>
+                    <button @click="openReservation = false" class="text-stone-400 hover:text-white">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                <form class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-stone-300 mb-2">Date</label>
+                            <input type="date" name="date" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-stone-300 mb-2">Time</label>
+                            <select name="time" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <option>12:00 PM</option>
+                                <option>1:00 PM</option>
+                                <option>2:00 PM</option>
+                                <option>6:00 PM</option>
+                                <option>7:00 PM</option>
+                                <option>8:00 PM</option>
+                                <option>9:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-300 mb-2">Number of Guests</label>
+                        <select name="guests" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <option>1 Person</option>
+                            <option>2 People</option>
+                            <option>3 People</option>
+                            <option>4 People</option>
+                            <option>5 People</option>
+                            <option>6+ People</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-300 mb-2">Your Name</label>
+                        <input type="text" name="name" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="John Doe">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-300 mb-2">Phone Number</label>
+                        <input type="tel" name="phone" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="+1 (555) 123-4567">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-300 mb-2">Special Requests</label>
+                        <textarea name="requests" rows="3" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none" placeholder="Any dietary requirements or special occasions?"></textarea>
+                    </div>
+                    <button type="button" @click="alpineListeners('Reservations.post_reservation', $event)" class="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                        Confirm Reservation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </template>
+</div>

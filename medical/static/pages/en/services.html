@@ -1,0 +1,93 @@
+<!-- Medical/Healthcare Services Page -->
+<div class="min-h-screen bg-white" apidata="get.services" keyname="services">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-teal-50 via-white to-blue-50 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">What We Offer</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mt-2">Our Medical Services</h1>
+            <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Comprehensive healthcare services designed to meet all your medical needs with compassion and expertise.</p>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="service in data.services || []" :key="service.id">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-slate-100 group">
+                        <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-600 transition-colors">
+                            <i :class="service.icon + ' text-2xl text-teal-600 group-hover:text-white transition-colors'"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3" x-text="service.name"></h3>
+                        <p class="text-slate-600 mb-4" x-text="service.description"></p>
+                        <ul class="space-y-2 mb-6">
+                            <template x-for="feature in (service.features || []).slice(0, 3)" :key="feature">
+                                <li class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <i class="fa-solid fa-check text-teal-600"></i>
+                                    <span x-text="feature"></span>
+                                </li>
+                            </template>
+                        </ul>
+                        <a :href="'/en/services/' + service.slug" class="inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700">
+                            Learn More <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Specialized Care</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-2">Medical Departments</h2>
+            </div>
+            <div class="grid md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <a href="/en/departments/cardiology" class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-heart-pulse text-3xl text-red-500 mb-3"></i>
+                    <h4 class="font-semibold text-slate-800">Cardiology</h4>
+                </a>
+                <a href="/en/departments/neurology" class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-brain text-3xl text-purple-500 mb-3"></i>
+                    <h4 class="font-semibold text-slate-800">Neurology</h4>
+                </a>
+                <a href="/en/departments/orthopedics" class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-bone text-3xl text-amber-500 mb-3"></i>
+                    <h4 class="font-semibold text-slate-800">Orthopedics</h4>
+                </a>
+                <a href="/en/departments/pediatrics" class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-baby text-3xl text-pink-500 mb-3"></i>
+                    <h4 class="font-semibold text-slate-800">Pediatrics</h4>
+                </a>
+                <a href="/en/departments/dermatology" class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-hand-dots text-3xl text-orange-500 mb-3"></i>
+                    <h4 class="font-semibold text-slate-800">Dermatology</h4>
+                </a>
+                <a href="/en/departments/ophthalmology" class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i class="fa-solid fa-eye text-3xl text-blue-500 mb-3"></i>
+                    <h4 class="font-semibold text-slate-800">Ophthalmology</h4>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-teal-600">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Need Help Choosing a Service?</h2>
+            <p class="text-teal-100 mb-8 max-w-2xl mx-auto">
+                Our patient coordinators are here to help you find the right care for your needs.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/en/appointments" class="px-8 py-4 bg-white text-teal-700 font-semibold rounded-full hover:bg-slate-100 transition-colors">
+                    Book Consultation
+                </a>
+                <a href="tel:+15551234567" class="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-phone mr-2"></i>+1 (555) 123-4567
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

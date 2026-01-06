@@ -1,0 +1,194 @@
+<!-- Restaurant Gallery Page -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900" x-data="{
+    activeFilter: 'all',
+    lightboxOpen: false,
+    currentImage: null
+}">
+    <!-- Hero Section -->
+    <section class="relative h-[40vh] bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative h-full flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Gallery</h1>
+                <p class="text-xl text-stone-300">A visual journey through our culinary world</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="py-8 bg-white dark:bg-stone-800 sticky top-0 z-40 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button @click="activeFilter = 'all'"
+                    :class="activeFilter === 'all' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-3 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    All Photos
+                </button>
+                <button @click="activeFilter = 'food'"
+                    :class="activeFilter === 'food' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-3 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    <i class="fa-solid fa-utensils mr-2"></i>Food
+                </button>
+                <button @click="activeFilter = 'interior'"
+                    :class="activeFilter === 'interior' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-3 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    <i class="fa-solid fa-couch mr-2"></i>Interior
+                </button>
+                <button @click="activeFilter = 'events'"
+                    :class="activeFilter === 'events' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-3 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    <i class="fa-solid fa-champagne-glasses mr-2"></i>Events
+                </button>
+                <button @click="activeFilter = 'team'"
+                    :class="activeFilter === 'team' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-3 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    <i class="fa-solid fa-users mr-2"></i>Team
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-16" apidata="get.gallery" keyname="gallery">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <template x-for="image in (data.gallery || []).filter(img => activeFilter === 'all' || img.category === activeFilter)" :key="image.id">
+                    <div @click="currentImage = image; lightboxOpen = true"
+                        class="relative group cursor-pointer overflow-hidden rounded-xl aspect-square">
+                        <img :src="image.src" :alt="image.title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-0 left-0 right-0 p-4">
+                                <h3 class="text-white font-semibold" x-text="image.title"></h3>
+                                <p class="text-stone-300 text-sm" x-text="image.description"></p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-expand text-white"></i>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Empty State -->
+            <div x-show="(data.gallery || []).filter(img => activeFilter === 'all' || img.category === activeFilter).length === 0" class="text-center py-16">
+                <i class="fa-solid fa-images text-6xl text-stone-300 dark:text-stone-600 mb-4"></i>
+                <p class="text-stone-500 dark:text-stone-400">No images found in this category.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div x-show="lightboxOpen" x-cloak
+        @keydown.escape.window="lightboxOpen = false"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/95">
+        <button @click="lightboxOpen = false" class="absolute top-6 right-6 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+            <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+
+        <div class="max-w-5xl max-h-[90vh] px-4">
+            <img :src="currentImage?.src" :alt="currentImage?.title" class="max-w-full max-h-[80vh] object-contain rounded-lg">
+            <div class="mt-4 text-center">
+                <h3 class="text-white text-xl font-semibold" x-text="currentImage?.title"></h3>
+                <p class="text-stone-400" x-text="currentImage?.description"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instagram Feed Section -->
+    <section class="py-16 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">@ourrestaurant</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Follow Us on Instagram</h2>
+                <p class="text-stone-600 dark:text-stone-400 mt-4">Tag us in your photos for a chance to be featured!</p>
+            </div>
+
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                <a href="#" class="relative group overflow-hidden aspect-square">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300" alt="Instagram" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                    </div>
+                </a>
+                <a href="#" class="relative group overflow-hidden aspect-square">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300" alt="Instagram" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                    </div>
+                </a>
+                <a href="#" class="relative group overflow-hidden aspect-square">
+                    <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300" alt="Instagram" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                    </div>
+                </a>
+                <a href="#" class="relative group overflow-hidden aspect-square">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300" alt="Instagram" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                    </div>
+                </a>
+                <a href="#" class="relative group overflow-hidden aspect-square">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=300" alt="Instagram" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                    </div>
+                </a>
+                <a href="#" class="relative group overflow-hidden aspect-square">
+                    <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=300" alt="Instagram" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all">
+                    <i class="fa-brands fa-instagram"></i>
+                    Follow @ourrestaurant
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">Behind the Scenes</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Watch Our Story</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200" alt="Video Thumbnail" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <button class="w-20 h-20 bg-amber-600 rounded-full flex items-center justify-center hover:bg-amber-700 transition-colors group">
+                            <i class="fa-solid fa-play text-white text-2xl ml-1 group-hover:scale-110 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-amber-600 to-amber-700">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Share Your Experience</h2>
+            <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
+                Use #OurRestaurant and tag us in your photos for a chance to be featured in our gallery!
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-amber-700 font-semibold rounded-lg hover:bg-stone-100 transition-colors">
+                    <i class="fa-brands fa-instagram"></i>
+                    Instagram
+                </a>
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur text-white font-semibold rounded-lg hover:bg-white/30 transition-colors">
+                    <i class="fa-brands fa-facebook"></i>
+                    Facebook
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,96 @@
+<!-- Beauty/Salon Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm" x-data="{ mobileMenu: false, searchOpen: false }">
+    <!-- Top Bar -->
+    <div class="bg-rose-600 text-white text-sm py-2 hidden md:block">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+1 (555) 123-4567</span>
+                </span>
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>hello@glamoursalon.com</span>
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-rose-200 transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-rose-200 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-rose-200 transition-colors"><i class="fa-brands fa-pinterest"></i></a>
+                <span class="border-l border-rose-400 pl-4 ml-2">
+                    <a href="/bg" class="hover:text-rose-200 transition-colors">BG</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/en" class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-spa text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">Glamour</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/en" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Home</a>
+                <a href="/en/services" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Services</a>
+                <a href="/en/stylists" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Our Team</a>
+                <a href="/en/booking" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Book Now</a>
+                <a href="/en/blog" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Blog</a>
+                <a href="/en/about" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">About</a>
+                <a href="/en/contacts" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Contact</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <button @click="searchOpen = !searchOpen" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+                <a href="/en/login" class="hidden sm:flex w-10 h-10 rounded-full bg-slate-100 items-center justify-center text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+                <a href="/en/booking" class="hidden md:inline-flex px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all shadow-lg shadow-rose-200">
+                    Book Appointment
+                </a>
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                    <i class="fa-solid" :class="mobileMenu ? 'fa-times' : 'fa-bars'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div x-show="searchOpen" x-transition class="mt-4 pb-4">
+            <div class="relative">
+                <input type="text" placeholder="Search services, stylists..." class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                <button class="absolute right-4 top-1/2 -translate-y-1/2 px-6 py-2 bg-rose-600 text-white rounded-full hover:bg-rose-700 transition-colors">
+                    Search
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-transition class="lg:hidden bg-white border-t border-slate-100 py-4">
+        <div class="container mx-auto px-4 space-y-4">
+            <a href="/en" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Home</a>
+            <a href="/en/services" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Services</a>
+            <a href="/en/stylists" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Our Team</a>
+            <a href="/en/booking" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Book Now</a>
+            <a href="/en/blog" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Blog</a>
+            <a href="/en/about" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">About</a>
+            <a href="/en/contacts" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Contact</a>
+            <div class="pt-4 border-t border-slate-100">
+                <a href="/en/booking" class="block w-full text-center px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full">
+                    Book Appointment
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header Spacer -->
+<div class="h-20 md:h-28"></div>

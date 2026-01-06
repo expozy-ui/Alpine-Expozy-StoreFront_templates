@@ -1,0 +1,270 @@
+<!-- Restaurant Reservation Page -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900" x-data="{
+    selectedDate: '',
+    selectedTime: '',
+    guests: 2,
+    occasion: '',
+    step: 1
+}">
+    <!-- Hero Section -->
+    <section class="relative h-[40vh] bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative h-full flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Reserve a Table</h1>
+                <p class="text-xl text-stone-300">Book your unforgettable dining experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Form Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <!-- Progress Steps -->
+                <div class="flex justify-center mb-12">
+                    <div class="flex items-center">
+                        <div :class="step >= 1 ? 'bg-amber-600 text-white' : 'bg-stone-200 text-stone-500'"
+                            class="w-10 h-10 rounded-full flex items-center justify-center font-bold">1</div>
+                        <div :class="step >= 2 ? 'bg-amber-600' : 'bg-stone-200'" class="w-20 h-1"></div>
+                        <div :class="step >= 2 ? 'bg-amber-600 text-white' : 'bg-stone-200 text-stone-500'"
+                            class="w-10 h-10 rounded-full flex items-center justify-center font-bold">2</div>
+                        <div :class="step >= 3 ? 'bg-amber-600' : 'bg-stone-200'" class="w-20 h-1"></div>
+                        <div :class="step >= 3 ? 'bg-amber-600 text-white' : 'bg-stone-200 text-stone-500'"
+                            class="w-10 h-10 rounded-full flex items-center justify-center font-bold">3</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Date & Time -->
+                <div x-show="step === 1" class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-6 text-center">Select Date & Time</h2>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Date Selection -->
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-3">
+                                <i class="fa-solid fa-calendar mr-2 text-amber-600"></i>Date
+                            </label>
+                            <input type="date" x-model="selectedDate"
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                        </div>
+
+                        <!-- Time Selection -->
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-3">
+                                <i class="fa-solid fa-clock mr-2 text-amber-600"></i>Time
+                            </label>
+                            <select x-model="selectedTime"
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <option value="">Select a time</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="11:30">11:30 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="12:30">12:30 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="13:30">1:30 PM</option>
+                                <option value="18:00">6:00 PM</option>
+                                <option value="18:30">6:30 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                                <option value="19:30">7:30 PM</option>
+                                <option value="20:00">8:00 PM</option>
+                                <option value="20:30">8:30 PM</option>
+                                <option value="21:00">9:00 PM</option>
+                            </select>
+                        </div>
+
+                        <!-- Number of Guests -->
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-3">
+                                <i class="fa-solid fa-users mr-2 text-amber-600"></i>Number of Guests
+                            </label>
+                            <div class="flex items-center gap-4">
+                                <button @click="guests > 1 ? guests-- : null"
+                                    class="w-12 h-12 rounded-full bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 hover:bg-amber-100 hover:text-amber-600 transition-colors">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <span class="text-3xl font-bold text-stone-800 dark:text-white w-12 text-center" x-text="guests"></span>
+                                <button @click="guests < 20 ? guests++ : null"
+                                    class="w-12 h-12 rounded-full bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 hover:bg-amber-100 hover:text-amber-600 transition-colors">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Occasion -->
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-3">
+                                <i class="fa-solid fa-champagne-glasses mr-2 text-amber-600"></i>Occasion (Optional)
+                            </label>
+                            <select x-model="occasion"
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <option value="">Select an occasion</option>
+                                <option value="birthday">Birthday</option>
+                                <option value="anniversary">Anniversary</option>
+                                <option value="date">Date Night</option>
+                                <option value="business">Business Dinner</option>
+                                <option value="celebration">Celebration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <button @click="step = 2"
+                            :disabled="!selectedDate || !selectedTime"
+                            :class="!selectedDate || !selectedTime ? 'opacity-50 cursor-not-allowed' : 'hover:from-amber-700 hover:to-amber-800'"
+                            class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg transition-all">
+                            Continue <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Contact Information -->
+                <div x-show="step === 2" class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-6 text-center">Your Information</h2>
+
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">First Name</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Last Name</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Email</label>
+                                <input type="email" name="email" required
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Phone</label>
+                                <input type="tel" name="phone" required
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Special Requests (Optional)</label>
+                            <textarea name="requests" rows="4"
+                                placeholder="Any dietary requirements, seating preferences, or special arrangements..."
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea>
+                        </div>
+                    </form>
+
+                    <div class="mt-8 flex justify-between">
+                        <button @click="step = 1"
+                            class="px-8 py-4 border-2 border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 font-semibold rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors">
+                            <i class="fa-solid fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button @click="step = 3"
+                            class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                            Review Booking <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Confirmation -->
+                <div x-show="step === 3" class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-6 text-center">Confirm Your Reservation</h2>
+
+                    <div class="bg-stone-50 dark:bg-stone-700 rounded-xl p-6 mb-8">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-calendar text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-stone-500 dark:text-stone-400">Date</p>
+                                    <p class="text-lg font-semibold text-stone-800 dark:text-white" x-text="selectedDate"></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-clock text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-stone-500 dark:text-stone-400">Time</p>
+                                    <p class="text-lg font-semibold text-stone-800 dark:text-white" x-text="selectedTime"></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-users text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-stone-500 dark:text-stone-400">Guests</p>
+                                    <p class="text-lg font-semibold text-stone-800 dark:text-white" x-text="guests + ' people'"></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4" x-show="occasion">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-champagne-glasses text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-stone-500 dark:text-stone-400">Occasion</p>
+                                    <p class="text-lg font-semibold text-stone-800 dark:text-white capitalize" x-text="occasion"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <p class="text-stone-600 dark:text-stone-400">
+                            By confirming this reservation, you agree to our cancellation policy.
+                            Please arrive 10 minutes before your reservation time.
+                        </p>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button @click="step = 2"
+                            class="px-8 py-4 border-2 border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 font-semibold rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors">
+                            <i class="fa-solid fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button @click="alpineListeners('Reservation.post_reservation', $event)" type="button"
+                            class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                            <i class="fa-solid fa-check mr-2"></i> Confirm Reservation
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="py-16 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-2">Call Us</h3>
+                    <p class="text-stone-600 dark:text-stone-400">For immediate assistance</p>
+                    <a href="tel:+15551234567" class="text-amber-600 font-semibold hover:text-amber-700">+1 (555) 123-4567</a>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-users-line text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-2">Large Groups</h3>
+                    <p class="text-stone-600 dark:text-stone-400">For parties of 10+, please call</p>
+                    <a href="/en/events" class="text-amber-600 font-semibold hover:text-amber-700">Private Events</a>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-ban text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-2">Cancellation Policy</h3>
+                    <p class="text-stone-600 dark:text-stone-400">Free cancellation up to 2 hours before your reservation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

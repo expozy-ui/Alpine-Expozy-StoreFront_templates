@@ -1,0 +1,163 @@
+<!-- Страница за Контакти за Недвижими Имоти -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Секция -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Свържете се с Нас</h1>
+            <p class="text-emerald-100 text-xl">Свържете се с нашите експерти по недвижими имоти</p>
+        </div>
+    </section>
+
+    <!-- Карти с Информация за Контакт -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto -mt-24 relative z-10">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Телефон</h3>
+                    <a href="tel:+35921234567" class="text-emerald-600 font-semibold hover:text-emerald-700">+359 2 123 4567</a>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-envelope text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Имейл</h3>
+                    <a href="mailto:info@imoti.bg" class="text-emerald-600 font-semibold hover:text-emerald-700">info@imoti.bg</a>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-location-dot text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Офис</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">ул. Имотна 123<br>София, 1000</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-clock text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Работно Време</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">Пон-Пет: 9:00 - 18:00<br>Съб: 10:00 - 16:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма за Контакт и Карта -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Форма за Контакт -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Изпратете ни Съобщение</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Име</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Фамилия</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Имейл</label>
+                                <input type="email" name="email" required
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Телефон</label>
+                                <input type="tel" name="phone"
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Интересувам се от</label>
+                            <select name="interest" required
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                                <option value="">Изберете опция</option>
+                                <option value="buying">Покупка на Имот</option>
+                                <option value="selling">Продажба на Имот</option>
+                                <option value="renting">Наемане на Имот</option>
+                                <option value="listing">Публикуване на Моя Имот</option>
+                                <option value="other">Друго Запитване</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Съобщение</label>
+                            <textarea name="message" rows="5" required
+                                placeholder="Разкажете ни за вашите нужди от недвижими имоти..."
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500"></textarea>
+                        </div>
+
+                        <button @click="alpineListeners('Contact.post_message', $event)" type="button"
+                            class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                            Изпрати Съобщение <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Карта и Информация за Офиса -->
+                <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden h-96">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.5587698338444!2d23.32148!3d42.69771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa8682cb317bf5%3A0x400a01269bf5e60!2sSofia!5e0!3m2!1sen!2sbg!4v1620000000000!5m2!1sen!2sbg"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-6">Нашите Офиси</h3>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-building text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800 dark:text-white">Централен Офис</h4>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">ул. Имотна 123, София, 1000</p>
+                                    <p class="text-emerald-600 text-sm">+359 2 123 4567</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-building text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800 dark:text-white">Офис Пловдив</h4>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">бул. Централен 456, Пловдив, 4000</p>
+                                    <p class="text-emerald-600 text-sm">+359 32 987 654</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA за Обаждане -->
+    <section class="py-16 bg-emerald-600">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Предпочитате да Поговорим?</h2>
+            <p class="text-emerald-100 mb-8 max-w-2xl mx-auto">
+                Насрочете обаждане с един от нашите експерти по недвижими имоти в удобно за вас време.
+            </p>
+            <button class="px-8 py-4 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-slate-100 transition-colors">
+                <i class="fa-solid fa-calendar-check mr-2"></i>
+                Насрочете Обаждане
+            </button>
+        </div>
+    </section>
+</div>

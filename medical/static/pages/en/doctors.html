@@ -1,0 +1,105 @@
+<!-- Medical/Healthcare Doctors Page -->
+<div class="min-h-screen bg-white" x-data="{ activeFilter: 'all' }">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-teal-50 via-white to-blue-50 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Our Medical Team</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mt-2">Find a Doctor</h1>
+            <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Our team of board-certified physicians are here to provide you with exceptional medical care.</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter -->
+    <section class="py-8 bg-white sticky top-32 z-30 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="relative w-full md:w-96">
+                    <input type="text" placeholder="Search by name or specialty..."
+                        class="w-full px-4 py-3 pl-12 border border-slate-200 rounded-full focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                    <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button @click="activeFilter = 'all'"
+                        :class="activeFilter === 'all' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                        class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-colors">
+                        All Doctors
+                    </button>
+                    <button @click="activeFilter = 'cardiology'"
+                        :class="activeFilter === 'cardiology' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                        class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-colors">
+                        Cardiology
+                    </button>
+                    <button @click="activeFilter = 'neurology'"
+                        :class="activeFilter === 'neurology' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                        class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-colors">
+                        Neurology
+                    </button>
+                    <button @click="activeFilter = 'pediatrics'"
+                        :class="activeFilter === 'pediatrics' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                        class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-colors">
+                        Pediatrics
+                    </button>
+                    <button @click="activeFilter = 'orthopedics'"
+                        :class="activeFilter === 'orthopedics' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                        class="px-4 py-2 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-colors">
+                        Orthopedics
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Grid -->
+    <section class="py-16" apidata="get.doctors" keyname="doctors">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <template x-for="doctor in (data.doctors || []).filter(d => activeFilter === 'all' || d.department.toLowerCase() === activeFilter)" :key="doctor.id">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-slate-100">
+                        <div class="h-72 overflow-hidden relative">
+                            <img :src="doctor.image" :alt="doctor.name" class="w-full h-full object-cover">
+                            <div class="absolute top-4 right-4">
+                                <span class="px-3 py-1 bg-teal-600 text-white text-xs font-semibold rounded-full" x-text="doctor.department"></span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800" x-text="doctor.name"></h3>
+                            <p class="text-teal-600 font-semibold mb-3" x-text="doctor.specialty"></p>
+                            <div class="flex items-center gap-4 text-sm text-slate-500 mb-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-yellow-500"></i>
+                                    <span x-text="doctor.rating"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-briefcase-medical text-teal-500"></i>
+                                    <span x-text="doctor.experience + ' years'"></span>
+                                </span>
+                            </div>
+                            <p class="text-slate-500 text-sm mb-4 line-clamp-2" x-text="doctor.bio"></p>
+                            <div class="flex gap-2">
+                                <a :href="'/en/doctor/' + doctor.slug" class="flex-1 py-2 text-center bg-teal-100 text-teal-700 font-semibold rounded-full hover:bg-teal-600 hover:text-white transition-colors">
+                                    View Profile
+                                </a>
+                                <a :href="'/en/appointments?doctor=' + doctor.id" class="flex-1 py-2 text-center bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                                    Book
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Can't Find the Right Doctor?</h2>
+                <p class="text-slate-600 mb-8">Our patient care coordinators can help match you with the right specialist for your needs.</p>
+                <a href="/en/contacts" class="inline-block px-8 py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                    Contact Patient Services
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

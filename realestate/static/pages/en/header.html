@@ -1,0 +1,215 @@
+<!-- Real Estate Header -->
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    x-data="{
+        openMobileMenu: false,
+        openSearch: false,
+        scrolled: false
+    }"
+    @scroll.window="scrolled = window.pageYOffset > 50"
+    :class="scrolled ? 'bg-white dark:bg-slate-900 shadow-lg' : 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-md'">
+
+    <!-- Top Bar -->
+    <div class="bg-emerald-600 text-white py-2 text-sm" x-show="!scrolled" x-cloak>
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span><i class="fa-solid fa-phone mr-2"></i>+1 (555) 123-4567</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-envelope mr-2"></i>info@realestate.com</span>
+                <span class="hidden lg:inline"><i class="fa-solid fa-location-dot mr-2"></i>123 Property Street, NY</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-emerald-200"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-emerald-200"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-emerald-200"><i class="fa-brands fa-linkedin-in"></i></a>
+                <span class="mx-2">|</span>
+                <a href="/en/homepage" class="text-emerald-200 font-semibold">EN</a>
+                <a href="/bg/homepage" class="hover:text-emerald-200">BG</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/en/homepage" class="flex items-center">
+                <img :src="data.settings?.logo" alt="Real Estate Logo" class="h-12 md:h-14">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/en/homepage" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Home</a>
+                <div class="relative group">
+                    <a href="/en/properties" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium flex items-center gap-1">
+                        Properties <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                        <a href="/en/properties?type=buy" class="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 hover:text-emerald-600 first:rounded-t-xl">For Sale</a>
+                        <a href="/en/properties?type=rent" class="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 hover:text-emerald-600">For Rent</a>
+                        <a href="/en/properties?type=commercial" class="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 hover:text-emerald-600 last:rounded-b-xl">Commercial</a>
+                    </div>
+                </div>
+                <a href="/en/agents" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Our Agents</a>
+                <a href="/en/about" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">About Us</a>
+                <a href="/en/blog" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Blog</a>
+                <a href="/en/contacts" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Contact</a>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Search Button -->
+                <button @click="openSearch = true" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 transition-colors">
+                    <i class="fa-solid fa-search text-xl"></i>
+                </button>
+
+                <!-- List Property Button -->
+                <a href="/en/list-property" class="hidden md:flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-semibold">
+                    <i class="fa-solid fa-plus"></i>
+                    List Property
+                </a>
+
+                <!-- User Menu -->
+                <a href="/en/login" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 transition-colors">
+                    <i class="fa-solid fa-user text-xl"></i>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button @click="openMobileMenu = true" class="lg:hidden text-slate-600 dark:text-white">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div x-show="openSearch" x-cloak
+        @click.self="openSearch = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-start justify-center pt-32">
+
+        <div x-show="openSearch"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-4xl mx-4 p-8">
+
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white">Search Properties</h3>
+                <button @click="openSearch = false" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
+            <form class="grid md:grid-cols-4 gap-4">
+                <div class="md:col-span-2">
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Location</label>
+                    <input type="text" name="location" placeholder="City, neighborhood, or ZIP"
+                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Property Type</label>
+                    <select name="type" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Any Type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="condo">Condo</option>
+                        <option value="land">Land</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Listing Type</label>
+                    <select name="listing" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Buy or Rent</option>
+                        <option value="buy">For Sale</option>
+                        <option value="rent">For Rent</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Min Price</label>
+                    <input type="number" name="minPrice" placeholder="$0"
+                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Max Price</label>
+                    <input type="number" name="maxPrice" placeholder="Any"
+                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Bedrooms</label>
+                    <select name="bedrooms" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Bathrooms</label>
+                    <select name="bathrooms" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                    </select>
+                </div>
+                <div class="md:col-span-4">
+                    <button type="submit" class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-search"></i>
+                        Search Properties
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div x-show="openMobileMenu" x-cloak
+        @click.self="openMobileMenu = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50">
+
+        <div x-show="openMobileMenu"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            class="absolute right-0 top-0 h-full w-80 bg-white dark:bg-slate-900 shadow-2xl">
+
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <img :src="data.settings?.logo" alt="Logo" class="h-10">
+                    <button @click="openMobileMenu = false" class="text-slate-600 dark:text-white">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-4">
+                    <a href="/en/homepage" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Home</a>
+                    <a href="/en/properties" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Properties</a>
+                    <a href="/en/agents" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Our Agents</a>
+                    <a href="/en/about" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">About Us</a>
+                    <a href="/en/blog" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Blog</a>
+                    <a href="/en/contacts" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Contact</a>
+                </nav>
+
+                <a href="/en/list-property" class="block w-full mt-8 px-6 py-4 bg-emerald-600 text-white text-center rounded-lg hover:bg-emerald-700 transition-colors font-semibold">
+                    <i class="fa-solid fa-plus mr-2"></i>
+                    List Your Property
+                </a>
+
+                <div class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <p class="text-slate-500 text-sm mb-4">Contact Us</p>
+                    <p class="text-slate-700 dark:text-white">+1 (555) 123-4567</p>
+                    <p class="text-slate-700 dark:text-white">info@realestate.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Spacer for fixed header -->
+<div class="h-20"></div>

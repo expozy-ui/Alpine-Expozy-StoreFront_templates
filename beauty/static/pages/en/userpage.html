@@ -1,0 +1,249 @@
+<!-- Beauty/Salon User Dashboard -->
+<div class="min-h-screen bg-slate-50" apidata="get.user_profile" keyname="user" x-data="{ activeTab: 'appointments' }">
+    <!-- Header -->
+    <section class="bg-gradient-to-r from-rose-500 to-pink-600 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="relative">
+                    <img :src="data.user?.avatar || '/images/default-avatar.jpg'" :alt="data.user?.name" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg">
+                    <button class="absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full flex items-center justify-center text-rose-600 shadow-md hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-camera text-sm"></i>
+                    </button>
+                </div>
+                <div class="text-center md:text-left text-white">
+                    <h1 class="text-2xl font-bold" x-text="'Welcome, ' + (data.user?.firstName || 'Guest')"></h1>
+                    <p class="text-rose-100" x-text="data.user?.email"></p>
+                    <div class="mt-2 flex items-center justify-center md:justify-start gap-4">
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm" x-text="(data.user?.loyaltyPoints || 0) + ' Points'"></span>
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm" x-text="(data.user?.memberSince || 'New Member')"></span>
+                    </div>
+                </div>
+                <div class="md:ml-auto">
+                    <a href="/en/booking" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-rose-600 font-semibold rounded-full hover:bg-slate-100 transition-colors">
+                        <i class="fa-solid fa-plus"></i>
+                        Book Appointment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <section class="bg-white shadow-sm sticky top-20 md:top-28 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto gap-8">
+                <button @click="activeTab = 'appointments'" :class="activeTab === 'appointments' ? 'border-b-2 border-rose-600 text-rose-600' : 'text-slate-500'" class="py-4 font-semibold whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-calendar-check mr-2"></i>Appointments
+                </button>
+                <button @click="activeTab = 'history'" :class="activeTab === 'history' ? 'border-b-2 border-rose-600 text-rose-600' : 'text-slate-500'" class="py-4 font-semibold whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i>History
+                </button>
+                <button @click="activeTab = 'favorites'" :class="activeTab === 'favorites' ? 'border-b-2 border-rose-600 text-rose-600' : 'text-slate-500'" class="py-4 font-semibold whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-heart mr-2"></i>Favorites
+                </button>
+                <button @click="activeTab = 'rewards'" :class="activeTab === 'rewards' ? 'border-b-2 border-rose-600 text-rose-600' : 'text-slate-500'" class="py-4 font-semibold whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-gift mr-2"></i>Rewards
+                </button>
+                <button @click="activeTab = 'settings'" :class="activeTab === 'settings' ? 'border-b-2 border-rose-600 text-rose-600' : 'text-slate-500'" class="py-4 font-semibold whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-gear mr-2"></i>Settings
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <!-- Upcoming Appointments -->
+            <div x-show="activeTab === 'appointments'">
+                <h2 class="text-xl font-bold text-slate-800 mb-6">Upcoming Appointments</h2>
+                <div class="space-y-4">
+                    <template x-for="appointment in data.user?.upcomingAppointments || []" :key="appointment.id">
+                        <div class="bg-white rounded-2xl shadow-sm p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
+                            <div class="w-16 h-16 bg-rose-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i :class="appointment.icon + ' text-rose-600 text-xl'"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-slate-800" x-text="appointment.service"></h3>
+                                <p class="text-slate-600 text-sm">with <span class="text-rose-600" x-text="appointment.stylist"></span></p>
+                                <div class="flex flex-wrap gap-4 mt-2 text-sm text-slate-500">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fa-solid fa-calendar"></i>
+                                        <span x-text="appointment.date"></span>
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span x-text="appointment.time"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 w-full md:w-auto">
+                                <button class="flex-1 md:flex-none px-4 py-2 border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">
+                                    Reschedule
+                                </button>
+                                <button class="flex-1 md:flex-none px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                    <template x-if="!data.user?.upcomingAppointments?.length">
+                        <div class="bg-white rounded-2xl shadow-sm p-12 text-center">
+                            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-calendar-xmark text-slate-400 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 mb-2">No Upcoming Appointments</h3>
+                            <p class="text-slate-600 mb-6">Ready for some self-care? Book your next appointment!</p>
+                            <a href="/en/booking" class="inline-flex items-center gap-2 px-6 py-3 bg-rose-600 text-white font-semibold rounded-full hover:bg-rose-700 transition-colors">
+                                <i class="fa-solid fa-plus"></i>
+                                Book Now
+                            </a>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div x-show="activeTab === 'history'" x-cloak>
+                <h2 class="text-xl font-bold text-slate-800 mb-6">Appointment History</h2>
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="text-left p-4 font-semibold text-slate-600">Service</th>
+                                <th class="text-left p-4 font-semibold text-slate-600">Stylist</th>
+                                <th class="text-left p-4 font-semibold text-slate-600">Date</th>
+                                <th class="text-left p-4 font-semibold text-slate-600">Amount</th>
+                                <th class="text-left p-4 font-semibold text-slate-600">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <template x-for="history in data.user?.appointmentHistory || []" :key="history.id">
+                                <tr>
+                                    <td class="p-4 text-slate-800" x-text="history.service"></td>
+                                    <td class="p-4 text-slate-600" x-text="history.stylist"></td>
+                                    <td class="p-4 text-slate-600" x-text="history.date"></td>
+                                    <td class="p-4 font-semibold text-slate-800" x-text="'$' + history.amount"></td>
+                                    <td class="p-4">
+                                        <button class="text-rose-600 hover:text-rose-700 font-medium">Book Again</button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Favorites -->
+            <div x-show="activeTab === 'favorites'" x-cloak>
+                <h2 class="text-xl font-bold text-slate-800 mb-6">Favorite Stylists</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <template x-for="stylist in data.user?.favoriteStylists || []" :key="stylist.id">
+                        <div class="bg-white rounded-2xl shadow-sm p-6 text-center">
+                            <img :src="stylist.image" :alt="stylist.name" class="w-20 h-20 rounded-full object-cover mx-auto mb-4">
+                            <h3 class="font-bold text-slate-800" x-text="stylist.name"></h3>
+                            <p class="text-rose-600 text-sm mb-4" x-text="stylist.specialty"></p>
+                            <a :href="'/en/booking?stylist=' + stylist.id" class="inline-block px-6 py-2 bg-rose-600 text-white rounded-full hover:bg-rose-700 transition-colors">
+                                Book
+                            </a>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Rewards -->
+            <div x-show="activeTab === 'rewards'" x-cloak>
+                <div class="bg-gradient-to-r from-rose-500 to-pink-600 rounded-2xl p-8 text-white mb-8">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2">Your Rewards Balance</h2>
+                            <p class="text-rose-100">Earn points with every visit and redeem for discounts!</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-5xl font-bold" x-text="data.user?.loyaltyPoints || 0"></p>
+                            <p class="text-rose-100">Points</p>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Available Rewards</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <template x-for="reward in data.user?.availableRewards || []" :key="reward.id">
+                        <div class="bg-white rounded-2xl shadow-sm p-6">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center">
+                                    <i :class="reward.icon + ' text-rose-600 text-xl'"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800" x-text="reward.name"></h4>
+                                    <p class="text-rose-600 font-semibold" x-text="reward.points + ' points'"></p>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-4" x-text="reward.description"></p>
+                            <button class="w-full py-2 border-2 border-rose-600 text-rose-600 font-semibold rounded-full hover:bg-rose-50 transition-colors" :disabled="(data.user?.loyaltyPoints || 0) < reward.points" :class="(data.user?.loyaltyPoints || 0) < reward.points ? 'opacity-50 cursor-not-allowed' : ''">
+                                Redeem
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div x-show="activeTab === 'settings'" x-cloak>
+                <div class="max-w-2xl">
+                    <h2 class="text-xl font-bold text-slate-800 mb-6">Account Settings</h2>
+                    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+                        <h3 class="font-bold text-slate-800 mb-4">Personal Information</h3>
+                        <form class="space-y-4">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">First Name</label>
+                                    <input type="text" :value="data.user?.firstName" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Last Name</label>
+                                    <input type="text" :value="data.user?.lastName" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-medium mb-2">Email</label>
+                                <input type="email" :value="data.user?.email" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-medium mb-2">Phone</label>
+                                <input type="tel" :value="data.user?.phone" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            </div>
+                            <button type="submit" class="px-6 py-3 bg-rose-600 text-white font-semibold rounded-full hover:bg-rose-700 transition-colors">
+                                Save Changes
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+                        <h3 class="font-bold text-slate-800 mb-4">Notification Preferences</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-slate-700">Appointment Reminders</span>
+                                <input type="checkbox" checked class="w-5 h-5 text-rose-600 rounded">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-slate-700">Promotional Offers</span>
+                                <input type="checkbox" checked class="w-5 h-5 text-rose-600 rounded">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-slate-700">Newsletter</span>
+                                <input type="checkbox" class="w-5 h-5 text-rose-600 rounded">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm p-6">
+                        <h3 class="font-bold text-red-600 mb-4">Danger Zone</h3>
+                        <button class="px-6 py-3 border border-red-600 text-red-600 font-semibold rounded-full hover:bg-red-50 transition-colors">
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

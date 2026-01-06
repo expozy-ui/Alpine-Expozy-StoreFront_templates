@@ -1,0 +1,146 @@
+<!-- Real Estate Agents Page -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Our Expert Agents</h1>
+            <p class="text-emerald-100 text-xl">Meet the professionals who will guide you home</p>
+        </div>
+    </section>
+
+    <!-- Search Agents -->
+    <section class="py-8 bg-white dark:bg-slate-800 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap gap-3">
+                    <input type="text" placeholder="Search by name..."
+                        class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    <select class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">All Specializations</option>
+                        <option value="residential">Residential</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="rentals">Rentals</option>
+                    </select>
+                    <select class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">All Locations</option>
+                        <option value="manhattan">Manhattan</option>
+                        <option value="brooklyn">Brooklyn</option>
+                        <option value="queens">Queens</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+                    <span>Sort by:</span>
+                    <select class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="rating">Top Rated</option>
+                        <option value="experience">Experience</option>
+                        <option value="sales">Most Sales</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agents Grid -->
+    <section class="py-16" apidata="get.agents" keyname="agents">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <template x-for="agent in data.agents || []" :key="agent.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-shadow">
+                        <div class="relative h-80 overflow-hidden">
+                            <img :src="agent.image" :alt="agent.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-bold text-white" x-text="agent.name"></h3>
+                                <p class="text-emerald-400 font-semibold" x-text="agent.title"></p>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <div class="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-xs"></i>
+                                    <span x-text="agent.rating"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400 mb-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-briefcase text-emerald-600"></i>
+                                    <span x-text="agent.experience + ' years'"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-home text-emerald-600"></i>
+                                    <span x-text="agent.sales + ' sales'"></span>
+                                </span>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2" x-text="agent.bio"></p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <template x-for="spec in agent.specializations || []" :key="spec">
+                                    <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs rounded-full" x-text="spec"></span>
+                                </template>
+                            </div>
+                            <div class="flex gap-2">
+                                <a :href="'/en/agent/' + agent.slug" class="flex-1 py-3 text-center bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                    View Profile
+                                </a>
+                                <a :href="'tel:' + agent.phone" class="w-12 h-12 flex items-center justify-center border border-slate-300 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-colors">
+                                    <i class="fa-solid fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center gap-2 mt-12">
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="w-10 h-10 rounded-lg bg-emerald-600 text-white shadow">1</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">2</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Our Team CTA -->
+    <section class="py-16 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-4">Join Our Team of Experts</h2>
+                    <p class="text-slate-400 mb-6">
+                        Are you a licensed real estate professional looking for a rewarding career? Join our team and benefit from industry-leading training, support, and commission structures.
+                    </p>
+                    <ul class="space-y-3 text-slate-300 mb-8">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Competitive commission splits
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Comprehensive training programs
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Marketing and lead generation support
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Flexible work arrangements
+                        </li>
+                    </ul>
+                    <a href="/en/careers" class="inline-block px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                        Apply Now <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600" alt="Join Our Team" class="rounded-2xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

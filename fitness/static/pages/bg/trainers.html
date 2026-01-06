@@ -1,0 +1,106 @@
+<!-- Фитнес Треньори страница -->
+<div class="min-h-screen bg-slate-900">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 py-16 relative">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1920')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase">Нашите треньори</h1>
+            <p class="text-slate-300 text-xl">Експертни треньори, посветени на вашия успех</p>
+        </div>
+    </section>
+
+    <!-- Мрежа с треньори -->
+    <section class="py-16" apidata="get.trainers" keyname="trainers">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <template x-for="trainer in data.trainers || []" :key="trainer.id">
+                    <div class="bg-slate-800 rounded-2xl overflow-hidden group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="relative h-80 overflow-hidden">
+                            <img :src="trainer.image" :alt="trainer.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-bold text-white" x-text="trainer.name"></h3>
+                                <p class="text-orange-500 font-semibold" x-text="trainer.specialty"></p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-sm text-slate-400 mb-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-briefcase text-orange-500"></i>
+                                    <span x-text="trainer.experience + ' години'"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-orange-500"></i>
+                                    <span x-text="trainer.rating"></span>
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-4 line-clamp-2" x-text="trainer.bio"></p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <template x-for="cert in trainer.certifications || []" :key="cert">
+                                    <span class="px-2 py-1 bg-slate-700 text-slate-300 text-xs rounded" x-text="cert"></span>
+                                </template>
+                            </div>
+                            <div class="flex gap-3 mb-4">
+                                <a :href="trainer.instagram" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a :href="trainer.twitter" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <a :href="trainer.linkedin" class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                            <a :href="'/bg/trainer/' + trainer.slug" class="block w-full py-3 text-center bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                                Виж профил
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Персонални тренировки CTA -->
+    <section class="py-16 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div>
+                    <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Персонални тренировки</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-white mt-2 mb-6 uppercase">Индивидуален подход</h2>
+                    <p class="text-slate-400 mb-6">
+                        Получете персонално внимание и индивидуални тренировъчни планове, създадени специално за вашите цели, ниво на подготовка и график.
+                    </p>
+                    <ul class="space-y-3 text-slate-300 mb-8">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-orange-500"></i>
+                            Персонализирани тренировъчни програми
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-orange-500"></i>
+                            Хранителни съвети и планиране на менюта
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-orange-500"></i>
+                            Проследяване на напредъка и корекции
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-orange-500"></i>
+                            Гъвкаво планиране на часовете
+                        </li>
+                    </ul>
+                    <a href="/bg/personal-training" class="inline-block px-8 py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                        Резервирай сесия <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1571388208497-71bedc66e932?w=600" alt="Персонални тренировки" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-6 -left-6 bg-orange-500 text-white p-6 rounded-xl shadow-xl">
+                        <div class="text-3xl font-black">БЕЗПЛАТНА</div>
+                        <div class="text-orange-100 text-sm uppercase">Първа сесия</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

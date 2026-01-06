@@ -1,0 +1,166 @@
+<!-- Медицински център Контакти страница -->
+<div class="min-h-screen bg-white">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-br from-teal-50 via-white to-blue-50 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Свържете се с нас</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mt-2">Контакти</h1>
+            <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Тук сме, за да помогнем. Свържете се с нас за часове, запитвания или помощ.</p>
+        </div>
+    </section>
+
+    <!-- Контактни карти -->
+    <section class="py-8 -mt-8 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-location-dot text-2xl text-teal-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Адрес</h3>
+                    <p class="text-slate-600 text-sm">бул. Медицински 123<br>1000 София</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone text-2xl text-teal-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Телефон</h3>
+                    <p class="text-slate-600 text-sm">+359 2 123 4567</p>
+                </div>
+                <div class="bg-red-50 rounded-2xl shadow-lg p-6 text-center border border-red-100">
+                    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone-volume text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Спешна помощ</h3>
+                    <p class="text-red-600 font-bold">+359 2 911 1234</p>
+                    <p class="text-slate-600 text-sm">24/7</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center border border-slate-100">
+                    <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-envelope text-2xl text-teal-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-2">Имейл</h3>
+                    <p class="text-slate-600 text-sm">info@medcenter.bg</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма и информация -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Форма -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Изпратете съобщение</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Име</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Фамилия</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Имейл</label>
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Телефон</label>
+                            <input type="tel" name="phone"
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Отдел</label>
+                            <select name="department"
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                                <option value="">Изберете отдел</option>
+                                <option value="general">Общи запитвания</option>
+                                <option value="appointments">Часове</option>
+                                <option value="billing">Фактуриране</option>
+                                <option value="medical-records">Медицински досиета</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Съобщение</label>
+                            <textarea name="message" rows="5" required
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500"></textarea>
+                        </div>
+                        <button @click="alpineListeners('Contact.submit', $event)" type="button"
+                            class="w-full py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                            Изпрати съобщение
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Информация -->
+                <div class="space-y-8">
+                    <div class="bg-slate-50 rounded-2xl p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6">Работно време</h2>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center pb-4 border-b border-slate-200">
+                                <span class="text-slate-700 font-semibold">Понеделник - Петък</span>
+                                <span class="text-teal-600 font-semibold">8:00 - 18:00</span>
+                            </li>
+                            <li class="flex justify-between items-center pb-4 border-b border-slate-200">
+                                <span class="text-slate-700 font-semibold">Събота</span>
+                                <span class="text-teal-600 font-semibold">9:00 - 14:00</span>
+                            </li>
+                            <li class="flex justify-between items-center pb-4 border-b border-slate-200">
+                                <span class="text-slate-700 font-semibold">Неделя</span>
+                                <span class="text-slate-500">Затворено</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="text-slate-700 font-semibold">Спешно отделение</span>
+                                <span class="text-red-600 font-bold">24/7</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-teal-50 rounded-2xl p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6">Бързи връзки</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="/bg/appointments" class="flex items-center gap-3 text-slate-700 hover:text-teal-600">
+                                <i class="fa-solid fa-calendar-check text-teal-600"></i>
+                                <span>Запазете час</span>
+                            </a>
+                            <a href="/bg/doctors" class="flex items-center gap-3 text-slate-700 hover:text-teal-600">
+                                <i class="fa-solid fa-user-doctor text-teal-600"></i>
+                                <span>Намерете лекар</span>
+                            </a>
+                            <a href="/bg/login" class="flex items-center gap-3 text-slate-700 hover:text-teal-600">
+                                <i class="fa-solid fa-file-medical text-teal-600"></i>
+                                <span>Портал за пациенти</span>
+                            </a>
+                            <a href="/bg/services" class="flex items-center gap-3 text-slate-700 hover:text-teal-600">
+                                <i class="fa-solid fa-stethoscope text-teal-600"></i>
+                                <span>Услуги</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Карта -->
+    <section class="py-16 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-slate-800">Намерете ни</h2>
+            </div>
+            <div class="h-96 rounded-2xl overflow-hidden shadow-lg">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.5!2d23.3!3d42.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z!5e0!3m2!1sbg!2sbg!4v1"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+</div>

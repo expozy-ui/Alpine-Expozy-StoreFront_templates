@@ -1,0 +1,334 @@
+<!-- Начална Страница за Недвижими Имоти -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Секция -->
+    <section class="relative min-h-[700px] flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920')] bg-cover bg-center opacity-30"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Намерете Вашия <span class="text-emerald-400">Мечтан Дом</span>
+                </h1>
+                <p class="text-xl text-slate-300 mb-8">
+                    Открийте перфектния имот от нашата внимателно подбрана колекция от жилища, апартаменти и търговски пространства.
+                </p>
+
+                <!-- Поле за Търсене -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6">
+                    <div class="flex gap-4 mb-4">
+                        <button class="px-6 py-2 bg-emerald-600 text-white rounded-lg font-semibold">Покупка</button>
+                        <button class="px-6 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Наем</button>
+                    </div>
+                    <form class="grid md:grid-cols-4 gap-4">
+                        <div class="md:col-span-2">
+                            <input type="text" name="location" placeholder="Въведете местоположение, град или пощенски код"
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <select name="type" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                                <option value="">Тип Имот</option>
+                                <option value="house">Къща</option>
+                                <option value="apartment">Апартамент</option>
+                                <option value="condo">Мезонет</option>
+                                <option value="villa">Вила</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-search"></i>
+                                Търси
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Бързи Статистики -->
+                <div class="flex flex-wrap gap-8 mt-12 text-white">
+                    <div>
+                        <div class="text-4xl font-bold text-emerald-400">2,500+</div>
+                        <div class="text-slate-400">Активни Обяви</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-emerald-400">1,200+</div>
+                        <div class="text-slate-400">Доволни Клиенти</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-emerald-400">50+</div>
+                        <div class="text-slate-400">Експертни Агенти</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Избрани Имоти -->
+    <section class="py-20" apidata="get.featured_properties" keyname="featured">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Избрани Имоти</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mt-2">Разгледайте Нашите Топ Обяви</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="property in data.featured || []" :key="property.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-shadow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img :src="property.image" :alt="property.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="px-3 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="property.status"></span>
+                                <template x-if="property.featured">
+                                    <span class="px-3 py-1 bg-amber-500 text-white text-sm font-semibold rounded-full">Избрано</span>
+                                </template>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 hover:bg-white transition-colors">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="text-2xl font-bold text-white drop-shadow-lg" x-text="property.price.toLocaleString() + ' лв.'"></div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-emerald-600 transition-colors" x-text="property.title"></h3>
+                            <p class="text-slate-500 flex items-center gap-2 mb-4">
+                                <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                                <span x-text="property.location"></span>
+                            </p>
+                            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400 text-sm border-t border-slate-200 dark:border-slate-600 pt-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-bed text-emerald-600"></i>
+                                    <span x-text="property.bedrooms"></span> Спални
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-bath text-emerald-600"></i>
+                                    <span x-text="property.bathrooms"></span> Бани
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-ruler-combined text-emerald-600"></i>
+                                    <span x-text="property.sqm"></span> кв.м.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a :href="'/bg/property/' + property.slug" class="block w-full py-3 text-center bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                Виж Детайли
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/bg/properties" class="inline-flex items-center gap-2 px-8 py-4 bg-slate-800 dark:bg-white text-white dark:text-slate-800 font-semibold rounded-lg hover:bg-slate-700 dark:hover:bg-slate-100 transition-colors">
+                    Виж Всички Имоти <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Типове Имоти -->
+    <section class="py-20 bg-white dark:bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Категории</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mt-2">Разгледайте по Тип Имот</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <a href="/bg/properties?type=house" class="group">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-6 text-center hover:bg-emerald-600 transition-colors">
+                        <div class="w-16 h-16 bg-emerald-100 group-hover:bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                            <i class="fa-solid fa-house text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-white transition-colors">Къщи</h3>
+                        <p class="text-slate-500 group-hover:text-emerald-100 text-sm transition-colors">120+ обяви</p>
+                    </div>
+                </a>
+                <a href="/bg/properties?type=apartment" class="group">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-6 text-center hover:bg-emerald-600 transition-colors">
+                        <div class="w-16 h-16 bg-emerald-100 group-hover:bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                            <i class="fa-solid fa-building text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-white transition-colors">Апартаменти</h3>
+                        <p class="text-slate-500 group-hover:text-emerald-100 text-sm transition-colors">350+ обяви</p>
+                    </div>
+                </a>
+                <a href="/bg/properties?type=villa" class="group">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-6 text-center hover:bg-emerald-600 transition-colors">
+                        <div class="w-16 h-16 bg-emerald-100 group-hover:bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                            <i class="fa-solid fa-hotel text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-white transition-colors">Вили</h3>
+                        <p class="text-slate-500 group-hover:text-emerald-100 text-sm transition-colors">45+ обяви</p>
+                    </div>
+                </a>
+                <a href="/bg/properties?type=condo" class="group">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-6 text-center hover:bg-emerald-600 transition-colors">
+                        <div class="w-16 h-16 bg-emerald-100 group-hover:bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                            <i class="fa-solid fa-city text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-white transition-colors">Мезонети</h3>
+                        <p class="text-slate-500 group-hover:text-emerald-100 text-sm transition-colors">80+ обяви</p>
+                    </div>
+                </a>
+                <a href="/bg/properties?type=land" class="group">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-6 text-center hover:bg-emerald-600 transition-colors">
+                        <div class="w-16 h-16 bg-emerald-100 group-hover:bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                            <i class="fa-solid fa-mountain-sun text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-white transition-colors">Парцели</h3>
+                        <p class="text-slate-500 group-hover:text-emerald-100 text-sm transition-colors">65+ обяви</p>
+                    </div>
+                </a>
+                <a href="/bg/properties?type=commercial" class="group">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-2xl p-6 text-center hover:bg-emerald-600 transition-colors">
+                        <div class="w-16 h-16 bg-emerald-100 group-hover:bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
+                            <i class="fa-solid fa-store text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-white transition-colors">Търговски</h3>
+                        <p class="text-slate-500 group-hover:text-emerald-100 text-sm transition-colors">90+ обяви</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Защо Да Ни Изберете -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Защо Да Ни Изберете</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mt-2 mb-6">Вашият Надежден Партньор в Недвижимите Имоти</h2>
+                    <p class="text-slate-600 dark:text-slate-400 mb-8">
+                        С повече от 25 години опит, ние помогнахме на хиляди семейства да намерят своя перфектен дом. Нашият отдаден екип е посветен на предоставянето на изключително обслужване на всяка стъпка от пътя.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-white mb-1">Доверени Експерти</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Лицензирани агенти с дълбоко познаване на местния пазар</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-white mb-1">Най-Добри Цени</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Договаряме най-добрите сделки за нашите клиенти</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-headset text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-white mb-1">24/7 Поддръжка</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm">Винаги на разположение, когато имате нужда от нас</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600" alt="Модерна Къща" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-8 -left-8 bg-emerald-600 text-white p-8 rounded-2xl shadow-xl">
+                        <div class="text-4xl font-bold">25+</div>
+                        <div class="text-emerald-100">Години Опит</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Нашите Агенти -->
+    <section class="py-20 bg-slate-100 dark:bg-slate-800" apidata="get.agents" keyname="agents">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Нашият Екип</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mt-2">Запознайте се с Нашите Експерти</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <template x-for="agent in (data.agents || []).slice(0, 4)" :key="agent.id">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg group">
+                        <div class="relative h-72 overflow-hidden">
+                            <img :src="agent.image" :alt="agent.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white" x-text="agent.name"></h3>
+                            <p class="text-emerald-600 font-semibold" x-text="agent.title"></p>
+                            <div class="flex justify-center gap-4 mt-4">
+                                <a :href="'tel:' + agent.phone" class="w-10 h-10 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:text-white transition-colors">
+                                    <i class="fa-solid fa-phone"></i>
+                                </a>
+                                <a :href="'mailto:' + agent.email" class="w-10 h-10 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:text-white transition-colors">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </a>
+                                <a :href="agent.linkedin" class="w-10 h-10 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:text-white transition-colors">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/bg/agents" class="inline-flex items-center gap-2 text-emerald-600 font-semibold hover:text-emerald-700">
+                    Виж Всички Агенти <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзиви -->
+    <section class="py-20" apidata="get.testimonials" keyname="testimonials">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Отзиви</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mt-2">Какво Казват Нашите Клиенти</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <template x-for="testimonial in data.testimonials || []" :key="testimonial.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg">
+                        <div class="flex items-center gap-1 mb-4">
+                            <template x-for="i in 5">
+                                <i class="fa-solid fa-star text-amber-400"></i>
+                            </template>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 mb-6 italic" x-text="'\"' + testimonial.content + '\"'"></p>
+                        <div class="flex items-center gap-4">
+                            <img :src="testimonial.author.image" :alt="testimonial.author.name" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-bold text-slate-800 dark:text-white" x-text="testimonial.author.name"></div>
+                                <div class="text-slate-500 text-sm" x-text="testimonial.author.role"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Секция -->
+    <section class="py-20 bg-emerald-600">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Готови ли сте да Намерите Вашия Перфектен Дом?</h2>
+            <p class="text-emerald-100 mb-8 max-w-2xl mx-auto">
+                Нека нашите експертни агенти ви помогнат да откриете идеалния имот, който отговаря на вашия начин на живот и бюджет.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/bg/properties" class="px-8 py-4 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-slate-100 transition-colors">
+                    Разгледай Имоти
+                </a>
+                <a href="/bg/contacts" class="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors">
+                    Свържете се с Нас
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

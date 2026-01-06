@@ -1,0 +1,153 @@
+<!-- Страница за Вход за Недвижими Имоти -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-md" x-data="{ activeTab: 'login', showPassword: false }">
+        <!-- Лого -->
+        <div class="text-center mb-8">
+            <a href="/bg/homepage">
+                <img :src="data.settings?.logo" alt="Лого Недвижими Имоти" class="h-16 mx-auto mb-4">
+            </a>
+            <h1 class="text-2xl font-bold text-slate-800 dark:text-white">Добре Дошли Отново</h1>
+            <p class="text-slate-600 dark:text-slate-400">Влезте в акаунта си</p>
+        </div>
+
+        <!-- Карта за Удостоверяване -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
+            <!-- Табове -->
+            <div class="flex border-b border-slate-200 dark:border-slate-700">
+                <button @click="activeTab = 'login'"
+                    :class="activeTab === 'login' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 border-b-2 border-emerald-600' : 'text-slate-600 dark:text-slate-400'"
+                    class="flex-1 py-4 font-semibold transition-colors">
+                    Вход
+                </button>
+                <button @click="activeTab = 'register'"
+                    :class="activeTab === 'register' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 border-b-2 border-emerald-600' : 'text-slate-600 dark:text-slate-400'"
+                    class="flex-1 py-4 font-semibold transition-colors">
+                    Регистрация
+                </button>
+            </div>
+
+            <div class="p-8">
+                <!-- Форма за Вход -->
+                <form x-show="activeTab === 'login'" class="space-y-6">
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Имейл Адрес</label>
+                        <div class="relative">
+                            <input type="email" name="email" required placeholder="vashiat@email.com"
+                                class="w-full px-4 py-3 pl-11 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Парола</label>
+                        <div class="relative">
+                            <input :type="showPassword ? 'text' : 'password'" name="password" required placeholder="••••••••"
+                                class="w-full px-4 py-3 pl-11 pr-11 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                                <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="remember" class="w-4 h-4 text-emerald-600 rounded">
+                            <span class="text-slate-600 dark:text-slate-400 text-sm">Запомни ме</span>
+                        </label>
+                        <a href="/bg/forgot-password" class="text-emerald-600 text-sm font-semibold hover:text-emerald-700">Забравена Парола?</a>
+                    </div>
+
+                    <button @click="alpineListeners('Auth.login', $event)" type="button"
+                        class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                        Вход
+                    </button>
+
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-4 bg-white dark:bg-slate-800 text-slate-500">Или продължете с</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button type="button" class="py-3 border border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            <i class="fa-brands fa-google text-red-500"></i>
+                            <span class="text-slate-700 dark:text-slate-300 font-medium">Google</span>
+                        </button>
+                        <button type="button" class="py-3 border border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            <i class="fa-brands fa-facebook-f text-blue-600"></i>
+                            <span class="text-slate-700 dark:text-slate-300 font-medium">Facebook</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Форма за Регистрация -->
+                <form x-show="activeTab === 'register'" x-cloak class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Име</label>
+                            <input type="text" name="firstName" required placeholder="Иван"
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Фамилия</label>
+                            <input type="text" name="lastName" required placeholder="Петров"
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Имейл Адрес</label>
+                        <input type="email" name="email" required placeholder="vashiat@email.com"
+                            class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Телефон</label>
+                        <input type="tel" name="phone" placeholder="+359 88 123 4567"
+                            class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Парола</label>
+                        <input type="password" name="password" required placeholder="Създайте силна парола"
+                            class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Интересувам се от</label>
+                        <select name="interest"
+                            class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <option value="">Изберете опция</option>
+                            <option value="buying">Покупка на Имот</option>
+                            <option value="selling">Продажба на Имот</option>
+                            <option value="renting">Наемане на Имот</option>
+                            <option value="agent">Да стана Агент</option>
+                        </select>
+                    </div>
+
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="terms" required class="w-4 h-4 text-emerald-600 rounded mt-1">
+                        <span class="text-slate-600 dark:text-slate-400 text-sm">
+                            Съгласен съм с <a href="/bg/terms-conditions" class="text-emerald-600 hover:underline">Общите Условия</a>
+                            и <a href="/bg/gdpr" class="text-emerald-600 hover:underline">Политиката за Поверителност</a>
+                        </span>
+                    </label>
+
+                    <button @click="alpineListeners('Auth.register', $event)" type="button"
+                        class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                        Създай Акаунт
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Връзка за Помощ -->
+        <p class="text-center text-slate-600 dark:text-slate-400 mt-6">
+            Нужна ви е помощ? <a href="/bg/contacts" class="text-emerald-600 font-semibold hover:text-emerald-700">Свържете се с нас</a>
+        </p>
+    </div>
+</div>

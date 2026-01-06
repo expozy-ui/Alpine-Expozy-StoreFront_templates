@@ -1,0 +1,234 @@
+<!-- Салон за красота Начална страница -->
+<div class="min-h-screen bg-white" apidata="get.salon_homepage" keyname="homepage">
+    <!-- Хиро секция -->
+    <section class="relative min-h-[90vh] flex items-center bg-gradient-to-br from-rose-50 via-pink-50 to-white overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-rose-300 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-pink-300 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 py-20 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-6">Добре дошли в Glamour</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-6 leading-tight">
+                        Там, където красотата среща <span class="bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent">съвършенството</span>
+                    </h1>
+                    <p class="text-slate-600 text-lg mb-8">Преживейте луксозни процедури, създадени специално за вас. Нашите експертни стилисти разкриват вашата естествена красота с премиум услуги.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/bg/booking" class="px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all shadow-lg shadow-rose-200">
+                            Запази час
+                        </a>
+                        <a href="/bg/services" class="px-8 py-4 border-2 border-rose-500 text-rose-600 font-semibold rounded-full hover:bg-rose-50 transition-colors">
+                            Виж услуги
+                        </a>
+                    </div>
+                    <div class="mt-12 flex items-center gap-8">
+                        <div class="flex -space-x-3">
+                            <template x-for="i in 4" :key="i">
+                                <img :src="'/images/client-' + i + '.jpg'" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                            </template>
+                        </div>
+                        <div>
+                            <div class="flex text-yellow-400 mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-slate-600 text-sm">5000+ доволни клиенти</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative z-10">
+                        <img :src="data.homepage?.heroImage || '/images/hero-salon.jpg'" alt="Салон за красота" class="rounded-3xl shadow-2xl">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-award text-rose-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-800">10+ години</p>
+                                <p class="text-slate-500 text-sm">Опит</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -right-6 bg-white rounded-2xl shadow-xl p-4 z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-scissors text-pink-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-800">50+</p>
+                                <p class="text-slate-500 text-sm">Услуги</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция услуги -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Нашите услуги</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Процедури за вас</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">От фризьорски услуги до СПА процедури, предлагаме пълна гама от услуги за красота.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="service in data.homepage?.services || []" :key="service.id">
+                    <a :href="'/bg/services#' + service.slug" class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-slate-100 hover:border-rose-200">
+                        <div class="w-16 h-16 bg-gradient-to-br from-rose-100 to-pink-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i :class="service.icon + ' text-rose-600 text-2xl'"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-600 transition-colors" x-text="service.name"></h3>
+                        <p class="text-slate-600 mb-4" x-text="service.description"></p>
+                        <span class="text-rose-600 font-semibold flex items-center gap-2">
+                            Научи повече <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </a>
+                </template>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/bg/services" class="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white font-semibold rounded-full hover:bg-slate-800 transition-colors">
+                    Виж всички услуги <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Защо нас -->
+    <section class="py-20 bg-gradient-to-br from-rose-50 to-pink-50">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="/images/salon-1.jpg" alt="Интериор на салон" class="rounded-2xl h-64 w-full object-cover">
+                    <img src="/images/salon-2.jpg" alt="Грижа за коса" class="rounded-2xl h-64 w-full object-cover mt-8">
+                    <img src="/images/salon-3.jpg" alt="Маникюр" class="rounded-2xl h-64 w-full object-cover -mt-8">
+                    <img src="/images/salon-4.jpg" alt="СПА процедура" class="rounded-2xl h-64 w-full object-cover">
+                </div>
+                <div>
+                    <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-6">Защо нас</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-6">Glamour преживяването</h2>
+                    <p class="text-slate-600 mb-8">Вярваме, че всеки заслужава да се чувства красив. Нашият салон съчетава умело майсторство с релаксираща атмосфера за вашето перфектно преживяване.</p>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                                <i class="fa-solid fa-gem text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">Премиум продукти</h4>
+                                <p class="text-slate-600 text-sm">Използваме само висококачествени професионални продукти.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                                <i class="fa-solid fa-user-tie text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">Експертни стилисти</h4>
+                                <p class="text-slate-600 text-sm">Нашият екип се състои от високо квалифицирани и опитни професионалисти.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                                <i class="fa-solid fa-heart text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">Персонална грижа</h4>
+                                <p class="text-slate-600 text-sm">Всяка процедура е персонализирана според вашите уникални нужди.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Стилисти -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Нашият екип</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Запознайте се с нашите стилисти</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Талантливи професионалисти, посветени да ви направят да изглеждате и се чувствате невероятно.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <template x-for="stylist in data.homepage?.stylists || []" :key="stylist.id">
+                    <div class="group text-center">
+                        <div class="relative mb-6 overflow-hidden rounded-2xl">
+                            <img :src="stylist.image" :alt="stylist.name" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6">
+                                <div class="flex gap-3">
+                                    <a :href="stylist.instagram" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-700 hover:bg-rose-500 hover:text-white transition-colors">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-700 hover:bg-rose-500 hover:text-white transition-colors">
+                                        <i class="fa-solid fa-calendar"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-lg" x-text="stylist.name"></h3>
+                        <p class="text-rose-600" x-text="stylist.specialty"></p>
+                    </div>
+                </template>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/bg/stylists" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-rose-500 text-rose-600 font-semibold rounded-full hover:bg-rose-50 transition-colors">
+                    Виж целия екип <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзиви -->
+    <section class="py-20 bg-slate-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-600 text-white text-sm font-semibold rounded-full mb-4">Отзиви</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Какво казват нашите клиенти</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Истински истории от нашите доволни клиенти.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <template x-for="testimonial in data.homepage?.testimonials || []" :key="testimonial.id">
+                    <div class="bg-slate-800 rounded-2xl p-8">
+                        <div class="flex text-yellow-400 mb-4">
+                            <template x-for="i in 5" :key="i">
+                                <i class="fa-solid fa-star"></i>
+                            </template>
+                        </div>
+                        <p class="text-slate-300 mb-6" x-text="testimonial.text"></p>
+                        <div class="flex items-center gap-4">
+                            <img :src="testimonial.avatar" :alt="testimonial.name" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-semibold text-white" x-text="testimonial.name"></h4>
+                                <p class="text-slate-400 text-sm" x-text="testimonial.service"></p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA секция -->
+    <section class="py-20 bg-gradient-to-r from-rose-500 to-pink-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Готови за вашата трансформация?</h2>
+            <p class="text-rose-100 text-lg mb-8 max-w-2xl mx-auto">Запазете час днес и преживейте Glamour разликата.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/bg/booking" class="px-8 py-4 bg-white text-rose-600 font-semibold rounded-full hover:bg-slate-100 transition-colors shadow-lg">
+                    Запази час
+                </a>
+                <a href="tel:+35921234567" class="px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-phone mr-2"></i>Обади се
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

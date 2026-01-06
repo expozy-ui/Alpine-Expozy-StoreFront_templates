@@ -1,0 +1,146 @@
+<!-- Страница с Агенти за Недвижими Имоти -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Секция -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Нашите Експертни Агенти</h1>
+            <p class="text-emerald-100 text-xl">Запознайте се с професионалистите, които ще ви отведат до дома</p>
+        </div>
+    </section>
+
+    <!-- Търсене на Агенти -->
+    <section class="py-8 bg-white dark:bg-slate-800 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap gap-3">
+                    <input type="text" placeholder="Търси по име..."
+                        class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    <select class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Всички Специализации</option>
+                        <option value="residential">Жилищни</option>
+                        <option value="commercial">Търговски</option>
+                        <option value="luxury">Луксозни</option>
+                        <option value="rentals">Наеми</option>
+                    </select>
+                    <select class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Всички Локации</option>
+                        <option value="sofia">София</option>
+                        <option value="plovdiv">Пловдив</option>
+                        <option value="varna">Варна</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+                    <span>Сортирай по:</span>
+                    <select class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="rating">Най-Високо Оценени</option>
+                        <option value="experience">Опит</option>
+                        <option value="sales">Най-Много Продажби</option>
+                        <option value="name">Име А-Я</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Мрежа с Агенти -->
+    <section class="py-16" apidata="get.agents" keyname="agents">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <template x-for="agent in data.agents || []" :key="agent.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-shadow">
+                        <div class="relative h-80 overflow-hidden">
+                            <img :src="agent.image" :alt="agent.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-bold text-white" x-text="agent.name"></h3>
+                                <p class="text-emerald-400 font-semibold" x-text="agent.title"></p>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <div class="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-star text-xs"></i>
+                                    <span x-text="agent.rating"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400 mb-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-briefcase text-emerald-600"></i>
+                                    <span x-text="agent.experience + ' години'"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-home text-emerald-600"></i>
+                                    <span x-text="agent.sales + ' продажби'"></span>
+                                </span>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2" x-text="agent.bio"></p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <template x-for="spec in agent.specializations || []" :key="spec">
+                                    <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs rounded-full" x-text="spec"></span>
+                                </template>
+                            </div>
+                            <div class="flex gap-2">
+                                <a :href="'/bg/agent/' + agent.slug" class="flex-1 py-3 text-center bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                    Виж Профил
+                                </a>
+                                <a :href="'tel:' + agent.phone" class="w-12 h-12 flex items-center justify-center border border-slate-300 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-colors">
+                                    <i class="fa-solid fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="flex justify-center gap-2 mt-12">
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="w-10 h-10 rounded-lg bg-emerald-600 text-white shadow">1</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">2</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA за Присъединяване към Екипа -->
+    <section class="py-16 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-4">Присъединете се към Нашия Екип от Експерти</h2>
+                    <p class="text-slate-400 mb-6">
+                        Вие лицензиран професионалист в недвижимите имоти, търсещ възнаграждаваща кариера? Присъединете се към нашия екип и се възползвайте от водещо в индустрията обучение, подкрепа и комисионни структури.
+                    </p>
+                    <ul class="space-y-3 text-slate-300 mb-8">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Конкурентни комисионни
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Цялостни програми за обучение
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Маркетингова подкрепа и генериране на клиенти
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-emerald-500"></i>
+                            Гъвкави работни условия
+                        </li>
+                    </ul>
+                    <a href="/bg/careers" class="inline-block px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                        Кандидатствай Сега <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600" alt="Присъединете се към Нашия Екип" class="rounded-2xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

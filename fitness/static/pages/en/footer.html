@@ -1,0 +1,126 @@
+<!-- Fitness/Gym Footer -->
+<footer class="bg-slate-900 text-white">
+    <!-- Newsletter Section -->
+    <div class="border-b border-slate-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto text-center">
+                <h3 class="text-2xl font-bold mb-4">Get Fitness Tips & Exclusive Offers</h3>
+                <p class="text-slate-400 mb-6">Subscribe to our newsletter and receive workout tips, nutrition advice, and special membership deals.</p>
+                <form class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                    <input type="email" name="email" placeholder="Enter your email" class="flex-1 px-6 py-4 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                    <button @click="alpineListeners('Newsletter.post_newsletter', $event)" type="button" class="px-8 py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-all">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Footer -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About Section -->
+            <div>
+                <img :src="data.settings.logo" alt="Fitness Logo" class="h-14 mb-6">
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    Transform your body and mind at our state-of-the-art fitness center. Expert trainers, top equipment, and a supportive community await you.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-all">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-orange-500">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="/en/classes" class="text-slate-400 hover:text-orange-500 transition-colors">All Classes</a></li>
+                    <li><a href="/en/trainers" class="text-slate-400 hover:text-orange-500 transition-colors">Our Trainers</a></li>
+                    <li><a href="/en/membership" class="text-slate-400 hover:text-orange-500 transition-colors">Membership Plans</a></li>
+                    <li><a href="/en/schedule" class="text-slate-400 hover:text-orange-500 transition-colors">Class Schedule</a></li>
+                    <li><a href="/en/blog" class="text-slate-400 hover:text-orange-500 transition-colors">Fitness Blog</a></li>
+                    <li><a href="/en/shop" class="text-slate-400 hover:text-orange-500 transition-colors">Shop</a></li>
+                </ul>
+            </div>
+
+            <!-- Programs -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-orange-500">Programs</h4>
+                <ul class="space-y-3">
+                    <li><a href="/en/classes?type=strength" class="text-slate-400 hover:text-orange-500 transition-colors">Strength Training</a></li>
+                    <li><a href="/en/classes?type=cardio" class="text-slate-400 hover:text-orange-500 transition-colors">Cardio & HIIT</a></li>
+                    <li><a href="/en/classes?type=yoga" class="text-slate-400 hover:text-orange-500 transition-colors">Yoga & Pilates</a></li>
+                    <li><a href="/en/classes?type=crossfit" class="text-slate-400 hover:text-orange-500 transition-colors">CrossFit</a></li>
+                    <li><a href="/en/classes?type=boxing" class="text-slate-400 hover:text-orange-500 transition-colors">Boxing & MMA</a></li>
+                    <li><a href="/en/personal-training" class="text-slate-400 hover:text-orange-500 transition-colors">Personal Training</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-orange-500">Visit Us</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-location-dot text-orange-500"></i>
+                        </div>
+                        <div class="text-slate-400">
+                            <p>123 Fitness Street</p>
+                            <p>New York, NY 10001</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-phone text-orange-500"></i>
+                        </div>
+                        <div class="text-slate-400">
+                            <a href="tel:+15551234567" class="text-white hover:text-orange-500">+1 (555) 123-4567</a>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-envelope text-orange-500"></i>
+                        </div>
+                        <div class="text-slate-400">
+                            <a href="mailto:info@fitnessgym.com" class="text-white hover:text-orange-500">info@fitnessgym.com</a>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-clock text-orange-500"></i>
+                        </div>
+                        <div class="text-slate-400">
+                            <p>Mon - Fri: 5:00 AM - 11:00 PM</p>
+                            <p>Sat - Sun: 7:00 AM - 9:00 PM</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-slate-800">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+                <p>&copy; <span x-text="new Date().getFullYear()"></span> Fitness Gym. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="/en/gdpr" class="hover:text-orange-500 transition-colors">Privacy Policy</a>
+                    <a href="/en/terms-conditions" class="hover:text-orange-500 transition-colors">Terms of Service</a>
+                    <a href="/en/cookies" class="hover:text-orange-500 transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

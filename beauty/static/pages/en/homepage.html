@@ -1,0 +1,255 @@
+<!-- Beauty/Salon Homepage -->
+<div class="min-h-screen bg-white" apidata="get.salon_homepage" keyname="homepage">
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center bg-gradient-to-br from-rose-50 via-pink-50 to-white overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-rose-300 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-pink-300 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 py-20 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-6">Welcome to Glamour</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-6 leading-tight">
+                        Where Beauty Meets <span class="bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent">Perfection</span>
+                    </h1>
+                    <p class="text-slate-600 text-lg mb-8">Experience luxurious beauty treatments tailored just for you. Our expert stylists bring out your natural radiance with premium services.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/en/booking" class="px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all shadow-lg shadow-rose-200">
+                            Book Appointment
+                        </a>
+                        <a href="/en/services" class="px-8 py-4 border-2 border-rose-500 text-rose-600 font-semibold rounded-full hover:bg-rose-50 transition-colors">
+                            View Services
+                        </a>
+                    </div>
+                    <div class="mt-12 flex items-center gap-8">
+                        <div class="flex -space-x-3">
+                            <template x-for="i in 4" :key="i">
+                                <img :src="'/images/client-' + i + '.jpg'" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                            </template>
+                        </div>
+                        <div>
+                            <div class="flex text-yellow-400 mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-slate-600 text-sm">5,000+ Happy Clients</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative z-10">
+                        <img :src="data.homepage?.heroImage || '/images/hero-salon.jpg'" alt="Beauty Salon" class="rounded-3xl shadow-2xl">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-award text-rose-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-800">10+ Years</p>
+                                <p class="text-slate-500 text-sm">Experience</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -right-6 bg-white rounded-2xl shadow-xl p-4 z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-scissors text-pink-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-800">50+</p>
+                                <p class="text-slate-500 text-sm">Services</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Our Services</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Treatments Made for You</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">From hair styling to spa treatments, we offer a complete range of beauty services.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="service in data.homepage?.services || []" :key="service.id">
+                    <a :href="'/en/services#' + service.slug" class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-slate-100 hover:border-rose-200">
+                        <div class="w-16 h-16 bg-gradient-to-br from-rose-100 to-pink-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i :class="service.icon + ' text-rose-600 text-2xl'"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-600 transition-colors" x-text="service.name"></h3>
+                        <p class="text-slate-600 mb-4" x-text="service.description"></p>
+                        <span class="text-rose-600 font-semibold flex items-center gap-2">
+                            Learn More <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </a>
+                </template>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/en/services" class="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white font-semibold rounded-full hover:bg-slate-800 transition-colors">
+                    View All Services <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-gradient-to-br from-rose-50 to-pink-50">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="/images/salon-1.jpg" alt="Salon Interior" class="rounded-2xl h-64 w-full object-cover">
+                    <img src="/images/salon-2.jpg" alt="Hair Treatment" class="rounded-2xl h-64 w-full object-cover mt-8">
+                    <img src="/images/salon-3.jpg" alt="Nail Art" class="rounded-2xl h-64 w-full object-cover -mt-8">
+                    <img src="/images/salon-4.jpg" alt="Spa Treatment" class="rounded-2xl h-64 w-full object-cover">
+                </div>
+                <div>
+                    <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-6">Why Choose Us</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-6">The Glamour Experience</h2>
+                    <p class="text-slate-600 mb-8">We believe everyone deserves to feel beautiful. Our salon combines skilled artistry with a relaxing atmosphere to give you the ultimate beauty experience.</p>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                                <i class="fa-solid fa-gem text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">Premium Products</h4>
+                                <p class="text-slate-600 text-sm">We use only top-quality, professional-grade beauty products.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                                <i class="fa-solid fa-user-tie text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">Expert Stylists</h4>
+                                <p class="text-slate-600 text-sm">Our team consists of highly trained and experienced professionals.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                                <i class="fa-solid fa-heart text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-1">Personalized Care</h4>
+                                <p class="text-slate-600 text-sm">Every treatment is customized to your unique needs and preferences.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Stylists -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Our Team</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Meet Our Stylists</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Talented professionals dedicated to making you look and feel amazing.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <template x-for="stylist in data.homepage?.stylists || []" :key="stylist.id">
+                    <div class="group text-center">
+                        <div class="relative mb-6 overflow-hidden rounded-2xl">
+                            <img :src="stylist.image" :alt="stylist.name" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6">
+                                <div class="flex gap-3">
+                                    <a :href="stylist.instagram" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-700 hover:bg-rose-500 hover:text-white transition-colors">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-700 hover:bg-rose-500 hover:text-white transition-colors">
+                                        <i class="fa-solid fa-calendar"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-lg" x-text="stylist.name"></h3>
+                        <p class="text-rose-600" x-text="stylist.specialty"></p>
+                    </div>
+                </template>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/en/stylists" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-rose-500 text-rose-600 font-semibold rounded-full hover:bg-rose-50 transition-colors">
+                    View All Team Members <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-slate-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-600 text-white text-sm font-semibold rounded-full mb-4">Testimonials</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Real stories from our satisfied customers.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <template x-for="testimonial in data.homepage?.testimonials || []" :key="testimonial.id">
+                    <div class="bg-slate-800 rounded-2xl p-8">
+                        <div class="flex text-yellow-400 mb-4">
+                            <template x-for="i in 5" :key="i">
+                                <i class="fa-solid fa-star"></i>
+                            </template>
+                        </div>
+                        <p class="text-slate-300 mb-6" x-text="testimonial.text"></p>
+                        <div class="flex items-center gap-4">
+                            <img :src="testimonial.avatar" :alt="testimonial.name" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-semibold text-white" x-text="testimonial.name"></h4>
+                                <p class="text-slate-400 text-sm" x-text="testimonial.service"></p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Our Work</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Beauty Gallery</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">A glimpse of our finest transformations and creations.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <template x-for="(image, index) in data.homepage?.gallery || []" :key="index">
+                    <div class="relative group overflow-hidden rounded-xl" :class="index === 0 || index === 5 ? 'col-span-2 row-span-2' : ''">
+                        <img :src="image.url" :alt="image.caption" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" :class="index === 0 || index === 5 ? 'h-full' : 'h-48'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <p class="text-white font-medium" x-text="image.caption"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-rose-500 to-pink-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready for Your Transformation?</h2>
+            <p class="text-rose-100 text-lg mb-8 max-w-2xl mx-auto">Book your appointment today and experience the Glamour difference.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/en/booking" class="px-8 py-4 bg-white text-rose-600 font-semibold rounded-full hover:bg-slate-100 transition-colors shadow-lg">
+                    Book Now
+                </a>
+                <a href="tel:+15551234567" class="px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-phone mr-2"></i>Call Us
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

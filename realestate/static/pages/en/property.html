@@ -1,0 +1,325 @@
+<!-- Real Estate Single Property Page -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900" x-data="{
+    activeImage: 0,
+    showGallery: false,
+    showTour: false
+}" apidata="get.property" keyname="property">
+    <!-- Property Gallery -->
+    <section class="relative">
+        <div class="grid grid-cols-4 gap-2 h-[500px]">
+            <div class="col-span-2 row-span-2 relative cursor-pointer" @click="showGallery = true">
+                <img :src="data.property?.images?.[0]" :alt="data.property?.title" class="w-full h-full object-cover">
+            </div>
+            <template x-for="(img, index) in (data.property?.images || []).slice(1, 5)" :key="index">
+                <div class="relative cursor-pointer" @click="activeImage = index + 1; showGallery = true">
+                    <img :src="img" :alt="data.property?.title" class="w-full h-full object-cover">
+                    <template x-if="index === 3 && (data.property?.images || []).length > 5">
+                        <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-xl font-semibold">
+                            +<span x-text="data.property?.images?.length - 5"></span> more
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="absolute bottom-4 right-4 flex gap-2">
+            <button @click="showGallery = true" class="px-4 py-2 bg-white rounded-lg shadow-lg flex items-center gap-2 hover:bg-slate-50">
+                <i class="fa-solid fa-images"></i>
+                <span x-text="(data.property?.images || []).length + ' Photos'"></span>
+            </button>
+            <button @click="showTour = true" class="px-4 py-2 bg-white rounded-lg shadow-lg flex items-center gap-2 hover:bg-slate-50">
+                <i class="fa-solid fa-vr-cardboard"></i>
+                Virtual Tour
+            </button>
+        </div>
+    </section>
+
+    <!-- Property Details -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Header -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8">
+                        <div class="flex flex-wrap justify-between items-start gap-4 mb-4">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="data.property?.status"></span>
+                                    <span class="px-3 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-full" x-text="data.property?.type"></span>
+                                </div>
+                                <h1 class="text-3xl font-bold text-slate-800 dark:text-white" x-text="data.property?.title"></h1>
+                                <p class="text-slate-500 flex items-center gap-2 mt-2">
+                                    <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                                    <span x-text="data.property?.address"></span>
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-3xl font-bold text-emerald-600" x-text="'$' + (data.property?.price || 0).toLocaleString()"></div>
+                                <template x-if="data.property?.pricePerSqft">
+                                    <div class="text-slate-500" x-text="'$' + data.property?.pricePerSqft + '/sqft'"></div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Key Features -->
+                        <div class="flex flex-wrap gap-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-bed text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-bold text-slate-800 dark:text-white" x-text="data.property?.bedrooms"></div>
+                                    <div class="text-slate-500 text-sm">Bedrooms</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-bath text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-bold text-slate-800 dark:text-white" x-text="data.property?.bathrooms"></div>
+                                    <div class="text-slate-500 text-sm">Bathrooms</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-ruler-combined text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-bold text-slate-800 dark:text-white" x-text="(data.property?.sqft || 0).toLocaleString()"></div>
+                                    <div class="text-slate-500 text-sm">Square Feet</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-car text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-bold text-slate-800 dark:text-white" x-text="data.property?.garage"></div>
+                                    <div class="text-slate-500 text-sm">Garage</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fa-solid fa-calendar text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-bold text-slate-800 dark:text-white" x-text="data.property?.yearBuilt"></div>
+                                    <div class="text-slate-500 text-sm">Year Built</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Description</h2>
+                        <div class="text-slate-600 dark:text-slate-400 leading-relaxed prose dark:prose-invert" x-html="data.property?.description"></div>
+                    </div>
+
+                    <!-- Features & Amenities -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Features & Amenities</h2>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <template x-for="feature in data.property?.features || []" :key="feature">
+                                <div class="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+                                    <i class="fa-solid fa-check text-emerald-600"></i>
+                                    <span x-text="feature"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Location & Map -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Location</h2>
+                        <div class="h-96 rounded-xl overflow-hidden">
+                            <iframe
+                                :src="'https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=' + encodeURIComponent(data.property?.address || '')"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-6 mt-6">
+                            <div>
+                                <h4 class="font-semibold text-slate-800 dark:text-white mb-2">Nearby Schools</h4>
+                                <ul class="text-slate-600 dark:text-slate-400 text-sm space-y-1">
+                                    <li>Lincoln Elementary - 0.3 mi</li>
+                                    <li>Washington High - 0.8 mi</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 dark:text-white mb-2">Transportation</h4>
+                                <ul class="text-slate-600 dark:text-slate-400 text-sm space-y-1">
+                                    <li>Bus Stop - 0.1 mi</li>
+                                    <li>Metro Station - 0.5 mi</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 dark:text-white mb-2">Shopping</h4>
+                                <ul class="text-slate-600 dark:text-slate-400 text-sm space-y-1">
+                                    <li>Supermarket - 0.2 mi</li>
+                                    <li>Shopping Mall - 1.2 mi</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Contact Agent -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 sticky top-24">
+                        <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-700">
+                            <img :src="data.property?.agent?.image" :alt="data.property?.agent?.name" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-white" x-text="data.property?.agent?.name"></h3>
+                                <p class="text-slate-500 text-sm" x-text="data.property?.agent?.title"></p>
+                                <div class="flex items-center gap-1 text-emerald-600 text-sm">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span x-text="data.property?.agent?.rating"></span>
+                                    <span class="text-slate-400" x-text="'(' + data.property?.agent?.reviews + ' reviews)'"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="space-y-4">
+                            <input type="text" name="name" placeholder="Your Name" required
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <input type="email" name="email" placeholder="Your Email" required
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <input type="tel" name="phone" placeholder="Your Phone"
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <textarea name="message" rows="4" placeholder="I'm interested in this property..." required
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500"></textarea>
+                            <button @click="alpineListeners('Property.send_inquiry', $event)" type="button"
+                                class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                Send Inquiry
+                            </button>
+                        </form>
+
+                        <div class="flex gap-3 mt-4">
+                            <a :href="'tel:' + data.property?.agent?.phone" class="flex-1 py-3 text-center border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+                                <i class="fa-solid fa-phone mr-2"></i>Call
+                            </a>
+                            <a :href="'https://wa.me/' + data.property?.agent?.whatsapp" class="flex-1 py-3 text-center border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+                                <i class="fa-brands fa-whatsapp mr-2"></i>WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mortgage Calculator -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6" x-data="{
+                        price: 0,
+                        downPayment: 20,
+                        interestRate: 6.5,
+                        loanTerm: 30,
+                        get monthlyPayment() {
+                            const principal = this.price * (1 - this.downPayment / 100);
+                            const monthlyRate = this.interestRate / 100 / 12;
+                            const numPayments = this.loanTerm * 12;
+                            if (monthlyRate === 0) return principal / numPayments;
+                            return principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+                        }
+                    }" x-init="price = data.property?.price || 500000">
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-4">Mortgage Calculator</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-slate-600 dark:text-slate-400 text-sm mb-1">Down Payment (%)</label>
+                                <input type="number" x-model="downPayment" min="0" max="100"
+                                    class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white">
+                            </div>
+                            <div>
+                                <label class="block text-slate-600 dark:text-slate-400 text-sm mb-1">Interest Rate (%)</label>
+                                <input type="number" x-model="interestRate" step="0.1"
+                                    class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white">
+                            </div>
+                            <div>
+                                <label class="block text-slate-600 dark:text-slate-400 text-sm mb-1">Loan Term (years)</label>
+                                <select x-model="loanTerm" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white">
+                                    <option value="15">15 years</option>
+                                    <option value="20">20 years</option>
+                                    <option value="30">30 years</option>
+                                </select>
+                            </div>
+                            <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                                <div class="text-slate-600 dark:text-slate-400 text-sm">Est. Monthly Payment</div>
+                                <div class="text-2xl font-bold text-emerald-600" x-text="'$' + Math.round(monthlyPayment).toLocaleString()"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Share & Save -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6">
+                        <div class="flex gap-3">
+                            <button class="flex-1 py-3 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                <i class="fa-regular fa-heart mr-2"></i>Save
+                            </button>
+                            <button class="flex-1 py-3 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                <i class="fa-solid fa-share-nodes mr-2"></i>Share
+                            </button>
+                            <button class="flex-1 py-3 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                <i class="fa-solid fa-print mr-2"></i>Print
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Similar Properties -->
+    <section class="py-12 bg-white dark:bg-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-8">Similar Properties</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="similar in data.property?.similar || []" :key="similar.id">
+                    <div class="bg-slate-50 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-shadow">
+                        <div class="relative h-48 overflow-hidden">
+                            <img :src="similar.image" :alt="similar.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="similar.status"></span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xl font-bold text-emerald-600 mb-2" x-text="'$' + similar.price.toLocaleString()"></div>
+                            <h3 class="font-bold text-slate-800 dark:text-white mb-2" x-text="similar.title"></h3>
+                            <p class="text-slate-500 text-sm flex items-center gap-1 mb-4">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span x-text="similar.location"></span>
+                            </p>
+                            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400 text-sm">
+                                <span><i class="fa-solid fa-bed mr-1"></i><span x-text="similar.bedrooms"></span></span>
+                                <span><i class="fa-solid fa-bath mr-1"></i><span x-text="similar.bathrooms"></span></span>
+                                <span><i class="fa-solid fa-ruler-combined mr-1"></i><span x-text="similar.sqft"></span> sqft</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Modal -->
+    <div x-show="showGallery" x-cloak
+        @click.self="showGallery = false"
+        @keydown.escape.window="showGallery = false"
+        class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center">
+        <button @click="showGallery = false" class="absolute top-4 right-4 text-white text-3xl hover:text-emerald-500">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button @click="activeImage = activeImage > 0 ? activeImage - 1 : (data.property?.images || []).length - 1"
+            class="absolute left-4 text-white text-3xl hover:text-emerald-500">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button @click="activeImage = activeImage < (data.property?.images || []).length - 1 ? activeImage + 1 : 0"
+            class="absolute right-4 text-white text-3xl hover:text-emerald-500">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <img :src="(data.property?.images || [])[activeImage]" class="max-h-[90vh] max-w-[90vw] object-contain">
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white">
+            <span x-text="(activeImage + 1) + ' / ' + (data.property?.images || []).length"></span>
+        </div>
+    </div>
+</div>

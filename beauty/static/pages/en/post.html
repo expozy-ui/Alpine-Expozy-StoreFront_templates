@@ -1,0 +1,131 @@
+<!-- Beauty/Salon Single Blog Post -->
+<div class="min-h-screen bg-white" apidata="get.blog_post" keyname="post">
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-rose-50 via-pink-50 to-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs font-semibold rounded-full mb-4" x-text="data.post?.category"></span>
+                <h1 class="text-3xl md:text-5xl font-bold text-slate-800 mb-6" x-text="data.post?.title"></h1>
+                <div class="flex flex-wrap items-center gap-6 text-slate-600">
+                    <div class="flex items-center gap-3">
+                        <img :src="data.post?.author?.avatar" :alt="data.post?.author?.name" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="font-semibold text-slate-800" x-text="data.post?.author?.name"></p>
+                            <p class="text-sm text-slate-500" x-text="data.post?.author?.role"></p>
+                        </div>
+                    </div>
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-calendar text-rose-600"></i>
+                        <span x-text="data.post?.date"></span>
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-clock text-rose-600"></i>
+                        <span x-text="data.post?.readTime + ' min read'"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Image -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <img :src="data.post?.image" :alt="data.post?.title" class="w-full h-96 object-cover rounded-2xl shadow-lg">
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+                <article class="lg:col-span-2">
+                    <div class="prose prose-lg max-w-none
+                        prose-headings:font-bold prose-headings:text-slate-800
+                        prose-p:text-slate-600 prose-p:leading-relaxed
+                        prose-a:text-rose-600 prose-a:no-underline hover:prose-a:text-rose-700
+                        prose-strong:text-slate-800
+                        prose-ul:text-slate-600 prose-ol:text-slate-600
+                        prose-blockquote:border-rose-600 prose-blockquote:text-slate-600
+                        prose-img:rounded-xl prose-code:bg-slate-100 prose-code:px-2 prose-code:py-1 prose-code:rounded"
+                        x-html="data.post?.content">
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="mt-8 flex flex-wrap gap-2">
+                        <template x-for="tag in data.post?.tags || []" :key="tag">
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-sm rounded-full" x-text="tag"></span>
+                        </template>
+                    </div>
+
+                    <!-- Share -->
+                    <div class="mt-8 pt-8 border-t border-slate-200">
+                        <div class="flex items-center gap-4">
+                            <span class="font-semibold text-slate-800">Share:</span>
+                            <button class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-rose-600 hover:text-white transition-colors">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-rose-600 hover:text-white transition-colors">
+                                <i class="fa-brands fa-twitter"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-rose-600 hover:text-white transition-colors">
+                                <i class="fa-brands fa-pinterest"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-rose-600 hover:text-white transition-colors">
+                                <i class="fa-solid fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Author Bio -->
+                    <div class="mt-8 bg-rose-50 rounded-2xl p-8">
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <img :src="data.post?.author?.avatar" :alt="data.post?.author?.name" class="w-24 h-24 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 mb-2" x-text="data.post?.author?.name"></h3>
+                                <p class="text-rose-600 font-semibold mb-3" x-text="data.post?.author?.role"></p>
+                                <p class="text-slate-600" x-text="data.post?.author?.bio"></p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="space-y-8">
+                    <div class="bg-slate-50 rounded-2xl p-6">
+                        <h3 class="font-bold text-slate-800 mb-4">Related Articles</h3>
+                        <div class="space-y-4">
+                            <template x-for="related in data.post?.relatedPosts || []" :key="related.id">
+                                <a :href="'/en/blog/' + related.slug" class="flex gap-4 group">
+                                    <img :src="related.image" :alt="related.title" class="w-20 h-16 rounded-lg object-cover">
+                                    <div>
+                                        <h4 class="font-semibold text-slate-800 text-sm group-hover:text-rose-600 transition-colors line-clamp-2" x-text="related.title"></h4>
+                                        <p class="text-slate-400 text-xs mt-1" x-text="related.date"></p>
+                                    </div>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-6 text-center text-white">
+                        <h3 class="font-bold mb-2">Ready to Look Your Best?</h3>
+                        <p class="text-rose-100 text-sm mb-4">Book an appointment with our expert stylists.</p>
+                        <a href="/en/booking" class="inline-block px-6 py-3 bg-white text-rose-600 font-semibold rounded-full hover:bg-slate-100 transition-colors">
+                            Book Now
+                        </a>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-2xl p-6">
+                        <h3 class="font-bold text-slate-800 mb-4">Popular Tags</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="tag in data.post?.popularTags || []" :key="tag">
+                                <a :href="'/en/blog?tag=' + tag" class="px-3 py-1 bg-white text-slate-600 text-sm rounded-full hover:bg-rose-100 hover:text-rose-600 transition-colors" x-text="tag"></a>
+                            </template>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,195 @@
+<!-- Restaurant Header - Bulgarian -->
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    x-data="{
+        openMobileMenu: false,
+        openReservation: false,
+        scrolled: false
+    }"
+    @scroll.window="scrolled = window.pageYOffset > 50"
+    :class="scrolled ? 'bg-stone-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'">
+
+    <!-- Top Bar -->
+    <div class="bg-amber-600 text-white py-2 text-sm" x-show="!scrolled" x-cloak>
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <span><i class="fa-solid fa-phone mr-2"></i>+359 2 123 4567</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-envelope mr-2"></i>info@restaurant.bg</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/en/homepage" class="hover:text-amber-200">EN</a>
+                <span>|</span>
+                <a href="/bg/homepage" class="text-amber-200 font-semibold">БГ</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/bg/homepage" class="flex items-center">
+                <img :src="data.settings?.logo" alt="Лого на ресторант" class="h-12 md:h-14">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/bg/homepage" class="text-white hover:text-amber-500 transition-colors font-medium">Начало</a>
+                <a href="/bg/menu" class="text-white hover:text-amber-500 transition-colors font-medium">Меню</a>
+                <a href="/bg/about" class="text-white hover:text-amber-500 transition-colors font-medium">За нас</a>
+                <a href="/bg/gallery" class="text-white hover:text-amber-500 transition-colors font-medium">Галерия</a>
+                <a href="/bg/events" class="text-white hover:text-amber-500 transition-colors font-medium">Събития</a>
+                <a href="/bg/blog" class="text-white hover:text-amber-500 transition-colors font-medium">Блог</a>
+                <a href="/bg/contacts" class="text-white hover:text-amber-500 transition-colors font-medium">Контакти</a>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Reservation Button -->
+                <button @click="openReservation = true"
+                    class="hidden md:flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors font-semibold">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    Резервация
+                </button>
+
+                <!-- User Menu -->
+                <a href="/bg/login" class="text-white hover:text-amber-500 transition-colors">
+                    <i class="fa-solid fa-user text-xl"></i>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button @click="openMobileMenu = true" class="lg:hidden text-white">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div x-show="openMobileMenu" x-cloak
+        @click.self="openMobileMenu = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50">
+
+        <!-- Mobile Menu Panel -->
+        <div x-show="openMobileMenu"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="translate-x-full"
+            class="absolute right-0 top-0 h-full w-80 bg-stone-900 shadow-2xl">
+
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <img :src="data.settings?.logo" alt="Лого" class="h-10">
+                    <button @click="openMobileMenu = false" class="text-white">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-4">
+                    <a href="/bg/homepage" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">Начало</a>
+                    <a href="/bg/menu" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">Меню</a>
+                    <a href="/bg/about" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">За нас</a>
+                    <a href="/bg/gallery" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">Галерия</a>
+                    <a href="/bg/events" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">Събития</a>
+                    <a href="/bg/blog" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">Блог</a>
+                    <a href="/bg/contacts" class="block py-3 text-white hover:text-amber-500 border-b border-stone-800">Контакти</a>
+                </nav>
+
+                <button @click="openReservation = true; openMobileMenu = false"
+                    class="w-full mt-8 px-6 py-4 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-semibold">
+                    <i class="fa-solid fa-calendar-check mr-2"></i>
+                    Направи резервация
+                </button>
+
+                <div class="mt-8 pt-8 border-t border-stone-800">
+                    <p class="text-stone-400 text-sm mb-4">Работно време</p>
+                    <p class="text-white">Пон - Пет: 11:00 - 23:00</p>
+                    <p class="text-white">Съб - Нед: 10:00 - 24:00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div x-show="openReservation" x-cloak
+        @click.self="openReservation = false"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+
+        <div x-show="openReservation"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            class="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-md w-full p-8">
+
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-stone-800 dark:text-white">Резервирайте маса</h3>
+                <button @click="openReservation = false" class="text-stone-400 hover:text-stone-600">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <form class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-stone-600 dark:text-stone-300 text-sm mb-1">Дата</label>
+                        <input type="date" name="date" required
+                            class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-stone-600 dark:text-stone-300 text-sm mb-1">Час</label>
+                        <select name="time" required class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white">
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-stone-600 dark:text-stone-300 text-sm mb-1">Брой гости</label>
+                    <select name="guests" required class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white">
+                        <option value="2">2 гости</option>
+                        <option value="3">3 гости</option>
+                        <option value="4">4 гости</option>
+                        <option value="5">5 гости</option>
+                        <option value="6">6 гости</option>
+                        <option value="7">7+ гости</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-stone-600 dark:text-stone-300 text-sm mb-1">Вашето име</label>
+                    <input type="text" name="name" required placeholder="Иван Иванов"
+                        class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block text-stone-600 dark:text-stone-300 text-sm mb-1">Телефон</label>
+                    <input type="tel" name="phone" required placeholder="+359 888 123 456"
+                        class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white">
+                </div>
+
+                <button @click="alpineListeners('Reservation.post_quick_reservation', $event)" type="button"
+                    class="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                    Потвърди резервация
+                </button>
+            </form>
+
+            <p class="text-center text-stone-500 text-sm mt-4">
+                Или се обадете на <a href="tel:+35921234567" class="text-amber-600">+359 2 123 4567</a>
+            </p>
+        </div>
+    </div>
+</header>
+
+<!-- Spacer for fixed header -->
+<div class="h-20"></div>

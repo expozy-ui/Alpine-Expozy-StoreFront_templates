@@ -1,0 +1,177 @@
+<!-- Restaurant Blog Page -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900">
+    <!-- Hero Section -->
+    <section class="relative h-[40vh] bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1920');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative h-full flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Our Blog</h1>
+                <p class="text-xl text-stone-300">Stories, recipes, and culinary insights</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="py-16" apidata="get.featuredPost" keyname="featured">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <template x-if="data.featured">
+                    <a :href="'/en/post/' + data.featured.slug" class="block group">
+                        <div class="grid lg:grid-cols-2 gap-8 items-center bg-white dark:bg-stone-800 rounded-2xl shadow-xl overflow-hidden">
+                            <div class="relative h-80 lg:h-full overflow-hidden">
+                                <img :src="data.featured.image" :alt="data.featured.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-4 py-2 bg-amber-600 text-white font-semibold rounded-full">Featured</span>
+                                </div>
+                            </div>
+                            <div class="p-8">
+                                <div class="flex items-center gap-4 text-sm text-stone-500 dark:text-stone-400 mb-4">
+                                    <span x-text="data.featured.category" class="text-amber-600 font-semibold"></span>
+                                    <span>•</span>
+                                    <span x-text="data.featured.date"></span>
+                                    <span>•</span>
+                                    <span x-text="data.featured.readTime + ' min read'"></span>
+                                </div>
+                                <h2 class="text-3xl font-bold text-stone-800 dark:text-white mb-4 group-hover:text-amber-600 transition-colors" x-text="data.featured.title"></h2>
+                                <p class="text-stone-600 dark:text-stone-400 mb-6" x-text="data.featured.excerpt"></p>
+                                <div class="flex items-center gap-4">
+                                    <img :src="data.featured.author.avatar" :alt="data.featured.author.name" class="w-12 h-12 rounded-full object-cover">
+                                    <div>
+                                        <p class="font-semibold text-stone-800 dark:text-white" x-text="data.featured.author.name"></p>
+                                        <p class="text-sm text-stone-500" x-text="data.featured.author.role"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Grid -->
+    <section class="py-16" apidata="get.posts" keyname="posts">
+        <div class="container mx-auto px-4">
+            <!-- Category Filter -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" x-data="{activeCategory: 'all'}">
+                <button @click="activeCategory = 'all'"
+                    :class="activeCategory === 'all' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-2 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    All Posts
+                </button>
+                <button @click="activeCategory = 'recipes'"
+                    :class="activeCategory === 'recipes' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-2 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    Recipes
+                </button>
+                <button @click="activeCategory = 'tips'"
+                    :class="activeCategory === 'tips' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-2 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    Cooking Tips
+                </button>
+                <button @click="activeCategory = 'stories'"
+                    :class="activeCategory === 'stories' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-2 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    Stories
+                </button>
+                <button @click="activeCategory = 'news'"
+                    :class="activeCategory === 'news' ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'"
+                    class="px-6 py-2 rounded-full font-semibold transition-all hover:bg-amber-600 hover:text-white">
+                    News
+                </button>
+            </div>
+
+            <!-- Posts Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <template x-for="post in data.posts || []" :key="post.id">
+                    <article class="bg-white dark:bg-stone-800 rounded-2xl shadow-lg overflow-hidden group">
+                        <a :href="'/en/post/' + post.slug" class="block">
+                            <div class="relative h-56 overflow-hidden">
+                                <img :src="post.image" :alt="post.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-3 py-1 bg-stone-900/70 backdrop-blur text-white text-sm rounded-full" x-text="post.category"></span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-4 text-sm text-stone-500 dark:text-stone-400 mb-3">
+                                    <span x-text="post.date"></span>
+                                    <span>•</span>
+                                    <span x-text="post.readTime + ' min read'"></span>
+                                </div>
+                                <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-3 group-hover:text-amber-600 transition-colors line-clamp-2" x-text="post.title"></h3>
+                                <p class="text-stone-600 dark:text-stone-400 text-sm line-clamp-3" x-text="post.excerpt"></p>
+                            </div>
+                        </a>
+                        <div class="px-6 pb-6 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <img :src="post.author.avatar" :alt="post.author.name" class="w-8 h-8 rounded-full object-cover">
+                                <span class="text-sm text-stone-600 dark:text-stone-400" x-text="post.author.name"></span>
+                            </div>
+                            <a :href="'/en/post/' + post.slug" class="text-amber-600 font-semibold text-sm hover:text-amber-700 flex items-center gap-1">
+                                Read More <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </article>
+                </template>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center gap-2 mt-12">
+                <button class="w-10 h-10 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="w-10 h-10 rounded-full bg-amber-600 text-white">1</button>
+                <button class="w-10 h-10 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-colors">2</button>
+                <button class="w-10 h-10 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-colors">3</button>
+                <button class="w-10 h-10 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <i class="fa-solid fa-envelope text-5xl text-amber-600 mb-6"></i>
+                <h2 class="text-3xl font-bold text-stone-800 dark:text-white mb-4">Subscribe to Our Newsletter</h2>
+                <p class="text-stone-600 dark:text-stone-400 mb-8">
+                    Get the latest recipes, cooking tips, and restaurant news delivered to your inbox.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" name="email" placeholder="Enter your email" required
+                        class="flex-1 px-6 py-4 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    <button @click="alpineListeners('Newsletter.post_newsletter', $event)" type="button"
+                        class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Posts Sidebar -->
+    <section class="py-16" apidata="get.popularPosts" keyname="popular">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-stone-800 dark:text-white mb-8 text-center">Most Popular</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <template x-for="(post, index) in data.popular || []" :key="post.id">
+                        <a :href="'/en/post/' + post.slug" class="flex gap-4 p-4 bg-white dark:bg-stone-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                            <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg">
+                                <img :src="post.image" :alt="post.title" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-amber-600 text-sm font-semibold" x-text="post.category"></span>
+                                <h4 class="font-bold text-stone-800 dark:text-white line-clamp-2 mt-1" x-text="post.title"></h4>
+                                <p class="text-stone-500 text-sm mt-2" x-text="post.date"></p>
+                            </div>
+                            <div class="text-4xl font-bold text-stone-200 dark:text-stone-700" x-text="'0' + (index + 1)"></div>
+                        </a>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,168 @@
+<!-- Restaurant Login Page -->
+<div class="min-h-screen bg-stone-100 dark:bg-stone-900 flex items-center justify-center py-12 px-4">
+    <div class="max-w-md w-full" x-data="{showPassword: false, isLogin: true}">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <a href="/en/homepage">
+                <img :src="data.settings?.logo" alt="Restaurant Logo" class="h-16 mx-auto mb-4">
+            </a>
+            <h1 class="text-3xl font-bold text-stone-800 dark:text-white" x-text="isLogin ? 'Welcome Back' : 'Create Account'"></h1>
+            <p class="text-stone-600 dark:text-stone-400 mt-2" x-text="isLogin ? 'Sign in to your account' : 'Join our culinary community'"></p>
+        </div>
+
+        <!-- Login/Register Card -->
+        <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+            <!-- Tab Buttons -->
+            <div class="flex mb-8">
+                <button @click="isLogin = true"
+                    :class="isLogin ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300'"
+                    class="flex-1 py-3 rounded-l-lg font-semibold transition-colors">
+                    Sign In
+                </button>
+                <button @click="isLogin = false"
+                    :class="!isLogin ? 'bg-amber-600 text-white' : 'bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300'"
+                    class="flex-1 py-3 rounded-r-lg font-semibold transition-colors">
+                    Register
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form x-show="isLogin" class="space-y-6">
+                <div>
+                    <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Email Address</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" name="email" required placeholder="your@email.com"
+                            class="w-full pl-12 pr-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Password</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input :type="showPassword ? 'text' : 'password'" name="password" required placeholder="••••••••"
+                            class="w-full pl-12 pr-12 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                        <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-600">
+                            <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="remember" class="w-4 h-4 text-amber-600 border-stone-300 rounded focus:ring-amber-500">
+                        <span class="text-sm text-stone-600 dark:text-stone-400">Remember me</span>
+                    </label>
+                    <a href="/en/forgot-password" class="text-sm text-amber-600 hover:text-amber-700 font-semibold">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button @click="alpineListeners('Auth.post_login', $event)" type="button"
+                    class="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form x-show="!isLogin" class="space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">First Name</label>
+                        <input type="text" name="firstName" required placeholder="John"
+                            class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Last Name</label>
+                        <input type="text" name="lastName" required placeholder="Doe"
+                            class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Email Address</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" name="email" required placeholder="your@email.com"
+                            class="w-full pl-12 pr-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Phone (Optional)</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">
+                            <i class="fa-solid fa-phone"></i>
+                        </span>
+                        <input type="tel" name="phone" placeholder="+1 (555) 000-0000"
+                            class="w-full pl-12 pr-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Password</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input :type="showPassword ? 'text' : 'password'" name="password" required placeholder="••••••••"
+                            class="w-full pl-12 pr-12 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                        <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-600">
+                            <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-stone-500 mt-2">Must be at least 8 characters</p>
+                </div>
+
+                <div>
+                    <label class="flex items-start gap-2 cursor-pointer">
+                        <input type="checkbox" name="terms" required class="w-4 h-4 mt-1 text-amber-600 border-stone-300 rounded focus:ring-amber-500">
+                        <span class="text-sm text-stone-600 dark:text-stone-400">
+                            I agree to the <a href="/en/terms-conditions" class="text-amber-600 hover:text-amber-700">Terms of Service</a> and <a href="/en/gdpr" class="text-amber-600 hover:text-amber-700">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+
+                <button @click="alpineListeners('Auth.post_register', $event)" type="button"
+                    class="w-full py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="flex items-center gap-4 my-8">
+                <div class="flex-1 h-px bg-stone-200 dark:bg-stone-700"></div>
+                <span class="text-stone-500 text-sm">or continue with</span>
+                <div class="flex-1 h-px bg-stone-200 dark:bg-stone-700"></div>
+            </div>
+
+            <!-- Social Login -->
+            <div class="grid grid-cols-2 gap-4">
+                <button @click="alpineListeners('Auth.social_login', $event)" data-provider="google"
+                    class="flex items-center justify-center gap-3 px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
+                    <i class="fa-brands fa-google text-red-500"></i>
+                    Google
+                </button>
+                <button @click="alpineListeners('Auth.social_login', $event)" data-provider="facebook"
+                    class="flex items-center justify-center gap-3 px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
+                    <i class="fa-brands fa-facebook text-blue-600"></i>
+                    Facebook
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="text-center mt-8 text-stone-500 text-sm">
+            <a href="/en/homepage" class="hover:text-amber-600 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,163 @@
+<!-- Medical/Healthcare Appointments Page -->
+<div class="min-h-screen bg-white" x-data="{ step: 1, selectedDoctor: null, selectedDate: null, selectedTime: null }" apidata="get.doctors" keyname="doctors">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-teal-50 via-white to-blue-50 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Easy Online Booking</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mt-2">Book an Appointment</h1>
+            <p class="text-slate-600 mt-4 max-w-2xl mx-auto">Schedule your visit in just a few clicks. Select a doctor, date, and time that works best for you.</p>
+        </div>
+    </section>
+
+    <!-- Booking Steps -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <!-- Progress Steps -->
+                <div class="flex justify-between mb-12">
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 transition-colors"
+                            :class="step >= 1 ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-500'">1</div>
+                        <span class="text-sm font-semibold" :class="step >= 1 ? 'text-teal-600' : 'text-slate-400'">Select Doctor</span>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 transition-colors"
+                            :class="step >= 2 ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-500'">2</div>
+                        <span class="text-sm font-semibold" :class="step >= 2 ? 'text-teal-600' : 'text-slate-400'">Choose Date & Time</span>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 transition-colors"
+                            :class="step >= 3 ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-500'">3</div>
+                        <span class="text-sm font-semibold" :class="step >= 3 ? 'text-teal-600' : 'text-slate-400'">Your Details</span>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 transition-colors"
+                            :class="step >= 4 ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-500'">4</div>
+                        <span class="text-sm font-semibold" :class="step >= 4 ? 'text-teal-600' : 'text-slate-400'">Confirmation</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Select Doctor -->
+                <div x-show="step === 1" class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Select a Doctor</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <template x-for="doctor in data.doctors || []" :key="doctor.id">
+                            <div @click="selectedDoctor = doctor; step = 2"
+                                class="p-4 border-2 rounded-xl cursor-pointer transition-colors hover:border-teal-600"
+                                :class="selectedDoctor?.id === doctor.id ? 'border-teal-600 bg-teal-50' : 'border-slate-200'">
+                                <div class="flex gap-4">
+                                    <img :src="doctor.image" :alt="doctor.name" class="w-16 h-16 rounded-full object-cover">
+                                    <div>
+                                        <h3 class="font-bold text-slate-800" x-text="doctor.name"></h3>
+                                        <p class="text-teal-600 text-sm font-semibold" x-text="doctor.specialty"></p>
+                                        <div class="flex items-center gap-1 mt-1">
+                                            <i class="fa-solid fa-star text-yellow-500 text-sm"></i>
+                                            <span class="text-slate-500 text-sm" x-text="doctor.rating"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Step 2: Select Date & Time -->
+                <div x-show="step === 2" x-cloak class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Choose Date & Time</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Select Date</label>
+                            <input type="date" @change="selectedDate = $event.target.value"
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Available Times</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <template x-for="time in ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00']">
+                                    <button @click="selectedTime = time"
+                                        class="py-2 px-3 border-2 rounded-lg text-sm font-semibold transition-colors"
+                                        :class="selectedTime === time ? 'border-teal-600 bg-teal-600 text-white' : 'border-slate-200 hover:border-teal-600'" x-text="time">
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 mt-8">
+                        <button @click="step = 1" class="px-6 py-3 border border-slate-200 text-slate-700 font-semibold rounded-full hover:bg-slate-50 transition-colors">
+                            Back
+                        </button>
+                        <button @click="step = 3" :disabled="!selectedDate || !selectedTime"
+                            class="px-6 py-3 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Patient Details -->
+                <div x-show="step === 3" x-cloak class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6">Your Details</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">First Name</label>
+                                <input type="text" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Last Name</label>
+                                <input type="text" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Email</label>
+                                <input type="email" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Phone</label>
+                                <input type="tel" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Reason for Visit</label>
+                            <textarea rows="3" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500"></textarea>
+                        </div>
+                    </form>
+                    <div class="flex gap-4 mt-8">
+                        <button @click="step = 2" class="px-6 py-3 border border-slate-200 text-slate-700 font-semibold rounded-full hover:bg-slate-50 transition-colors">
+                            Back
+                        </button>
+                        <button @click="step = 4" class="px-6 py-3 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                            Confirm Appointment
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Confirmation -->
+                <div x-show="step === 4" x-cloak class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100 text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-check text-4xl text-green-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Appointment Confirmed!</h2>
+                    <p class="text-slate-600 mb-8">Your appointment has been successfully booked. You will receive a confirmation email shortly.</p>
+                    <div class="bg-slate-50 rounded-xl p-6 max-w-md mx-auto mb-8">
+                        <div class="flex justify-between mb-3">
+                            <span class="text-slate-500">Doctor</span>
+                            <span class="font-semibold text-slate-800" x-text="selectedDoctor?.name"></span>
+                        </div>
+                        <div class="flex justify-between mb-3">
+                            <span class="text-slate-500">Date</span>
+                            <span class="font-semibold text-slate-800" x-text="selectedDate"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Time</span>
+                            <span class="font-semibold text-slate-800" x-text="selectedTime"></span>
+                        </div>
+                    </div>
+                    <a href="/en/homepage" class="inline-block px-8 py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

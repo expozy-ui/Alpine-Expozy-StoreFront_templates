@@ -1,0 +1,248 @@
+<!-- Страница с Обяви за Недвижими Имоти -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900" x-data="{
+    viewMode: 'grid',
+    showFilters: false,
+    sortBy: 'newest'
+}">
+    <!-- Hero Секция -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Намерете Вашия Перфектен Имот</h1>
+            <p class="text-emerald-100 text-xl">Разгледайте нашата обширна колекция от премиум имоти</p>
+        </div>
+    </section>
+
+    <!-- Търсене и Филтри -->
+    <section class="py-8 bg-white dark:bg-slate-800 shadow-lg sticky top-20 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- Бързи Филтри -->
+                <div class="flex flex-wrap gap-3">
+                    <select name="status" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Покупка или Наем</option>
+                        <option value="sale">За Продажба</option>
+                        <option value="rent">Под Наем</option>
+                    </select>
+                    <select name="type" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Тип Имот</option>
+                        <option value="house">Къща</option>
+                        <option value="apartment">Апартамент</option>
+                        <option value="condo">Мезонет</option>
+                        <option value="villa">Вила</option>
+                        <option value="land">Парцел</option>
+                    </select>
+                    <select name="beds" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Спални</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                    </select>
+                    <button @click="showFilters = !showFilters" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i>
+                        Още Филтри
+                    </button>
+                </div>
+
+                <!-- Сортиране и Изглед -->
+                <div class="flex items-center gap-4">
+                    <select x-model="sortBy" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="newest">Най-Нови</option>
+                        <option value="price-low">Цена: Ниска към Висока</option>
+                        <option value="price-high">Цена: Висока към Ниска</option>
+                        <option value="sqm">Квадратура</option>
+                    </select>
+                    <div class="flex border border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden">
+                        <button @click="viewMode = 'grid'" :class="viewMode === 'grid' ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400'" class="px-3 py-2 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                            <i class="fa-solid fa-grip"></i>
+                        </button>
+                        <button @click="viewMode = 'list'" :class="viewMode === 'list' ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400'" class="px-3 py-2 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                            <i class="fa-solid fa-list"></i>
+                        </button>
+                        <button @click="viewMode = 'map'" :class="viewMode === 'map' ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400'" class="px-3 py-2 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                            <i class="fa-solid fa-map"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Разширени Филтри -->
+            <div x-show="showFilters" x-collapse class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-slate-600 dark:text-slate-300 text-sm mb-2">Мин. Цена</label>
+                        <input type="number" name="minPrice" placeholder="0 лв."
+                            class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 dark:text-slate-300 text-sm mb-2">Макс. Цена</label>
+                        <input type="number" name="maxPrice" placeholder="Без ограничение"
+                            class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 dark:text-slate-300 text-sm mb-2">Мин. Кв.м.</label>
+                        <input type="number" name="minSqm" placeholder="0"
+                            class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 dark:text-slate-300 text-sm mb-2">Макс. Кв.м.</label>
+                        <input type="number" name="maxSqm" placeholder="Без ограничение"
+                            class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-4 mt-4">
+                    <h4 class="w-full text-sm font-semibold text-slate-700 dark:text-slate-300">Удобства</h4>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="pool" class="w-4 h-4 text-emerald-600 rounded">
+                        <span class="text-slate-600 dark:text-slate-400">Басейн</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="garage" class="w-4 h-4 text-emerald-600 rounded">
+                        <span class="text-slate-600 dark:text-slate-400">Гараж</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="garden" class="w-4 h-4 text-emerald-600 rounded">
+                        <span class="text-slate-600 dark:text-slate-400">Градина</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="gym" class="w-4 h-4 text-emerald-600 rounded">
+                        <span class="text-slate-600 dark:text-slate-400">Фитнес</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="security" class="w-4 h-4 text-emerald-600 rounded">
+                        <span class="text-slate-600 dark:text-slate-400">24/7 Охрана</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Списък с Имоти -->
+    <section class="py-12" apidata="get.properties" keyname="properties">
+        <div class="container mx-auto px-4">
+            <!-- Брой Резултати -->
+            <div class="flex justify-between items-center mb-8">
+                <p class="text-slate-600 dark:text-slate-400">
+                    Показани <span class="font-semibold text-slate-800 dark:text-white" x-text="(data.properties || []).length"></span> имота
+                </p>
+            </div>
+
+            <!-- Мрежов Изглед -->
+            <div x-show="viewMode === 'grid'" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="property in data.properties || []" :key="property.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-shadow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img :src="property.image" :alt="property.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="px-3 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="property.status"></span>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 hover:bg-white transition-colors">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="text-2xl font-bold text-white drop-shadow-lg" x-text="property.price.toLocaleString() + ' лв.'"></div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-emerald-600 transition-colors" x-text="property.title"></h3>
+                            <p class="text-slate-500 flex items-center gap-2 mb-4">
+                                <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                                <span x-text="property.location"></span>
+                            </p>
+                            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400 text-sm border-t border-slate-200 dark:border-slate-600 pt-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-bed text-emerald-600"></i>
+                                    <span x-text="property.bedrooms"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-bath text-emerald-600"></i>
+                                    <span x-text="property.bathrooms"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-ruler-combined text-emerald-600"></i>
+                                    <span x-text="property.sqm + ' кв.м.'"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a :href="'/bg/property/' + property.slug" class="block w-full py-3 text-center bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                Виж Детайли
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Списъчен Изглед -->
+            <div x-show="viewMode === 'list'" class="space-y-6">
+                <template x-for="property in data.properties || []" :key="property.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col md:flex-row">
+                        <div class="md:w-80 h-64 md:h-auto relative">
+                            <img :src="property.image" :alt="property.title" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="property.status"></span>
+                            </div>
+                        </div>
+                        <div class="flex-1 p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2" x-text="property.title"></h3>
+                                        <p class="text-slate-500 flex items-center gap-2">
+                                            <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                                            <span x-text="property.location"></span>
+                                        </p>
+                                    </div>
+                                    <div class="text-2xl font-bold text-emerald-600" x-text="property.price.toLocaleString() + ' лв.'"></div>
+                                </div>
+                                <p class="text-slate-600 dark:text-slate-400 mt-4" x-text="property.description"></p>
+                            </div>
+                            <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                                <div class="flex items-center gap-6 text-slate-600 dark:text-slate-400">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fa-solid fa-bed text-emerald-600"></i>
+                                        <span x-text="property.bedrooms + ' Спални'"></span>
+                                    </span>
+                                    <span class="flex items-center gap-2">
+                                        <i class="fa-solid fa-bath text-emerald-600"></i>
+                                        <span x-text="property.bathrooms + ' Бани'"></span>
+                                    </span>
+                                    <span class="flex items-center gap-2">
+                                        <i class="fa-solid fa-ruler-combined text-emerald-600"></i>
+                                        <span x-text="property.sqm + ' кв.м.'"></span>
+                                    </span>
+                                </div>
+                                <a :href="'/bg/property/' + property.slug" class="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                    Виж Детайли
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Изглед с Карта -->
+            <div x-show="viewMode === 'map'" class="h-[600px] bg-slate-200 dark:bg-slate-700 rounded-2xl flex items-center justify-center">
+                <div class="text-center text-slate-500 dark:text-slate-400">
+                    <i class="fa-solid fa-map text-6xl mb-4"></i>
+                    <p>Интерактивен Изглед на Картата</p>
+                    <p class="text-sm">Тук би се показала интеграцията с карта</p>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="flex justify-center gap-2 mt-12">
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="w-10 h-10 rounded-lg bg-emerald-600 text-white shadow">1</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">2</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">3</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+</div>

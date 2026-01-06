@@ -1,0 +1,129 @@
+<!-- Restaurant Footer - Bulgarian -->
+<footer class="bg-stone-900 dark:bg-stone-950 text-white">
+    <!-- Newsletter Section -->
+    <div class="border-b border-stone-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="max-w-2xl mx-auto text-center">
+                <h3 class="text-2xl font-bold mb-4">Абонирайте се за нашия бюлетин</h3>
+                <p class="text-stone-400 mb-6">Получавайте актуализации за специални менюта, събития и ексклузивни оферти.</p>
+                <form class="flex flex-col sm:flex-row gap-3">
+                    <input type="email" name="email" placeholder="Въведете вашия имейл" class="flex-1 px-6 py-4 bg-stone-800 border border-stone-700 rounded-lg text-white placeholder-stone-500 focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    <button @click="alpineListeners('Newsletter.post_newsletter', $event)" type="button" class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                        Абонирай се
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Footer -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About Section -->
+            <div>
+                <img :src="data.settings.logo" alt="Лого на ресторант" class="h-16 mb-6">
+                <p class="text-stone-400 leading-relaxed mb-6">
+                    Изживейте най-изисканото кулинарно изкуство в елегантна атмосфера. Нашата страст към изключителната храна и обслужване създава незабравими моменти.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-tripadvisor"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Opening Hours -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-amber-500">Работно време</h4>
+                <ul class="space-y-3 text-stone-400">
+                    <li class="flex justify-between">
+                        <span>Понеделник - Петък</span>
+                        <span class="text-white">11:00 - 23:00</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Събота</span>
+                        <span class="text-white">10:00 - 24:00</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Неделя</span>
+                        <span class="text-white">10:00 - 22:00</span>
+                    </li>
+                </ul>
+                <div class="mt-6 p-4 bg-stone-800 rounded-lg">
+                    <p class="text-sm text-amber-500 font-semibold">Щастлив час</p>
+                    <p class="text-stone-300">Пон-Пет: 16:00 - 19:00</p>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-amber-500">Бързи връзки</h4>
+                <ul class="space-y-3">
+                    <li><a href="/bg/menu" class="text-stone-400 hover:text-amber-500 transition-colors">Нашето меню</a></li>
+                    <li><a href="/bg/reservation" class="text-stone-400 hover:text-amber-500 transition-colors">Резервации</a></li>
+                    <li><a href="/bg/events" class="text-stone-400 hover:text-amber-500 transition-colors">Частни събития</a></li>
+                    <li><a href="/bg/gallery" class="text-stone-400 hover:text-amber-500 transition-colors">Галерия</a></li>
+                    <li><a href="/bg/about" class="text-stone-400 hover:text-amber-500 transition-colors">Нашата история</a></li>
+                    <li><a href="/bg/contacts" class="text-stone-400 hover:text-amber-500 transition-colors">Свържете се с нас</a></li>
+                    <li><a href="/bg/careers" class="text-stone-400 hover:text-amber-500 transition-colors">Кариери</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-amber-500">Контакти</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-location-dot text-amber-500"></i>
+                        </div>
+                        <div class="text-stone-400">
+                            <p>бул. Витоша 123</p>
+                            <p>София, 1000</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-phone text-amber-500"></i>
+                        </div>
+                        <div class="text-stone-400">
+                            <p>Резервации:</p>
+                            <a href="tel:+35921234567" class="text-white hover:text-amber-500">+359 2 123 4567</a>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-envelope text-amber-500"></i>
+                        </div>
+                        <div class="text-stone-400">
+                            <a href="mailto:info@restaurant.bg" class="text-white hover:text-amber-500">info@restaurant.bg</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-stone-800">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-sm">
+                <p>&copy; <span x-text="new Date().getFullYear()"></span> Ресторант. Всички права запазени.</p>
+                <div class="flex gap-6">
+                    <a href="/bg/gdpr" class="hover:text-amber-500 transition-colors">Политика за поверителност</a>
+                    <a href="/bg/terms-conditions" class="hover:text-amber-500 transition-colors">Условия за ползване</a>
+                    <a href="/bg/cookies" class="hover:text-amber-500 transition-colors">Бисквитки</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

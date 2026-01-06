@@ -1,0 +1,113 @@
+<!-- Фитнес Футър -->
+<footer class="bg-slate-900 border-t border-slate-800">
+    <!-- Основен футър -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- Информация -->
+            <div>
+                <img :src="data.settings?.logo" alt="Фитнес Лого" class="h-12 mb-6">
+                <p class="text-slate-400 mb-6">
+                    Трансформирайте тялото си, променете живота си. Присъединете се към нашата фитнес общност и постигнете целите си.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Програми -->
+            <div>
+                <h4 class="text-white font-bold uppercase mb-6">Програми</h4>
+                <ul class="space-y-3">
+                    <li><a href="/bg/classes?type=strength" class="text-slate-400 hover:text-orange-500 transition-colors">Силови тренировки</a></li>
+                    <li><a href="/bg/classes?type=cardio" class="text-slate-400 hover:text-orange-500 transition-colors">Кардио фитнес</a></li>
+                    <li><a href="/bg/classes?type=yoga" class="text-slate-400 hover:text-orange-500 transition-colors">Йога & Пилатес</a></li>
+                    <li><a href="/bg/classes?type=crossfit" class="text-slate-400 hover:text-orange-500 transition-colors">Кросфит</a></li>
+                    <li><a href="/bg/classes?type=boxing" class="text-slate-400 hover:text-orange-500 transition-colors">Бокс & Кикбокс</a></li>
+                    <li><a href="/bg/personal-training" class="text-slate-400 hover:text-orange-500 transition-colors">Персонални тренировки</a></li>
+                </ul>
+            </div>
+
+            <!-- Бързи връзки -->
+            <div>
+                <h4 class="text-white font-bold uppercase mb-6">Бързи връзки</h4>
+                <ul class="space-y-3">
+                    <li><a href="/bg/about" class="text-slate-400 hover:text-orange-500 transition-colors">За нас</a></li>
+                    <li><a href="/bg/schedule" class="text-slate-400 hover:text-orange-500 transition-colors">Програма</a></li>
+                    <li><a href="/bg/membership" class="text-slate-400 hover:text-orange-500 transition-colors">Членство</a></li>
+                    <li><a href="/bg/trainers" class="text-slate-400 hover:text-orange-500 transition-colors">Нашите треньори</a></li>
+                    <li><a href="/bg/blog" class="text-slate-400 hover:text-orange-500 transition-colors">Блог</a></li>
+                    <li><a href="/bg/contacts" class="text-slate-400 hover:text-orange-500 transition-colors">Контакти</a></li>
+                </ul>
+            </div>
+
+            <!-- Контакти -->
+            <div>
+                <h4 class="text-white font-bold uppercase mb-6">Контакти</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot text-orange-500 mt-1"></i>
+                        <span class="text-slate-400">ул. Фитнес 123<br>1000 София, България</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-orange-500"></i>
+                        <a href="tel:+35921234567" class="text-slate-400 hover:text-orange-500">+359 2 123 4567</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-orange-500"></i>
+                        <a href="mailto:info@fitnessgym.bg" class="text-slate-400 hover:text-orange-500">info@fitnessgym.bg</a>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-clock text-orange-500 mt-1"></i>
+                        <span class="text-slate-400">Пон-Пет: 05:00-23:00<br>Съб-Нед: 07:00-21:00</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Бюлетин -->
+    <div class="bg-orange-500">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="text-center md:text-left">
+                    <h4 class="text-white font-bold text-xl uppercase">Абонирайте се за бюлетина</h4>
+                    <p class="text-orange-100">Получавайте фитнес съвети и ексклузивни оферти</p>
+                </div>
+                <form class="flex gap-3 w-full md:w-auto">
+                    <input type="email" placeholder="Вашият имейл"
+                        class="flex-1 md:w-80 px-6 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-orange-100 focus:outline-none focus:ring-2 focus:ring-white">
+                    <button type="submit" class="px-6 py-3 bg-white text-orange-600 font-bold uppercase rounded-lg hover:bg-slate-100 transition-colors">
+                        Абониране
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Долен футър -->
+    <div class="bg-slate-950">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm text-center md:text-left">
+                    © 2024 FitnessGym. Всички права запазени.
+                </p>
+                <div class="flex items-center gap-6 text-sm">
+                    <a href="/bg/terms-conditions" class="text-slate-500 hover:text-orange-500 transition-colors">Общи условия</a>
+                    <a href="/bg/gdpr" class="text-slate-500 hover:text-orange-500 transition-colors">Поверителност</a>
+                    <a href="/bg/cookies" class="text-slate-500 hover:text-orange-500 transition-colors">Бисквитки</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

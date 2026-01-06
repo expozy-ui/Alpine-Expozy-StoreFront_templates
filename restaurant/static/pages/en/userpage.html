@@ -1,0 +1,299 @@
+<!-- Restaurant User Dashboard Page -->
+<div class="min-h-screen bg-stone-100 dark:bg-stone-900" x-data="{activeTab: 'reservations'}" apidata="get.user" keyname="user">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="relative">
+                    <img :src="data.user?.avatar || 'https://via.placeholder.com/150'" alt="Profile" class="w-24 h-24 rounded-full object-cover border-4 border-white/30">
+                    <button class="absolute bottom-0 right-0 w-8 h-8 bg-white text-amber-600 rounded-full flex items-center justify-center shadow-lg hover:bg-stone-100 transition-colors">
+                        <i class="fa-solid fa-camera text-sm"></i>
+                    </button>
+                </div>
+                <div class="text-center md:text-left">
+                    <h1 class="text-3xl font-bold" x-text="data.user?.name || 'Welcome'"></h1>
+                    <p class="text-amber-100" x-text="data.user?.email"></p>
+                    <p class="text-amber-200 text-sm mt-1">Member since <span x-text="data.user?.memberSince"></span></p>
+                </div>
+                <div class="md:ml-auto flex gap-4">
+                    <a href="/en/reservation" class="px-6 py-3 bg-white/20 backdrop-blur rounded-lg font-semibold hover:bg-white/30 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        New Reservation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white dark:bg-stone-800 shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto">
+                <button @click="activeTab = 'reservations'"
+                    :class="activeTab === 'reservations' ? 'border-amber-600 text-amber-600' : 'border-transparent text-stone-600 dark:text-stone-400'"
+                    class="px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap">
+                    <i class="fa-solid fa-calendar-check mr-2"></i>Reservations
+                </button>
+                <button @click="activeTab = 'favorites'"
+                    :class="activeTab === 'favorites' ? 'border-amber-600 text-amber-600' : 'border-transparent text-stone-600 dark:text-stone-400'"
+                    class="px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap">
+                    <i class="fa-solid fa-heart mr-2"></i>Favorites
+                </button>
+                <button @click="activeTab = 'loyalty'"
+                    :class="activeTab === 'loyalty' ? 'border-amber-600 text-amber-600' : 'border-transparent text-stone-600 dark:text-stone-400'"
+                    class="px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap">
+                    <i class="fa-solid fa-award mr-2"></i>Loyalty
+                </button>
+                <button @click="activeTab = 'settings'"
+                    :class="activeTab === 'settings' ? 'border-amber-600 text-amber-600' : 'border-transparent text-stone-600 dark:text-stone-400'"
+                    class="px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap">
+                    <i class="fa-solid fa-cog mr-2"></i>Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Reservations Tab -->
+        <div x-show="activeTab === 'reservations'" apidata="get.userReservations" keyname="reservations">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Upcoming Reservations -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-6">Upcoming Reservations</h2>
+                    <div class="space-y-4">
+                        <template x-for="reservation in data.reservations?.upcoming || []" :key="reservation.id">
+                            <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg p-6 flex flex-col md:flex-row gap-6">
+                                <div class="bg-amber-100 dark:bg-amber-900/30 rounded-xl p-4 text-center min-w-[100px]">
+                                    <p class="text-3xl font-bold text-amber-600" x-text="reservation.day"></p>
+                                    <p class="text-amber-700 dark:text-amber-400 font-semibold" x-text="reservation.month"></p>
+                                    <p class="text-stone-500 text-sm" x-text="reservation.year"></p>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div>
+                                            <h3 class="text-lg font-bold text-stone-800 dark:text-white">Dinner Reservation</h3>
+                                            <p class="text-stone-500 text-sm">Confirmation #<span x-text="reservation.confirmationNumber"></span></p>
+                                        </div>
+                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Confirmed</span>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-4 text-sm">
+                                        <div>
+                                            <p class="text-stone-500">Time</p>
+                                            <p class="font-semibold text-stone-800 dark:text-white" x-text="reservation.time"></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-stone-500">Guests</p>
+                                            <p class="font-semibold text-stone-800 dark:text-white" x-text="reservation.guests + ' people'"></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-stone-500">Table</p>
+                                            <p class="font-semibold text-stone-800 dark:text-white" x-text="reservation.table || 'TBD'"></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3 mt-4">
+                                        <button class="px-4 py-2 text-amber-600 font-semibold hover:bg-amber-50 dark:hover:bg-stone-700 rounded-lg transition-colors">
+                                            <i class="fa-solid fa-pen mr-2"></i>Modify
+                                        </button>
+                                        <button class="px-4 py-2 text-red-600 font-semibold hover:bg-red-50 dark:hover:bg-stone-700 rounded-lg transition-colors">
+                                            <i class="fa-solid fa-xmark mr-2"></i>Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Past Reservations -->
+                    <h2 class="text-2xl font-bold text-stone-800 dark:text-white mt-12 mb-6">Past Reservations</h2>
+                    <div class="space-y-4">
+                        <template x-for="reservation in data.reservations?.past || []" :key="reservation.id">
+                            <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg p-6 flex flex-col md:flex-row gap-6 opacity-75">
+                                <div class="bg-stone-100 dark:bg-stone-700 rounded-xl p-4 text-center min-w-[100px]">
+                                    <p class="text-3xl font-bold text-stone-600 dark:text-stone-300" x-text="reservation.day"></p>
+                                    <p class="text-stone-500" x-text="reservation.month"></p>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="text-lg font-bold text-stone-800 dark:text-white">Dinner Reservation</h3>
+                                            <p class="text-stone-500 text-sm" x-text="reservation.guests + ' guests • ' + reservation.time"></p>
+                                        </div>
+                                        <span class="px-3 py-1 bg-stone-100 text-stone-600 rounded-full text-sm font-semibold">Completed</span>
+                                    </div>
+                                    <button class="mt-4 text-amber-600 font-semibold hover:text-amber-700">
+                                        <i class="fa-solid fa-rotate-right mr-2"></i>Book Again
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Sidebar -->
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-bold text-stone-800 dark:text-white mb-4">Quick Stats</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-stone-600 dark:text-stone-400">Total Visits</span>
+                                <span class="text-2xl font-bold text-amber-600" x-text="data.user?.totalVisits || 0"></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-stone-600 dark:text-stone-400">Loyalty Points</span>
+                                <span class="text-2xl font-bold text-amber-600" x-text="data.user?.loyaltyPoints || 0"></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-stone-600 dark:text-stone-400">Member Status</span>
+                                <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-semibold" x-text="data.user?.memberStatus || 'Bronze'"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl shadow-lg p-6 text-white">
+                        <h3 class="text-lg font-bold mb-2">Special Offer!</h3>
+                        <p class="text-amber-100 text-sm mb-4">Book your next reservation and earn 2x loyalty points!</p>
+                        <a href="/en/reservation" class="block text-center py-3 bg-white text-amber-700 font-semibold rounded-lg hover:bg-stone-100 transition-colors">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div x-show="activeTab === 'favorites'" apidata="get.userFavorites" keyname="favorites">
+            <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-6">Your Favorite Dishes</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="item in data.favorites || []" :key="item.id">
+                    <div class="bg-white dark:bg-stone-800 rounded-xl shadow-lg overflow-hidden">
+                        <img :src="item.image" :alt="item.name" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-stone-800 dark:text-white" x-text="item.name"></h3>
+                                <button class="text-red-500 hover:text-red-600">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+                            <p class="text-stone-600 dark:text-stone-400 text-sm mb-4" x-text="item.description"></p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-600 font-bold" x-text="'$' + item.price"></span>
+                                <a href="/en/menu" class="text-amber-600 font-semibold hover:text-amber-700">View in Menu</a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Loyalty Tab -->
+        <div x-show="activeTab === 'loyalty'">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 text-center mb-8">
+                    <div class="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-crown text-4xl text-amber-600"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-stone-800 dark:text-white" x-text="data.user?.memberStatus || 'Bronze'"></h2>
+                    <p class="text-stone-600 dark:text-stone-400 mt-2">Member Status</p>
+                    <div class="mt-8">
+                        <div class="flex justify-between text-sm text-stone-600 dark:text-stone-400 mb-2">
+                            <span><span x-text="data.user?.loyaltyPoints || 0"></span> points</span>
+                            <span>1000 points to Gold</span>
+                        </div>
+                        <div class="h-4 bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-amber-500 to-amber-600 rounded-full" :style="'width: ' + ((data.user?.loyaltyPoints || 0) / 10) + '%'"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-4">How to Earn Points</h3>
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-white dark:bg-stone-800 rounded-xl p-6 text-center">
+                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-utensils text-amber-600"></i>
+                        </div>
+                        <h4 class="font-bold text-stone-800 dark:text-white">Dine With Us</h4>
+                        <p class="text-stone-500 text-sm mt-2">1 point per $1 spent</p>
+                    </div>
+                    <div class="bg-white dark:bg-stone-800 rounded-xl p-6 text-center">
+                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-user-plus text-amber-600"></i>
+                        </div>
+                        <h4 class="font-bold text-stone-800 dark:text-white">Refer a Friend</h4>
+                        <p class="text-stone-500 text-sm mt-2">100 bonus points</p>
+                    </div>
+                    <div class="bg-white dark:bg-stone-800 rounded-xl p-6 text-center">
+                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-star text-amber-600"></i>
+                        </div>
+                        <h4 class="font-bold text-stone-800 dark:text-white">Leave a Review</h4>
+                        <p class="text-stone-500 text-sm mt-2">25 bonus points</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div x-show="activeTab === 'settings'">
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-6">Account Settings</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">First Name</label>
+                                <input type="text" name="firstName" :value="data.user?.firstName"
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Last Name</label>
+                                <input type="text" name="lastName" :value="data.user?.lastName"
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Email</label>
+                            <input type="email" name="email" :value="data.user?.email"
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Phone</label>
+                            <input type="tel" name="phone" :value="data.user?.phone"
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="pt-4 border-t border-stone-200 dark:border-stone-700">
+                            <h3 class="text-lg font-bold text-stone-800 dark:text-white mb-4">Preferences</h3>
+                            <div class="space-y-4">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" name="emailNotifications" class="w-5 h-5 text-amber-600 rounded">
+                                    <span class="text-stone-700 dark:text-stone-300">Email notifications for promotions</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" name="smsReminders" class="w-5 h-5 text-amber-600 rounded">
+                                    <span class="text-stone-700 dark:text-stone-300">SMS reminders for reservations</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <button @click="alpineListeners('User.update_profile', $event)" type="button"
+                                class="px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors">
+                                Save Changes
+                            </button>
+                            <button type="button" class="px-6 py-3 border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 font-semibold rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 mt-8">
+                    <h3 class="text-lg font-bold text-red-600 mb-4">Danger Zone</h3>
+                    <p class="text-stone-600 dark:text-stone-400 mb-4">Once you delete your account, there is no going back.</p>
+                    <button class="px-6 py-3 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                        Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

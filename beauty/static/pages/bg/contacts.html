@@ -1,0 +1,172 @@
+<!-- Салон за красота Контакти -->
+<div class="min-h-screen bg-white" apidata="get.contacts" keyname="contacts">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-br from-rose-50 via-pink-50 to-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Свържете се с нас</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Контакти</h1>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto">Имате въпроси? Ще се радваме да чуем от вас.</p>
+        </div>
+    </section>
+
+    <!-- Контакт информация и форма -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Контакт информация -->
+                <div class="lg:col-span-1">
+                    <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-8 text-white h-full">
+                        <h2 class="text-2xl font-bold mb-8">Контакт информация</h2>
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-location-dot text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Посетете ни</h4>
+                                    <p class="text-rose-100">ул. Красота 123<br>София 1000</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-phone text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Обадете се</h4>
+                                    <p class="text-rose-100">+359 2 123 4567</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-envelope text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Пишете ни</h4>
+                                    <p class="text-rose-100">hello@glamour.bg</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12">
+                            <h4 class="font-semibold mb-4">Работно време</h4>
+                            <div class="space-y-2 text-rose-100">
+                                <div class="flex justify-between">
+                                    <span>Понеделник - Петък</span>
+                                    <span>9:00 - 20:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Събота</span>
+                                    <span>9:00 - 18:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Неделя</span>
+                                    <span>10:00 - 16:00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12">
+                            <h4 class="font-semibold mb-4">Последвайте ни</h4>
+                            <div class="flex gap-4">
+                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-rose-600 transition-colors">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-rose-600 transition-colors">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-rose-600 transition-colors">
+                                    <i class="fa-brands fa-pinterest"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-rose-600 transition-colors">
+                                    <i class="fa-brands fa-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Форма за контакт -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6">Изпратете ни съобщение</h2>
+                        <form @submit.prevent="alpineListeners('Contact.submit', $event)" class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Име *</label>
+                                    <input type="text" name="firstName" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="Вашето име">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Фамилия *</label>
+                                    <input type="text" name="lastName" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="Вашата фамилия">
+                                </div>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Имейл *</label>
+                                    <input type="email" name="email" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="your@email.com">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Телефон</label>
+                                    <input type="tel" name="phone" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="+359 888 123 456">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-medium mb-2">Тема *</label>
+                                <select name="subject" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                                    <option value="">Изберете тема</option>
+                                    <option value="general">Общ въпрос</option>
+                                    <option value="booking">Въпрос за резервация</option>
+                                    <option value="services">Информация за услуги</option>
+                                    <option value="careers">Кариерни възможности</option>
+                                    <option value="feedback">Обратна връзка</option>
+                                    <option value="other">Друго</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-medium mb-2">Съобщение *</label>
+                                <textarea name="message" rows="5" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent" placeholder="Как можем да ви помогнем?"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all shadow-lg shadow-rose-200">
+                                Изпрати съобщение
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Карта -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="bg-slate-200 rounded-2xl overflow-hidden h-96">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.5547890185145!2d23.32148631548424!3d42.69770537916567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDQxJzUxLjgiTiAyM8KwMTknMjUuOCJF!5e0!3m2!1sen!2sbg!4v1629999999999!5m2!1sen!2sbg" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЧЗВ -->
+    <section class="py-16 bg-slate-50" x-data="{ openFaq: null }">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-4">Често задавани въпроси</h2>
+                    <p class="text-slate-600">Намерете бързи отговори на често задавани въпроси.</p>
+                </div>
+                <div class="space-y-4">
+                    <template x-for="(faq, index) in data.contacts?.faqs || []" :key="index">
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <button @click="openFaq = openFaq === index ? null : index" class="w-full flex items-center justify-between p-6 text-left">
+                                <span class="font-semibold text-slate-800" x-text="faq.question"></span>
+                                <i class="fa-solid fa-chevron-down text-rose-600 transition-transform" :class="openFaq === index ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="openFaq === index" x-collapse class="px-6 pb-6">
+                                <p class="text-slate-600" x-text="faq.answer"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

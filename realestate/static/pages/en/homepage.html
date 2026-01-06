@@ -1,0 +1,351 @@
+<!-- Real Estate Homepage -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Section -->
+    <section class="relative h-[90vh] min-h-[600px]">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920');"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent"></div>
+        <div class="relative h-full flex items-center">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl">
+                    <span class="inline-block px-4 py-2 bg-emerald-600/20 backdrop-blur border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-semibold tracking-wider uppercase mb-6">
+                        Find Your Dream Home
+                    </span>
+                    <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                        Discover Your Perfect<br><span class="text-emerald-500">Property</span>
+                    </h1>
+                    <p class="text-xl text-slate-300 mb-10">
+                        Browse through thousands of listings and find the home that matches your lifestyle. Your dream property is just a search away.
+                    </p>
+
+                    <!-- Search Box -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6">
+                        <div class="flex gap-4 mb-4">
+                            <button class="px-6 py-2 bg-emerald-600 text-white rounded-lg font-semibold">Buy</button>
+                            <button class="px-6 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-semibold hover:bg-emerald-100 transition-colors">Rent</button>
+                        </div>
+                        <form class="grid md:grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <input type="text" name="location" placeholder="Enter location, city, or ZIP code"
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <select name="type" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                                    <option value="">Property Type</option>
+                                    <option value="house">House</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="condo">Condo</option>
+                                    <option value="villa">Villa</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-search"></i>
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-lg border-t border-white/20">
+            <div class="container mx-auto px-4 py-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+                    <div>
+                        <div class="text-3xl font-bold">2,500+</div>
+                        <div class="text-slate-300 text-sm">Properties Listed</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">1,200+</div>
+                        <div class="text-slate-300 text-sm">Happy Clients</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">50+</div>
+                        <div class="text-slate-300 text-sm">Expert Agents</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">15+</div>
+                        <div class="text-slate-300 text-sm">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties Section -->
+    <section class="py-20 bg-white dark:bg-slate-800" apidata="get.featuredProperties" keyname="featured">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-semibold tracking-wider uppercase">Featured Listings</span>
+                <h2 class="text-4xl font-bold text-slate-800 dark:text-white mt-2">Explore Our Premium Properties</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto">
+                    Hand-picked properties that offer exceptional value and prime locations
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="property in data.featured || []" :key="property.id">
+                    <div class="bg-white dark:bg-slate-700 rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-shadow">
+                        <div class="relative h-64 overflow-hidden">
+                            <img :src="property.image" :alt="property.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="px-3 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="property.status"></span>
+                                <template x-if="property.featured">
+                                    <span class="px-3 py-1 bg-amber-500 text-white text-sm font-semibold rounded-full">Featured</span>
+                                </template>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-slate-600 hover:text-red-500 hover:bg-white transition-colors">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="text-2xl font-bold text-white drop-shadow-lg" x-text="'$' + property.price.toLocaleString()"></div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-emerald-600 transition-colors" x-text="property.title"></h3>
+                            <p class="text-slate-500 flex items-center gap-2 mb-4">
+                                <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                                <span x-text="property.location"></span>
+                            </p>
+                            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400 text-sm border-t border-slate-200 dark:border-slate-600 pt-4">
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-bed text-emerald-600"></i>
+                                    <span x-text="property.bedrooms + ' Beds'"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-bath text-emerald-600"></i>
+                                    <span x-text="property.bathrooms + ' Baths'"></span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fa-solid fa-ruler-combined text-emerald-600"></i>
+                                    <span x-text="property.sqft + ' sqft'"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a :href="'/en/property/' + property.slug" class="block w-full py-3 text-center border-2 border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-600 hover:text-white transition-colors">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/en/properties" class="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                    View All Properties <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Types Section -->
+    <section class="py-20 bg-slate-100 dark:bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-semibold tracking-wider uppercase">Browse by Type</span>
+                <h2 class="text-4xl font-bold text-slate-800 dark:text-white mt-2">Property Categories</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <a href="/en/properties?type=house" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-house text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">Houses</h3>
+                    <p class="text-slate-500 text-sm mt-1">250+ listings</p>
+                </a>
+
+                <a href="/en/properties?type=apartment" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-building text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">Apartments</h3>
+                    <p class="text-slate-500 text-sm mt-1">180+ listings</p>
+                </a>
+
+                <a href="/en/properties?type=condo" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-city text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">Condos</h3>
+                    <p class="text-slate-500 text-sm mt-1">120+ listings</p>
+                </a>
+
+                <a href="/en/properties?type=villa" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-landmark text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">Villas</h3>
+                    <p class="text-slate-500 text-sm mt-1">85+ listings</p>
+                </a>
+
+                <a href="/en/properties?type=land" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-tree text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">Land</h3>
+                    <p class="text-slate-500 text-sm mt-1">60+ listings</p>
+                </a>
+
+                <a href="/en/properties?type=commercial" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-store text-2xl text-emerald-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">Commercial</h3>
+                    <p class="text-slate-500 text-sm mt-1">45+ listings</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-white dark:bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-emerald-600 font-semibold tracking-wider uppercase">Why Choose Us</span>
+                    <h2 class="text-4xl font-bold text-slate-800 dark:text-white mt-2 mb-6">Your Trusted Real Estate Partner</h2>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
+                        With over 15 years of experience in the real estate market, we've helped thousands of families find their dream homes. Our commitment to excellence and personalized service sets us apart.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-shield-check text-2xl text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Verified Listings</h3>
+                                <p class="text-slate-600 dark:text-slate-400">Every property is thoroughly verified to ensure accurate information and legitimate listings.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-handshake text-2xl text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Expert Guidance</h3>
+                                <p class="text-slate-600 dark:text-slate-400">Our experienced agents guide you through every step of the buying or selling process.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-dollar-sign text-2xl text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Best Value</h3>
+                                <p class="text-slate-600 dark:text-slate-400">We negotiate the best deals and ensure you get maximum value for your investment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800" alt="Real Estate Team" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-8 -left-8 bg-emerald-600 text-white p-6 rounded-xl shadow-xl">
+                        <div class="text-4xl font-bold">15+</div>
+                        <div class="text-emerald-100">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section class="py-20 bg-slate-100 dark:bg-slate-900" apidata="get.agents" keyname="agents">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-semibold tracking-wider uppercase">Our Team</span>
+                <h2 class="text-4xl font-bold text-slate-800 dark:text-white mt-2">Meet Our Expert Agents</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <template x-for="agent in (data.agents || []).slice(0, 4)" :key="agent.id">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg group">
+                        <div class="relative h-72 overflow-hidden">
+                            <img :src="agent.image" :alt="agent.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-3">
+                                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-emerald-600 transition-colors">
+                                        <i class="fa-brands fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-emerald-600 transition-colors">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-emerald-600 transition-colors">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white" x-text="agent.name"></h3>
+                            <p class="text-emerald-600 font-semibold" x-text="agent.title"></p>
+                            <p class="text-slate-500 text-sm mt-2" x-text="agent.listings + ' listings'"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/en/agents" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-600 hover:text-white transition-colors">
+                    View All Agents <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-emerald-600" apidata="get.testimonials" keyname="testimonials">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-emerald-200 font-semibold tracking-wider uppercase">Testimonials</span>
+                <h2 class="text-4xl font-bold text-white mt-2">What Our Clients Say</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <template x-for="testimonial in data.testimonials || []" :key="testimonial.id">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl">
+                        <div class="flex items-center gap-1 text-amber-500 mb-4">
+                            <template x-for="i in 5">
+                                <i class="fa-solid fa-star"></i>
+                            </template>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 italic mb-6" x-text="testimonial.text"></p>
+                        <div class="flex items-center gap-4">
+                            <img :src="testimonial.avatar" :alt="testimonial.name" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-bold text-slate-800 dark:text-white" x-text="testimonial.name"></h4>
+                                <p class="text-slate-500 text-sm" x-text="testimonial.transaction"></p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920'); background-size: cover;"></div>
+        </div>
+        <div class="container mx-auto px-4 text-center relative">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Ready to Find Your Dream Home?</h2>
+            <p class="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
+                Let us help you navigate the real estate market and find the perfect property that fits your needs.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/en/properties" class="px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                    Browse Properties
+                </a>
+                <a href="/en/contacts" class="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors">
+                    Contact an Agent
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

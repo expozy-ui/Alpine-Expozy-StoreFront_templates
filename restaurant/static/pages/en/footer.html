@@ -1,0 +1,129 @@
+<!-- Restaurant Footer -->
+<footer class="bg-stone-900 dark:bg-stone-950 text-white">
+    <!-- Newsletter Section -->
+    <div class="border-b border-stone-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="max-w-2xl mx-auto text-center">
+                <h3 class="text-2xl font-bold mb-4">Subscribe to Our Newsletter</h3>
+                <p class="text-stone-400 mb-6">Get updates on special menus, events, and exclusive offers.</p>
+                <form class="flex flex-col sm:flex-row gap-3">
+                    <input type="email" name="email" placeholder="Enter your email" class="flex-1 px-6 py-4 bg-stone-800 border border-stone-700 rounded-lg text-white placeholder-stone-500 focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    <button @click="alpineListeners('Newsletter.post_newsletter', $event)" type="button" class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Footer -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- About Section -->
+            <div>
+                <img :src="data.settings.logo" alt="Restaurant Logo" class="h-16 mb-6">
+                <p class="text-stone-400 leading-relaxed mb-6">
+                    Experience the finest culinary artistry in an elegant atmosphere. Our passion for exceptional food and service creates unforgettable dining moments.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-tripadvisor"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Opening Hours -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-amber-500">Opening Hours</h4>
+                <ul class="space-y-3 text-stone-400">
+                    <li class="flex justify-between">
+                        <span>Monday - Friday</span>
+                        <span class="text-white">11:00 AM - 11:00 PM</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Saturday</span>
+                        <span class="text-white">10:00 AM - 12:00 AM</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Sunday</span>
+                        <span class="text-white">10:00 AM - 10:00 PM</span>
+                    </li>
+                </ul>
+                <div class="mt-6 p-4 bg-stone-800 rounded-lg">
+                    <p class="text-sm text-amber-500 font-semibold">Happy Hour</p>
+                    <p class="text-stone-300">Mon-Fri: 4:00 PM - 7:00 PM</p>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-amber-500">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="/en/menu" class="text-stone-400 hover:text-amber-500 transition-colors">Our Menu</a></li>
+                    <li><a href="/en/reservation" class="text-stone-400 hover:text-amber-500 transition-colors">Reservations</a></li>
+                    <li><a href="/en/events" class="text-stone-400 hover:text-amber-500 transition-colors">Private Events</a></li>
+                    <li><a href="/en/gallery" class="text-stone-400 hover:text-amber-500 transition-colors">Gallery</a></li>
+                    <li><a href="/en/about" class="text-stone-400 hover:text-amber-500 transition-colors">Our Story</a></li>
+                    <li><a href="/en/contacts" class="text-stone-400 hover:text-amber-500 transition-colors">Contact Us</a></li>
+                    <li><a href="/en/careers" class="text-stone-400 hover:text-amber-500 transition-colors">Careers</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-amber-500">Contact Us</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-location-dot text-amber-500"></i>
+                        </div>
+                        <div class="text-stone-400">
+                            <p>123 Gourmet Street</p>
+                            <p>New York, NY 10001</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-phone text-amber-500"></i>
+                        </div>
+                        <div class="text-stone-400">
+                            <p>Reservations:</p>
+                            <a href="tel:+15551234567" class="text-white hover:text-amber-500">+1 (555) 123-4567</a>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-envelope text-amber-500"></i>
+                        </div>
+                        <div class="text-stone-400">
+                            <a href="mailto:info@restaurant.com" class="text-white hover:text-amber-500">info@restaurant.com</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-stone-800">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-sm">
+                <p>&copy; <span x-text="new Date().getFullYear()"></span> Restaurant. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="/en/gdpr" class="hover:text-amber-500 transition-colors">Privacy Policy</a>
+                    <a href="/en/terms-conditions" class="hover:text-amber-500 transition-colors">Terms of Service</a>
+                    <a href="/en/cookies" class="hover:text-amber-500 transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

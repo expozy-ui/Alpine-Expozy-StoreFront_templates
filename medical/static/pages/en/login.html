@@ -1,0 +1,133 @@
+<!-- Medical/Healthcare Login Page -->
+<div class="min-h-screen bg-gradient-to-br from-teal-50 via-white to-blue-50 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-md" x-data="{ activeTab: 'login', showPassword: false }">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <a href="/en/homepage">
+                <img :src="data.settings?.logo" alt="Medical Logo" class="h-16 mx-auto mb-4">
+            </a>
+            <h1 class="text-2xl font-bold text-slate-800">Patient Portal</h1>
+            <p class="text-slate-600">Access your health records securely</p>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200">
+                <button @click="activeTab = 'login'"
+                    :class="activeTab === 'login' ? 'bg-teal-50 text-teal-600 border-b-2 border-teal-600' : 'text-slate-500'"
+                    class="flex-1 py-4 font-semibold transition-colors">
+                    Sign In
+                </button>
+                <button @click="activeTab = 'register'"
+                    :class="activeTab === 'register' ? 'bg-teal-50 text-teal-600 border-b-2 border-teal-600' : 'text-slate-500'"
+                    class="flex-1 py-4 font-semibold transition-colors">
+                    New Patient
+                </button>
+            </div>
+
+            <div class="p-8">
+                <!-- Login Form -->
+                <form x-show="activeTab === 'login'" class="space-y-6">
+                    <div>
+                        <label class="block text-slate-700 font-semibold mb-2">Email Address</label>
+                        <div class="relative">
+                            <input type="email" name="email" required placeholder="your@email.com"
+                                class="w-full px-4 py-3 pl-11 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                            <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 font-semibold mb-2">Password</label>
+                        <div class="relative">
+                            <input :type="showPassword ? 'text' : 'password'" name="password" required placeholder="••••••••"
+                                class="w-full px-4 py-3 pl-11 pr-11 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                                <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="remember" class="w-4 h-4 text-teal-600 rounded border-slate-300">
+                            <span class="text-slate-600 text-sm">Remember me</span>
+                        </label>
+                        <a href="/en/forgot-password" class="text-teal-600 text-sm font-semibold hover:text-teal-700">Forgot Password?</a>
+                    </div>
+
+                    <button @click="alpineListeners('Auth.login', $event)" type="button"
+                        class="w-full py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form x-show="activeTab === 'register'" x-cloak class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">First Name</label>
+                            <input type="text" name="firstName" required
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Last Name</label>
+                            <input type="text" name="lastName" required
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 font-semibold mb-2">Email Address</label>
+                        <input type="email" name="email" required
+                            class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 font-semibold mb-2">Phone Number</label>
+                        <input type="tel" name="phone" required
+                            class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 font-semibold mb-2">Date of Birth</label>
+                        <input type="date" name="dob" required
+                            class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-700 font-semibold mb-2">Password</label>
+                        <input type="password" name="password" required
+                            class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="terms" required class="w-4 h-4 text-teal-600 rounded border-slate-300 mt-1">
+                        <span class="text-slate-600 text-sm">
+                            I agree to the <a href="/en/terms-conditions" class="text-teal-600 hover:underline">Terms of Service</a>
+                            and <a href="/en/gdpr" class="text-teal-600 hover:underline">Privacy Policy</a>
+                        </span>
+                    </label>
+
+                    <button @click="alpineListeners('Auth.register', $event)" type="button"
+                        class="w-full py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Help -->
+        <p class="text-center text-slate-600 mt-6">
+            Need help? <a href="/en/contacts" class="text-teal-600 font-semibold hover:text-teal-700">Contact Support</a>
+        </p>
+
+        <!-- Security Notice -->
+        <div class="mt-6 bg-teal-50 rounded-xl p-4 text-center">
+            <i class="fa-solid fa-shield-halved text-teal-600 mr-2"></i>
+            <span class="text-teal-700 text-sm">Your information is protected with 256-bit encryption</span>
+        </div>
+    </div>
+</div>

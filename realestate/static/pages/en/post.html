@@ -1,0 +1,204 @@
+<!-- Real Estate Single Blog Post Page -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900" apidata="get.post" keyname="post">
+    <!-- Hero Section -->
+    <section class="relative h-[500px]">
+        <div class="absolute inset-0">
+            <img :src="data.post?.image" :alt="data.post?.title" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        </div>
+        <div class="container mx-auto px-4 h-full flex items-end pb-12 relative z-10">
+            <div class="max-w-3xl">
+                <div class="flex items-center gap-4 text-sm text-white/80 mb-4">
+                    <a href="/en/blog" class="hover:text-emerald-400 transition-colors">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>Back to Blog
+                    </a>
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="px-4 py-1 bg-emerald-600 text-white text-sm font-semibold rounded-full" x-text="data.post?.category"></span>
+                    <span class="text-white/80" x-text="data.post?.date"></span>
+                    <span class="text-white/80">•</span>
+                    <span class="text-white/80" x-text="data.post?.readTime + ' min read'"></span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-6" x-text="data.post?.title"></h1>
+                <div class="flex items-center gap-4">
+                    <img :src="data.post?.author?.image" :alt="data.post?.author?.name" class="w-14 h-14 rounded-full object-cover border-2 border-white">
+                    <div>
+                        <div class="font-semibold text-white" x-text="data.post?.author?.name"></div>
+                        <div class="text-white/70 text-sm" x-text="data.post?.author?.role"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-12">
+                <!-- Main Content -->
+                <article class="lg:col-span-3">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 md:p-12">
+                        <!-- Article Body -->
+                        <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:text-slate-800 dark:prose-headings:text-white prose-a:text-emerald-600" x-html="data.post?.content">
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="flex flex-wrap gap-2 mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+                            <span class="text-slate-600 dark:text-slate-400 font-semibold mr-2">Tags:</span>
+                            <template x-for="tag in data.post?.tags || []" :key="tag">
+                                <a :href="'/en/blog?tag=' + tag" class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-emerald-100 hover:text-emerald-700 transition-colors" x-text="tag"></a>
+                            </template>
+                        </div>
+
+                        <!-- Share -->
+                        <div class="flex items-center gap-4 mt-6">
+                            <span class="text-slate-600 dark:text-slate-400 font-semibold">Share:</span>
+                            <a href="#" class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition-colors">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+                                <i class="fa-solid fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Author Box -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 mt-8">
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <img :src="data.post?.author?.image" :alt="data.post?.author?.name" class="w-24 h-24 rounded-full object-cover">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-800 dark:text-white" x-text="'About ' + data.post?.author?.name"></h3>
+                                <p class="text-emerald-600 font-semibold mb-3" x-text="data.post?.author?.role"></p>
+                                <p class="text-slate-600 dark:text-slate-400" x-text="data.post?.author?.bio"></p>
+                                <div class="flex gap-4 mt-4">
+                                    <a :href="data.post?.author?.linkedin" class="text-slate-400 hover:text-emerald-600 transition-colors">
+                                        <i class="fa-brands fa-linkedin-in"></i>
+                                    </a>
+                                    <a :href="data.post?.author?.twitter" class="text-slate-400 hover:text-emerald-600 transition-colors">
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </a>
+                                    <a :href="'mailto:' + data.post?.author?.email" class="text-slate-400 hover:text-emerald-600 transition-colors">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 mt-8">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">
+                            Comments (<span x-text="(data.post?.comments || []).length"></span>)
+                        </h3>
+
+                        <!-- Comment Form -->
+                        <form class="mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
+                            <textarea name="comment" rows="4" placeholder="Leave a comment..." required
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 mb-4"></textarea>
+                            <button @click="alpineListeners('Blog.post_comment', $event)" type="button"
+                                class="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                Post Comment
+                            </button>
+                        </form>
+
+                        <!-- Comments List -->
+                        <div class="space-y-6">
+                            <template x-for="comment in data.post?.comments || []" :key="comment.id">
+                                <div class="flex gap-4">
+                                    <img :src="comment.author.image" :alt="comment.author.name" class="w-12 h-12 rounded-full object-cover">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="font-semibold text-slate-800 dark:text-white" x-text="comment.author.name"></span>
+                                            <span class="text-slate-500 text-sm" x-text="comment.date"></span>
+                                        </div>
+                                        <p class="text-slate-600 dark:text-slate-400" x-text="comment.content"></p>
+                                        <button class="text-emerald-600 text-sm font-semibold mt-2 hover:text-emerald-700">Reply</button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="space-y-8">
+                    <!-- Search -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-4">Search Articles</h4>
+                        <div class="relative">
+                            <input type="text" placeholder="Search..."
+                                class="w-full px-4 py-3 pr-12 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600">
+                                <i class="fa-solid fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-4">Categories</h4>
+                        <ul class="space-y-3">
+                            <li>
+                                <a href="/en/blog?category=buying" class="flex justify-between text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
+                                    <span>Buying Tips</span>
+                                    <span class="text-slate-400">24</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/en/blog?category=selling" class="flex justify-between text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
+                                    <span>Selling Guide</span>
+                                    <span class="text-slate-400">18</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/en/blog?category=market" class="flex justify-between text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
+                                    <span>Market Trends</span>
+                                    <span class="text-slate-400">32</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/en/blog?category=investing" class="flex justify-between text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
+                                    <span>Investing</span>
+                                    <span class="text-slate-400">15</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Related Posts -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6">
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-4">Related Articles</h4>
+                        <div class="space-y-4">
+                            <template x-for="related in data.post?.related || []" :key="related.id">
+                                <a :href="'/en/blog/' + related.slug" class="flex gap-3 group">
+                                    <img :src="related.image" :alt="related.title" class="w-20 h-16 rounded-lg object-cover">
+                                    <div class="flex-1">
+                                        <h5 class="font-semibold text-slate-800 dark:text-white text-sm group-hover:text-emerald-600 transition-colors line-clamp-2" x-text="related.title"></h5>
+                                        <span class="text-slate-500 text-xs" x-text="related.date"></span>
+                                    </div>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="bg-emerald-600 rounded-2xl shadow-lg p-6 text-white">
+                        <h4 class="font-bold mb-2">Subscribe to Newsletter</h4>
+                        <p class="text-emerald-100 text-sm mb-4">Get the latest real estate insights delivered to your inbox.</p>
+                        <input type="email" placeholder="Your email"
+                            class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white mb-3">
+                        <button class="w-full py-3 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-slate-100 transition-colors">
+                            Subscribe
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>

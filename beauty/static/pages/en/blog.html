@@ -1,0 +1,118 @@
+<!-- Beauty/Salon Blog Page -->
+<div class="min-h-screen bg-white" apidata="get.blog_posts" keyname="blog" x-data="{ activeCategory: 'all' }">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-rose-50 via-pink-50 to-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 text-sm font-semibold rounded-full mb-4">Beauty Blog</span>
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Tips, Trends & Inspiration</h1>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto">Discover the latest beauty secrets, styling tips, and self-care advice from our experts.</p>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="py-8 bg-white border-b border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-3">
+                <button @click="activeCategory = 'all'" :class="activeCategory === 'all' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-6 py-3 rounded-full font-medium transition-colors">
+                    All Posts
+                </button>
+                <button @click="activeCategory = 'hair'" :class="activeCategory === 'hair' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-6 py-3 rounded-full font-medium transition-colors">
+                    Hair
+                </button>
+                <button @click="activeCategory = 'skincare'" :class="activeCategory === 'skincare' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-6 py-3 rounded-full font-medium transition-colors">
+                    Skincare
+                </button>
+                <button @click="activeCategory = 'makeup'" :class="activeCategory === 'makeup' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-6 py-3 rounded-full font-medium transition-colors">
+                    Makeup
+                </button>
+                <button @click="activeCategory = 'nails'" :class="activeCategory === 'nails' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-6 py-3 rounded-full font-medium transition-colors">
+                    Nails
+                </button>
+                <button @click="activeCategory = 'wellness'" :class="activeCategory === 'wellness' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-6 py-3 rounded-full font-medium transition-colors">
+                    Wellness
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <template x-if="data.blog?.featured">
+                <a :href="'/en/blog/' + data.blog.featured.slug" class="group block bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
+                    <div class="grid md:grid-cols-2">
+                        <div class="h-64 md:h-auto overflow-hidden">
+                            <img :src="data.blog.featured.image" :alt="data.blog.featured.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-8 md:p-12 flex flex-col justify-center">
+                            <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs font-semibold rounded-full mb-4 w-fit" x-text="data.blog.featured.category"></span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 group-hover:text-rose-600 transition-colors" x-text="data.blog.featured.title"></h2>
+                            <p class="text-slate-600 mb-6" x-text="data.blog.featured.excerpt"></p>
+                            <div class="flex items-center gap-4">
+                                <img :src="data.blog.featured.author.avatar" :alt="data.blog.featured.author.name" class="w-10 h-10 rounded-full object-cover">
+                                <div>
+                                    <p class="font-semibold text-slate-800" x-text="data.blog.featured.author.name"></p>
+                                    <p class="text-slate-500 text-sm" x-text="data.blog.featured.date + ' • ' + data.blog.featured.readTime + ' min read'"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </template>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="post in (data.blog?.posts || []).filter(p => activeCategory === 'all' || p.category.toLowerCase() === activeCategory)" :key="post.id">
+                    <a :href="'/en/blog/' + post.slug" class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-slate-100">
+                        <div class="h-48 overflow-hidden">
+                            <img :src="post.image" :alt="post.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs font-semibold rounded-full mb-3" x-text="post.category"></span>
+                            <h3 class="font-bold text-slate-800 text-lg mb-3 group-hover:text-rose-600 transition-colors line-clamp-2" x-text="post.title"></h3>
+                            <p class="text-slate-600 text-sm mb-4 line-clamp-2" x-text="post.excerpt"></p>
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                                <div class="flex items-center gap-2">
+                                    <img :src="post.author.avatar" :alt="post.author.name" class="w-8 h-8 rounded-full object-cover">
+                                    <span class="text-slate-600 text-sm" x-text="post.author.name"></span>
+                                </div>
+                                <span class="text-slate-400 text-sm" x-text="post.readTime + ' min'"></span>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-12 flex justify-center gap-2">
+                <button class="px-4 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <template x-for="page in data.blog?.totalPages || 1" :key="page">
+                    <button :class="page === (data.blog?.currentPage || 1) ? 'bg-rose-600 text-white' : 'border border-slate-200 text-slate-600 hover:bg-slate-50'" class="px-4 py-2 rounded-lg transition-colors" x-text="page"></button>
+                </template>
+                <button class="px-4 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-rose-500 to-pink-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Get Beauty Tips in Your Inbox</h2>
+            <p class="text-rose-100 mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for weekly beauty advice, exclusive offers, and more.</p>
+            <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input type="email" placeholder="your@email.com" class="flex-1 px-6 py-4 rounded-full text-slate-800 focus:outline-none focus:ring-2 focus:ring-white">
+                <button type="submit" class="px-8 py-4 bg-white text-rose-600 font-semibold rounded-full hover:bg-slate-100 transition-colors">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+</div>

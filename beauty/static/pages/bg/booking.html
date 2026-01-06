@@ -1,0 +1,230 @@
+<!-- Салон за красота Резервация -->
+<div class="min-h-screen bg-white" apidata="get.booking_data" keyname="booking" x-data="{
+    step: 1,
+    selectedService: null,
+    selectedStylist: null,
+    selectedDate: null,
+    selectedTime: null,
+    formData: { name: '', email: '', phone: '', notes: '' }
+}">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-br from-rose-50 via-pink-50 to-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Запазете вашия час</h1>
+            <p class="text-slate-600 text-lg">Резервирайте перфектното преживяване за красота само с няколко клика.</p>
+        </div>
+    </section>
+
+    <!-- Стъпки за прогрес -->
+    <section class="py-8 bg-white border-b border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center gap-4 md:gap-8">
+                <div class="flex items-center gap-2">
+                    <div :class="step >= 1 ? 'bg-rose-600 text-white' : 'bg-slate-200 text-slate-500'" class="w-10 h-10 rounded-full flex items-center justify-center font-bold">1</div>
+                    <span class="hidden md:inline font-medium" :class="step >= 1 ? 'text-rose-600' : 'text-slate-400'">Услуга</span>
+                </div>
+                <div class="w-12 h-0.5" :class="step >= 2 ? 'bg-rose-600' : 'bg-slate-200'"></div>
+                <div class="flex items-center gap-2">
+                    <div :class="step >= 2 ? 'bg-rose-600 text-white' : 'bg-slate-200 text-slate-500'" class="w-10 h-10 rounded-full flex items-center justify-center font-bold">2</div>
+                    <span class="hidden md:inline font-medium" :class="step >= 2 ? 'text-rose-600' : 'text-slate-400'">Стилист</span>
+                </div>
+                <div class="w-12 h-0.5" :class="step >= 3 ? 'bg-rose-600' : 'bg-slate-200'"></div>
+                <div class="flex items-center gap-2">
+                    <div :class="step >= 3 ? 'bg-rose-600 text-white' : 'bg-slate-200 text-slate-500'" class="w-10 h-10 rounded-full flex items-center justify-center font-bold">3</div>
+                    <span class="hidden md:inline font-medium" :class="step >= 3 ? 'text-rose-600' : 'text-slate-400'">Дата и час</span>
+                </div>
+                <div class="w-12 h-0.5" :class="step >= 4 ? 'bg-rose-600' : 'bg-slate-200'"></div>
+                <div class="flex items-center gap-2">
+                    <div :class="step >= 4 ? 'bg-rose-600 text-white' : 'bg-slate-200 text-slate-500'" class="w-10 h-10 rounded-full flex items-center justify-center font-bold">4</div>
+                    <span class="hidden md:inline font-medium" :class="step >= 4 ? 'text-rose-600' : 'text-slate-400'">Потвърждение</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Стъпки за резервация -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <!-- Стъпка 1: Избор на услуга -->
+                <div x-show="step === 1" x-transition>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Изберете услуга</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <template x-for="service in data.booking?.services || []" :key="service.id">
+                            <button @click="selectedService = service; step = 2" class="flex items-center gap-4 p-6 bg-white rounded-2xl border-2 transition-all text-left" :class="selectedService?.id === service.id ? 'border-rose-500 bg-rose-50' : 'border-slate-200 hover:border-rose-300'">
+                                <div class="w-14 h-14 bg-rose-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i :class="service.icon + ' text-rose-600 text-xl'"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-bold text-slate-800" x-text="service.name"></h3>
+                                    <p class="text-slate-500 text-sm" x-text="service.duration + ' мин'"></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-rose-600" x-text="service.price + ' лв.'"></p>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Стъпка 2: Избор на стилист -->
+                <div x-show="step === 2" x-transition x-cloak>
+                    <div class="flex items-center justify-between mb-6">
+                        <button @click="step = 1" class="text-slate-500 hover:text-rose-600 transition-colors">
+                            <i class="fa-solid fa-arrow-left mr-2"></i>Назад
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-800">Изберете стилист</h2>
+                        <div class="w-20"></div>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <button @click="selectedStylist = null; step = 3" class="p-6 bg-white rounded-2xl border-2 border-slate-200 hover:border-rose-300 transition-all text-center">
+                            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-random text-slate-400 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Без предпочитание</h3>
+                            <p class="text-slate-500 text-sm">Първият свободен стилист</p>
+                        </button>
+                        <template x-for="stylist in data.booking?.stylists || []" :key="stylist.id">
+                            <button @click="selectedStylist = stylist; step = 3" class="p-6 bg-white rounded-2xl border-2 transition-all text-center" :class="selectedStylist?.id === stylist.id ? 'border-rose-500 bg-rose-50' : 'border-slate-200 hover:border-rose-300'">
+                                <img :src="stylist.image" :alt="stylist.name" class="w-20 h-20 rounded-full object-cover mx-auto mb-4">
+                                <h3 class="font-bold text-slate-800" x-text="stylist.name"></h3>
+                                <p class="text-rose-600 text-sm" x-text="stylist.specialty"></p>
+                                <div class="flex justify-center mt-2 text-yellow-400">
+                                    <template x-for="i in 5" :key="i">
+                                        <i class="fa-solid fa-star text-xs"></i>
+                                    </template>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Стъпка 3: Избор на дата и час -->
+                <div x-show="step === 3" x-transition x-cloak>
+                    <div class="flex items-center justify-between mb-6">
+                        <button @click="step = 2" class="text-slate-500 hover:text-rose-600 transition-colors">
+                            <i class="fa-solid fa-arrow-left mr-2"></i>Назад
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-800">Изберете дата и час</h2>
+                        <div class="w-20"></div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Календар -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                            <h3 class="font-bold text-slate-800 mb-4">Изберете дата</h3>
+                            <div class="grid grid-cols-7 gap-2 text-center">
+                                <span class="text-slate-400 text-sm font-medium">Нед</span>
+                                <span class="text-slate-400 text-sm font-medium">Пон</span>
+                                <span class="text-slate-400 text-sm font-medium">Вто</span>
+                                <span class="text-slate-400 text-sm font-medium">Сря</span>
+                                <span class="text-slate-400 text-sm font-medium">Чет</span>
+                                <span class="text-slate-400 text-sm font-medium">Пет</span>
+                                <span class="text-slate-400 text-sm font-medium">Съб</span>
+                                <template x-for="date in data.booking?.availableDates || []" :key="date.value">
+                                    <button @click="selectedDate = date.value; selectedTime = null" class="w-10 h-10 rounded-full flex items-center justify-center text-sm transition-colors" :class="date.available ? (selectedDate === date.value ? 'bg-rose-600 text-white' : 'hover:bg-rose-100 text-slate-700') : 'text-slate-300 cursor-not-allowed'" :disabled="!date.available" x-text="date.day"></button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Часови слотове -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                            <h3 class="font-bold text-slate-800 mb-4">Изберете час</h3>
+                            <div x-show="selectedDate" class="grid grid-cols-3 gap-2">
+                                <template x-for="slot in data.booking?.timeSlots || []" :key="slot.time">
+                                    <button @click="selectedTime = slot.time" class="py-3 px-4 rounded-xl text-sm font-medium transition-colors" :class="slot.available ? (selectedTime === slot.time ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-rose-100') : 'bg-slate-50 text-slate-300 cursor-not-allowed'" :disabled="!slot.available" x-text="slot.time"></button>
+                                </template>
+                            </div>
+                            <p x-show="!selectedDate" class="text-slate-400 text-center py-8">Моля, първо изберете дата</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button @click="step = 4" :disabled="!selectedDate || !selectedTime" class="px-8 py-4 bg-rose-600 text-white font-semibold rounded-full hover:bg-rose-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                            Продължи към потвърждение
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Стъпка 4: Потвърждение -->
+                <div x-show="step === 4" x-transition x-cloak>
+                    <div class="flex items-center justify-between mb-6">
+                        <button @click="step = 3" class="text-slate-500 hover:text-rose-600 transition-colors">
+                            <i class="fa-solid fa-arrow-left mr-2"></i>Назад
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-800">Потвърдете резервацията</h2>
+                        <div class="w-20"></div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Резюме на резервацията -->
+                        <div class="bg-rose-50 rounded-2xl p-6">
+                            <h3 class="font-bold text-slate-800 mb-4">Резюме на резервацията</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Услуга</span>
+                                    <span class="font-semibold text-slate-800" x-text="selectedService?.name"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Стилист</span>
+                                    <span class="font-semibold text-slate-800" x-text="selectedStylist?.name || 'Първият свободен'"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Дата</span>
+                                    <span class="font-semibold text-slate-800" x-text="selectedDate"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Час</span>
+                                    <span class="font-semibold text-slate-800" x-text="selectedTime"></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Продължителност</span>
+                                    <span class="font-semibold text-slate-800" x-text="selectedService?.duration + ' мин'"></span>
+                                </div>
+                                <div class="border-t border-rose-200 pt-4 flex justify-between">
+                                    <span class="text-slate-800 font-bold">Общо</span>
+                                    <span class="font-bold text-rose-600 text-xl" x-text="selectedService?.price + ' лв.'"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Форма за контакт -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                            <h3 class="font-bold text-slate-800 mb-4">Вашите данни</h3>
+                            <form @submit.prevent="alpineListeners('Booking.submit', $event)" class="space-y-4">
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Име *</label>
+                                    <input type="text" x-model="formData.name" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Имейл *</label>
+                                    <input type="email" x-model="formData.email" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Телефон *</label>
+                                    <input type="tel" x-model="formData.phone" required class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-700 font-medium mb-2">Специални изисквания</label>
+                                    <textarea x-model="formData.notes" rows="3" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500" placeholder="Допълнителни бележки..."></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all">
+                                    Потвърди резервацията
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакт информация -->
+    <section class="py-12 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-slate-600 mb-4">Предпочитате да резервирате по телефона?</p>
+                <a href="tel:+35921234567" class="text-2xl font-bold text-rose-600 hover:text-rose-700 transition-colors">
+                    <i class="fa-solid fa-phone mr-2"></i>+359 2 123 4567
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

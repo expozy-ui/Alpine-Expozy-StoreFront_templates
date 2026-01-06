@@ -1,0 +1,177 @@
+<!-- Fitness/Gym Single Post Page -->
+<div class="min-h-screen bg-slate-900" apidata="get.blog_post" keyname="post">
+    <!-- Hero Section -->
+    <section class="relative">
+        <div class="h-96 w-full overflow-hidden">
+            <img :src="data.post?.image" :alt="data.post?.title" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 pb-12">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl">
+                    <span class="inline-block px-3 py-1 bg-orange-500 text-white text-xs font-bold uppercase rounded mb-4" x-text="data.post?.category"></span>
+                    <h1 class="text-3xl md:text-5xl font-black text-white mb-4" x-text="data.post?.title"></h1>
+                    <div class="flex flex-wrap items-center gap-6 text-slate-300">
+                        <div class="flex items-center gap-3">
+                            <img :src="data.post?.author?.avatar" :alt="data.post?.author?.name" class="w-12 h-12 rounded-full object-cover border-2 border-orange-500">
+                            <div>
+                                <p class="font-semibold text-white" x-text="data.post?.author?.name"></p>
+                                <p class="text-sm text-slate-400" x-text="data.post?.author?.role"></p>
+                            </div>
+                        </div>
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-calendar text-orange-500"></i>
+                            <span x-text="data.post?.date"></span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-orange-500"></i>
+                            <span x-text="data.post?.readTime + ' min read'"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Main Content -->
+                <article class="lg:col-span-2">
+                    <div class="prose prose-invert prose-lg max-w-none
+                        prose-headings:font-black prose-headings:text-white prose-headings:uppercase
+                        prose-p:text-slate-300 prose-p:leading-relaxed
+                        prose-a:text-orange-500 prose-a:no-underline hover:prose-a:text-orange-400
+                        prose-strong:text-white
+                        prose-ul:text-slate-300 prose-ol:text-slate-300
+                        prose-blockquote:border-orange-500 prose-blockquote:text-slate-300
+                        prose-img:rounded-xl"
+                        x-html="data.post?.content">
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="mt-8 pt-8 border-t border-slate-700">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-slate-400 font-semibold mr-2">Tags:</span>
+                            <template x-for="tag in data.post?.tags || []" :key="tag">
+                                <a :href="'/en/blog/tag/' + tag" class="px-3 py-1 bg-slate-800 text-slate-300 text-sm rounded-lg hover:bg-orange-500 hover:text-white transition-colors" x-text="tag"></a>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Share -->
+                    <div class="mt-8 pt-8 border-t border-slate-700">
+                        <div class="flex items-center gap-4">
+                            <span class="text-white font-bold">Share:</span>
+                            <button class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-blue-500 hover:text-white transition-colors">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-sky-500 hover:text-white transition-colors">
+                                <i class="fa-brands fa-twitter"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-colors">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:bg-orange-500 hover:text-white transition-colors">
+                                <i class="fa-solid fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Author Bio -->
+                    <div class="mt-8 bg-slate-800 rounded-2xl p-8">
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <img :src="data.post?.author?.avatar" :alt="data.post?.author?.name" class="w-24 h-24 rounded-full object-cover border-4 border-orange-500">
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2" x-text="data.post?.author?.name"></h3>
+                                <p class="text-orange-500 font-semibold mb-3" x-text="data.post?.author?.role"></p>
+                                <p class="text-slate-400" x-text="data.post?.author?.bio"></p>
+                                <div class="flex gap-3 mt-4">
+                                    <a :href="data.post?.author?.instagram" class="text-slate-400 hover:text-orange-500">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a :href="data.post?.author?.twitter" class="text-slate-400 hover:text-orange-500">
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="space-y-8">
+                    <!-- Search -->
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Search</h3>
+                        <div class="relative">
+                            <input type="text" placeholder="Search articles..." class="w-full px-4 py-3 pr-12 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-orange-500">
+                                <i class="fa-solid fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Related Posts -->
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Related Articles</h3>
+                        <div class="space-y-4">
+                            <template x-for="related in data.post?.relatedPosts || []" :key="related.id">
+                                <a :href="'/en/blog/' + related.slug" class="flex gap-4 group">
+                                    <img :src="related.image" :alt="related.title" class="w-20 h-16 rounded-lg object-cover">
+                                    <div>
+                                        <h4 class="text-white font-semibold text-sm group-hover:text-orange-500 transition-colors line-clamp-2" x-text="related.title"></h4>
+                                        <p class="text-slate-500 text-xs mt-1" x-text="related.date"></p>
+                                    </div>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="bg-slate-800 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Categories</h3>
+                        <ul class="space-y-2">
+                            <li><a href="/en/blog?category=workouts" class="flex justify-between text-slate-300 hover:text-orange-500"><span>Workouts</span><span class="text-slate-500">24</span></a></li>
+                            <li><a href="/en/blog?category=nutrition" class="flex justify-between text-slate-300 hover:text-orange-500"><span>Nutrition</span><span class="text-slate-500">18</span></a></li>
+                            <li><a href="/en/blog?category=wellness" class="flex justify-between text-slate-300 hover:text-orange-500"><span>Wellness</span><span class="text-slate-500">12</span></a></li>
+                            <li><a href="/en/blog?category=success-stories" class="flex justify-between text-slate-300 hover:text-orange-500"><span>Success Stories</span><span class="text-slate-500">8</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="bg-orange-500 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-2">Stay Updated</h3>
+                        <p class="text-orange-100 text-sm mb-4">Get fitness tips and news in your inbox.</p>
+                        <input type="email" placeholder="Your email" class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-orange-100 focus:outline-none focus:ring-2 focus:ring-white mb-3">
+                        <button class="w-full py-3 bg-white text-orange-600 font-bold uppercase rounded-lg hover:bg-slate-100 transition-colors">
+                            Subscribe
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Posts -->
+    <section class="py-16 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-black text-white mb-8 uppercase text-center">More Articles</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <template x-for="post in data.post?.morePosts || []" :key="post.id">
+                    <a :href="'/en/blog/' + post.slug" class="bg-slate-900 rounded-2xl overflow-hidden group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="h-48 overflow-hidden">
+                            <img :src="post.image" :alt="post.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <span class="px-2 py-1 bg-orange-500/20 text-orange-500 text-xs font-bold uppercase rounded" x-text="post.category"></span>
+                            <h3 class="text-lg font-bold text-white mt-3 group-hover:text-orange-500 transition-colors" x-text="post.title"></h3>
+                            <p class="text-slate-400 text-sm mt-2" x-text="post.date"></p>
+                        </div>
+                    </a>
+                </template>
+            </div>
+        </div>
+    </section>
+</div>

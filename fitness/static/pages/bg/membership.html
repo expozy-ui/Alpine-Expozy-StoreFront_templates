@@ -1,0 +1,140 @@
+<!-- Фитнес Членство страница -->
+<div class="min-h-screen bg-slate-900" apidata="get.membership_plans" keyname="plans">
+    <!-- Хиро секция -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 py-16 relative">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase">Планове за членство</h1>
+            <p class="text-slate-300 text-xl">Изберете перфектния план за вашето фитнес пътуване</p>
+        </div>
+    </section>
+
+    <!-- Ценови планове -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <template x-for="plan in data.plans || []" :key="plan.id">
+                    <div class="bg-slate-800 rounded-2xl p-8 relative"
+                        :class="plan.popular ? 'border-2 border-orange-500 transform scale-105' : ''">
+                        <template x-if="plan.popular">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-orange-500 text-white text-sm font-bold uppercase rounded-full">
+                                Най-популярен
+                            </div>
+                        </template>
+                        <h3 class="text-2xl font-black text-white mb-2 uppercase" x-text="plan.name"></h3>
+                        <div class="text-5xl font-black text-orange-500 mb-1">
+                            <span x-text="plan.price"></span>лв
+                            <span class="text-lg text-slate-400 font-normal">/месец</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6" x-text="plan.description"></p>
+                        <ul class="space-y-4 mb-8">
+                            <template x-for="feature in plan.features || []" :key="feature">
+                                <li class="flex items-center gap-3 text-slate-300">
+                                    <i class="fa-solid fa-check text-orange-500"></i>
+                                    <span x-text="feature"></span>
+                                </li>
+                            </template>
+                        </ul>
+                        <a :href="'/bg/signup?plan=' + plan.slug"
+                            class="block w-full py-4 text-center font-bold uppercase rounded-lg transition-colors"
+                            :class="plan.popular ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-slate-700 text-orange-500 hover:bg-orange-500 hover:text-white'">
+                            Започни сега
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Какво е включено -->
+    <section class="py-20 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">Всички планове включват</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white mt-2 uppercase">Премиум удобства</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-dumbbell text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Зона свободни тежести</h3>
+                    <p class="text-slate-400 text-sm">Пълен избор от дъмбели, щанги и кетълбели</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-heart-pulse text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Кардио оборудване</h3>
+                    <p class="text-slate-400 text-sm">Пътеки, велоергометри, кростренажори и гребни машини</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-shower text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Съблекални</h3>
+                    <p class="text-slate-400 text-sm">Чисти помещения с душове, сауни и шкафчета</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-wifi text-3xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Безплатен WiFi</h3>
+                    <p class="text-slate-400 text-sm">Останете свързани докато тренирате</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЧЗВ -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-white uppercase">Често задавани въпроси</h2>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4" x-data="{ openFaq: 1 }">
+                <div class="bg-slate-800 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 1 ? null : 1" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Мога ли да замразя членството си?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 1 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse class="px-6 pb-6 text-slate-400">
+                        Да! Можете да замразите членството си за до 3 месеца годишно без допълнително заплащане. Просто ни уведомете поне 7 дни предварително.
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 2 ? null : 2" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Има ли такса за присъединяване?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 2 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse class="px-6 pb-6 text-slate-400">
+                        Често провеждаме промоции без такса за присъединяване. Свържете се с нас, за да научите за текущите оферти!
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 3 ? null : 3" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Каква е политиката за отказ?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 3 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse class="px-6 pb-6 text-slate-400">
+                        Можете да прекратите членството си с 30 дни писмено предизвестие. Без скрити такси или дългосрочни договори за месечни планове.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-orange-500 relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-black text-white mb-4 uppercase">Започнете безплатната си седмица днес</h2>
+            <p class="text-orange-100 mb-8 max-w-2xl mx-auto">
+                Без ангажимент. Изпитайте всичко, което предлагаме с безплатен 7-дневен пробен период.
+            </p>
+            <a href="/bg/signup?trial=true" class="inline-block px-8 py-4 bg-white text-orange-600 font-bold uppercase rounded-lg hover:bg-slate-100 transition-colors">
+                Вземете безплатната седмица
+            </a>
+        </div>
+    </section>
+</div>

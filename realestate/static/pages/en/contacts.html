@@ -1,0 +1,163 @@
+<!-- Real Estate Contact Page -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Contact Us</h1>
+            <p class="text-emerald-100 text-xl">Get in touch with our real estate experts</p>
+        </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto -mt-24 relative z-10">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Phone</h3>
+                    <a href="tel:+15551234567" class="text-emerald-600 font-semibold hover:text-emerald-700">+1 (555) 123-4567</a>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-envelope text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Email</h3>
+                    <a href="mailto:info@realestate.com" class="text-emerald-600 font-semibold hover:text-emerald-700">info@realestate.com</a>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-location-dot text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Office</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">123 Property Street<br>New York, NY 10001</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-clock text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 dark:text-white mb-2">Hours</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">Mon-Fri: 9AM - 6PM<br>Sat: 10AM - 4PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Map -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Form -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Send Us a Message</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">First Name</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Last Name</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Email</label>
+                                <input type="email" name="email" required
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Phone</label>
+                                <input type="tel" name="phone"
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">I'm Interested In</label>
+                            <select name="interest" required
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                                <option value="">Select an option</option>
+                                <option value="buying">Buying a Property</option>
+                                <option value="selling">Selling a Property</option>
+                                <option value="renting">Renting a Property</option>
+                                <option value="listing">Listing My Property</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Message</label>
+                            <textarea name="message" rows="5" required
+                                placeholder="Tell us about your real estate needs..."
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500"></textarea>
+                        </div>
+
+                        <button @click="alpineListeners('Contact.post_message', $event)" type="button"
+                            class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                            Send Message <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Map & Office Info -->
+                <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden h-96">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sNew%20York!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-6">Our Offices</h3>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-building text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800 dark:text-white">Headquarters</h4>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">123 Property Street, New York, NY 10001</p>
+                                    <p class="text-emerald-600 text-sm">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-building text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800 dark:text-white">Downtown Office</h4>
+                                    <p class="text-slate-600 dark:text-slate-400 text-sm">456 Broadway, New York, NY 10012</p>
+                                    <p class="text-emerald-600 text-sm">+1 (555) 987-6543</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule a Call CTA -->
+    <section class="py-16 bg-emerald-600">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Prefer to Talk?</h2>
+            <p class="text-emerald-100 mb-8 max-w-2xl mx-auto">
+                Schedule a call with one of our real estate experts at a time that works for you.
+            </p>
+            <button class="px-8 py-4 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-slate-100 transition-colors">
+                <i class="fa-solid fa-calendar-check mr-2"></i>
+                Schedule a Call
+            </button>
+        </div>
+    </section>
+</div>

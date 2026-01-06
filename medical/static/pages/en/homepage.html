@@ -1,0 +1,253 @@
+<!-- Medical/Healthcare Homepage -->
+<div class="min-h-screen bg-white">
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-teal-50 via-white to-blue-50 py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="inline-block px-4 py-2 bg-teal-100 text-teal-700 font-semibold text-sm rounded-full mb-6">
+                        Trusted Healthcare Since 1998
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6 leading-tight">
+                        Your Health Is Our <span class="text-teal-600">Top Priority</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-8">
+                        Experience compassionate care from our team of expert physicians. We're committed to providing the highest quality healthcare for you and your family.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/en/appointments" class="px-8 py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors shadow-lg shadow-teal-600/30">
+                            Book Appointment
+                        </a>
+                        <a href="/en/services" class="px-8 py-4 bg-white text-slate-700 font-semibold rounded-full border-2 border-slate-200 hover:border-teal-600 hover:text-teal-600 transition-colors">
+                            Our Services
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600" alt="Medical Team" class="rounded-3xl shadow-2xl">
+                    <!-- Stats Card -->
+                    <div class="absolute -bottom-8 -left-8 bg-white rounded-2xl shadow-xl p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-user-doctor text-2xl text-teal-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-slate-800">150+</div>
+                                <div class="text-slate-500">Expert Doctors</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rating Card -->
+                    <div class="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-star text-yellow-500"></i>
+                            <span class="text-2xl font-bold text-slate-800">4.9</span>
+                        </div>
+                        <div class="text-slate-500 text-sm">Patient Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="py-8 bg-white -mt-8 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <a href="/en/doctors" class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-slate-100 group">
+                    <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-teal-600 transition-colors">
+                        <i class="fa-solid fa-user-doctor text-2xl text-teal-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-1">Find a Doctor</h3>
+                    <p class="text-slate-500 text-sm">Search our specialists</p>
+                </a>
+                <a href="/en/appointments" class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-slate-100 group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
+                        <i class="fa-solid fa-calendar-check text-2xl text-blue-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-1">Appointments</h3>
+                    <p class="text-slate-500 text-sm">Book online easily</p>
+                </a>
+                <a href="/en/patient-resources" class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-slate-100 group">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-600 transition-colors">
+                        <i class="fa-solid fa-file-medical text-2xl text-purple-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-1">Patient Portal</h3>
+                    <p class="text-slate-500 text-sm">Access your records</p>
+                </a>
+                <a href="tel:+15559111234" class="bg-red-50 rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-red-100 group">
+                    <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors">
+                        <i class="fa-solid fa-phone-volume text-2xl text-red-600 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 mb-1">Emergency</h3>
+                    <p class="text-red-600 text-sm font-semibold">+1 (555) 911-1234</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-slate-50" apidata="get.services" keyname="services">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Our Services</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-2">Comprehensive Healthcare Services</h2>
+                <p class="text-slate-600 mt-4">We offer a wide range of medical services to meet all your healthcare needs under one roof.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="service in (data.services || []).slice(0, 6)" :key="service.id">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center mb-6">
+                            <i :class="service.icon + ' text-2xl text-teal-600'"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3" x-text="service.name"></h3>
+                        <p class="text-slate-600 mb-4" x-text="service.description"></p>
+                        <a :href="'/en/services/' + service.slug" class="text-teal-600 font-semibold hover:text-teal-700 inline-flex items-center gap-2">
+                            Learn More <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </template>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/en/services" class="inline-block px-8 py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                    View All Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600" alt="Medical Facility" class="rounded-3xl shadow-xl">
+                    <div class="absolute -bottom-8 -right-8 bg-teal-600 text-white p-8 rounded-2xl shadow-xl">
+                        <div class="text-5xl font-bold mb-2">25+</div>
+                        <div class="text-teal-100">Years of Excellence</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-2 mb-6">Exceptional Care You Can Trust</h2>
+                    <p class="text-slate-600 mb-8">
+                        We combine advanced medical technology with compassionate care to provide the best possible outcomes for our patients.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-award text-teal-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 mb-1">Board-Certified Physicians</h3>
+                                <p class="text-slate-600 text-sm">Our doctors are leaders in their respective fields with extensive training and experience.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-microscope text-teal-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 mb-1">Advanced Technology</h3>
+                                <p class="text-slate-600 text-sm">State-of-the-art equipment and the latest medical technologies for accurate diagnosis.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-heart-pulse text-teal-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 mb-1">Patient-Centered Care</h3>
+                                <p class="text-slate-600 text-sm">Your comfort and well-being are at the center of everything we do.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Doctors -->
+    <section class="py-20 bg-slate-50" apidata="get.doctors" keyname="doctors">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-teal-600 font-semibold text-sm uppercase tracking-wider">Our Team</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-2">Meet Our Expert Doctors</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <template x-for="doctor in (data.doctors || []).slice(0, 4)" :key="doctor.id">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg group">
+                        <div class="h-64 overflow-hidden">
+                            <img :src="doctor.image" :alt="doctor.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold text-slate-800" x-text="doctor.name"></h3>
+                            <p class="text-teal-600 font-semibold mb-2" x-text="doctor.specialty"></p>
+                            <p class="text-slate-500 text-sm mb-4" x-text="doctor.department"></p>
+                            <a :href="'/en/doctor/' + doctor.slug" class="inline-block px-6 py-2 bg-teal-100 text-teal-700 font-semibold rounded-full hover:bg-teal-600 hover:text-white transition-colors">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/en/doctors" class="inline-block px-8 py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                    View All Doctors
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-teal-600" apidata="get.testimonials" keyname="testimonials">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-teal-200 font-semibold text-sm uppercase tracking-wider">Testimonials</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">What Our Patients Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <template x-for="testimonial in data.testimonials || []" :key="testimonial.id">
+                    <div class="bg-white rounded-2xl p-8">
+                        <div class="flex gap-1 mb-4">
+                            <template x-for="i in 5" :key="i">
+                                <i class="fa-solid fa-star text-yellow-500"></i>
+                            </template>
+                        </div>
+                        <p class="text-slate-600 mb-6 italic" x-text="'\"' + testimonial.text + '\"'"></p>
+                        <div class="flex items-center gap-4">
+                            <img :src="testimonial.image" :alt="testimonial.name" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-bold text-slate-800" x-text="testimonial.name"></h4>
+                                <p class="text-slate-500 text-sm" x-text="testimonial.treatment"></p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-to-r from-teal-600 to-teal-700 rounded-3xl p-12 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1920')] bg-cover bg-center opacity-10"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Schedule Your Visit?</h2>
+                    <p class="text-teal-100 mb-8 max-w-2xl mx-auto">
+                        Book your appointment today and experience the difference compassionate, quality healthcare can make.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="/en/appointments" class="px-8 py-4 bg-white text-teal-700 font-semibold rounded-full hover:bg-slate-100 transition-colors">
+                            Book Appointment
+                        </a>
+                        <a href="tel:+15551234567" class="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
+                            <i class="fa-solid fa-phone mr-2"></i>Call Us Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

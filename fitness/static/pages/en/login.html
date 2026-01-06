@@ -1,0 +1,154 @@
+<!-- Fitness/Gym Login Page -->
+<div class="min-h-screen bg-slate-900 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-md" x-data="{ activeTab: 'login', showPassword: false }">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <a href="/en/homepage">
+                <img :src="data.settings?.logo" alt="Fitness Logo" class="h-16 mx-auto mb-4">
+            </a>
+            <h1 class="text-2xl font-black text-white uppercase">Member Login</h1>
+            <p class="text-slate-400">Access your fitness account</p>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="bg-slate-800 rounded-2xl shadow-xl overflow-hidden">
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-700">
+                <button @click="activeTab = 'login'"
+                    :class="activeTab === 'login' ? 'bg-orange-500/20 text-orange-500 border-b-2 border-orange-500' : 'text-slate-400'"
+                    class="flex-1 py-4 font-bold uppercase text-sm transition-colors">
+                    Sign In
+                </button>
+                <button @click="activeTab = 'register'"
+                    :class="activeTab === 'register' ? 'bg-orange-500/20 text-orange-500 border-b-2 border-orange-500' : 'text-slate-400'"
+                    class="flex-1 py-4 font-bold uppercase text-sm transition-colors">
+                    Join Now
+                </button>
+            </div>
+
+            <div class="p-8">
+                <!-- Login Form -->
+                <form x-show="activeTab === 'login'" class="space-y-6">
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-2">Email Address</label>
+                        <div class="relative">
+                            <input type="email" name="email" required placeholder="your@email.com"
+                                class="w-full px-4 py-3 pl-11 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-2">Password</label>
+                        <div class="relative">
+                            <input :type="showPassword ? 'text' : 'password'" name="password" required placeholder="••••••••"
+                                class="w-full px-4 py-3 pl-11 pr-11 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
+                                <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="remember" class="w-4 h-4 text-orange-500 rounded bg-slate-700 border-slate-600">
+                            <span class="text-slate-400 text-sm">Remember me</span>
+                        </label>
+                        <a href="/en/forgot-password" class="text-orange-500 text-sm font-semibold hover:text-orange-400">Forgot Password?</a>
+                    </div>
+
+                    <button @click="alpineListeners('Auth.login', $event)" type="button"
+                        class="w-full py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                        Sign In
+                    </button>
+
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-slate-700"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-4 bg-slate-800 text-slate-500">Or continue with</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button type="button" class="py-3 border border-slate-600 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
+                            <i class="fa-brands fa-google text-red-500"></i>
+                            <span class="text-slate-300 font-medium">Google</span>
+                        </button>
+                        <button type="button" class="py-3 border border-slate-600 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
+                            <i class="fa-brands fa-apple text-white"></i>
+                            <span class="text-slate-300 font-medium">Apple</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Register Form -->
+                <form x-show="activeTab === 'register'" x-cloak class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">First Name</label>
+                            <input type="text" name="firstName" required
+                                class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Last Name</label>
+                            <input type="text" name="lastName" required
+                                class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-2">Email Address</label>
+                        <input type="email" name="email" required
+                            class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-2">Phone Number</label>
+                        <input type="tel" name="phone"
+                            class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-2">Password</label>
+                        <input type="password" name="password" required
+                            class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-2">Fitness Goal</label>
+                        <select name="goal"
+                            class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <option value="">Select your goal</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="muscle-gain">Muscle Gain</option>
+                            <option value="strength">Build Strength</option>
+                            <option value="endurance">Improve Endurance</option>
+                            <option value="general">General Fitness</option>
+                        </select>
+                    </div>
+
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="terms" required class="w-4 h-4 text-orange-500 rounded bg-slate-700 border-slate-600 mt-1">
+                        <span class="text-slate-400 text-sm">
+                            I agree to the <a href="/en/terms-conditions" class="text-orange-500 hover:underline">Terms of Service</a>
+                            and <a href="/en/gdpr" class="text-orange-500 hover:underline">Privacy Policy</a>
+                        </span>
+                    </label>
+
+                    <button @click="alpineListeners('Auth.register', $event)" type="button"
+                        class="w-full py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Help Link -->
+        <p class="text-center text-slate-400 mt-6">
+            Need help? <a href="/en/contacts" class="text-orange-500 font-semibold hover:text-orange-400">Contact Support</a>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,208 @@
+<!-- Medical/Healthcare Patient Dashboard Page -->
+<div class="min-h-screen bg-slate-50" x-data="{ activeTab: 'overview' }" apidata="get.patient_dashboard" keyname="patient">
+    <!-- Dashboard Header -->
+    <section class="bg-white border-b">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="relative">
+                    <img :src="data.patient?.avatar || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=200'"
+                        alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-teal-100">
+                </div>
+                <div class="text-center md:text-left">
+                    <h1 class="text-2xl font-bold text-slate-800" x-text="'Welcome, ' + (data.patient?.firstName || 'Patient')"></h1>
+                    <p class="text-slate-600">Patient ID: <span x-text="data.patient?.patientId" class="font-mono"></span></p>
+                </div>
+                <div class="md:ml-auto flex gap-4">
+                    <a href="/en/appointments" class="px-6 py-3 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                        <i class="fa-solid fa-calendar-plus mr-2"></i>Book Appointment
+                    </a>
+                    <button @click="alpineListeners('Auth.logout', $event)" class="px-6 py-3 bg-slate-200 text-slate-700 font-semibold rounded-full hover:bg-slate-300 transition-colors">
+                        <i class="fa-solid fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Tabs -->
+    <section class="bg-white shadow-sm sticky top-32 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto gap-2 py-4">
+                <button @click="activeTab = 'overview'"
+                    :class="activeTab === 'overview' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm whitespace-nowrap hover:bg-teal-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chart-line mr-2"></i>Overview
+                </button>
+                <button @click="activeTab = 'appointments'"
+                    :class="activeTab === 'appointments' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm whitespace-nowrap hover:bg-teal-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-calendar-check mr-2"></i>Appointments
+                </button>
+                <button @click="activeTab = 'records'"
+                    :class="activeTab === 'records' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm whitespace-nowrap hover:bg-teal-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-file-medical mr-2"></i>Medical Records
+                </button>
+                <button @click="activeTab = 'prescriptions'"
+                    :class="activeTab === 'prescriptions' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm whitespace-nowrap hover:bg-teal-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-pills mr-2"></i>Prescriptions
+                </button>
+                <button @click="activeTab = 'settings'"
+                    :class="activeTab === 'settings' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-4 py-2 rounded-full font-semibold text-sm whitespace-nowrap hover:bg-teal-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-cog mr-2"></i>Settings
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Content -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <!-- Overview Tab -->
+            <div x-show="activeTab === 'overview'" class="space-y-8">
+                <!-- Quick Stats -->
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-calendar-check text-2xl text-teal-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-slate-800" x-text="data.patient?.upcomingAppointments || 0"></div>
+                                <div class="text-slate-500 text-sm">Upcoming Visits</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-pills text-2xl text-blue-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-slate-800" x-text="data.patient?.activePrescriptions || 0"></div>
+                                <div class="text-slate-500 text-sm">Active Prescriptions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-file-medical text-2xl text-purple-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-slate-800" x-text="data.patient?.labResults || 0"></div>
+                                <div class="text-slate-500 text-sm">Lab Results</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-message text-2xl text-green-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-slate-800" x-text="data.patient?.unreadMessages || 0"></div>
+                                <div class="text-slate-500 text-sm">Messages</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Appointment -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6">Next Appointment</h3>
+                    <template x-if="data.patient?.nextAppointment">
+                        <div class="flex flex-col md:flex-row gap-6 items-center">
+                            <div class="text-center md:text-left">
+                                <div class="text-4xl font-bold text-teal-600" x-text="data.patient.nextAppointment.day"></div>
+                                <div class="text-slate-500" x-text="data.patient.nextAppointment.month"></div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-slate-800" x-text="data.patient.nextAppointment.doctorName"></h4>
+                                <p class="text-teal-600" x-text="data.patient.nextAppointment.specialty"></p>
+                                <p class="text-slate-500" x-text="data.patient.nextAppointment.time + ' • ' + data.patient.nextAppointment.location"></p>
+                            </div>
+                            <div class="flex gap-3">
+                                <button class="px-6 py-3 bg-slate-100 text-slate-700 font-semibold rounded-full hover:bg-slate-200 transition-colors">
+                                    Reschedule
+                                </button>
+                                <button class="px-6 py-3 bg-red-100 text-red-600 font-semibold rounded-full hover:bg-red-200 transition-colors">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                    <template x-if="!data.patient?.nextAppointment">
+                        <div class="text-center py-8">
+                            <i class="fa-solid fa-calendar text-4xl text-slate-300 mb-4"></i>
+                            <p class="text-slate-500 mb-4">No upcoming appointments</p>
+                            <a href="/en/appointments" class="inline-block px-6 py-3 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                                Book Appointment
+                            </a>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div x-show="activeTab === 'appointments'" x-cloak class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-slate-800">My Appointments</h2>
+                    <a href="/en/appointments" class="px-4 py-2 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                        Book New
+                    </a>
+                </div>
+                <div class="space-y-4">
+                    <template x-for="appointment in data.patient?.appointments || []" :key="appointment.id">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 flex flex-col md:flex-row gap-4 items-center">
+                            <div class="w-20 text-center">
+                                <div class="text-2xl font-bold text-teal-600" x-text="appointment.day"></div>
+                                <div class="text-slate-500 text-sm" x-text="appointment.month"></div>
+                            </div>
+                            <div class="flex-1 text-center md:text-left">
+                                <h4 class="font-bold text-slate-800" x-text="appointment.doctorName"></h4>
+                                <p class="text-teal-600 text-sm" x-text="appointment.specialty"></p>
+                                <p class="text-slate-500 text-sm" x-text="appointment.time"></p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold"
+                                :class="appointment.status === 'confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'"
+                                x-text="appointment.status"></span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div x-show="activeTab === 'settings'" x-cloak class="max-w-2xl">
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6">Profile Settings</h3>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">First Name</label>
+                                <input type="text" :value="data.patient?.firstName" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-700 font-semibold mb-2">Last Name</label>
+                                <input type="text" :value="data.patient?.lastName" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Email</label>
+                            <input type="email" :value="data.patient?.email" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2">Phone</label>
+                            <input type="tel" :value="data.patient?.phone" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-colors">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

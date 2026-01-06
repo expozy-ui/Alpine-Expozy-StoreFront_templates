@@ -1,0 +1,191 @@
+<!-- Образователна платформа Единичен курс страница -->
+<div class="min-h-screen bg-white" apidata="get.course" keyname="course" x-data="{ activeTab: 'overview' }">
+    <!-- Курс хиро -->
+    <section class="bg-gradient-to-br from-indigo-900 to-purple-900 py-16 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-2">
+                    <span class="inline-block px-3 py-1 bg-indigo-500 text-white text-sm font-semibold rounded-full mb-4" x-text="data.course?.category"></span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4" x-text="data.course?.title"></h1>
+                    <p class="text-indigo-200 text-lg mb-6" x-text="data.course?.subtitle"></p>
+
+                    <div class="flex flex-wrap items-center gap-6 mb-6">
+                        <div class="flex items-center gap-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <span class="font-semibold" x-text="data.course?.rating"></span>
+                            <span class="text-indigo-200" x-text="'(' + data.course?.reviews + ' отзива)'"></span>
+                        </div>
+                        <span class="text-indigo-200" x-text="data.course?.students + ' записани студенти'"></span>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-6">
+                        <img :src="data.course?.instructor?.avatar" :alt="data.course?.instructor?.name" class="w-12 h-12 rounded-full object-cover border-2 border-white">
+                        <div>
+                            <p class="font-semibold">Създаден от <span x-text="data.course?.instructor?.name"></span></p>
+                            <p class="text-indigo-200 text-sm" x-text="data.course?.instructor?.title"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 text-sm text-indigo-200">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock"></i>
+                            <span x-text="data.course?.duration + ' часа общо'"></span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-play-circle"></i>
+                            <span x-text="data.course?.lectures + ' лекции'"></span>
+                        </span>
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-signal"></i>
+                            <span x-text="data.course?.level"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Карта на курса -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden text-slate-800">
+                        <div class="h-48 overflow-hidden">
+                            <img :src="data.course?.image" :alt="data.course?.title" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-3xl font-bold text-indigo-600" x-text="data.course?.price + ' лв.'"></span>
+                            </div>
+                            <button @click="alpineListeners('Cart.add', $event)" class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition-colors mb-3">
+                                Добави в количката
+                            </button>
+                            <button class="w-full py-4 border-2 border-indigo-600 text-indigo-600 font-semibold rounded-full hover:bg-indigo-50 transition-colors mb-6">
+                                Купи сега
+                            </button>
+                            <p class="text-center text-sm text-slate-500 mb-6">30-дневна гаранция за връщане</p>
+
+                            <h4 class="font-bold text-slate-800 mb-3">Този курс включва:</h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-video text-indigo-600"></i>
+                                    <span x-text="data.course?.duration + ' часа видео'"></span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-file-alt text-indigo-600"></i>
+                                    <span x-text="data.course?.resources + ' ресурса за изтегляне'"></span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-infinity text-indigo-600"></i>
+                                    <span>Доживотен достъп</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i class="fa-solid fa-certificate text-indigo-600"></i>
+                                    <span>Сертификат за завършване</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Съдържание на курса -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-2">
+                    <!-- Табове -->
+                    <div class="flex gap-4 border-b border-slate-200 mb-8">
+                        <button @click="activeTab = 'overview'"
+                            :class="activeTab === 'overview' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500'"
+                            class="pb-4 font-semibold transition-colors">Преглед</button>
+                        <button @click="activeTab = 'curriculum'"
+                            :class="activeTab === 'curriculum' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500'"
+                            class="pb-4 font-semibold transition-colors">Учебна програма</button>
+                        <button @click="activeTab = 'instructor'"
+                            :class="activeTab === 'instructor' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500'"
+                            class="pb-4 font-semibold transition-colors">Инструктор</button>
+                        <button @click="activeTab = 'reviews'"
+                            :class="activeTab === 'reviews' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500'"
+                            class="pb-4 font-semibold transition-colors">Отзиви</button>
+                    </div>
+
+                    <!-- Таб Преглед -->
+                    <div x-show="activeTab === 'overview'">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">Какво ще научите</h2>
+                        <div class="grid md:grid-cols-2 gap-4 mb-8">
+                            <template x-for="item in data.course?.learningOutcomes || []" :key="item">
+                                <div class="flex gap-3">
+                                    <i class="fa-solid fa-check text-indigo-600 mt-1"></i>
+                                    <span class="text-slate-600" x-text="item"></span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">Описание</h2>
+                        <div class="prose prose-slate max-w-none" x-html="data.course?.description"></div>
+
+                        <h2 class="text-2xl font-bold text-slate-800 mt-8 mb-4">Изисквания</h2>
+                        <ul class="list-disc list-inside text-slate-600 space-y-2">
+                            <template x-for="req in data.course?.requirements || []" :key="req">
+                                <li x-text="req"></li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <!-- Таб Учебна програма -->
+                    <div x-show="activeTab === 'curriculum'" x-cloak>
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6">Съдържание на курса</h2>
+                        <div class="space-y-4">
+                            <template x-for="(section, index) in data.course?.curriculum || []" :key="section.id">
+                                <div class="border border-slate-200 rounded-xl overflow-hidden" x-data="{ open: index === 0 }">
+                                    <button @click="open = !open" class="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 transition-colors">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fa-solid fa-chevron-down transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                                            <span class="font-semibold text-slate-800" x-text="section.title"></span>
+                                        </div>
+                                        <span class="text-slate-500 text-sm" x-text="section.lectures + ' лекции • ' + section.duration"></span>
+                                    </button>
+                                    <div x-show="open" x-collapse class="divide-y divide-slate-100">
+                                        <template x-for="lecture in section.items || []" :key="lecture.id">
+                                            <div class="flex items-center justify-between p-4">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fa-solid fa-play-circle text-indigo-600"></i>
+                                                    <span class="text-slate-700" x-text="lecture.title"></span>
+                                                </div>
+                                                <span class="text-slate-500 text-sm" x-text="lecture.duration"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Таб Инструктор -->
+                    <div x-show="activeTab === 'instructor'" x-cloak>
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <img :src="data.course?.instructor?.avatar" :alt="data.course?.instructor?.name" class="w-32 h-32 rounded-full object-cover">
+                            <div>
+                                <h2 class="text-2xl font-bold text-slate-800" x-text="data.course?.instructor?.name"></h2>
+                                <p class="text-indigo-600 font-semibold mb-4" x-text="data.course?.instructor?.title"></p>
+                                <div class="flex gap-6 text-sm text-slate-600 mb-4">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fa-solid fa-star text-yellow-500"></i>
+                                        <span x-text="data.course?.instructor?.rating + ' рейтинг'"></span>
+                                    </span>
+                                    <span x-text="data.course?.instructor?.students + ' студенти'"></span>
+                                    <span x-text="data.course?.instructor?.courses + ' курса'"></span>
+                                </div>
+                                <p class="text-slate-600" x-text="data.course?.instructor?.bio"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

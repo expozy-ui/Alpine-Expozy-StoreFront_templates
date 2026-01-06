@@ -1,0 +1,168 @@
+<!-- Restaurant Blog Post Page - Bulgarian -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900" apidata="get.post" keyname="post">
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] bg-cover bg-center bg-fixed" :style="'background-image: url(' + (data.post?.image || '') + ')'">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+        <div class="relative h-full flex items-end">
+            <div class="container mx-auto px-4 pb-16">
+                <div class="max-w-4xl">
+                    <a :href="'/bg/blog?category=' + data.post?.category" class="inline-block px-4 py-2 bg-amber-600 text-white font-semibold rounded-full mb-4" x-text="data.post?.category"></a>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-6" x-text="data.post?.title"></h1>
+                    <div class="flex flex-wrap items-center gap-6 text-stone-300">
+                        <div class="flex items-center gap-3">
+                            <img :src="data.post?.author?.avatar" :alt="data.post?.author?.name" class="w-12 h-12 rounded-full object-cover border-2 border-white">
+                            <div>
+                                <p class="text-white font-semibold" x-text="data.post?.author?.name"></p>
+                                <p class="text-sm" x-text="data.post?.author?.role"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span><i class="fa-regular fa-calendar mr-2"></i><span x-text="data.post?.date"></span></span>
+                            <span><i class="fa-regular fa-clock mr-2"></i><span x-text="data.post?.readTime + ' мин четене'"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+                <!-- Main Content -->
+                <article class="lg:col-span-2">
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 md:p-12">
+                        <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:text-stone-800 dark:prose-headings:text-white prose-p:text-stone-600 dark:prose-p:text-stone-400 prose-a:text-amber-600" x-html="data.post?.content">
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mt-12 pt-8 border-t border-stone-200 dark:border-stone-700">
+                            <h4 class="font-semibold text-stone-800 dark:text-white mb-4">Тагове</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <template x-for="tag in data.post?.tags || []" :key="tag">
+                                    <a :href="'/bg/blog?tag=' + tag" class="px-4 py-2 bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 rounded-full text-sm hover:bg-amber-600 hover:text-white transition-colors" x-text="tag"></a>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Share -->
+                        <div class="mt-8 pt-8 border-t border-stone-200 dark:border-stone-700">
+                            <h4 class="font-semibold text-stone-800 dark:text-white mb-4">Споделете тази статия</h4>
+                            <div class="flex gap-3">
+                                <a href="#" class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-sky-500 rounded-full flex items-center justify-center text-white hover:bg-sky-600 transition-colors">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-700 transition-colors">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-stone-800 dark:bg-stone-600 rounded-full flex items-center justify-center text-white hover:bg-stone-900 transition-colors">
+                                    <i class="fa-solid fa-link"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Author Bio -->
+                        <div class="mt-8 pt-8 border-t border-stone-200 dark:border-stone-700">
+                            <div class="flex gap-6">
+                                <img :src="data.post?.author?.avatar" :alt="data.post?.author?.name" class="w-24 h-24 rounded-xl object-cover">
+                                <div>
+                                    <h4 class="text-xl font-bold text-stone-800 dark:text-white" x-text="data.post?.author?.name"></h4>
+                                    <p class="text-amber-600 font-semibold mb-2" x-text="data.post?.author?.role"></p>
+                                    <p class="text-stone-600 dark:text-stone-400 text-sm" x-text="data.post?.author?.bio"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 md:p-12 mt-8" apidata="get.comments" keyname="comments">
+                        <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-8">
+                            Коментари (<span x-text="(data.comments || []).length"></span>)
+                        </h3>
+
+                        <!-- Comment Form -->
+                        <form class="mb-12 p-6 bg-stone-50 dark:bg-stone-700 rounded-xl">
+                            <h4 class="font-semibold text-stone-800 dark:text-white mb-4">Оставете коментар</h4>
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <input type="text" name="name" placeholder="Вашето име" required
+                                    class="px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-800 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <input type="email" name="email" placeholder="Вашият имейл" required
+                                    class="px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-800 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                            <textarea name="comment" rows="4" placeholder="Вашият коментар..." required
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-800 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 mb-4"></textarea>
+                            <button @click="alpineListeners('Comments.post_comment', $event)" type="button"
+                                class="px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors">
+                                Публикувай коментар
+                            </button>
+                        </form>
+
+                        <!-- Comments List -->
+                        <div class="space-y-6">
+                            <template x-for="comment in data.comments || []" :key="comment.id">
+                                <div class="flex gap-4">
+                                    <img :src="comment.avatar" :alt="comment.name" class="w-12 h-12 rounded-full object-cover flex-shrink-0">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <h5 class="font-semibold text-stone-800 dark:text-white" x-text="comment.name"></h5>
+                                            <span class="text-stone-400 text-sm" x-text="comment.date"></span>
+                                        </div>
+                                        <p class="text-stone-600 dark:text-stone-400" x-text="comment.text"></p>
+                                        <button class="text-amber-600 text-sm font-semibold mt-2 hover:text-amber-700">Отговори</button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="lg:col-span-1 space-y-8">
+                    <!-- Search -->
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-6">
+                        <h4 class="font-bold text-stone-800 dark:text-white mb-4">Търсене</h4>
+                        <div class="relative">
+                            <input type="text" placeholder="Търсете публикации..." class="w-full px-4 py-3 pr-12 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            <button class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-amber-600">
+                                <i class="fa-solid fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-6">
+                        <h4 class="font-bold text-stone-800 dark:text-white mb-4">Категории</h4>
+                        <ul class="space-y-3">
+                            <li><a href="/bg/blog?category=recipes" class="flex justify-between text-stone-600 dark:text-stone-400 hover:text-amber-600 transition-colors">
+                                <span>Рецепти</span><span class="text-stone-400">(12)</span>
+                            </a></li>
+                            <li><a href="/bg/blog?category=tips" class="flex justify-between text-stone-600 dark:text-stone-400 hover:text-amber-600 transition-colors">
+                                <span>Съвети за готвене</span><span class="text-stone-400">(8)</span>
+                            </a></li>
+                            <li><a href="/bg/blog?category=stories" class="flex justify-between text-stone-600 dark:text-stone-400 hover:text-amber-600 transition-colors">
+                                <span>Истории</span><span class="text-stone-400">(5)</span>
+                            </a></li>
+                            <li><a href="/bg/blog?category=news" class="flex justify-between text-stone-600 dark:text-stone-400 hover:text-amber-600 transition-colors">
+                                <span>Новини</span><span class="text-stone-400">(3)</span>
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="bg-gradient-to-br from-amber-600 to-amber-700 rounded-2xl shadow-xl p-6 text-white">
+                        <h4 class="font-bold mb-2">Абонирайте се за бюлетина</h4>
+                        <p class="text-amber-100 text-sm mb-4">Получавайте най-новите рецепти и новини.</p>
+                        <input type="email" placeholder="Вашият имейл" class="w-full px-4 py-3 rounded-lg bg-white/20 backdrop-blur border border-white/30 text-white placeholder-white/70 focus:ring-2 focus:ring-white focus:border-white mb-3">
+                        <button @click="alpineListeners('Newsletter.post_newsletter', $event)" type="button" class="w-full px-4 py-3 bg-white text-amber-700 font-semibold rounded-lg hover:bg-stone-100 transition-colors">
+                            Абонирай се
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>

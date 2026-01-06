@@ -1,0 +1,215 @@
+<!-- Хедър за Недвижими Имоти -->
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    x-data="{
+        openMobileMenu: false,
+        openSearch: false,
+        scrolled: false
+    }"
+    @scroll.window="scrolled = window.pageYOffset > 50"
+    :class="scrolled ? 'bg-white dark:bg-slate-900 shadow-lg' : 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-md'">
+
+    <!-- Горна Лента -->
+    <div class="bg-emerald-600 text-white py-2 text-sm" x-show="!scrolled" x-cloak>
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span><i class="fa-solid fa-phone mr-2"></i>+359 2 123 4567</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-envelope mr-2"></i>info@imoti.bg</span>
+                <span class="hidden lg:inline"><i class="fa-solid fa-location-dot mr-2"></i>ул. Имотна 123, София</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-emerald-200"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-emerald-200"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-emerald-200"><i class="fa-brands fa-linkedin-in"></i></a>
+                <span class="mx-2">|</span>
+                <a href="/en/homepage" class="hover:text-emerald-200">EN</a>
+                <a href="/bg/homepage" class="text-emerald-200 font-semibold">BG</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Главна Навигация -->
+    <nav class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <!-- Лого -->
+            <a href="/bg/homepage" class="flex items-center">
+                <img :src="data.settings?.logo" alt="Лого Недвижими Имоти" class="h-12 md:h-14">
+            </a>
+
+            <!-- Десктоп Навигация -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/bg/homepage" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Начало</a>
+                <div class="relative group">
+                    <a href="/bg/properties" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium flex items-center gap-1">
+                        Имоти <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                        <a href="/bg/properties?type=buy" class="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 hover:text-emerald-600 first:rounded-t-xl">За Продажба</a>
+                        <a href="/bg/properties?type=rent" class="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 hover:text-emerald-600">Под Наем</a>
+                        <a href="/bg/properties?type=commercial" class="block px-4 py-3 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 hover:text-emerald-600 last:rounded-b-xl">Търговски</a>
+                    </div>
+                </div>
+                <a href="/bg/agents" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Нашите Агенти</a>
+                <a href="/bg/about" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">За Нас</a>
+                <a href="/bg/blog" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Блог</a>
+                <a href="/bg/contacts" class="text-slate-700 dark:text-white hover:text-emerald-600 transition-colors font-medium">Контакти</a>
+            </div>
+
+            <!-- Действия -->
+            <div class="flex items-center gap-4">
+                <!-- Бутон за Търсене -->
+                <button @click="openSearch = true" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 transition-colors">
+                    <i class="fa-solid fa-search text-xl"></i>
+                </button>
+
+                <!-- Бутон за Обява -->
+                <a href="/bg/list-property" class="hidden md:flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-semibold">
+                    <i class="fa-solid fa-plus"></i>
+                    Публикувай Имот
+                </a>
+
+                <!-- Потребителско Меню -->
+                <a href="/bg/login" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 transition-colors">
+                    <i class="fa-solid fa-user text-xl"></i>
+                </a>
+
+                <!-- Бутон за Мобилно Меню -->
+                <button @click="openMobileMenu = true" class="lg:hidden text-slate-600 dark:text-white">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Модал за Търсене -->
+    <div x-show="openSearch" x-cloak
+        @click.self="openSearch = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-start justify-center pt-32">
+
+        <div x-show="openSearch"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-4xl mx-4 p-8">
+
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-slate-800 dark:text-white">Търсене на Имоти</h3>
+                <button @click="openSearch = false" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
+            <form class="grid md:grid-cols-4 gap-4">
+                <div class="md:col-span-2">
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Местоположение</label>
+                    <input type="text" name="location" placeholder="Град, квартал или пощенски код"
+                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Тип Имот</label>
+                    <select name="type" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Всички Типове</option>
+                        <option value="house">Къща</option>
+                        <option value="apartment">Апартамент</option>
+                        <option value="condo">Мезонет</option>
+                        <option value="land">Парцел</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Тип Обява</label>
+                    <select name="listing" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Покупка или Наем</option>
+                        <option value="buy">За Продажба</option>
+                        <option value="rent">Под Наем</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Мин. Цена</label>
+                    <input type="number" name="minPrice" placeholder="0 лв."
+                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Макс. Цена</label>
+                    <input type="number" name="maxPrice" placeholder="Без ограничение"
+                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Спални</label>
+                    <select name="bedrooms" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Всички</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-600 dark:text-slate-300 text-sm mb-1">Бани</label>
+                    <select name="bathrooms" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Всички</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                    </select>
+                </div>
+                <div class="md:col-span-4">
+                    <button type="submit" class="w-full py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-search"></i>
+                        Търси Имоти
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Мобилно Меню -->
+    <div x-show="openMobileMenu" x-cloak
+        @click.self="openMobileMenu = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50">
+
+        <div x-show="openMobileMenu"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            class="absolute right-0 top-0 h-full w-80 bg-white dark:bg-slate-900 shadow-2xl">
+
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <img :src="data.settings?.logo" alt="Лого" class="h-10">
+                    <button @click="openMobileMenu = false" class="text-slate-600 dark:text-white">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-4">
+                    <a href="/bg/homepage" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Начало</a>
+                    <a href="/bg/properties" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Имоти</a>
+                    <a href="/bg/agents" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Нашите Агенти</a>
+                    <a href="/bg/about" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">За Нас</a>
+                    <a href="/bg/blog" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Блог</a>
+                    <a href="/bg/contacts" class="block py-3 text-slate-700 dark:text-white hover:text-emerald-600 border-b border-slate-200 dark:border-slate-700">Контакти</a>
+                </nav>
+
+                <a href="/bg/list-property" class="block w-full mt-8 px-6 py-4 bg-emerald-600 text-white text-center rounded-lg hover:bg-emerald-700 transition-colors font-semibold">
+                    <i class="fa-solid fa-plus mr-2"></i>
+                    Публикувай Имот
+                </a>
+
+                <div class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+                    <p class="text-slate-500 text-sm mb-4">Свържете се с нас</p>
+                    <p class="text-slate-700 dark:text-white">+359 2 123 4567</p>
+                    <p class="text-slate-700 dark:text-white">info@imoti.bg</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Разделител за фиксиран хедър -->
+<div class="h-20"></div>

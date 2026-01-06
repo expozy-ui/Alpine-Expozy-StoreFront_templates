@@ -1,0 +1,190 @@
+<!-- Fitness/Gym Contact Page -->
+<div class="min-h-screen bg-slate-900">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase">Contact Us</h1>
+            <p class="text-slate-300 text-xl">We're here to help you on your fitness journey</p>
+        </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto -mt-24 relative z-10">
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-phone text-xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Phone</h3>
+                    <a href="tel:+15551234567" class="text-orange-500 font-semibold hover:text-orange-400">+1 (555) 123-4567</a>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-envelope text-xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Email</h3>
+                    <a href="mailto:info@fitnessgym.com" class="text-orange-500 font-semibold hover:text-orange-400">info@fitnessgym.com</a>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-location-dot text-xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Location</h3>
+                    <p class="text-slate-400 text-sm">123 Fitness Street<br>New York, NY 10001</p>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
+                    <div class="w-14 h-14 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-clock text-xl text-orange-500"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Hours</h3>
+                    <p class="text-slate-400 text-sm">Mon-Fri: 5AM-11PM<br>Sat-Sun: 7AM-9PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Map -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Form -->
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-2xl font-bold text-white mb-6">Get In Touch</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-300 font-semibold mb-2">First Name</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 font-semibold mb-2">Last Name</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-slate-300 font-semibold mb-2">Email</label>
+                                <input type="email" name="email" required
+                                    class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 font-semibold mb-2">Phone</label>
+                                <input type="tel" name="phone"
+                                    class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">I'm Interested In</label>
+                            <select name="interest" required
+                                class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                <option value="">Select an option</option>
+                                <option value="membership">Membership Information</option>
+                                <option value="personal-training">Personal Training</option>
+                                <option value="classes">Group Classes</option>
+                                <option value="tour">Gym Tour</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-2">Message</label>
+                            <textarea name="message" rows="5" required
+                                placeholder="Tell us about your fitness goals..."
+                                class="w-full px-4 py-3 border border-slate-600 rounded-lg bg-slate-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500"></textarea>
+                        </div>
+
+                        <button @click="alpineListeners('Contact.post_message', $event)" type="button"
+                            class="w-full py-4 bg-orange-500 text-white font-bold uppercase rounded-lg hover:bg-orange-600 transition-colors">
+                            Send Message <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Map & Info -->
+                <div class="space-y-8">
+                    <div class="bg-slate-800 rounded-2xl shadow-xl overflow-hidden h-96">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sNew%20York!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <div class="bg-slate-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-bold text-white mb-6">Book a Free Tour</h3>
+                        <p class="text-slate-400 mb-6">
+                            Come see our state-of-the-art facility! Schedule a free tour and meet our team. We'll show you around and answer all your questions.
+                        </p>
+                        <ul class="space-y-3 text-slate-300 mb-6">
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-orange-500"></i>
+                                See our equipment and facilities
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-orange-500"></i>
+                                Meet our certified trainers
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-orange-500"></i>
+                                Get a free fitness assessment
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check text-orange-500"></i>
+                                Learn about membership options
+                            </li>
+                        </ul>
+                        <button class="w-full py-4 border-2 border-orange-500 text-orange-500 font-bold uppercase rounded-lg hover:bg-orange-500 hover:text-white transition-colors">
+                            <i class="fa-solid fa-calendar-check mr-2"></i>
+                            Schedule Tour
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-white uppercase">Frequently Asked Questions</h2>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4" x-data="{ openFaq: 1 }">
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 1 ? null : 1" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">What are your gym hours?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 1 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse class="px-6 pb-6 text-slate-400">
+                        We're open Monday through Friday from 5:00 AM to 11:00 PM, and Saturday through Sunday from 7:00 AM to 9:00 PM. Our facility is open 365 days a year!
+                    </div>
+                </div>
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 2 ? null : 2" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Do you offer trial memberships?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 2 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse class="px-6 pb-6 text-slate-400">
+                        Yes! We offer a free one-week trial for new members. Come in for a tour and we'll set you up with full access to our facilities.
+                    </div>
+                </div>
+                <div class="bg-slate-900 rounded-xl overflow-hidden">
+                    <button @click="openFaq = openFaq === 3 ? null : 3" class="w-full p-6 text-left flex justify-between items-center">
+                        <span class="font-bold text-white">Is personal training included?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500 transition-transform" :class="openFaq === 3 && 'rotate-180'"></i>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse class="px-6 pb-6 text-slate-400">
+                        Personal training is available as an add-on to any membership. We offer individual sessions and package deals. Your first session is free with any new membership!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

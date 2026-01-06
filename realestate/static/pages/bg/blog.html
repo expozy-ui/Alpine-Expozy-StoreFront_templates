@@ -1,0 +1,130 @@
+<!-- Блог Страница за Недвижими Имоти -->
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <!-- Hero Секция -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-700 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Полезни Статии за Имоти</h1>
+            <p class="text-emerald-100 text-xl">Експертни съвети, пазарни тенденции и съвети за покупка на дом</p>
+        </div>
+    </section>
+
+    <!-- Категории -->
+    <section class="py-8 bg-white dark:bg-slate-800 shadow-lg sticky top-20 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center gap-4">
+                <span class="text-slate-600 dark:text-slate-400 font-semibold">Категории:</span>
+                <a href="/bg/blog" class="px-4 py-2 bg-emerald-600 text-white rounded-full text-sm font-medium">Всички</a>
+                <a href="/bg/blog?category=buying" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-emerald-100 hover:text-emerald-700 transition-colors">Съвети за Покупка</a>
+                <a href="/bg/blog?category=selling" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-emerald-100 hover:text-emerald-700 transition-colors">Ръководство за Продажба</a>
+                <a href="/bg/blog?category=market" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-emerald-100 hover:text-emerald-700 transition-colors">Пазарни Тенденции</a>
+                <a href="/bg/blog?category=investing" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-emerald-100 hover:text-emerald-700 transition-colors">Инвестиции</a>
+                <a href="/bg/blog?category=renovation" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-emerald-100 hover:text-emerald-700 transition-colors">Ремонт на Дома</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Избрана Публикация -->
+    <section class="py-12" apidata="get.featured_post" keyname="featured">
+        <div class="container mx-auto px-4">
+            <template x-if="data.featured">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl">
+                    <div class="grid lg:grid-cols-2">
+                        <div class="h-80 lg:h-auto relative">
+                            <img :src="data.featured.image" :alt="data.featured.title" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-4 py-2 bg-emerald-600 text-white font-semibold rounded-full">Избрано</span>
+                            </div>
+                        </div>
+                        <div class="p-8 lg:p-12 flex flex-col justify-center">
+                            <div class="flex items-center gap-4 text-sm text-slate-500 mb-4">
+                                <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full" x-text="data.featured.category"></span>
+                                <span x-text="data.featured.date"></span>
+                                <span>•</span>
+                                <span x-text="data.featured.readTime + ' мин четене'"></span>
+                            </div>
+                            <h2 class="text-3xl font-bold text-slate-800 dark:text-white mb-4" x-text="data.featured.title"></h2>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 line-clamp-3" x-text="data.featured.excerpt"></p>
+                            <div class="flex items-center gap-4">
+                                <img :src="data.featured.author.image" :alt="data.featured.author.name" class="w-12 h-12 rounded-full object-cover">
+                                <div>
+                                    <div class="font-semibold text-slate-800 dark:text-white" x-text="data.featured.author.name"></div>
+                                    <div class="text-slate-500 text-sm" x-text="data.featured.author.role"></div>
+                                </div>
+                            </div>
+                            <a :href="'/bg/blog/' + data.featured.slug" class="inline-block mt-6 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                                Прочети Статията <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- Списък с Публикации -->
+    <section class="py-12" apidata="get.posts" keyname="posts">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="post in data.posts || []" :key="post.id">
+                    <article class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-shadow">
+                        <div class="relative h-56 overflow-hidden">
+                            <img :src="post.image" :alt="post.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-4 left-4">
+                                <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 text-sm rounded-full" x-text="post.category"></span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-sm text-slate-500 mb-3">
+                                <span x-text="post.date"></span>
+                                <span>•</span>
+                                <span x-text="post.readTime + ' мин четене'"></span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3 group-hover:text-emerald-600 transition-colors line-clamp-2" x-text="post.title"></h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3" x-text="post.excerpt"></p>
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
+                                <div class="flex items-center gap-3">
+                                    <img :src="post.author.image" :alt="post.author.name" class="w-10 h-10 rounded-full object-cover">
+                                    <span class="text-slate-700 dark:text-slate-300 font-medium text-sm" x-text="post.author.name"></span>
+                                </div>
+                                <a :href="'/bg/blog/' + post.slug" class="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors">
+                                    Прочети <i class="fa-solid fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </template>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="flex justify-center gap-2 mt-12">
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="w-10 h-10 rounded-lg bg-emerald-600 text-white shadow">1</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">2</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">3</button>
+                <button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 shadow hover:bg-emerald-600 hover:text-white transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA за Бюлетин -->
+    <section class="py-16 bg-emerald-600">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Бъдете в Крак с Новините за Имоти</h2>
+            <p class="text-emerald-100 mb-8 max-w-2xl mx-auto">
+                Абонирайте се за нашия бюлетин за седмични пазарни анализи, съвети за покупка и ексклузивни обяви за имоти.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                <input type="email" name="email" placeholder="Въведете вашия имейл"
+                    class="flex-1 px-6 py-4 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/60 focus:ring-2 focus:ring-white">
+                <button @click="alpineListeners('Newsletter.subscribe', $event)" type="button"
+                    class="px-8 py-4 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-slate-100 transition-colors">
+                    Абонирай се
+                </button>
+            </form>
+        </div>
+    </section>
+</div>

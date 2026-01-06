@@ -1,0 +1,202 @@
+<!-- Restaurant About Page - Bulgarian -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900">
+    <!-- Hero Section -->
+    <section class="relative h-[50vh] bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1920');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative h-full flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Нашата история</h1>
+                <p class="text-xl text-stone-300">Страст към изключителната кухня от 1995</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <div>
+                    <span class="text-amber-600 font-semibold tracking-wider uppercase">Нашето начало</span>
+                    <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2 mb-6">От скромни корени до кулинарно съвършенство</h2>
+                    <div class="space-y-4 text-stone-600 dark:text-stone-400 leading-relaxed">
+                        <p>
+                            Това, което започна като малка семейна кухня през 1995 г., се превърна в една от най-обичаните кулинарни дестинации в града. Нашите основатели донесоха рецепти на баба си от хълмовете на Тоскана, влагайки във всяко ястие поколения кулинарна традиция.
+                        </p>
+                        <p>
+                            Днес, въпреки че сме се разраснали и еволюирали, нашият ангажимент към оригиналните ценности остава непроменен: пресни, местни съставки, изпитани техники на готвене и непоколебима отдаденост към създаването на незабравими кулинарни изживявания.
+                        </p>
+                        <p>
+                            Всяко ястие, което напуска нашата кухня, разказва история – за фермерите, които са отгледали продуктите, за майсторите, които са създали съставките, и за страстта на нашите готвачи.
+                        </p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800" alt="Интериор на ресторанта" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-8 -left-8 bg-amber-600 text-white p-6 rounded-xl shadow-xl">
+                        <div class="text-4xl font-bold">29+</div>
+                        <div class="text-amber-100">Години опит</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">В какво вярваме</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Нашите ценности</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white dark:bg-stone-700 p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-leaf text-3xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-4">От фермата на масата</h3>
+                    <p class="text-stone-600 dark:text-stone-400">
+                        Партнираме с местни фермери и производители, за да ви донесем най-пресните, сезонни съставки.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-heart text-3xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-4">Направено с любов</h3>
+                    <p class="text-stone-600 dark:text-stone-400">
+                        Всяко ястие е създадено със страст и внимание към детайла, почитайки традиционни рецепти.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-users text-3xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-4">Общност на първо място</h3>
+                    <p class="text-stone-600 dark:text-stone-400">
+                        Ние сме повече от ресторант – ние сме място за срещи, където се създават спомени и връзки.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Team -->
+    <section class="py-20" apidata="get.team" keyname="team">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">Хората зад магията</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Нашият екип</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <template x-for="member in data.team || []" :key="member.id">
+                    <div class="group">
+                        <div class="relative overflow-hidden rounded-2xl mb-4">
+                            <img :src="member.image" :alt="member.name" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-4 left-4 right-4">
+                                    <div class="flex justify-center gap-3">
+                                        <a :href="member.social?.instagram" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-amber-600 transition-colors">
+                                            <i class="fa-brands fa-instagram"></i>
+                                        </a>
+                                        <a :href="member.social?.linkedin" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-amber-600 transition-colors">
+                                            <i class="fa-brands fa-linkedin-in"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-stone-800 dark:text-white" x-text="member.name"></h3>
+                        <p class="text-amber-600 font-semibold" x-text="member.role"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Head Chef Spotlight -->
+    <section class="py-20 bg-stone-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800" alt="Главен готвач" class="rounded-2xl shadow-2xl">
+                </div>
+                <div>
+                    <span class="text-amber-500 font-semibold tracking-wider uppercase">Главен готвач</span>
+                    <h2 class="text-4xl font-bold text-white mt-2 mb-6">Шеф Алесандро Роси</h2>
+                    <div class="space-y-4 text-stone-300 leading-relaxed">
+                        <p>
+                            С над 20 години кулинарен опит на три континента, Шеф Алесандро носи уникална перспектива в нашата кухня. Обучен в Le Cordon Bleu в Париж и работил в ресторанти с Мишлен звезди в Италия и Япония.
+                        </p>
+                        <p>
+                            "Готвенето е разказване на истории. Всяка съставка има история и всяко ястие трябва да ви отведе някъде значимо. Моята цел е да създавам храна, която не само удовлетворява вкуса, но и докосва душата."
+                        </p>
+                    </div>
+                    <div class="flex gap-4 mt-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-amber-500">3</div>
+                            <div class="text-stone-400 text-sm">Мишлен звезди</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-amber-500">20+</div>
+                            <div class="text-stone-400 text-sm">Години опит</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-amber-500">15</div>
+                            <div class="text-stone-400 text-sm">Спечелени награди</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards -->
+    <section class="py-20 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">Признание</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Награди и отличия</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-award text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Най-добър ресторант</h4>
+                    <p class="text-stone-500 text-sm">Награди 2023</p>
+                </div>
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-star text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Мишлен звезда</h4>
+                    <p class="text-stone-500 text-sm">От 2019</p>
+                </div>
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-utensils text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Топ 50</h4>
+                    <p class="text-stone-500 text-sm">Най-добрите 2022</p>
+                </div>
+                <div class="bg-white dark:bg-stone-700 p-6 rounded-xl shadow-lg text-center">
+                    <i class="fa-solid fa-certificate text-4xl text-amber-600 mb-4"></i>
+                    <h4 class="font-bold text-stone-800 dark:text-white">Отличие</h4>
+                    <p class="text-stone-500 text-sm">Wine Spectator</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-amber-600 to-amber-700">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Изживейте нашата история лично</h2>
+            <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
+                Присъединете се към нас за незабравимо кулинарно пътешествие. Резервирайте масата си днес.
+            </p>
+            <a href="/bg/reservation" class="inline-block px-8 py-4 bg-white text-amber-700 font-semibold rounded-lg hover:bg-stone-100 transition-colors">
+                Направете резервация
+            </a>
+        </div>
+    </section>
+</div>

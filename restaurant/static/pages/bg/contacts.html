@@ -1,0 +1,205 @@
+<!-- Restaurant Contact Page - Bulgarian -->
+<div class="min-h-screen bg-stone-50 dark:bg-stone-900">
+    <!-- Hero Section -->
+    <section class="relative h-[40vh] bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1920');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative h-full flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Контакти</h1>
+                <p class="text-xl text-stone-300">Ще се радваме да чуем от вас</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto -mt-24 relative z-10">
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-phone text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-2">Телефон</h3>
+                    <p class="text-stone-600 dark:text-stone-400 mb-4">За резервации и запитвания</p>
+                    <a href="tel:+35921234567" class="text-amber-600 font-semibold text-lg hover:text-amber-700">+359 2 123 4567</a>
+                </div>
+
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-envelope text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-2">Имейл</h3>
+                    <p class="text-stone-600 dark:text-stone-400 mb-4">Изпратете ни съобщение</p>
+                    <a href="mailto:info@restaurant.bg" class="text-amber-600 font-semibold text-lg hover:text-amber-700">info@restaurant.bg</a>
+                </div>
+
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-location-dot text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-stone-800 dark:text-white mb-2">Адрес</h3>
+                    <p class="text-stone-600 dark:text-stone-400 mb-4">Посетете ни на</p>
+                    <p class="text-amber-600 font-semibold">бул. Витоша 123<br>София, 1000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Map -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Form -->
+                <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                    <h2 class="text-3xl font-bold text-stone-800 dark:text-white mb-6">Изпратете ни съобщение</h2>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Име</label>
+                                <input type="text" name="firstName" required
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Фамилия</label>
+                                <input type="text" name="lastName" required
+                                    class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Имейл</label>
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Тема</label>
+                            <select name="subject" required
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <option value="">Изберете тема</option>
+                                <option value="reservation">Запитване за резервация</option>
+                                <option value="private-event">Частно събитие</option>
+                                <option value="feedback">Обратна връзка</option>
+                                <option value="careers">Кариери</option>
+                                <option value="other">Друго</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-stone-700 dark:text-stone-300 font-semibold mb-2">Съобщение</label>
+                            <textarea name="message" rows="5" required
+                                placeholder="Кажете ни как можем да ви помогнем..."
+                                class="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea>
+                        </div>
+
+                        <button @click="alpineListeners('Contact.post_message', $event)" type="button"
+                            class="w-full px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all">
+                            Изпрати съобщение <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Map & Hours -->
+                <div class="space-y-8">
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl overflow-hidden h-80">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.6669266145!2d23.3153!3d42.6977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDQxJzUxLjciTiAyM8KwMTgnNTUuMSJF!5e0!3m2!1sen!2sbg!4v1620000000000!5m2!1sen!2sbg"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-6 flex items-center gap-3">
+                            <i class="fa-solid fa-clock text-amber-600"></i> Работно време
+                        </h3>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center pb-3 border-b border-stone-200 dark:border-stone-700">
+                                <span class="text-stone-600 dark:text-stone-400">Понеделник - Петък</span>
+                                <span class="font-semibold text-stone-800 dark:text-white">11:00 - 23:00</span>
+                            </li>
+                            <li class="flex justify-between items-center pb-3 border-b border-stone-200 dark:border-stone-700">
+                                <span class="text-stone-600 dark:text-stone-400">Събота</span>
+                                <span class="font-semibold text-stone-800 dark:text-white">10:00 - 24:00</span>
+                            </li>
+                            <li class="flex justify-between items-center pb-3 border-b border-stone-200 dark:border-stone-700">
+                                <span class="text-stone-600 dark:text-stone-400">Неделя</span>
+                                <span class="font-semibold text-stone-800 dark:text-white">10:00 - 22:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="text-amber-600 font-semibold">Щастлив час (Пон-Пет)</span>
+                                <span class="font-semibold text-amber-600">16:00 - 19:00</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-2xl font-bold text-stone-800 dark:text-white mb-6">Последвайте ни</h3>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-14 h-14 bg-stone-100 dark:bg-stone-700 rounded-full flex items-center justify-center text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                                <i class="fa-brands fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" class="w-14 h-14 bg-stone-100 dark:bg-stone-700 rounded-full flex items-center justify-center text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                                <i class="fa-brands fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="w-14 h-14 bg-stone-100 dark:bg-stone-700 rounded-full flex items-center justify-center text-stone-600 dark:text-stone-400 hover:bg-amber-600 hover:text-white transition-all">
+                                <i class="fa-brands fa-tripadvisor text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-stone-100 dark:bg-stone-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase">Често задавани въпроси</span>
+                <h2 class="text-4xl font-bold text-stone-800 dark:text-white mt-2">Въпроси и отговори</h2>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4" x-data="{openFaq: null}">
+                <div class="bg-white dark:bg-stone-700 rounded-xl shadow-lg overflow-hidden">
+                    <button @click="openFaq = openFaq === 1 ? null : 1" class="w-full px-6 py-4 text-left flex justify-between items-center">
+                        <span class="font-semibold text-stone-800 dark:text-white">Приемате ли гости без резервация?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform" :class="openFaq === 1 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 1" x-collapse class="px-6 pb-4 text-stone-600 dark:text-stone-400">
+                        Да, приемаме гости без резервация! Въпреки това препоръчваме да направите резервация, особено през уикендите и празниците, за да гарантираме наличност.
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 rounded-xl shadow-lg overflow-hidden">
+                    <button @click="openFaq = openFaq === 2 ? null : 2" class="w-full px-6 py-4 text-left flex justify-between items-center">
+                        <span class="font-semibold text-stone-800 dark:text-white">Има ли паркинг?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform" :class="openFaq === 2 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 2" x-collapse class="px-6 pb-4 text-stone-600 dark:text-stone-400">
+                        Предлагаме безплатен валет паркинг за вечерни гости. Има и обществен паркинг на един блок разстояние.
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 rounded-xl shadow-lg overflow-hidden">
+                    <button @click="openFaq = openFaq === 3 ? null : 3" class="w-full px-6 py-4 text-left flex justify-between items-center">
+                        <span class="font-semibold text-stone-800 dark:text-white">Съобразявате ли се с хранителни ограничения?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform" :class="openFaq === 3 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 3" x-collapse class="px-6 pb-4 text-stone-600 dark:text-stone-400">
+                        Разбира се! Предлагаме вегетариански, веган, безглутенови и други диетични опции. Моля, информирайте нашия персонал за алергии или ограничения.
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-stone-700 rounded-xl shadow-lg overflow-hidden">
+                    <button @click="openFaq = openFaq === 4 ? null : 4" class="w-full px-6 py-4 text-left flex justify-between items-center">
+                        <span class="font-semibold text-stone-800 dark:text-white">Мога ли да организирам частно събитие?</span>
+                        <i class="fa-solid fa-chevron-down text-amber-600 transition-transform" :class="openFaq === 4 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openFaq === 4" x-collapse class="px-6 pb-4 text-stone-600 dark:text-stone-400">
+                        Да! Имаме красива частна зала за до 30 гости. За по-големи събития предлагаме наем на целия ресторант. Свържете се с нашия екип за повече информация.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

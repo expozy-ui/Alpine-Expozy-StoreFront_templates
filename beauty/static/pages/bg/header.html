@@ -1,0 +1,96 @@
+<!-- Салон за красота Хедър -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm" x-data="{ mobileMenu: false, searchOpen: false }">
+    <!-- Горна лента -->
+    <div class="bg-rose-600 text-white text-sm py-2 hidden md:block">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+359 2 123 4567</span>
+                </span>
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>hello@glamour.bg</span>
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-rose-200 transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-rose-200 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-rose-200 transition-colors"><i class="fa-brands fa-pinterest"></i></a>
+                <span class="border-l border-rose-400 pl-4 ml-2">
+                    <a href="/en" class="hover:text-rose-200 transition-colors">EN</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Главна навигация -->
+    <nav class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Лого -->
+            <a href="/bg" class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-spa text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">Glamour</span>
+            </a>
+
+            <!-- Десктоп меню -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/bg" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Начало</a>
+                <a href="/bg/services" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Услуги</a>
+                <a href="/bg/stylists" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Екип</a>
+                <a href="/bg/booking" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Резервация</a>
+                <a href="/bg/blog" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Блог</a>
+                <a href="/bg/about" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">За нас</a>
+                <a href="/bg/contacts" class="font-medium text-slate-700 hover:text-rose-600 transition-colors">Контакти</a>
+            </div>
+
+            <!-- Десни действия -->
+            <div class="flex items-center gap-4">
+                <button @click="searchOpen = !searchOpen" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+                <a href="/bg/login" class="hidden sm:flex w-10 h-10 rounded-full bg-slate-100 items-center justify-center text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+                <a href="/bg/booking" class="hidden md:inline-flex px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-700 transition-all shadow-lg shadow-rose-200">
+                    Запази час
+                </a>
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                    <i class="fa-solid" :class="mobileMenu ? 'fa-times' : 'fa-bars'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Търсачка -->
+        <div x-show="searchOpen" x-transition class="mt-4 pb-4">
+            <div class="relative">
+                <input type="text" placeholder="Търсене на услуги, стилисти..." class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent">
+                <button class="absolute right-4 top-1/2 -translate-y-1/2 px-6 py-2 bg-rose-600 text-white rounded-full hover:bg-rose-700 transition-colors">
+                    Търси
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобилно меню -->
+    <div x-show="mobileMenu" x-transition class="lg:hidden bg-white border-t border-slate-100 py-4">
+        <div class="container mx-auto px-4 space-y-4">
+            <a href="/bg" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Начало</a>
+            <a href="/bg/services" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Услуги</a>
+            <a href="/bg/stylists" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Екип</a>
+            <a href="/bg/booking" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Резервация</a>
+            <a href="/bg/blog" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Блог</a>
+            <a href="/bg/about" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">За нас</a>
+            <a href="/bg/contacts" class="block font-medium text-slate-700 hover:text-rose-600 transition-colors py-2">Контакти</a>
+            <div class="pt-4 border-t border-slate-100">
+                <a href="/bg/booking" class="block w-full text-center px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-full">
+                    Запази час
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Спейсър за хедър -->
+<div class="h-20 md:h-28"></div>
