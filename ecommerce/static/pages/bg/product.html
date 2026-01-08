@@ -170,6 +170,53 @@
                                 <textarea rows="4" name="comment" class="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" placeholder="Споделете вашето мнение..."></textarea>
                             </div>
 
+                            <div class="space-y-4">
+                                <label class="block text-sm font-semibold text-slate-700">Добавете снимки</label>
+
+                                <label class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 hover:border-slate-400 transition text-center">
+                                    <div class="text-slate-400 mb-2">
+                                        <i class="fa fa-cloud-upload text-3xl"></i>
+                                    </div>
+
+                                    <p class="text-sm text-slate-600 font-medium">Пуснете снимки тук или кликнете</p>
+                                    <p class="text-xs text-slate-500 mt-1">Максимум 5 снимки</p>
+
+                                    <input type="file" name="images[]" multiple accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleFiles(this)">
+                                </label>
+
+                                <div id="preview" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+                            </div>
+
+                            <script>
+                                const MAX_FILES = 5;
+
+                                function handleFiles(input) {
+                                    const files = Array.from(input.files);
+                                    const preview = document.getElementById('preview');
+
+                                    preview.innerHTML = '';
+
+                                    if (files.length > MAX_FILES) {
+                                        alert(`Можете да качите максимум ${MAX_FILES} снимки.`);
+                                        input.value = '';
+                                        return;
+                                    }
+
+                                    files.forEach(file => {
+                                        if (!file.type.startsWith('image/')) return;
+
+                                        const reader = new FileReader();
+                                        reader.onload = e => {
+                                            const div = document.createElement('div');
+                                            div.className = 'relative aspect-square rounded-lg overflow-hidden border bg-slate-100';
+                                            div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                                            preview.appendChild(div);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    });
+                                }
+                            </script>
+
                             <div>
                                 <label class="block text-slate-700 dark:text-gray-300 font-semibold mb-3">Оценете този продукт</label>
                                 <div x-data="{ temp: 0, orig: 0 }" class="flex cursor-pointer text-4xl mb-4" @click="orig = temp">
@@ -201,18 +248,28 @@
                                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-100 dark:border-gray-700 p-6 hover:shadow-xl transition-shadow">
                                         <div class="flex flex-col lg:flex-row gap-6">
                                             <div class="lg:w-64 flex-shrink-0 p-4 bg-slate-50 dark:bg-gray-900 rounded-lg">
+                                                <div class="flex mb-3">
+                                                    <template x-for="item in review.rating">
+                                                        <span class="text-yellow-400 text-xl">★</span>
+                                                    </template>
+                                                </div>
                                                 <p class="font-bold text-slate-900 dark:text-white mb-1" x-text="review.user_name"></p>
-                                                <p class="text-sm text-slate-600 dark:text-gray-400 mb-1" x-text="review.email"></p>
                                                 <p class="text-xs text-slate-500 dark:text-gray-500" x-text="review.date"></p>
                                             </div>
 
                                             <div class="flex-1">
-                                                <div class="flex mb-3">
-                                                    <template x-for="item in review.rating">
-                                                        <span class="text-amber-400 text-xl">★</span>
-                                                    </template>
-                                                </div>
-                                                <p class="text-slate-700 dark:text-gray-300 leading-relaxed" x-text="review.comment"></p>
+
+                                                <template x-if="review.images[0]">
+
+                                                    <div class=" flex flex-wrap gap-2 border-b border-gray-300  pb-4">
+                                                        <template x-for="image in review.images">
+                                                            <img :src="image.url_10x10" class="h-24  !w-24 shadow object-cover rounded-lg" alt="">
+                                                        </template>
+                                                    </div>
+                                                </template>
+
+                                                <p class="text-slate-700 dark:text-gray-300 leading-relaxed pt-2" x-text="review.comment"></p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -285,7 +342,39 @@
             <template x-if="tab == 'promo'">
                 <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyName="discountProducts" data-sort="discount" data-subcategories="true" data-only_instock="0" data-category_id="0">
                     <template x-if="data.discountProducts">
-                        <div x-data="discountProductsF()" x-init="init()" class="glide !h-fit !w-full" id="discountProductsGlide">
+                        <div x-data="{
+                        async init() {
+
+                            // 2. Чакаш Alpine да рендерира x-for
+                            await this.$nextTick();
+
+                            // 3. Инициализираш Glide, след като DOM е готов
+                            this.glide = new Glide('#discountProductsGlide', {
+                                type: 'slide',
+                                startAt: 0,
+                                perView: 6,
+                                autoplay: false,
+                                animationDuration: 1500,
+                                perTouch: 4,
+                                breakpoints: {
+                                    1630: {
+                                        perView: 4
+                                    },
+                                    886: {
+                                        perView: 3
+                                    },
+                                    600: {
+                                        perView: 2
+                                    },
+                                    440: {
+                                        perView: 1
+                                    }
+                                }
+                            });
+
+                            this.glide.mount();
+                        }
+                    }" x-init="init()" class="glide !h-fit !w-full" id="discountProductsGlide">
                             <div class="glide__track " data-glide-el="track">
                                 <ul class="glide__slides">
                                     <template x-for="item in data.discountProducts.result" :key="item.id">
@@ -371,46 +460,9 @@
                 </div>
             </template>
 
-            <script>
-                function discountProductsF() {
-                    return {
-                        async init() {
-
-                            // 2. Чакаш Alpine да рендерира x-for
-                            await this.$nextTick();
-
-                            // 3. Инициализираш Glide, след като DOM е готов
-                            this.glide = new Glide('#discountProductsGlide', {
-                                type: 'slide',
-                                startAt: 0,
-                                perView: 6,
-                                autoplay: false,
-                                animationDuration: 1500,
-                                perTouch: 4,
-                                breakpoints: {
-                                    1630: {
-                                        perView: 4
-                                    },
-                                    886: {
-                                        perView: 3
-                                    },
-                                    600: {
-                                        perView: 2
-                                    },
-                                    440: {
-                                        perView: 1
-                                    }
-                                }
-                            });
-
-                            this.glide.mount();
-                        }
-                    }
-                }
-
-
-                function similarProductsF() {
-                    return {
+            <template x-if="tab == 'similar'">
+                <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="similarProducts" data-only_instock="0" :data-category_id="data.product.categories[0].id">
+                    <div x-data="{
                         async init() {
 
                             // 2. Чакаш Alpine да рендерира x-for
@@ -442,13 +494,7 @@
 
                             this.glide.mount();
                         }
-                    }
-                }
-            </script>
-
-            <template x-if="tab == 'similar'">
-                <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="similarProducts" data-only_instock="0" :data-category_id="data.product.categories[0].id">
-                    <div x-data="similarProductsF()" x-init="init()" id="similarProductsGlide" class="glide !h-fit">
+                    }" x-init="init()" id="similarProductsGlide" class="glide !h-fit">
                         <div class="glide__track " data-glide-el="track">
                             <ul class="glide__slides">
                                 <template x-for="item in data.similarProducts.result">
