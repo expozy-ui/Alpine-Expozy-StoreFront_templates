@@ -199,7 +199,7 @@
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                         <i class="fa-solid fa-building text-amber-600 mr-2"></i>Company name
                                     </label>
-                                    <input :value="data.my_company.name" type="text" name="invoice_name" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                    <input :value="data.my_company.name" type="text" name="name" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
 
                                 <div apidata="Countries.get_countries" keyname="countries">
@@ -208,7 +208,7 @@
                                     </label>
 
                                     <template x-if="data.my_company && data.countries">
-                                        <select name="invoice_country" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                        <select name="country" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                             <template x-for="country in data.countries">
                                                 <option :selected="country.id == data.my_company.country_id" x-text="country.title" :value="country.id"></option>
                                             </template>
@@ -221,44 +221,44 @@
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                         <i class="fa-solid fa-city text-amber-600 mr-2"></i>City
                                     </label>
-                                    <input :value="data.my_company.city" type="text" name="invoice_city" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate- 200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                    <input :value="data.my_company.city" type="text" name="city" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate- 200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                         <i class="fa-solid fa-location-dot text-amber-600 mr-2"></i>Address
                                     </label>
-                                    <input :value="data.my_company.address" type="text" name="invoice_address" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                    <input :value="data.my_company.address" type="text" name="address" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                         <i class="fa-solid fa-phone text-amber-600 mr-2"></i>Phone
                                     </label>
-                                    <input :value="data.my_company.phone" type="text" name="invoice_phone" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                    <input :value="data.my_company.phone" type="text" name="phone" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                         <i class="fa-solid fa-user-tie text-amber-600 mr-2"></i>MOL
                                     </label>
-                                    <input :value="data.my_company.mol" type="text" name="invoice_mol" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                    <input :value="data.my_company.mol" type="text" name="mol" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                         <i class="fa-solid fa-id-card text-amber-600 mr-2"></i>EIC
                                     </label>
-                                    <input :value="data.my_company.vat" type="text" name="invoice_vat" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
+                                    <input :value="data.my_company.vat" type="text" name="vat" class="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-900 transition-all duration-200">
                                 </div>
 
                                 <div class="flex items-center">
                                     <label class="inline-flex items-center cursor-pointer">
                                         <template x-if="data.my_company.vat_registered == 1">
-                                            <input type="checkbox" name="invoice_vat_registered" value="1" checked x-on:click="if($el.value == 0){$el.value = 1}else{$el.value = 0}" class="w-5 h-5 text-amber-600 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-amber-500">
+                                            <input type="checkbox" name="vat_registered" value="1" checked x-on:click="if($el.value == 0){$el.value = 1}else{$el.value = 0}" class="w-5 h-5 text-amber-600 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-amber-500">
                                         </template>
                                         <template x-if="data.my_company.vat_registered == 0">
-                                            <input type="checkbox" name="invoice_vat_registered" value="0" x-on:click="if($el.value == 0){$el.value = 1}else{$el.value = 0}" class="w-5 h-5 text-amber-600 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-amber-500">
+                                            <input type="checkbox" name="vat_registered" value="0" x-on:click="if($el.value == 0){$el.value = 1}else{$el.value = 0}" class="w-5 h-5 text-amber-600 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-amber-500">
                                         </template>
                                         <span class="ml-3 text-sm font-semibold text-slate-700 dark:text-slate-300">VAT registered</span>
                                     </label>
