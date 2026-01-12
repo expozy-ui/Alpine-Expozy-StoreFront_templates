@@ -560,7 +560,7 @@
             <!-- =============== START SERVICES ===============  -->
             <div x-show="tab == 'services'">
                 <!-- Enhanced services grid with modern cards -->
-                <div apidata="Shop.get_orders" data-product_type='4' keyname="services" class="grid xl:grid-cols-2 grid-cols-1 gap-4">
+                <div apidata="Shop.get_orders" data-type='4' keyname="services" class="grid xl:grid-cols-2 grid-cols-1 gap-4">
 
                     <template x-for="order in data.services">
 
@@ -632,7 +632,7 @@
             <!-- =============== START DIGITAL PRODUCTS ===============  -->
             <div x-show="tab == 'digital'">
                 <!-- Enhanced digital products grid with download button -->
-                <div apidata="Shop.get_orders" data-product_type='4' keyname="services" class="grid xl:grid-cols-2 grid-cols-1 gap-4">
+                <div apidata="Shop.get_orders" data-type='4' keyname="services" class="grid xl:grid-cols-2 grid-cols-1 gap-4">
                     <template x-for="order in data.services">
                         <template x-for="product in order.products">
                             <div class="shadow-xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition-shadow">
