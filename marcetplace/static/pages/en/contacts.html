@@ -1,0 +1,283 @@
+<div class="is-section is-section-auto section">
+    <div class="is-overlay"></div>
+    <div class="!container is-container v2">
+        <div class="max-w-7xl mx-auto px-4">
+
+            <!-- Header Section -->
+            <div class="text-center mb-12 lg:mb-16">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+                    Contact Us
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                    We're here to help you. Choose the appropriate way to contact us.
+                </p>
+            </div>
+
+            <!-- Contact Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+                <!-- Customer Service Card - Featured -->
+                <div class="md:col-span-2 lg:col-span-2 bg-gradient-to-br from-purple-600 via-red-600 to-orange-500 rounded-2xl shadow-xl p-8 lg:p-10 text-white relative overflow-hidden" x-data="{ showForm: false }">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                                <i class="fas fa-headset text-2xl"></i>
+                            </div>
+                            <h2 class="text-2xl lg:text-3xl font-bold">Customer Support</h2>
+                        </div>
+
+                        <p class="text-lg text-white/90 mb-6 leading-relaxed">
+                            Have a question or need help? Our team is ready to support you.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4">
+                            <button @click="callModal($el)" data-modal="contacts" class="inline-flex items-center gap-2 bg-white text-purple-700 font-semibold px-6 py-3 rounded-lg hover:bg-purple-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <i class="fas fa-envelope"></i>
+                                <span>Send Message</span>
+                            </button>
+
+                            <a href="#faq" class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/20 transition-all duration-200">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Frequently Asked Questions</span>
+                            </a>
+                        </div>
+
+                        <!-- Social Media Icons -->
+                        <div class="mt-8 pt-8 border-t border-white/20">
+                            <p class="text-sm text-white/80 mb-4">Connect with us on social media:</p>
+                            <div class="flex gap-3">
+                                <a href="#" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white/20 transition-all duration-200 hover:scale-110">
+                                    <i class="fab fa-telegram text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white/20 transition-all duration-200 hover:scale-110">
+                                    <i class="fab fa-viber text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white/20 transition-all duration-200 hover:scale-110">
+                                    <i class="fab fa-facebook-messenger text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white/20 transition-all duration-200 hover:scale-110">
+                                    <i class="fab fa-vk text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decorative Icon -->
+                    <div class="absolute -right-6 -bottom-6 opacity-10">
+                        <i class="fas fa-comments text-9xl"></i>
+                    </div>
+                </div>
+
+                <!-- For Merchants -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 lg:p-8 border border-gray-100 hover:border-purple-200 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                            <i class="fas fa-store text-2xl text-blue-600"></i>
+                        </div>
+                        <h2 class="text-xl lg:text-2xl font-bold text-gray-900">For Merchants</h2>
+                    </div>
+
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Sending and receiving business documents and communications
+                    </p>
+
+                    <a href="mailto:sales@pavilion.bg" class="inline-flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition-colors group">
+                        <i class="fas fa-envelope"></i>
+                        <span class="border-b-2 border-transparent group-hover:border-purple-600 transition-all">sales@pavilion.bg</span>
+                    </a>
+                </div>
+
+                <!-- Copyright Holders -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 lg:p-8 border border-gray-100 hover:border-purple-200 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+                            <i class="fas fa-copyright text-2xl text-amber-600"></i>
+                        </div>
+                        <h2 class="text-xl lg:text-2xl font-bold text-gray-900">Copyright</h2>
+                    </div>
+
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Intellectual property infringement claims
+                    </p>
+
+                    <a href="mailto:copyrights@pavilion.bg" class="inline-flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition-colors group">
+                        <i class="fas fa-envelope"></i>
+                        <span class="border-b-2 border-transparent group-hover:border-purple-600 transition-all">copyrights@pavilion.bg</span>
+                    </a>
+                </div>
+
+                <!-- Partners -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 lg:p-8 border border-gray-100 hover:border-purple-200 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                            <i class="fas fa-handshake text-2xl text-green-600"></i>
+                        </div>
+                        <h2 class="text-xl lg:text-2xl font-bold text-gray-900">Partners</h2>
+                    </div>
+
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Learn more about partnership terms
+                    </p>
+
+                    <a href="mailto:partners@pavilion.bg" class="inline-flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition-colors group">
+                        <i class="fas fa-envelope"></i>
+                        <span class="border-b-2 border-transparent group-hover:border-purple-600 transition-all">partners@pavilion.bg</span>
+                    </a>
+                </div>
+
+                <!-- Press Center -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 lg:p-8 border border-gray-100 hover:border-purple-200 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
+                            <i class="fas fa-newspaper text-2xl text-indigo-600"></i>
+                        </div>
+                        <h2 class="text-xl lg:text-2xl font-bold text-gray-900">Press Center</h2>
+                    </div>
+
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Media inquiries and event participation
+                    </p>
+
+                    <a href="mailto:pr@pavilion.bg" class="inline-flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition-colors group">
+                        <i class="fas fa-envelope"></i>
+                        <span class="border-b-2 border-transparent group-hover:border-purple-600 transition-all">pr@pavilion.bg</span>
+                    </a>
+                </div>
+
+                <!-- Whistleblower -->
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 lg:p-8 border border-gray-100 hover:border-purple-200 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center group-hover:bg-red-200 transition-colors">
+                            <i class="fas fa-shield-alt text-2xl text-red-600"></i>
+                        </div>
+                        <h2 class="text-xl lg:text-2xl font-bold text-gray-900">Reports</h2>
+                    </div>
+
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Report cases of fraud or corruption
+                    </p>
+
+                    <a href="mailto:abuse@pavilion.bg" class="inline-flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition-colors group">
+                        <i class="fas fa-envelope"></i>
+                        <span class="border-b-2 border-transparent group-hover:border-purple-600 transition-all">abuse@pavilion.bg</span>
+                    </a>
+                </div>
+
+                <!-- Security Warning -->
+                <div class="md:col-span-2 lg:col-span-3 bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl shadow-lg p-6 lg:p-8 border-2 border-red-200">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-2xl text-red-600"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-xl lg:text-2xl font-bold text-red-900 mb-3">
+                                <i class="fas fa-lock mr-2"></i>
+                                Warning: Protect Yourself from Scams
+                            </h2>
+                            <p class="text-red-800 text-lg leading-relaxed">
+                                Be careful with phishing sites! Our official domain is only
+                                <a href="https://pavilion.bg" class="font-bold underline hover:text-red-900 transition-colors">
+                                    https://pavilion.bg
+                                </a>
+                                . Do not provide personal information on other sites.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Additional Info Section -->
+            <div class="mt-16 lg:mt-20 text-center">
+                <div class="bg-white rounded-2xl shadow-lg p-8 lg:p-12 border border-gray-100">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-6">
+                        <i class="fas fa-clock text-3xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                        Working Hours
+                    </h3>
+                    <p class="text-lg text-gray-600 mb-2">
+                        Monday - Friday: 9:00 AM - 6:00 PM
+                    </p>
+                    <p class="text-lg text-gray-600">
+                        Saturday - Sunday: Closed
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <p class="text-gray-500">
+                            We respond to all messages within 24 hours
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Simple Contact Form Modal (Alpine.js) -->
+<div x-data="{ open: false }" x-show="data.modal.contacts" x-cloak class="fixed inset-0 z-50 overflow-y-auto">
+
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" @click="open = false"></div>
+
+    <!-- Modal -->
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8" @click.away="open = false" x-transition>
+
+            <button @click="open = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                Contact Us
+            </h2>
+
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Full Name
+                    </label>
+                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all" placeholder="Enter your name">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Email Address
+                    </label>
+                    <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all" placeholder="your@email.com">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Subject
+                    </label>
+                    <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all">
+                        <option>Product Question</option>
+                        <option>Technical Support</option>
+                        <option>Partnership</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Message
+                    </label>
+                    <textarea rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all resize-none" placeholder="Describe your question or issue..."></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-purple-600 to-red-600 text-white font-semibold px-6 py-3 rounded-lg hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Send Message
+                    </button>
+                    <button type="button" @click="open = false" class="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
