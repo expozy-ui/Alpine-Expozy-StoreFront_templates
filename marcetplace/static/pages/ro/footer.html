@@ -1,0 +1,589 @@
+<!-- DESKTOP FOOTER -->
+<footer class="desktop-footer desktop-only bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] backdrop-blur-xl border-t border-white/10 pt-12 pb-3 text-gray-300">
+
+    <div class="container">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 px-8 lg:px-4">
+
+            <!-- Company info -->
+            <div class="col-span-2 lg:col-span-1">
+                <img :src="data.settings.logo" alt="Expozy Logo" class="h-16 w-auto object-contain mb-6">
+
+                <p class="mt-4 text-base text-slate-50">Expozy - o platformă modernă de comerț electronic unde oricine poate oferi și descoperi produse ușor, sigur și transparent.</p>
+
+            </div>
+
+            <!-- Sellers -->
+            <div class="footer-section flex lg:justify-center">
+                <div class="w-fit">
+
+                    <h4 class="text-white font-semibold text-[16px] mb-4">Despre noi</h4>
+
+                    <a href="/ro/about" class="block text-gray-300 hover:text-red-700 transition">Despre noi</a>
+                    <a href="/ro/registration-as-seller" class="block text-gray-300 hover:text-red-700 transition">Pentru afaceri</a>
+                    <a href="/ro/contacts" class="block text-gray-300 hover:text-red-700 transition">Contact</a>
+                    <a href="/ro/registration" class="block text-gray-300 hover:text-red-700 transition">Înregistrare</a>
+
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="footer-section flex lg:justify-center">
+                <div class="w-fit">
+
+                    <h4 class="text-white font-semibold text-[16px] mb-4">Confidențialitate</h4>
+
+                    <a href="/ro/gdpr" class="block text-gray-300 hover:text-red-700 transition">Politica de confidențialitate</a>
+                    <a href="/ro/cookies" class="block text-gray-300 hover:text-red-700 transition">Cookie-uri</a>
+                    <a href="/ro/terms-conditions" class="block text-gray-300 hover:text-red-700 transition">Termeni și condiții</a>
+                </div>
+            </div>
+
+            <div class="col-span-2 lg:col-span-1 footer-section flex lg:justify-center">
+                <div class="w-fit">
+
+                    <h4 class="text-white font-semibold text-[16px] mb-4">Urmărește-ne</h4>
+
+                    <div class="flex justify-center lg:justify-start space-x-4">
+
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-red-700 hover:bg-white/10 transition">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-red-700 hover:bg-white/10 transition">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-red-700 hover:bg-white/10 transition">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-red-700 hover:bg-white/10 transition">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-red-700 hover:bg-white/10 transition">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="relative mt-16 mb-4 container mx-auto">
+            <hr class="border-slate-100">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 bg-gradient-to-b from-slate-900 to-slate-950">
+                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="relative flex flex-wrap max-md:flex-col gap-6 container mx-auto items-center justify-between mb-8 lg:mb-0">
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-slate-400 text-sm font-light">
+                <span class="flex items-center gap-2">
+                    <span class="text-slate-500">Creat de:</span>
+                    <a class="text-red-600 hover:text-red-700 font-medium transition-colors underline-offset-4 hover:underline" href="http://www.studioweb.bg">
+                        Studioweb.bg
+                    </a>
+                </span>
+                <span class="hidden md:inline text-slate-700">•</span>
+                <span class="flex items-center gap-2">
+                    <span class="text-slate-500">Software utilizat:</span>
+                    <a class="text-red-600 hover:text-red-700 font-medium transition-colors underline-offset-4 hover:underline" href="https://expozy.com/">
+                        Expozy
+                    </a>
+                </span>
+            </div>
+
+            <p class="text-slate-400 text-sm font-light md:ml-auto flex items-center gap-2">
+                <span>Toate drepturile rezervate ©</span>
+                <span x-text="new Date().getFullYear()" class="font-medium text-white">2026</span>
+                <span class="font-medium text-red-600">Expozy</span>
+            </p>
+        </div>
+
+    </div>
+</footer>
+<!-- END DESKTOP FOOTER -->
+
+<!-- MOBILE MENU -->
+<template x-if="data.screenWidth < 1024">
+    <nav class="bottom-nav mobile-only  fixed bottom-0 left-0 w-full z-50 bg-[#1a1a1a]/90 backdrop-blur-xl border-t border-white/10 py-2">
+
+        <div class="flex justify-around items-center text-gray-300">
+
+            <!-- Home -->
+            <a href="/" class="nav-item flex flex-col items-center gap-1 text-red-700 font-semibold">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-[11px]">Acasă</span>
+            </a>
+
+            <!-- Catalog -->
+            <button @click="data.openMobileMenu = !data.openMobileMenu" class="nav-item flex flex-col items-center gap-1 text-gray-300 hover:text-white transition">
+                <i class="fas fa-th-large text-xl"></i>
+                <span class="text-[11px]">Catalog</span>
+            </button>
+
+            <!-- Cart -->
+            <button type="button" @click="data.openCart = !data.openCart" class="nav-item flex flex-col items-center gap-1 text-gray-300 hover:text-white transition">
+
+                <div class="relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <div x-text="data.cart.total_quantity" x-show="data.cart.total_quantity > 0" class="cart-counter-mobile absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-semibold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1"></div>
+                </div>
+
+                <span class="text-[11px]">Coș</span>
+            </button>
+
+            <template x-if="data.user.logged_in">
+                <a href="/ro/wishlist" class="nav-item flex flex-col items-center gap-1 text-gray-300 hover:text-white transition">
+                    <i class="far fa-heart text-xl"></i>
+                    <span class="text-[11px]">Favorite</span>
+                </a>
+            </template>
+
+            <template x-if="data.user.logged_in">
+                <a href="/ro/userpage" class="nav-item flex flex-col items-center gap-1 text-gray-300 hover:text-white transition">
+                    <i class="far fa-user text-xl"></i>
+                    <span class="text-[11px]">Profil</span>
+                </a>
+            </template>
+
+            <template x-if="!data.user.logged_in">
+                <a href="/ro/login" class="nav-item flex flex-col items-center gap-1 text-gray-300 hover:text-white transition">
+                    <i class="far fa-user text-xl"></i>
+                    <span class="text-[11px]">Autentificare</span>
+                </a>
+            </template>
+
+        </div>
+    </nav>
+</template>
+<!-- END MOBILE MENU -->
+
+<!-- ==================    SIDEBAR MENU  ======================================= -->
+<div :class="data.openMobileMenu ? 'opacity-1' : 'opacity-0' " x-cloak class="sidebar-overlay fixed inset-0 bg-black/60 backdrop-blur-sm  pointer-events-none transition-all duration-300" id="sidebarOverlay" @click="data.openMobileMenu = false"></div>
+
+<template x-if="data.menu_categories" apidata="Shop.get_categories" keyname="menu_categories" data-droplist="1" :data-parent="0">
+    <div x-data="categoryNavigator()" :class="data.openMobileMenu ? 'left-0' : 'left-[-100%]' " id="sidebar" class="sidebar fixed top-0 w-72 h-screen flex flex-col z-50 bg-gradient-to-b from-[#1a1a1a] to-[#2d2d2d] border-r border-white/10 shadow-2xl transition-all duration-300 ease-out">
+
+        <!-- Header -->
+        <div class="sidebar-header  shrink-0 flex items-center justify-between p-4 border-b border-white/10">
+            <div class="logo">
+                <img :src="data.settings.logo" alt="Expozy" class="h-10">
+            </div>
+
+            <button @click="data.openMobileMenu = false" class="close-btn text-gray-300 hover:text-white transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto">
+
+            <!-- ROOT LEVEL -->
+            <template x-if="data.categoryNav.path.length === 0">
+                <div class="sidebar-menu divide-y divide-white/10">
+                    <template x-for="category in data.menu_categories" :key="category.id">
+                        <button type="button" @click="data.categoryNav.enter(category)" class="block w-full text-left flex justify-between items-center py-3 px-4 text-gray-300 hover:text-red-700 hover:bg-white/5 transition text-[15px]">
+                            <span @click="href(category.url)" x-text="category.title"></span>
+
+                            <template x-if="category.children?.length">
+                                <i class="fa-regular fa-angle-right"></i>
+                            </template>
+                        </button>
+                    </template>
+                </div>
+            </template>
+
+            <!-- CHILD LEVEL -->
+            <template x-if="data.categoryNav.path.length > 0">
+                <div>
+                    <!-- Back row -->
+                    <div class="flex gap-6 hover:bg-white/5 transition px-4 py-6 cursor-pointer group" @click="data.categoryNav.back()">
+                        <span class="inline-flex h-6 w-6 items-center justify-center
+                               bg-gray-400 group-hover:bg-gray-200 rounded-full">
+                            <i class="text-gray-800 fa-regular fa-angle-left"></i>
+                        </span>
+
+                        <p class="grow text-white group-hover:text-red-700" x-text="data.categoryNav.current?.title"></p>
+                    </div>
+
+                    <!-- Children list -->
+                    <div class="sidebar-menu divide-y divide-white/10">
+                        <template x-for="category in (data.categoryNav.current?.children || [])" :key="category.id">
+                            <button type="button" @click="data.categoryNav.enter(category)" class="block w-full text-left flex justify-between items-center py-3 px-4 text-gray-300 hover:text-red-700 hover:bg-white/5 transition text-[15px]">
+                                <span @click="href(category.url)" x-text="category.title"></span>
+
+                                <template x-if="category.children?.length">
+                                    <i class="fa-regular fa-angle-right"></i>
+                                </template>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+    function categoryNavigator() {
+        return {
+            path: [],
+
+            init() {
+                // 🔑 Alpine instance → глобален data достъп
+                data.categoryNav = this;
+            },
+
+            get current() {
+                return this.path.at(-1) ?? null;
+            },
+
+            enter(category) {
+                if (category.children && category.children.length) {
+                    this.path.push(category);
+                } else {
+                    href(category.url);
+                }
+            },
+
+            back() {
+                this.path.pop();
+            },
+
+            reset() {
+                this.path = [];
+            }
+        };
+    }
+</script>
+<!-- ==================  END SIDEBAR MENU  ======================================= -->
+
+<!-- ==================    CART  ======================================= -->
+
+<div id="cartOverlay" :class="data.openCart ? 'opacity-1' : 'opacity-0' " x-cloak class="cart-overlay fixed inset-0 bg-black/60 backdrop-blur-sm  pointer-events-none transition-all duration-300" @click="data.openCart = false"></div>
+
+<div id="cartModal" :class="data.openCart ? 'right-0' : 'right-[-100%]' " x-cloak class="cart-modal fixed top-0  w-full max-w-sm h-full bg-gradient-to-b from-[#1a1a1a] to-[#2d2d2d]   text-gray-200 shadow-2xl  border-l border-white/10 flex flex-col transition-all duration-300 ease-out z-50">
+
+    <!-- Header -->
+    <div class="cart-header flex items-center justify-between p-4 border-b border-white/10">
+        <div>
+            <h2 class="text-[18px] font-semibold text-white">Coș</h2>
+            <div class="text-[14px] text-gray-400 mt-1" x-text="data.cart.total_quantity + ' articole'"></div>
+        </div>
+
+        <button @click="data.openCart = false" class="cart-close-btn text-gray-300 hover:text-white transition">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Items -->
+    <div class="flex-1 overflow-y-auto p-4">
+
+        <!-- Empty cart -->
+        <div x-show="data.cart.products.length === 0" class="text-center py-10 px-5 text-gray-400">
+            <i class="fa-thin fa-cart-shopping text-[60px] text-gray-600 mt-4"></i>
+            <p class="text-base mt-6 text-gray-300">Coșul tău este gol</p>
+            <p class="text-base text-gray-500">Adaugă câteva produse pentru a începe</p>
+        </div>
+
+        <!-- Cart items -->
+        <template x-for="(product, index) in data.cart.products" :key="product.id || index">
+            <div class="cart-item mb-4 p-3 bg-white/5 rounded-lg border border-white/10">
+
+                <div class="flex gap-3">
+
+                    <img :src="product.images[0] ? product.images[0].url : data.settings.logo" :alt="product.title" class="w-16 h-16 object-contain rounded-md bg-white/5" />
+
+                    <div class="flex-1 min-w-0">
+
+                        <!-- Price + delete -->
+                        <div class="flex items-start justify-between mb-1">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-red-600 font-bold text-[15px]" x-text="product.variation.selling_price + ' ' + product.variation.currency"></span>
+
+                                <template x-if="product.variation.promoprice">
+                                    <span class="text-gray-500 line-through text-[11px]" x-text="product.variation.price + ' ' + product.variation.currency"></span>
+                                </template>
+                            </div>
+
+                            <button @click="alpineListeners('Shop.delete_carts', $event)" keyname="cart" :data-id="product.id" class="text-gray-400 hover:text-red-700 transition">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14zM10 11v6M14 11v6"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Title -->
+                        <h3 class="text-[13px] text-gray-200 my-1 leading-tight" x-text="product.title"></h3>
+
+                        <!-- Brand -->
+                        <div class="inline-block bg-white/10 px-1.5 py-[1px] rounded text-[10px] text-gray-400" x-show="product.brand.title" x-text="product.brand.title">
+                        </div>
+
+                        <!-- Quantity -->
+                        <form class="quantity-controls mt-2 flex items-center gap-2" x-data="{ quantity: product.quantity }" x-init="$watch('quantity', () => alpineListeners('Shop.put_carts', $el))">
+
+                            <input type="hidden" name="variation_id" :value="product.id">
+
+                            <!-- Minus -->
+                            <button type="button" @click="if(product.quantity > 1){ product.quantity--; quantity--; }" class="w-7 h-7 flex items-center justify-center 
+                                       bg-white/10 border border-white/20 rounded-md 
+                                       hover:bg-white/20 transition">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14"></path>
+                                </svg>
+                            </button>
+
+                            <!-- Quantity -->
+                            <input class="w-8 text-center text-gray-100 bg-transparent border-none text-[14px] pointer-events-none" type="number" :value="product.quantity" readonly>
+
+                            <!-- Plus -->
+                            <button type="button" @click="product.quantity++; quantity++;" class="w-7 h-7 flex items-center justify-center 
+                                       bg-white/10 border border-white/20 rounded-md 
+                                       hover:bg-white/20 transition">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M5 12h14"></path>
+                                </svg>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Summary -->
+    <div class="shrink-0 bg-[#1a1a1a]/90 backdrop-blur-sm border-t border-white/10">
+        <div class="cart-summary px-4 py-4 space-y-2 text-[13px]">
+
+            <!-- <div class="flex justify-between text-gray-300">
+                <span>Междинна сума</span>
+                <span class="text-red-600 font-semibold" x-amount="data.cart.subtotal_without_disc"></span>
+            </div> -->
+
+            <div class="flex justify-between text-gray-300">
+                <span>Reducere</span>
+                <span class="text-red-600 font-semibold" x-amount="data.cart.discount_total"></span>
+            </div>
+
+            <div class="flex justify-between text-gray-300">
+                <span>După reducere</span>
+                <span class="text-red-600 font-semibold" x-amount="data.cart.subtotal"></span>
+            </div>
+
+            <div class="flex justify-between border-t border-white/10 pt-3 mt-1">
+                <span class="text-gray-200 font-semibold">Total</span>
+                <span class="text-gray-200 font-semibold" x-amount="data.cart.total"></span>
+            </div>
+
+            <!-- Order button -->
+            <a href="/ro/checkout">
+                <button class="w-full mt-3 py-2 text-[14px] font-semibold rounded-md
+                           bg-red-600 text-white hover:bg-red-700 transition">
+                    Comandă
+                </button>
+            </a>
+
+            <!-- Terms -->
+            <div class="flex items-start gap-2 mt-3 text-[12px] text-gray-400 leading-snug">
+                <input type="checkbox" id="terms" checked class="mt-[3px] accent-red-600">
+                <label for="terms">
+                    Sunt de acord cu
+                    <a href="/ro/terms-conditions" class="text-red-600 hover:underline">termenii de utilizare</a>
+                    și
+                    <a href="/ro/gdpr" class="text-red-600 hover:underline">politica de confidențialitate</a>.
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ==================   END CART  ======================================= -->
+
+<template x-if="data.modals.lang">
+    <div x-init="alpineListeners('get.languages', $el)" x-cloak x-transition:enter.duration.500ms x-transition:leave.duration.100ms class="fixed inset-0 z-50 overflow-auto">
+
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+        <!-- Dialog wrapper -->
+        <div class="relative min-h-full w-full flex items-center justify-center p-4 sm:p-8">
+            <div @mousedown.outside="callModal($el)" class="w-full max-w-[560px] bg-white rounded-2xl shadow-2xl ring-1 ring-black/10 overflow-hidden text-black">
+
+                <!-- Header -->
+                <div class="px-6 py-5 border-b border-slate-100 bg-gradient-to-b from-slate-50 to-white">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-xl bg-red-700 text-white flex items-center justify-center shadow-sm">
+                                <i class="fa-solid fa-language"></i>
+                            </div>
+
+                            <div class="leading-tight">
+                                <p class="text-lg font-semibold text-slate-900">Selectează limba</p>
+                                <!-- Ако имаш текущ език, можеш да го вържеш тук -->
+                                <p class="text-sm text-slate-500">
+                                    Selectat:
+                                    <span x-text="Object.values(data.languages).find(obj=> obj.lang == LANG).title" class="font-semibold text-slate-700">—</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <p @click="callModal($el)" class="h-10 w-10 rounded-xl bg-white hover:bg-slate-100 active:bg-slate-200 text-slate-700 flex items-center justify-center transition ring-1 ring-slate-200 cursor-pointer" aria-label="Închide">
+                            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Body -->
+                <div class="px-6 py-2">
+                    <!-- Hint -->
+                    <div class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="mt-0.5 h-8 w-8 rounded-lg bg-white ring-1 ring-slate-200 flex items-center justify-center text-slate-700">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div class="text-sm">
+                            <p class="font-semibold text-slate-900">Limba interfeței</p>
+                            <p class="text-slate-600">
+                                Selecția modifică textele și formatarea conform limbii alese.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="mt-2 space-y-2">
+                        <template x-for="lang in data.languages" :key="lang.lang">
+                            <button type="button" class="group w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition shadow-sm" @click="changeLang(lang.lang)">
+                                <div class="flex items-center justify-between gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 rounded-xl bg-slate-100 ring-1 ring-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-white transition">
+                                            <i class="fa-solid fa-globe"></i>
+                                        </div>
+
+                                        <div class="leading-tight">
+                                            <p class="text-base font-semibold text-slate-900" x-text="lang.title"></p>
+                                        </div>
+                                    </div>
+
+                                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-slate-600 transition"></i>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-6 py-5 border-t border-slate-100 bg-slate-50 flex items-center justify-between gap-3">
+                    <div class="text-sm text-slate-600 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-slate-500"></i>
+                        <span>Modificarea se aplică imediat.</span>
+                    </div>
+
+                    <button type="button" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 active:bg-slate-200 text-slate-700 transition ring-1 ring-slate-200 font-semibold" @click="callModal($el)">
+                        Închide
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template x-if="data.modals.currency">
+    <div x-transition:enter.duration.500ms x-transition:leave.duration.100ms class="fixed inset-0 z-50 overflow-auto">
+
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+        <!-- Dialog wrapper -->
+        <div class="relative min-h-full w-full flex items-center justify-center p-4 sm:p-8">
+            <div @mousedown.outside="callModal($el)" class="w-full max-w-[560px] bg-white rounded-2xl shadow-2xl ring-1 ring-black/10 overflow-hidden text-black">
+
+                <!-- Header -->
+                <div class="px-6 py-5 border-b border-slate-100 bg-gradient-to-b from-slate-50 to-white">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-xl bg-red-700 text-white flex items-center justify-center shadow-sm">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+
+                            <div class="leading-tight">
+                                <p class="text-lg font-semibold text-slate-900">Selectează moneda</p>
+                                <!-- Тук по-късно можеш да покажеш избраната валута -->
+                                <p class="text-sm text-slate-500">
+                                    Moneda selectată:
+                                    <span x-text="CURRENCY.code" class="font-semibold text-slate-700"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <button type="button" class="h-10 w-10 rounded-xl bg-white hover:bg-slate-100 active:bg-slate-200 text-slate-700 flex items-center justify-center transition ring-1 ring-slate-200" @click="callModal($el)" aria-label="Închide">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Body -->
+                <div class="p-2 px-6">
+                    <!-- Hint -->
+                    <div class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="mt-0.5 h-8 w-8 rounded-lg bg-white ring-1 ring-slate-200 flex items-center justify-center text-slate-700">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div class="text-sm">
+                            <p class="font-semibold text-slate-900">Alege moneda</p>
+                            <p class="text-slate-600">
+                                Alege o monedă pentru a afișa prețurile în formatul corespunzător.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Currency list -->
+                    <div class="mt-2 space-y-2 ">
+                        <template x-for="currency in data.currencies" :key="currency.code">
+                            <button @click="localStorage.setItem('currency' , currency.code); window.location.reload()" type="button" class="group w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition shadow-sm">
+                                <div class="flex items-center justify-between gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 rounded-xl bg-slate-100 ring-1 ring-slate-200 flex items-center justify-center text-slate-700 group-hover:bg-white transition">
+                                            <i class="fa-solid fa-money-bill-wave"></i>
+                                        </div>
+
+                                        <div class="leading-tight">
+                                            <p class="text-base font-semibold text-slate-900" x-text="currency.code"></p>
+                                            <p class="text-xs text-slate-500">Monedă</p>
+                                        </div>
+                                    </div>
+
+                                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-slate-600 transition"></i>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-6 py-5 border-t border-slate-100 bg-slate-50 flex items-center justify-between gap-3">
+                    <div class="text-sm text-slate-600 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-slate-500"></i>
+                        <span>Modificarea se aplică imediat.</span>
+                    </div>
+
+                    <button type="button" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 active:bg-slate-200 text-slate-700 transition ring-1 ring-slate-200 font-semibold" @click="callModal($el)">
+                        Închide
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

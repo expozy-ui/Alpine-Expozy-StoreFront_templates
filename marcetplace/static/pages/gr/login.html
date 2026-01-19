@@ -1,0 +1,107 @@
+<div class="w-[400px]  flex items-center justify-center">
+    <div class="w-full">
+        <!-- Τίτλος -->
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center justify-center w-16 h-16 wb-gradient bg-gradient-to-br from-red-500 to-red-700 rounded-2xl mb-4 float-animation shadow-lg">
+                <i class="fa-regular  fa-user-circle text-3xl text-white"></i>
+            </div>
+            <h1 class="text-3xl font-black gradient-text bg-clip-text text-transparent bg-gradient-to-br from-red-500 to-red-700 mb-2">
+                Καλώς ήρθατε ξανά
+            </h1>
+            <p class="text-gray-600 font-medium">
+                Συνδεθείτε στον λογαριασμό σας για να συνεχίσετε
+            </p>
+        </div>
+
+        <!-- Κάρτα φόρμας -->
+        <div class="wb-card bg-white/95 backdrop-blur rounded-2xl p-6 shadow-lg border border-white/30 transition-all">
+            <form class="space-y-4">
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block mb-2 text-sm font-bold text-gray-900">
+                        <i class="fa-regular  fa-envelope text-red-600 mr-1"></i>
+                        Διεύθυνση Email
+                    </label>
+                    <input type="email" name="email" id="email" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl wb-input font-medium text-sm
+                               transition-all focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20" placeholder="onoma@etairia.com" required>
+                </div>
+
+                <!-- Κωδικός -->
+                <div>
+                    <label for="password" class="block mb-2 text-sm font-bold text-gray-900">
+                        <i class="fa-regular  fa-lock text-red-600 mr-1"></i>
+                        Κωδικός πρόσβασης
+                    </label>
+                    <input type="password" name="password" id="password" placeholder="••••••••" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl wb-input font-medium text-sm transition-all focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20" required>
+                </div>
+
+                <!-- Να με θυμάσαι / Ξεχάσατε τον κωδικό -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" class="wb-checkbox rounded border-2 border-gray-300 transition-all checked:bg-gradient-to-br checked:from-red-500 checked:to-red-700">
+                        <span class="text-sm font-medium text-gray-700">
+                            Να με θυμάσαι
+                        </span>
+                    </label>
+                    <a href="/el/forgotten-password" class="text-sm font-bold text-red-600 hover:text-red-700 hover:underline transition-colors">
+                        Ξεχάσατε τον κωδικό;
+                    </a>
+                </div>
+
+                <!-- Κουμπί σύνδεσης -->
+                <button @click="alpineListeners('User.login', event)" keyName="user" type="button" class="btn-desktop w-full bg-gradient-to-br from-red-500 to-red-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        <i class="fa-regular  fa-sign-in-alt"></i>
+                        Σύνδεση
+                    </span>
+                </button>
+
+                <!-- Διαχωριστικό -->
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t-2 border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white text-gray-500 font-bold">
+                            Ή
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Κοινωνική σύνδεση -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" class="px-4 py-3 border-2 border-gray-300 rounded-xl font-bold text-sm
+                               hover:border-red-500 hover:bg-red-50
+                               transition-all flex items-center justify-center gap-2">
+                        <i class="fab fa-google text-red-500"></i>
+                        Google
+                    </button>
+                    <button type="button" class="px-4 py-3 border-2 border-gray-300 rounded-xl font-bold text-sm
+                               hover:border-red-500 hover:bg-red-50
+                               transition-all flex items-center justify-center gap-2">
+                        <i class="fab fa-facebook text-blue-600"></i>
+                        Facebook
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Κάτω κείμενο -->
+        <div class="text-center mt-6">
+            <p class="text-sm font-medium text-gray-600">
+                Δεν έχετε λογαριασμό;
+                <a href="/el/registration" class="font-black text-red-600 hover:text-red-700 hover:underline transition-colors ml-1">
+                    Εγγραφείτε εδώ
+                </a>
+            </p>
+        </div>
+
+        <!-- Ασφάλεια SSL -->
+        <div class="flex items-center justify-center gap-2 mt-6 text-gray-500 text-xs">
+            <i class="fa-regular  fa-shield-alt text-green-600"></i>
+            <span class="font-bold">
+                Ασφαλής σύνδεση • Κρυπτογραφημένη σύνδεση SSL
+            </span>
+        </div>
+    </div>
+</div>

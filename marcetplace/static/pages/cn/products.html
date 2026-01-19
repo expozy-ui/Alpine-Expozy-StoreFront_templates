@@ -1,0 +1,659 @@
+<div class=" w-full">
+    <div class="container">
+
+        <div class="">
+            <div class="breadcrumb desktop-only  " apiData="Shop.get_categories" keyname="currentCategory" :data-id="data.corePage.target_id">
+                <div class="container-desktop mx-auto px-4 py-3">
+                    <div class="flex items-center gap-2 text-gray-600 flex-wrap">
+                        <a href="/" class="hover:text-red-600 transition-colors">
+                            <i class="fa-regular  fa-home"></i>
+                        </a>
+                        <i class="fa-regular  fa-chevron-right text-xs text-gray-400"></i>
+                        <a href="/" class="hover:text-red-600 transition-colors">首页</a>
+                        <i class="fa-regular  fa-chevron-right text-xs text-gray-400"></i>
+
+                        <template x-for="parent in data.currentCategory.parents">
+                            <div>
+                                <a x-text="parent.title" :href="parent.url" class="hover:text-red-600 transition-colors">Дом</a>
+                                <i class="fa-regular  fa-chevron-right text-xs text-gray-400"></i>
+                            </div>
+                        </template>
+
+                        <a x-text="data.currentCategory.title" :href="data.currentCategory.url" class="hover:text-red-600 transition-colors"></a>
+
+                    </div>
+
+                    <div class="flex gap-1 items-center pt-6">
+                        <p class="font-semibold text-2xl mr-3" x-text="data.currentCategory.title" :href="data.currentCategory.url"> </p>
+                        <p class="text-xs text-gray-500" x-text="data.products.pagination.total_results"></p>
+                        <p class="text-xs text-gray-500">产品</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class=" bg-white border-b border-slate-200 px-4 py-3 flex justify-between">
+            <div class="flex items-center  gap-4 flex-wrap" apiData="Shop.get_product_filters" keyName="product_filters" :data-category_id="data.corePage.target_id">
+
+                <template x-if="data.screenWidth > 1280">
+
+                    <form x-data="{active: data.pageUrl?.only_promo == 1}" keyName="products" x-init="$watch('active', () => {alpineListeners('get.products', $el);})">
+                        <input type="hidden" name="only_promo" :value="active ? 1 : 'empty' ">
+                        <div @click="active =! active; " class="flex items-center justify-between cursor-pointer gap-2 bg-green-100 border border-green-200 text-green-600 px-3 py-1.5 rounded-full text-sm font-semibold">
+                            <span>促销</span>
+                            <button type="button" :class="active ? 'bg-green-600' : 'bg-white' " class="w-9 h-5  rounded-full relative">
+                                <span :class="active ? 'bg-white right-1' : 'bg-green-600 left-1' " class="absolute  top-1 w-3 h-3  rounded-full"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                </template>
+
+                <!-- ORDER FILTER -->
+                <div x-data="{ open:false }" class="relative inline-block">
+                    <button @click="open = !open" class="cursor-pointer flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium text-slate-700 transition">
+                        <i class="fa-regular fa-sort-amount-down"></i>
+                        <span>排序</span>
+                        <i :class="open ? 'fa-chevron-up' : 'fa-chevron-down' " class="fa  text-xs"></i>
+                    </button>
+
+                    <div x-show="open" x-cloak x-transition @click.outside="open = false" class="absolute left-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 z-50">
+                        <div class="">
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="newest" name="sort" :checked="data.pageUrl.sort == 'newest' " @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">最新</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="min_price" name="sort" :checked="data.pageUrl.sort == 'min_price'" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">价格升序</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="max_price" name="sort" :checked="data.pageUrl.sort == 'max_price'" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">价格降序</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="discount" name="sort" :checked="data.pageUrl.sort == 'discount'" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">特价</span>
+                            </label>
+
+                        </div>
+
+                        <button @click="open = false" class="w-full py-2 rounded-lg text-white mt-2 font-semibold bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all duration-300 ">
+                            完成
+                        </button>
+                    </div>
+                </div>
+                <!-- ORDER FILTER -->
+
+                <!-- LIMIT FILTER -->
+                <template x-if="data.screenWidth > 1280">
+
+                    <div x-data="{ open:false }" class="relative inline-block">
+                        <button @click="open = !open" class="cursor-pointer flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium text-slate-700 transition">
+                            <i class="fa-regular fa-layer-group"></i>
+                            <span>产品数量</span>
+                            <i :class="open ? 'fa-chevron-up' : 'fa-chevron-down' " class="fa  text-xs"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak x-transition @click.outside="open = false" class="absolute left-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 z-50">
+                            <div class="">
+
+                                <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                    <input type="radio" name="limit" data-limit="10" :checked="data.pageUrl.limit == 10 || data.pageUrl.limit == undefined" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                    <span class="text-sm">10 产品</span>
+                                </label>
+
+                                <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                    <input type="radio" name="limit" data-limit="20" :checked="data.pageUrl.limit == 20" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                    <span class="text-sm">20 产品</span>
+                                </label>
+
+                                <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                    <input type="radio" name="limit" data-limit="50" :checked="data.pageUrl.limit == 50" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                    <span class="text-sm">50 产品</span>
+                                </label>
+
+                            </div>
+
+                            <button @click="open = false" class="w-full py-2 rounded-lg text-white mt-2 font-semibold bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all duration-300  ">
+                                完成
+                            </button>
+                        </div>
+                    </div>
+
+                </template>
+                <!-- LIMIT FILTER -->
+
+                <!-- START PRICE FILTER -->
+                <template x-if="data.screenWidth > 1280">
+                    <div x-data="{ open:false }" class="relative inline-block">
+                        <button @click="open = !open" class="cursor-pointer flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium text-slate-700 transition">
+                            <i class="fa-regular fa-tag"></i>
+                            <span>价格</span>
+                            <i :class="open ? 'fa-chevron-up' : 'fa-chevron-down' " class="fa  text-xs"></i>
+                        </button>
+
+                        <div x-show="open" x-cloak x-transition @click.outside="open = false" class="absolute left-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 z-50">
+                            <form>
+                                <div class="flex gap-3 mb-4">
+                                    <div class="flex-1">
+                                        <label class="block text-xs text-slate-500 mb-1">从</label>
+                                        <input :value="data.pageUrl.price_from" name="price_from" :placeholder="data.product_filters.price_range.min" :min="data.product_filters.price_range.min" @input.debounce.500="alpineListeners('get.products', $event)" keyname="products" type="number" class="w-full px-3 py-2 rounded-xl bg-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+
+                                    <div class="flex-1">
+                                        <label class="block text-xs text-slate-500 mb-1">到</label>
+                                        <input :value="data.pageUrl.price_to" name="price_to" :placeholder="data.product_filters.price_range.max" :max="data.product_filters.price_range.max" @input.debounce.500="alpineListeners('get.products', $event)" keyname="products" type="number" class="w-full px-3 py-2 rounded-xl bg-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <button @click="open = false" class="w-full py-2 rounded-lg text-white mt-2 font-semibold bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all duration-300 ">
+                                完成
+                            </button>
+                        </div>
+                    </div>
+                </template>
+                <!-- END PRICE FILTER -->
+
+                <!-- START BRAND FILTER -->
+                <template x-if="data.pageUrl && data.product_filters.brands[0] != undefined && data.screenWidth > 1280">
+                    <form>
+                        <div x-data="{open: false, selectedBrand: data.pageUrl.brands ?? 'empty'}" class="relative inline-block">
+
+                            <input type="hidden" name="brands" :value="selectedBrand">
+
+                            <button type="button" @click="open = !open" class="cursor-pointer flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium text-slate-700 transition">
+                                <i class="fa-regular fa-certificate"></i>
+                                <span x-text="selectedBrand!='empty'
+                ? (data.product_filters.brands.find(b=>b.id==selectedBrand)?.title ?? '品牌')
+                : '品牌'"></span>
+
+                                <!-- ICON -->
+                                <i class="fa text-xs cursor-pointer" :class="selectedBrand!='empty' ? 'fa-xmark' : (open ? 'fa-chevron-up' : 'fa-chevron-down')" keyName="products" @click.stop="
+                    if(selectedBrand!='empty'){
+                        selectedBrand='empty';
+                        $nextTick(()=>alpineListeners('get.products',$el));
+                        open=false;
+                    } else {
+                        open=!open;
+                    }
+               ">
+                                </i>
+                            </button>
+
+                            <div x-show="open" x-cloak x-transition @click.outside="open = false" class="absolute left-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 z-50">
+
+                                <div class="max-h-[400px] overflow-y-auto space-y-1">
+                                    <template x-for="brand in data.product_filters.brands" :key="brand.id">
+                                        <div @click="selectedBrand = selectedBrand == brand.id ? 'empty' : brand.id; $nextTick(() => alpineListeners('get.products', $el)); open = false;" keyName="products" class="flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-red-200 transition" :class="selectedBrand == brand.id && 'bg-red-200 font-medium'">
+                                            <span x-text="brand.title" class="text-sm"></span>
+                                            <i x-show="selectedBrand == brand.id" class="fa fa-check text-xs text-purple-600"></i>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <button type="button" x-show="selectedBrand" keyName="products" @click="selectedBrand = 'empty'; $nextTick(() => alpineListeners('get.products', $el)); open = false;" class="mt-3 w-full text-sm text-red-600 hover:text-red-700 transition">
+                                    清除筛选
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </template>
+                <!-- END BRAND FILTER -->
+
+                <!-- START CATEGORY FILTER -->
+                <template x-if="data.pageUrl && Object.values(data.product_filters.categories).length > 1 && data.screenWidth > 1280">
+                    <form>
+                        <div x-data="{open: false, selectedCategory: data.pageUrl.category_id ?? data.currentCategory.id}" class="relative inline-block ">
+                            <input type="hidden" name="category_id" :value="selectedCategory">
+
+                            <button type="button" @click="open = !open" class="cursor-pointer flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium text-slate-700 transition">
+                                <i class="fa-regular fa-boxes-stacked"></i>
+                                <span x-text="selectedCategory != data.currentCategory.id ? ( Object.values(data.product_filters.categories).find(c=>c.id == selectedCategory).title ?? '分类') : '分类'"></span>
+
+                                <!-- ICON -->
+                                <i class="fa text-xs cursor-pointer" :class="selectedCategory!=data.currentCategory.id ? 'fa-xmark' : (open ? 'fa-chevron-up' : 'fa-chevron-down')" keyName="products" @click.stop="
+                    if(selectedCategory!=data.currentCategory.id){
+                        selectedCategory=data.currentCategory.id;
+                        $nextTick(()=>alpineListeners('get.products',$el));
+                        open=false;
+                    } else {
+                        open=!open;
+                    }
+               ">
+                                </i>
+                            </button>
+
+                            <div x-show="open" x-cloak x-transition @click.outside="open = false" class="absolute left-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 z-50">
+
+                                <div class="max-h-[400px] overflow-y-auto space-y-1">
+                                    <template x-for="category in data.product_filters.categories" :key="category.id">
+                                        <div @click="selectedCategory = selectedCategory == category.id ? data.currentCategory.id : category.id; $nextTick(() => alpineListeners('get.products', $el)); open = false;" keyName="products" class="flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-red-200 transition" :class="selectedCategory == category.id && 'bg-red-200 font-medium'">
+                                            <span x-text="category.title" class="text-sm"></span>
+
+                                            <i x-show="selectedCategory == category.id" class="fa fa-check text-xs text-purple-600"></i>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <button type="button" x-show="selectedCategory" keyName="products" @click="selectedCategory = data.currentCategory.id; $nextTick(() => alpineListeners('get.products', $el)); open = false;" class="mt-3 w-full text-sm text-red-600 hover:text-red-700 transition">
+                                    清除筛选
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </template>
+                <!-- END CATEGORY FILTER -->
+
+            </div>
+            <!-- ALL FILTERS -->
+            <div class="relative inline-block cursor-pointer">
+                <button @click="callModal($el)" data-modal="filters" class="cursor-pointer flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium text-slate-700 transition">
+                    <i class="fa-regular fa-filter"></i>
+                    <span>所有筛选</span>
+                </button>
+            </div>
+            <!-- ALL FILTERS -->
+        </div>
+
+        <div class="w-full px-4 lg:px-0">
+            <div class="  pt-10">
+
+                <div class=" grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-4" apidata="get.products" data-show_filters="true" data-subcategories="true" data-only_instock="0" :data-category_id="data.corePage.target_id" keyname="products" options-pushurl="true" data-sort="newest">
+
+                    <template x-for="product in data.products.result">
+
+                        <article class="desktop-product-card group cursor-pointer rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white flex flex-col justify-between border border-slate-100">
+
+                            <!-- Image + Wishlist -->
+                            <div class="relative overflow-hidden rounded-t-[10px]" x-data="{wishlist: product.isWishlisted}">
+
+                                <!-- Wishlist ADD -->
+                                <!-- <template x-if="!product.isWishlisted && data.user.logged_in"> -->
+                                <button x-show="!product.isWishlisted && data.user.logged_in" @click="alpineListeners('post.wishlist', $el); " @success="console.log('tuk');product.isWishlisted = true" :data-object_id="product.id" class=" z-10 wishlist-desktop absolute right-2 top-2  transition-all duration-300 text-gray-600  hover:text-red-600">
+                                    <i class="far fa-heart text-lg"></i>
+                                </button>
+                                <!-- </template> -->
+
+                                <!-- Wishlist DELETE -->
+                                <!-- <template x-if="product.isWishlisted && data.user.logged_in"> -->
+                                <button x-show="product.isWishlisted && data.user.logged_in" @click="alpineListeners('Shop.delete_wishlist', $el); " @success="console.log('tuk');product.isWishlisted = false" :data-id="product.id" class=" z-10 wishlist-desktop absolute right-2 top-2  transition-all duration-300  text-red-600  hover:text-gray-600 ">
+                                    <i class="fa-solid  fa-heart text-lg"></i>
+                                </button>
+                                <!-- </template> -->
+
+                                <!-- Discount badge -->
+                                <template x-if="product.variations[0].discount">
+                                    <div class="ribbon rounded-r-lg bg-red-600 shadow text-white">
+                                        <span x-text="'-' + product.variations[0].discount + '%'"></span>
+                                    </div>
+                                </template>
+
+                                <img @click="href(product.url)" :src="product.images[0] ? product.images[0].url_10x10 : data.settings.logo" :alt="product.title" class="w-full h-40 object-contain transition-transform duration-300 group-hover:scale-105">
+                            </div>
+
+                            <!-- Card content -->
+                            <div class="p-3 space-y-2">
+
+                                <!-- Price -->
+                                <div class="flex items-center gap-2 ">
+                                    <span class="font-bold text-lg text-red-600" x-text="product.variations[0].selling_price.toFixed(2) + ' ' + product.variations[0].currency"></span>
+
+                                    <template x-if="product.variations[0].promoprice">
+                                        <span class="text-gray-400 line-through text-xs" x-text="product.variations[0].price.toFixed(2) + ' ' + product.variations[0].currency"></span>
+                                    </template>
+                                </div>
+
+                                <!-- Category -->
+                                <a :href="product.categories[0].url" class="text-xs text-gray-600 hover:text-red-600 transition-colors line-clamp-1" x-text="product.categories[0].title"></a>
+
+                                <!-- Title -->
+                                <a :href="product.url" class="text-xs text-gray-800 hover:text-red-600 transition-colors line-clamp-2 " x-text="product.title"></a>
+
+                            </div>
+                            <!-- Add to Cart -->
+                            <div class="px-3 pb-3">
+                                <!-- Rating -->
+                                <div class="flex items-center mb-2">
+                                    <template x-for="i in 5">
+                                        <i class="fa-regular  fa-star text-xs" :class="i <= product.rating ? 'text-[#ffae00]' : 'text-gray-300'"></i>
+                                    </template>
+                                </div>
+
+                                <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="w-full py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all duration-300 ">
+                                    <i class="fa-regular  fa-shopping-cart mr-2"></i>
+                                    添加
+                                </button>
+                            </div>
+
+                        </article>
+
+                    </template>
+
+                    <template x-if="!data.products.result[0]">
+                        <p class=" mx-5 py-10 mt-10 px-5">未找到产品</p>
+                    </template>
+
+                </div>
+
+                <ul class="pagination my-10">
+                    <template x-if="data.products.pagination.pagesArray">
+                        <div class="flex justify-center py-8">
+                            <ul class="flex items-center gap-1">
+                                <template x-for="(page,index) in data.products.pagination.pagesArray" :key="index">
+                                    <li>
+                                        <button @click="alpineListeners('get.products', $event)" :data-page="page" options-scroll="true" keyname="products" x-text="page" :class="page == data.products.pagination.current_page ? 'bg-gradient-to-r from-red-600 to-fuchsia-600 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div x-cloak :class="data.modals.filters ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-all duration-300"></div>
+
+        <template x-if="data.modals.filters">
+            <div :class="data.modals.filters ? 'right-0' : 'right-[-100%]' " x-cloak @mousedown.outside="callModal($el)" id="sidebar" class="sidebar  py-2 fixed top-0 w-72 h-screen flex flex-col gap-4 z-50 bg-gradient-to-b from-slate-100 to-slate-200 border-r border-white/10 shadow-2xl transition-all duration-300 ease-out  px-4 pb-[90px] lg:pb-0">
+                <div class="p-4 bg-white rounded-md relative">
+                    <p class="text-center text-xl font-semibold">筛选</p>
+                    <div @click="callModal($el)" class="w-[30px] h-[30px] text-white flex items-center justify-center absolute top-2 right-4 p-2 rounded-full bg-red-600 hover:bg-red-700">
+                        <i class="fa-solid fa-x text-xs"></i>
+                    </div>
+                </div>
+
+                <div class="flex-1 overflow-y-auto  space-y-4">
+
+                    <div class="p-4 bg-white rounded-md">
+                        <div class="">
+                            <form x-data="{active: data.pageUrl?.only_promo == 1}" keyName="products" x-init="$watch('active', () => {alpineListeners('get.products', $el);})">
+                                <input type="hidden" name="only_promo" :value="active ? 1 : 'empty' ">
+                                <div @click="active =! active; " class="flex w-full justify-between items-center cursor-pointer gap-2 bg-green-100 border border-green-200 text-green-600 px-3 py-1.5 rounded-md lg:rounded-full text-sm font-semibold">
+                                    <span>促销</span>
+                                    <button type="button" :class="active ? 'bg-green-600' : 'bg-white' " class="w-9 h-5  rounded-full relative">
+                                        <span :class="active ? 'bg-white right-1' : 'bg-green-600 left-1' " class="absolute  top-1 w-3 h-3  rounded-full"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-md">
+                        <p class="font-semibold mb-2">排序</p>
+                        <div class="">
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="newest" name="sort" :checked="data.pageUrl.sort == 'newest' " @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">最新</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="min_price" name="sort" :checked="data.pageUrl.sort == 'min_price'" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">价格升序</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="max_price" name="sort" :checked="data.pageUrl.sort == 'max_price'" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">价格降序</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer p-2 hover:shadow rounded-lg hover:bg-slate-50">
+                                <input type="radio" data-sort="discount" name="sort" :checked="data.pageUrl.sort == 'discount'" @change="alpineListeners('get.products', $event); open = false" keyName="products" class="scale-125">
+                                <span class="text-sm">特价</span>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-md">
+                        <p class="font-semibold mb-2">价格</p>
+
+                        <form>
+                            <div class="flex gap-3 mb-4">
+                                <div class="flex-1">
+                                    <label class="block text-xs text-slate-500 mb-1">从</label>
+                                    <input :value="data.pageUrl.price_from" name="price_from" :placeholder="data.product_filters.price_range.min" :min="data.product_filters.price_range.min" @input.debounce.500="alpineListeners('get.products', $event)" keyname="products" type="number" class="w-full px-3 py-2 rounded-xl bg-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+
+                                <div class="flex-1">
+                                    <label class="block text-xs text-slate-500 mb-1">到</label>
+                                    <input :value="data.pageUrl.price_to" name="price_to" :placeholder="data.product_filters.price_range.max" :max="data.product_filters.price_range.max" @input.debounce.500="alpineListeners('get.products', $event)" keyname="products" type="number" class="w-full px-3 py-2 rounded-xl bg-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <template x-if="data.pageUrl && data.product_filters.brands[0] != undefined">
+                        <div x-data="{open: false, selectedBrand: data.pageUrl.brands ?? 'empty'}" class="p-4 bg-white rounded-md">
+                            <p class="font-semibold mb-2">品牌</p>
+
+                            <form class="space-y-1">
+                                <input type="hidden" name="brands" :value="selectedBrand ">
+
+                                <template x-for="brand in data.product_filters.brands" :key="brand.id">
+                                    <div @click="selectedBrand = selectedBrand == brand.id ? 'empty' : brand.id; $nextTick(() => alpineListeners('get.products', $el)); open = false;" keyName="products" class="flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-red-200 transition" :class="selectedBrand == brand.id && 'bg-red-200 font-medium'">
+                                        <span x-text="brand.title" class="text-sm"></span>
+
+                                        <i x-show="selectedBrand == brand.id" class="fa fa-check text-xs text-purple-600"></i>
+                                    </div>
+                                </template>
+
+                            </form>
+
+                        </div>
+                    </template>
+
+                    <template x-if="data.pageUrl && Object.values(data.product_filters.categories).length > 1">
+                        <div x-data="{ selectedCategory: data.pageUrl.category_id ?? data.currentCategory.id }" class="p-4 bg-white rounded-md">
+                            <p class="font-semibold mb-2">分类</p>
+
+                            <form class="space-y-1">
+                                <input type="hidden" name="category_id" :value="selectedCategory">
+
+                                <div x-data="{ limit: 6,
+                                    get categories() {
+                                        return this.limit ? Object.values(data.product_filters.categories).slice(0, this.limit)
+                                            : data.product_filters.categories;
+                                    }
+                                }">
+                                    <template x-for="category in categories" :key="category.id">
+                                        <div @click="
+                                            selectedCategory = selectedCategory == category.id
+                                                ? data.currentCategory.id
+                                                : category.id;
+
+                                            $nextTick(() => alpineListeners('get.products', $el));
+                                        " keyName="products" class="flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-red-200 transition" :class="selectedCategory == category.id && 'bg-red-200 font-medium'">
+                                            <span x-text="category.title" class="text-sm"></span>
+                                            <i x-show="selectedCategory == category.id" class="fa fa-check text-xs text-purple-600"></i>
+                                        </div>
+                                    </template>
+
+                                    <!-- Toggle -->
+                                    <button x-show="Object.values(data.product_filters.categories).length > 6" @click="limit = limit ? null : 6" type="button" class="mt-2 text-sm text-blue-600 hover:underline">
+                                        <span x-text="limit ? '显示全部' : '收起'"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </template>
+
+                    <template x-if="data.product_filters.attributes.length > 0">
+                        <form>
+
+                            <div x-data="{
+                selectedAttributes: (() => {
+                    const raw = data.pageUrl.attr_val;
+                    if (!raw) return [];
+                    if (Array.isArray(raw)) return raw;
+                    return raw.split(',').filter(Boolean);
+                })(),
+
+                toggle(id) {
+                    id = String(id);
+
+                    if (this.selectedAttributes.includes(id)) {
+                        this.selectedAttributes = this.selectedAttributes.filter(v => v !== id);
+                    } else {
+                        this.selectedAttributes.push(id);
+                    }
+
+                    // sync към pageUrl
+                    if (this.selectedAttributes.length) {
+                        data.pageUrl.attr_val = this.selectedAttributes.join(',');
+                    } else {
+                        delete data.pageUrl.attr_val;
+                    }
+
+                        $nextTick(()=>alpineListeners('get.products',this.$el));
+
+              
+                }
+            }" keyName="products" class="space-y-4">
+                                <input type="hidden" name="attr_val" :value="selectedAttributes">
+                                <template x-for="attr in data.product_filters.attributes">
+                                    <div class="p-4 bg-white rounded-md">
+                                        <p x-text="attr.title" class="font-semibold mb-2"></p>
+
+                                        <template x-for="option in attr.values" :key="option.id">
+                                            <div keyName="products" @click="toggle(option.id)" class="flex items-center justify-between p-2 rounded-lg cursor-pointer transition mt-1" :class="selectedAttributes.includes(String(option.id)) ? 'bg-red-200 font-medium' : 'hover:bg-red-100'">
+                                                <span x-text="option.value" class="text-sm"></span>
+
+                                                <i x-show="selectedAttributes.includes(String(option.id))" class="fa fa-check text-xs text-purple-600"></i>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+
+                            </div>
+                        </form>
+
+                    </template>
+
+                    <template x-if="data.product_filters.features.length > 0">
+                        <form x-data="featuresFilter()" keyName="products" x-init="init()" class="space-y-4">
+
+                            <!-- hidden inputs -->
+                            <template x-if="Object.keys(selected).length === 0">
+                                <input type="hidden" name="features_values[]" value="empty">
+                            </template>
+
+                            <template x-for="(optionId, featureId) in selected" :key="featureId">
+                                <input type="hidden" name="features_values[]" :value="optionId">
+                            </template>
+
+                            <!-- UI -->
+                            <template x-for="feature in data.product_filters.features" :key="feature.id">
+                                <div class="p-4 bg-white rounded-md ">
+
+                                    <p class="font-semibold mb-2" x-text="feature.title"></p>
+
+                                    <template x-for="option in feature.values" :key="option.id">
+                                        <div @click="toggle(feature.id, option.id, $el)" class="p-2 rounded-lg cursor-pointer transition flex items-center justify-between" :class="selected[feature.id] == option.id? 'bg-red-200 font-medium' : 'hover:bg-red-100'">
+                                            <span x-text="option.title"></span>
+                                            <i x-show="selected[feature.id] == option.id" class="fa fa-check text-xs text-purple-600"></i>
+                                        </div>
+                                    </template>
+
+                                </div>
+                            </template>
+
+                            <script>
+                                function featuresFilter() {
+                                    return {
+                                        selected: {},
+
+                                        init() {
+                                            const urlValues = data.pageUrl['features_values[]'];
+                                            if (Array.isArray(urlValues)) {
+
+                                                const allOptions = data.product_filters.features.flatMap(feature =>
+                                                    feature.values.map(v => ({
+                                                        optionId: String(v.id),
+                                                        categoryId: String(feature.id)
+                                                    }))
+                                                );
+
+                                                urlValues.forEach(optionId => {
+                                                    const match = allOptions.find(o => o.optionId === String(optionId));
+                                                    if (match) {
+                                                        this.selected[match.categoryId] = match.optionId;
+                                                    }
+                                                });
+                                            }
+
+                                            this.$watch('selected', () => {
+                                                this.$nextTick(() => {
+                                                    alpineListeners('get.products', this.$el);
+                                                });
+                                            });
+                                        },
+
+                                        toggle(featureId, optionId) {
+                                            if (this.selected[featureId] == optionId) {
+                                                delete this.selected[featureId];
+                                            } else {
+                                                this.selected[featureId] = optionId;
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
+
+                        </form>
+
+                    </template>
+
+                    <div class="p-4 bg-white rounded-md">
+                        <p class="font-semibold mb-2">标签</p>
+                        <form>
+                            <div id="activeTags" class="flex flex-wrap" keyName="products" x-data="{
+            activeTags: (data.pageUrl['tags[]'] ? data.pageUrl['tags[]'].split(',').filter(Boolean): []),
+            toggleTag(tag) {
+                this.activeTags = this.activeTags.includes(tag)
+                    ? this.activeTags.filter(t => t !== tag)
+                    : [...this.activeTags, tag];
+            }
+        }" x-init="$watch('activeTags', () => {alpineListeners('get.products', $el);})">
+
+                                <input type="hidden" name="tags[]" value="empty" :disabled="activeTags.length !== 0">
+
+                                <!-- active tags -->
+                                <template x-for="tag in activeTags" :key="tag">
+                                    <input type="hidden" name="tags[]" :value="tag">
+                                </template>
+
+                                <!-- визуални тагове -->
+                                <template x-for="tag in data.product_filters.tags" :key="tag">
+                                    <button type="button" x-text="tag" @click="toggleTag(tag)" class="rounded my-1 mr-2 p-2 shadow w-fit shrink-0 transition" :class="activeTags.includes(tag)
+                    ? 'bg-red-600 text-white hover:bg-red-700'
+                    : 'bg-slate-100 hover:bg-red-600 hover:text-white'"></button>
+                                </template>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <button type="button" class="mt-3 w-full text-sm text-red-600 hover:text-red-700 transition">
+                        清除筛选
+                    </button>
+                </div>
+            </div>
+        </template>
+
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,918 @@
+<!-- Breadcrumb Navigation -->
+<template x-if="data.product">
+
+    <div class="bg-white border-b border-gray-200 w-full" x-init="alpineListeners('get.categories', $el)" keyName="productCat" data-id="430" :data-id="data.product.categories[0].id">
+        <div class="container mx-auto px-4 lg:px-6 py-3">
+            <nav class="flex items-center justify-between gap-4 text-sm">
+                <!-- Breadcrumb Path -->
+                <div class="flex items-center gap-2 text-gray-600 flex-wrap">
+                    <a href="/" class="hover:text-red-600 transition-colors">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <i class="fas fa-chevron-right text-xs text-gray-400"></i>
+                    <a href="/" class="hover:text-red-600 transition-colors">Hem</a>
+                    <i class="fas fa-chevron-right text-xs text-gray-400"></i>
+
+                    <template x-for="category in data.productCat.parents.reverse()">
+                        <div>
+                            <a x-text="category.title" :href="category.url" class="hover:text-red-600 transition-colors">Hem</a>
+                            <i class="fas fa-chevron-right text-xs text-gray-400"></i>
+                        </div>
+                    </template>
+
+                    <a x-text="data.productCat.title" :href="data.productCat.url" class="hover:text-red-600 transition-colors"></a>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-4">
+                    <button x-show="!data.product.isWishlisted && data.user.logged_in" class="group flex items-center gap-2   transition-colors text-gray-600  hover:text-red-600" @click="alpineListeners('Shop.post_wishlist', $event); " @success="data.product.isWishlisted = true" :data-object_id="data.product.id">
+                        <i class="far fa-heart text-lg"></i>
+                        <span class="hidden md:inline text-sm">Favoriter</span>
+                    </button>
+
+                    <button x-show="data.product.isWishlisted && data.user.logged_in" class="group flex items-center gap-2   transition-colors text-red-600  hover:text-gray-600" @click="alpineListeners('Shop.delete_wishlist', $event); " @success="data.product.isWishlisted = false" :data-id="data.product.id">
+                        <i class="fa-solid fa-heart text-lg"></i>
+                        <span class="hidden md:inline text-sm">Favoriter</span>
+                    </button>
+
+                    <button class="group flex items-center gap-2 text-gray-600 hover:text-red-600 transition-colors" @click="callModal($el)" data-modal="question">
+                        <i class="far fa-comment-dots text-lg"></i>
+                        <span class="hidden md:inline text-sm">Har du en fråga?</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+</template>
+
+<div x-init="data.activeTab = 'description'"></div>
+
+<!-- Main Product Section -->
+<div x-data="{selectedVariation : 0}" apidata="Shop.get_products" :data-id="data.corePage.target_id" keyname="product" class="bg-gray-50 w-full">
+    <div class="container mx-auto  py-6 lg:py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8" x-data="{ mainImage: '', selectedImage: null, selectedVariation: 0 }">
+
+            <template x-if="data.product.images[0] ? mainImage = data.product.images[0].url : mainImage = data.settings.logo"></template>
+
+            <!-- Column 1: Image Gallery (4 columns on desktop) -->
+            <div class="lg:col-span-5">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden sticky top-6">
+                    <!-- Main Image -->
+                    <div class="relative aspect-square bg-gray-100 p-6 lg:p-8">
+                        <img :src="selectedImage || mainImage" class="w-full h-full object-contain cursor-zoom-in transition-transform duration-300 hover:scale-105" @click="openLightbox()" alt="Produktbild">
+
+                        <!-- Category Badge -->
+                        <div x-text="data.productCat.title" @click="href(data.productCat.url) " class="absolute top-4 left-4 bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg"></div>
+
+                        <!-- Promo Badge -->
+                        <template x-if="data.product.promoprice != '' ">
+                            <div class="absolute top-4 right-4 bg-gradient-to-br from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg transform rotate-3">
+                                SALE
+                            </div>
+                        </template>
+
+                    </div>
+
+                    <!-- Thumbnail Gallery -->
+                    <div class="p-4 border-t border-gray-200 bg-white">
+                        <div class="grid grid-cols-5 gap-3">
+                            <template x-for="(image, index) in data.product.images" :key="index">
+                                <button @click="selectedImage = image.url || image" class="aspect-square border-2 rounded-lg overflow-hidden transition-all duration-200 hover:border-red-500 hover:shadow-md" :class="selectedImage === (image.url || image) ? 'border-red-600 ring-2 ring-red-200' : 'border-gray-200'">
+                                    <img :src="image.url || image" class="w-full h-full object-cover" alt="Miniatyrbild">
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Product Details (5 columns on desktop) -->
+            <div class="lg:col-span-4 space-y-6 px-4 lg:px-0">
+                <!-- Category & Title -->
+                <div class="space-y-3">
+                    <a :href="data.productCat.url" class="inline-flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors">
+                        <i class="fas fa-tag"></i>
+                        <span x-text="data.productCat.title"></span>
+                    </a>
+                    <template x-if="data.product">
+                        <h1 class="text-xl lg:text-4xl font-bold text-gray-900 leading-tight" x-text="data.product.title">
+                            Product Name
+                        </h1>
+
+                    </template>
+                </div>
+
+                <!-- Rating & Reviews -->
+                <div class="flex items-center gap-4 py-4 border-y border-gray-200">
+                    <template x-if="data.product">
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1">
+                                <i class="fas fa-star text-sm" :class="1 <= data.product.rating ? 'text-yellow-400' : 'text-gray-300'"></i>
+                                <i class="fas fa-star text-sm" :class="2 <= data.product.rating ? 'text-yellow-400' : 'text-gray-300'"></i>
+                                <i class="fas fa-star text-sm" :class="3 <= data.product.rating ? 'text-yellow-400' : 'text-gray-300'"></i>
+                                <i class="fas fa-star text-sm" :class="4 <= data.product.rating ? 'text-yellow-400' : 'text-gray-300'"></i>
+                                <i class="fas fa-star text-sm" :class="5 <= data.product.rating ? 'text-yellow-400' : 'text-gray-300'"></i>
+                            </div>
+
+                            <span class="font-semibold text-gray-900" x-text="data.product.rating">4.8</span>
+                        </div>
+                    </template>
+
+                    <div class="h-4 w-px bg-gray-300"></div>
+
+                    <button @click="$refs.descriptionContent.scrollIntoView({ behavior: 'smooth' }); data.activeTab = 'reviews' " class="text-sm text-gray-600 hover:text-red-600 transition-colors">
+                        <i class="far fa-comment-alt mr-1"></i>
+                        <span x-text="Object.values(data.productReviews).length"></span>
+                        <span class="font-medium"> omdömen</span>
+                    </button>
+
+                    <div class="h-4 w-px bg-gray-300"></div>
+
+                    <button @click="$refs.descriptionContent.scrollIntoView({ behavior: 'smooth' }); data.activeTab = 'questions'" class="text-sm text-gray-600 hover:text-red-600 transition-colors">
+                        <i class="far fa-question-circle mr-1"></i>
+                        <span x-text="Object.values(data.qa).length"></span>
+                        <span class="font-medium"> frågor</span>
+                    </button>
+                </div>
+
+                <!-- Product Information -->
+                <div class="bg-white rounded-xl p-5 border border-gray-200 space-y-3">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-red-600"></i>
+                        Product Information
+                    </h3>
+
+                    <div class="specifications mb-8 col-span-2">
+
+                        <div class="spec-row flex items-center justify-between py-3 border-b border-gray-200 text-sm">
+                            <span class="spec-label text-gray-500 font-medium">Produktkod</span>
+                            <span x-text="data.product.id_code" class="spec-value font-semibold text-gray-900 flex items-center gap-2"></span>
+                        </div>
+
+                        <div class="spec-row flex items-center justify-between py-3 border-b border-gray-200 text-sm">
+                            <span class="spec-label text-gray-500 font-medium">Varumärke</span>
+                            <span x-text="data.product.brand.title" class="spec-value font-semibold text-gray-900 flex items-center gap-2"></span>
+                        </div>
+
+                        <template x-if="data.product.width != '' || data.product.width != '' || data.product.height != '' ">
+                            <div class="spec-row flex items-center justify-between py-3 border-b border-gray-200 text-sm">
+                                <span class="spec-label text-gray-500 font-medium">Mått</span>
+                                <span class="spec-value font-semibold text-gray-900 flex items-center gap-1">
+                                    <template x-if="data.product.width != '' ">
+                                        <div>
+                                            <span x-text="data.product.width"></span>
+                                            <span>x</span>
+                                        </div>
+                                    </template>
+
+                                    <template x-if="data.product.length != '' ">
+                                        <div>
+                                            <span x-text="data.product.length"></span>
+                                            <span>x</span>
+                                        </div>
+                                    </template>
+
+                                    <template x-if="data.product.height != '' ">
+                                        <div>
+                                            <span x-text="data.product.height"></span>
+                                        </div>
+                                    </template>
+
+                                </span>
+                            </div>
+                        </template>
+
+                        <template x-for="feature in data.product.features.slice(0,6)">
+
+                            <div class="spec-row flex items-center justify-between py-3 border-b border-gray-200 text-sm">
+                                <span x-text="feature.title" class="spec-label text-gray-500 font-medium"></span>
+                                <span x-text="feature.value.title" class="spec-value font-semibold text-gray-900 flex items-center gap-2"></span>
+                            </div>
+                        </template>
+
+                        <div @click="$refs.descriptionContent.scrollIntoView({ behavior: 'smooth' }); data.activeTab = 'description'" class="show-more mt-3 text-sm font-bold text-red-600 cursor-pointer hover:text-red-700 transition-colors">
+                            Features and description ↓
+                        </div>
+                    </div>
+
+                    <template x-if="data.product.variations.length > 1">
+                        <select class="mt-4 w-full border-2 border-slate-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all cursor-pointer hover:border-amber-400" @change="selectedVariation = $event.target.value">
+                            <template x-for="(variation, index) in data.product.variations" :key="index">
+                                <option :value="index">
+                                    <template x-for="attr in variation.attributes">
+                                        <span x-text="attr.title + ' ' + attr.values[0].value + '  '"></span>
+                                    </template>
+                                </option>
+                            </template>
+                        </select>
+                    </template>
+
+                    <div class="px-2 text-sm mt-4">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-600"></i>
+                                <span class=" text-green-600">I Lager</span>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                Can be delivered:
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap justify-between items-center mt-2">
+                            <div>
+                                <i class="fas fa-shipping-fast text-red-600"></i>
+                                <span class=" ">Leverans</span>
+                            </div>
+                            <div class="">
+                                <span>från</span>
+                                <span class="text-red-600"> 06.01.2026</span>
+                                <span>till</span>
+                                <span class="text-red-600">09.01.2026</span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-gray-400 leading-relaxed pt-2">
+                            * Leveransdatumet är ungefärligt och beror på din plats och vald leverantör. 
+                            Du ser det exakta datumet och slutpriset när du slutför din beställning.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-3 px-4 lg:px-0">
+                <div class="bg-white rounded-xl shadow-lg border sticky top-6 ">
+
+                    <!-- Price -->
+                    <div class="p-4 border-b bg-gray-50 space-y-2 flex flex-col items-center">
+                        <div class="flex gap-2 items-center">
+                            <p class="text-xs text-gray-400 text-center ">RRP: <span x-amount="data.product.variations[selectedVariation].rec_price"></span></p>
+                            <div class="absolute z-50 w-max max-w-[320px] rounded-lg bg-[#1E2634] shadow-xl text-sm text-gray-300 bottom-full left-1/2 -translate-x-1/2 mb-2"></div>
+
+                            <div class="float-right ml-2">
+
+                                <i class="fa fa-question-circle cursor-pointer" x-tooltip.hover title="Rekommenderat pris från leverantör. Försäljningspriset visas nedan."></i>
+                            </div>
+                        </div>
+
+                        <p class="text-4xl  text-red-700  my-2 font-bold" x-amount="data.product.variations[selectedVariation].selling_price"></p>
+
+                        <template x-if="data.product.variations[selectedVariation].promoprice">
+                            <p class="text-lg text-center text-gray-400 line-through" x-amount="data.product.variations[selectedVariation].price"></p>
+                        </template>
+
+                        <template x-if="data.product.variations[selectedVariation].promoprice">
+                            <div class="flex flex-wrap items-center gap-2 !mt-4  text-sm rounded-full">
+                                <i class="fas fa-tag text-green-600"></i>
+                                <span> You save <span x-amount="data.product.variations[selectedVariation].price - data.product.variations[selectedVariation].selling_price"></span></span>
+                                <span x-text="Math.round(((data.product.variations[selectedVariation].price - data.product.variations[selectedVariation].selling_price) / data.product.variations[selectedVariation].price) * 100 ) + '%'" class="bg-green-100 text-green-800 shadow py-2 px-2 rounded-lg"></span>
+                            </div>
+                        </template>
+
+                        <template x-if="data.product.single_promo_active.id != 0">
+
+                            <div class="flex flex-col items-center mt-2">
+                                <div>
+                                    <i class="fas fa-tag text-red-600"></i>
+                                    <span class=" ">Produkt på rea</span>
+                                </div>
+                                <div class="">
+                                    <span>från</span>
+                                    <span x-text="data.product.single_promo_active.promo_startdate" class="text-red-600"> 06.01.2026</span>
+                                    <span>till</span>
+                                    <span x-text="data.product.single_promo_active.promo_enddate" class="text-red-600">09.01.2026</span>
+                                </div>
+                            </div>
+
+                        </template>
+
+                    </div>
+
+                    <!-- CTA -->
+                    <template x-if="data.product">
+
+                        <div class="p-6 space-y-4">
+                            <form>
+                                <button type="button" class="w-full bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-3 text-lg" onclick="alpineListeners('Shop.post_carts', event)" :data-product_id="data.product.id" :data-variation_id="data.product.variations[selectedVariation].id" :data-qty="1">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+                            </form>
+
+                            <button x-show="!data.product.isWishlisted && data.user.logged_in" @click="alpineListeners('Shop.post_wishlist', $event); " @success="data.product.isWishlisted = true" :data-object_id="data.product.id" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-900  py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                                <i class="far fa-heart"></i>
+                                Save to Favorites
+                            </button>
+
+                            <button x-show="data.product.isWishlisted && data.user.logged_in" @click="alpineListeners('Shop.delete_wishlist', $event); " @success="data.product.isWishlisted = false" :data-id="data.product.id" class="w-full bg-gray-100 hover:bg-gray-200 text-red-600  py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                                <i class=" fa-solid fa-heart"></i>
+                                Favorite Product
+                            </button>
+
+                        </div>
+                    </template>
+
+                    <!-- Additional Benefits -->
+                    <div class="px-6  border-t py-4 ">
+                        <div class=" space-y-4 text-sm">
+                            <div class="flex items-center gap-2 text-gray-700 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:translate-x-2 transition-all cursor-pointer">
+                                <i class="fa-regular fa-undo text-red-600"></i>
+                                <span class="font-medium">14 dagars retur</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:translate-x-2 transition-all cursor-pointer">
+                                <i class="fa-regular fa-certificate text-red-600"></i>
+                                <span class="font-medium">Inspektion och testning</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:translate-x-2 transition-all cursor-pointer">
+                                <i class="fa-regular fa-shipping-fast text-red-600"></i>
+                                <span class="font-medium">Snabb leverans</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:translate-x-2 transition-all cursor-pointer">
+                                <i class="fa-regular fa-headset text-red-600"></i>
+                                <span class="font-medium">Kundtjänst dygnet runt</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <template x-if="data.product.seller.id != 0">
+                        <div class="px-6 pb-6 border-t border-gray-200 pt-6">
+                            <div class="flex items-start gap-3">
+                                <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Leverantör</div>
+                                    <div @click="href(`/bg/seller?id=${data.product.seller.id}`)" x-text="data.product.seller.title" class="font-bold text-gray-900 mb-1 hover:text-red-500 cursor-pointer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs-section container mt-10 w-full bg-white pb-40 px-4 lg:px-0" x-ref=" descriptionContent">
+
+    <div class="tabs flex gap-6 border-b border-[#e5e7eb] text-sm">
+
+        <div class="tab py-3 cursor-pointer font-medium" :class="data.activeTab === 'description' ? 'text-red-600 border-b-2 border-red-600' : 'text-[#333]'" @click="data.activeTab = 'description'">
+            Description <span class="text-[#666]" x-text="data.product.review_count"></span>
+        </div>
+
+        <div class="tab py-3 cursor-pointer font-medium" :class="data.activeTab === 'reviews' ? 'text-red-600 border-b-2 border-red-600' : 'text-[#333]'" @click="data.activeTab = 'reviews'">
+            Reviews <span class="text-[#666]" x-text="data.product.review_count"></span>
+        </div>
+
+        <div class="tab py-3 cursor-pointer font-medium" :class="data.activeTab === 'questions' ? 'text-red-600 border-b-2 border-red-600' : 'text-[#333]'" @click="data.activeTab = 'questions'">
+            Questions <span class="text-[#666]" x-text="data.product.question_count"></span>
+        </div>
+    </div>
+
+    <!-- Reviews tab -->
+    <div class="tab-content mt-6" x-show="data.activeTab === 'description'">
+        <div x-html="data.product.description"></div>
+
+        <template x-if="data.product.features[0] != undefined">
+            <div class="w-full">
+                <p class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2 pt-10 pb-4">Ytterligare Specifikationer</p>
+                <template x-for="(feature,index) in data.product.features" :key="index">
+                    <div :class="index % 2 == 0 ? 'bg-slate-50' : 'bg-white' " class="spec-row flex items-center  py-3 border-b border-gray-200 text-sm w-full px-4 ">
+                        <span x-text="feature.title" class="spec-label  font-medium w-1/3"></span>
+                        <span x-text="feature.value.title" class="spec-value font-semibold text-gray-900 flex items-center gap-2">
+                            <i class="far fa-copy text-gray-400 hover:text-red-600 transition-colors cursor-pointer"></i>
+                        </span>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+
+    <!-- Reviews tab -->
+    <div class="tab-content mt-6" x-show="data.activeTab === 'reviews'" apidata="Reviews.get_product_comments" :data-product_id="data.corePage.target_id" keyname="productReviews">
+
+        <!-- Reviews Slider -->
+        <template x-if="data.productReviews && data.productReviews[0] != undefined && data.activeTab === 'reviews'">
+            <div x-data="reviewsSlider()" x-init="$nextTick(() => init())" class="relative mx-auto py-6">
+
+                <div class="glide" id="reviewGlide">
+
+                    <div class="glide__track" data-glide-el="track">
+                        <ul class="glide__slides flex items-stretch">
+
+                            <template x-for="review in data.productReviews" :key="review.id">
+                                <li class="glide__slide flex px-2">
+
+                                    <!-- CARD -->
+                                    <div class="flex flex-col w-full  min-h-[220px] bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+
+                                        <!-- HEADER -->
+                                        <div class="flex items-start gap-4 mb-4">
+
+                                            <div class="w-12 h-12 rounded-full border border-gray-500 shadow-lg shrink-0 overflow-hidden">
+                                                <img :src="Helpers.image('user')" class="w-full h-full object-cover" alt="">
+                                            </div>
+
+                                            <div class="flex-1">
+                                                <div class="font-medium text-slate-900" x-text="review.user_name"></div>
+                                                <div class="text-sm text-slate-400" x-text="review.date"></div>
+                                            </div>
+
+                                            <div class="flex text-yellow-400 text-lg mt-1">
+                                                <template x-for="i in 5">
+                                                    <i class="fa-solid fa-star" :class="i <= review.rating ? 'opacity-100' : 'opacity-20'"></i>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <!-- Optional photo -->
+                                        <template x-if="review.images[0]">
+                                            <div class="mb-4 flex flex-wrap gap-2">
+                                                <template x-for="image in review.images.slice(0,3)">
+                                                    <img :src="image.url_10x10" class="h-24  !w-24 shadow object-cover rounded-lg" alt="">
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                        <!-- COMMENT -->
+                                        <div class="flex-1 text-sm text-slate-700 leading-relaxed">
+                                            <p x-text="review.comment"></p>
+                                        </div>
+
+                                    </div>
+
+                                </li>
+                            </template>
+
+                        </ul>
+
+                        <!-- CONTROLS -->
+                        <div class="absolute inset-y-0 left-0 right-0 pointer-events-none" data-glide-el="controls">
+                            <button class="pointer-events-auto absolute -left-4 top-1/2 -translate-y-1/2
+                               w-10 h-10 bg-white rounded-full shadow
+                               flex items-center justify-center
+                               text-slate-600 hover:text-slate-900" data-glide-dir="<">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+
+                            <button class="pointer-events-auto absolute -right-4 top-1/2 -translate-y-1/2
+                               w-10 h-10 bg-white rounded-full shadow
+                               flex items-center justify-center
+                               text-slate-600 hover:text-slate-900" data-glide-dir=">">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <section class="bg-gray-50 rounded-2xl shadow p-8 md:p-12 lg:p-16 w-full text-center relative overflow-hidden mt-12">
+
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-5">
+                <i class="fa-solid fa-quote-left text-[20rem] text-gray-400"></i>
+            </div>
+
+            <div class="relative z-10">
+                <div class="flex justify-center gap-2 mb-6">
+                    <i class="fa-solid fa-star text-red-600 text-3xl"></i>
+                    <i class="fa-solid fa-star text-red-600 text-3xl"></i>
+                    <i class="fa-solid fa-star text-[#cb11ab] text-3xl"></i>
+                    <i class="fa-solid fa-star text-[#9c27b0] text-3xl"></i>
+                    <i class="fa-solid fa-star text-[#9c27b0] text-3xl"></i>
+                </div>
+
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+                    Do you like our service?
+                </h2>
+
+                <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Your opinion matters to us! Share your experience and help others make the right decision.
+                </p>
+
+                <button @click="callModal($el)" data-modal="comment" class="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 via-[#cb11ab] to-[#9c27b0] text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300">
+                    <i class="fa-solid fa-pen-to-square text-xl"></i>
+                    <span class="text-lg">Lämna ett Omdöme</span>
+                </button>
+
+                <p class="text-sm text-gray-500 mt-6">
+                    <i class="fa-solid fa-clock mr-2"></i>
+                    Takes only 2 minutes
+                </p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <template x-if="data.activeTab === 'questions'" apiData="get.qa" keyName="qa" :data-product_id="data.corePage.target_id">
+        <div class="tab-content mt-6">
+
+            <!-- GRID WRAPPER -->
+            <div class="grid grid-cols-1 xl:grid-cols-7 gap-10 items-start h-fit">
+
+                <!-- LEFT: QUESTIONS -->
+                <template x-if="data.qa[0] != undefined">
+
+                    <div class="space-y-6 col-span-5">
+
+                        <template x-for="qa in data.qa">
+                            <div class="w-full space-y-6">
+
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+
+                                    <!-- Header -->
+                                    <div class="flex items-start gap-4">
+                                        <img :src="Helpers.image('user')" alt="User" class="w-12 h-12 rounded-full object-cover bg-slate-200">
+
+                                        <div>
+                                            <div x-text="qa.user_name" class="font-semibold text-slate-900"></div>
+                                            <div x-text="Helpers.formatDate(qa.date_created, 'long')" class="text-sm text-slate-400"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Question -->
+                                    <div x-text="qa.text" class="mt-4 text-slate-800 text-sm leading-relaxed"></div>
+
+                                    <!-- Reply -->
+                                    <div class="mt-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
+                                        <div class="text-sm font-semibold text-slate-600 mb-2">
+                                            Response from the seller
+                                        </div>
+                                        <div x-text="qa.answer.text" class="text-sm text-slate-700 leading-relaxed"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </template>
+
+                    </div>
+
+                </template>
+
+                <!-- RIGHT: STICKY CTA -->
+                <div class=" col-span-2 sticky top-0">
+                    <div class="">
+
+                        <div class="bg-gray-50 rounded-3xl shadow-lg p-10 text-center relative overflow-hidden min-h-[420px]">
+
+                            <!-- Decorative icon -->
+                            <div class="absolute top-6 right-6 text-gray-100 opacity-40 pointer-events-none">
+                                <i class="fas fa-question-circle text-[140px]"></i>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col items-center justify-center h-full">
+
+                                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-red-600 via-[#cb11ab] to-[#9c27b0] mb-8 shadow-lg">
+                                    <i class="fas fa-comments text-white text-3xl"></i>
+                                </div>
+
+                                <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                    Have a question?
+                                </h2>
+
+                                <p class="text-lg text-gray-600 mb-8 max-w-sm">
+                                    Our team is here to help you with a quick and accurate answer.
+                                </p>
+
+                                <a @click="callModal($el)" data-modal="question" class="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 via-[#cb11ab] to-[#9c27b0]
+                                       text-white font-semibold text-lg px-8 py-4 rounded-xl
+                                       hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <span>Ställ en Fråga</span>
+                                </a>
+
+                                <p class="text-sm text-gray-500 mt-8">
+                                    <i class="fas fa-clock text-red-600 mr-1"></i>
+                                    We respond within 24 hours
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+</div>
+
+<div x-show="data.modals.comment" x-cloak x-transition:enter.duration.500ms x-transition:leave.duration.100ms class="backdrop-blur bg-[#0000008a] fixed block sm:flex items-center top-0 left-0 w-full h-full z-50 overflow-auto px-4 lg:px-0">
+
+    <div class=" flex flex-row justify-center w-full max-h-full h-full sm:!h-fit">
+        <!-- Improved visual design with modern styles and gradients -->
+        <div @mousedown.outside="callModal($event)" class="w-full lg:w-[600px] relative bg-white rounded-2xl text-black shadow-2xl">
+            <!-- Improved Close button with hover effects -->
+            <button @click="callModal($event)" class="cursor-pointer w-10 h-10 flex items-center justify-center absolute top-5 right-5 z-10 rounded-full bg-slate-100 text-slate-600 hover:bg-gradient-to-r hover:from-red-600 hover:to-[#9c27b0] hover:text-white transition-all duration-300 hover:scale-110 hover:rotate-90">
+                <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
+            </button>
+
+            <div class="w-full lg:rounded-2xl lg:border h-full  overflow-y-auto ">
+                <!-- Gradient header with theme styles -->
+                <div class="relative px-8 pt-8 pb-6 bg-gradient-to-br from-red-600 via-[#cb11ab] to-[#9c27b0]">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+
+                    <div class="relative">
+
+                        <h1 class="text-3xl font-bold text-white mb-2">
+                            Leave a Comment
+                        </h1>
+                        <p class="text-white/90 text-sm">Dela din åsikt om denna produkt</p>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form class="px-8 py-6 space-y-6" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+
+                    <!-- Email Field -->
+                    <!-- Improved field styles with focus effects -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700" for="email">
+                            Email <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <i class="fa-solid fa-envelope text-slate-400 group-focus-within:text-red-600 transition-colors"></i>
+                            </div>
+                            <input name="email" :value="data.user.email" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-red-600 focus:ring-4 focus:ring-red-600/10 outline-none transition-all duration-300" type="email" placeholder="din@email.com">
+                        </div>
+                    </div>
+
+                    <!-- Name Field -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700" for="name">
+                            Name <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <i class="fa-solid fa-user text-slate-400 group-focus-within:text-red-600 transition-colors"></i>
+                            </div>
+                            <input name="user_name" :value="data.user.names" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-red-600 focus:ring-4 focus:ring-red-600/10 outline-none transition-all duration-300" type="text" placeholder="Ditt namn">
+                        </div>
+                    </div>
+
+                    <!-- Comment Field -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700" for="comment">
+                            Comment <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative group">
+                            <textarea rows="4" name="comment" class="w-full px-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-red-600 focus:ring-4 focus:ring-red-600/10 outline-none resize-none transition-all duration-300" placeholder="Dela din åsikt om kvalitet, leverans och helhetsupplevelse..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Rating Section -->
+                    <!-- Improved visual rating style with gradient background -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-semibold text-slate-700">
+                            Your Rating <span class="text-red-600">*</span>
+                        </label>
+                        <div x-data="{ temp: 0, orig: 0 }" class="relative p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border-2 border-slate-200 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-red-600/5 to-[#9c27b0]/5"></div>
+
+                            <div class="relative flex items-center justify-center gap-2 cursor-pointer" @click="orig = temp">
+                                <input type="number" name="rating" :value="orig" class="hidden">
+
+                                <template x-for="item in [1,2,3,4,5]">
+                                    <span @mouseenter="temp = item" @mouseleave="temp = orig" class="text-5xl transition-all duration-200 hover:scale-125 active:scale-95" :class="temp >= item ? 'text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-[#9c27b0] drop-shadow-lg' : 'text-slate-300'">★</span>
+                                </template>
+                            </div>
+                            <p class="relative text-center text-xs font-semibold bg-gradient-to-r from-red-600 to-[#9c27b0] text-transparent bg-clip-text mt-3" x-show="orig > 0" x-transition>
+                                <span x-text="orig === 5 ? 'Utmärkt!' : orig === 4 ? 'Mycket bra!' : orig === 3 ? 'Bra' : orig === 2 ? 'Genomsnittligt' : 'Behöver förbättras'"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <label class="block text-sm font-semibold text-slate-700">Lägg till Bilder</label>
+
+                        <label class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 hover:border-slate-400 transition text-center">
+                            <div class="text-slate-400 mb-2">
+                                <i class="fa fa-cloud-upload text-3xl"></i>
+                            </div>
+
+                            <p class="text-sm text-slate-600 font-medium">Dra bilder hit eller klicka</p>
+                            <p class="text-xs text-slate-500 mt-1">Max 5 bilder</p>
+
+                            <input type="file" name="images[]" multiple accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleFiles(this)">
+                        </label>
+
+                        <div id="preview" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+                    </div>
+
+                    <script>
+                        const MAX_FILES = 5;
+
+                        function handleFiles(input) {
+                            const files = Array.from(input.files);
+                            const preview = document.getElementById('preview');
+
+                            preview.innerHTML = '';
+
+                            if (files.length > MAX_FILES) {
+                                alert(`Du kan ladda upp max ${MAX_FILES} bilder.`);
+                                input.value = '';
+                                return;
+                            }
+
+                            files.forEach(file => {
+                                if (!file.type.startsWith('image/')) return;
+
+                                const reader = new FileReader();
+                                reader.onload = e => {
+                                    const div = document.createElement('div');
+                                    div.className = 'relative aspect-square rounded-lg overflow-hidden border bg-slate-100';
+                                    div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                                    preview.appendChild(div);
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        }
+                    </script>
+
+                    <!-- Submit Button -->
+                    <!-- Button with gradient and shine effect -->
+                    <button @click="alpineListeners('post.product_comments', $event)" @success="callModal($el)" :data-product_id="data.product.id" :options-clearForm="true" type="submit" class="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-red-600 via-[#cb11ab] to-[#9c27b0] px-6 py-4 text-base font-bold text-white shadow-lg shadow-red-600/30 transition-all duration-300 hover:shadow-xl hover:shadow-red-600/50 hover:scale-[1.02] active:scale-[0.98]">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Publicera Kommentar</span>
+                        </span>
+                        <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700"></div>
+                    </button>
+
+                    <!-- Helper text -->
+                    <!-- Improved protection section with shield icon -->
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-r from-red-600 to-[#9c27b0] text-white">
+                            <i class="fa-solid fa-shield-halved text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-slate-700 mb-1">
+                                Your information is protected
+                            </p>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                Your comment will be reviewed before publishing
+                            </p>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div x-show="data.modals.question" x-cloak x-transition:enter.duration.500ms x-transition:leave.duration.100ms class="backdrop-blur bg-[#0000008a] fixed block sm:flex items-center top-0 left-0 w-full h-full z-50 overflow-auto px-4 lg:px-0">
+    <div class=" flex flex-row justify-center w-full max-h-full h-full sm:!h-fit">
+
+        <div @mousedown.outside="callModal($event)" class="w-full lg:w-[600px] relative bg-white rounded-2xl text-black shadow-2xl">
+            <!-- Close -->
+            <button @click="callModal($event)" class="cursor-pointer w-10 h-10 flex items-center justify-center absolute top-5 right-5 z-10
+                       rounded-full bg-slate-100 text-slate-600
+                       hover:bg-gradient-to-r hover:from-red-600 hover:to-[#9c27b0]
+                       hover:text-white transition-all duration-300 hover:scale-110 hover:rotate-90">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="w-full lg:rounded-2xl lg:border h-full overflow-y-auto">
+
+                <!-- Header -->
+                <div class="relative px-8 pt-8 pb-6 bg-gradient-to-br from-red-600 via-[#cb11ab] to-[#9c27b0]">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1Ii8+PC9zdmc+')] opacity-30"></div>
+
+                    <div class="relative">
+                        <h1 class="text-3xl font-bold text-white mb-2">
+                            Ask a Question About the Product
+                        </h1>
+                        <p class="text-white/90 text-sm">
+                            We will respond as soon as possible
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form class="px-8 py-6 space-y-6">
+
+                    <input type="hidden" name="product_id" :value="data.product.id">
+
+                    <!-- Email -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">
+                            Email <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <i class="fa-solid fa-envelope text-slate-400 group-focus-within:text-red-600"></i>
+                            </div>
+                            <input type="email" name="email" :value="data.user.email" placeholder="din@email.com" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200
+                                       rounded-xl focus:bg-white focus:border-red-600
+                                       focus:ring-4 focus:ring-red-600/10
+                                       outline-none transition-all" required>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">
+                            Name <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <i class="fa-solid fa-user text-slate-400 group-focus-within:text-red-600"></i>
+                            </div>
+                            <input type="text" name="user_name" :value="data.user.names" placeholder="Ditt namn" class="w-full pl-12 pr-4 py-3.5 bg-slate-50 border-2 border-slate-200
+                                       rounded-xl focus:bg-white focus:border-red-600
+                                       focus:ring-4 focus:ring-red-600/10
+                                       outline-none transition-all" required>
+                        </div>
+                    </div>
+
+                    <!-- Subject -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">
+                            Subject <span class="text-red-600">*</span>
+                        </label>
+                        <input type="text" name="subject" :value="`Fråga om: ${data.product.title}`" class="w-full px-4 py-3.5 bg-slate-50 border-2 border-slate-200
+                                   rounded-xl focus:bg-white focus:border-red-600
+                                   focus:ring-4 focus:ring-red-600/10
+                                   outline-none transition-all" required>
+                    </div>
+
+                    <!-- Question -->
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">
+                            Your Question <span class="text-red-600">*</span>
+                        </label>
+                        <textarea name="text" rows="5" placeholder="Till exempel: Finns det garanti? Vad är leveranstiden? Passar den för...?" class="w-full px-4 py-3.5 bg-slate-50 border-2 border-slate-200
+                                   rounded-xl focus:bg-white focus:border-red-600
+                                   focus:ring-4 focus:ring-red-600/10
+                                   outline-none resize-none transition-all" required></textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <button @click="alpineListeners('Qa.post_qa', $event)" @success="callModal($el)" type="submit" class="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-red-600 via-[#cb11ab] to-[#9c27b0] px-6 py-4 text-base font-bold text-white shadow-lg shadow-red-600/30 transition-all duration-300 hover:scale-[1.02]">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Skicka Fråga</span>
+                        </span>
+                        <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700"></div>
+                    </button>
+
+                    <!-- Info -->
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="w-8 h-8 flex items-center justify-center rounded-full
+                                    bg-gradient-to-r from-red-600 to-[#9c27b0] text-white">
+                            <i class="fa-solid fa-circle-question text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-slate-700 mb-1">
+                                Question about the product
+                            </p>
+                            <p class="text-xs text-slate-500">
+                                The question and answer may be visible to other customers
+                            </p>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function reviewsSlider() {
+        return {
+            async init() {
+
+                await this.$nextTick();
+
+                this.$nextTick(() => {
+                    this.glide = new Glide('#reviewGlide', {
+                        type: 'slide',
+                        startAt: 0,
+                        perView: 3,
+                        gap: 0,
+                        breakpoints: {
+                            1024: { perView: 2 },
+                            640: { perView: 1 }
+                        }
+                    });
+                    this.glide.mount();
+                });
+            }
+        }
+    }
+</script>

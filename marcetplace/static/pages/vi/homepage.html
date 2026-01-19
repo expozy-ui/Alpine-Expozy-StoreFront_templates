@@ -1,0 +1,96 @@
+<div class="is-section is-section-auto section last-box scroll-target">
+    <div class="is-overlay"></div>
+    <div class="!container is-container v2 !p-4 lg:p-0">
+        <div class=" grid grid-cols-3 gap-2 lg:gap-6 mx-auto">
+            <div class="col-span-3 brightness-90 rounded-lg overflow-hidden">
+                <img class="w-full h-full object-cover" src="/static/images/1920x540.webp" alt="" data-filename="b1.jpg">
+            </div>
+            <div class="object-cover brightness-90 rounded-lg overflow-hidden">
+                <img src="/static/images/640x450.webp" alt="" data-filename="b5.jpg">
+            </div>
+            <div class="object-cover brightness-90 rounded-lg overflow-hidden">
+                <img src="/static/images/640x450.webp" alt="" data-filename="b5.jpg">
+            </div>
+            <div class="object-cover brightness-90 rounded-lg overflow-hidden">
+                <img src="/static/images/640x450.webp" alt="" data-filename="b5.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="container pb-4 xl:pb-6 lock" apidata="Shop.get_products" data-subcategories="true" data-only_featured="1" data-sort="random" data-only_instock="0" data-limit="40" keyname="products">
+    <div class=" mx-auto px-4">
+
+        <div>
+
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-4">
+
+                <template x-for="product in data.products.result">
+
+                    <article class="desktop-product-card group cursor-pointer rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white flex flex-col justify-between border border-slate-100">
+
+                        <!-- Image + Wishlist -->
+                        <div class="relative overflow-hidden rounded-t-[10px]" x-data="{wishlist: product.isWishlisted}">
+
+                            <!-- Wishlist ADD -->
+                            <button x-show="!product.isWishlisted && data.user.logged_in" @click="alpineListeners('Shop.post_wishlist', $event); " @success="product.isWishlisted = true" :data-object_id="product.id" class=" z-10 wishlist-desktop absolute right-2 top-2  transition-all duration-300 text-gray-600  hover:text-red-600">
+                                <i class="far fa-heart text-lg"></i>
+                            </button>
+
+                            <!-- Wishlist DELETE -->
+                            <button x-show="product.isWishlisted && data.user.logged_in" @click="alpineListeners('Shop.delete_wishlist', $event); " @success="product.isWishlisted = false" :data-id="product.id" class=" z-10 wishlist-desktop absolute right-2 top-2  transition-all duration-300  text-red-600  hover:text-gray-600 ">
+                                <i class="fa-solid  fa-heart text-lg"></i>
+                            </button>
+
+                            <!-- Discount badge -->
+                            <template x-if="product.variations[0].discount">
+                                <div class="ribbon rounded-r-lg bg-red-600 shadow text-white">
+                                    <span x-text="'-' + product.variations[0].discount + '%'"></span>
+                                </div>
+                            </template>
+
+                            <img @click="href(product.url)" :src="product.images[0] ? product.images[0].url_10x10 : data.settings.logo" :alt="product.title" class="w-full h-40 object-contain transition-transform duration-300 group-hover:scale-105">
+                        </div>
+
+                        <!-- Card content -->
+                        <div class="p-3 space-y-2">
+
+                            <!-- Price -->
+                            <div class="flex items-center gap-2 ">
+                                <span class="font-bold text-lg text-red-600" x-text="product.variations[0].selling_price.toFixed(2) + ' ' + product.variations[0].currency"></span>
+
+                                <template x-if="product.variations[0].promoprice">
+                                    <span class="text-gray-400 line-through text-xs" x-text="product.variations[0].price.toFixed(2) + ' ' + product.variations[0].currency"></span>
+                                </template>
+                            </div>
+
+                            <!-- Category -->
+                            <a :href="product.categories[0].url" class="text-xs text-gray-600 hover:text-red-600 transition-colors line-clamp-1" x-text="product.categories[0].title"></a>
+
+                            <!-- Title -->
+                            <a :href="product.url" class="text-xs text-gray-800 hover:text-red-600 transition-colors line-clamp-2 " x-text="product.title"></a>
+
+                        </div>
+                        <!-- Add to Cart -->
+                        <div class="px-3 pb-3">
+                            <!-- Rating -->
+                            <div class="flex items-center mb-2">
+                                <template x-for="i in 5">
+                                    <i class="fa-regular  fa-star text-xs" :class="i &lt;= product.rating ? 'text-[#ffae00]' : 'text-gray-300'"></i>
+                                </template>
+                            </div>
+
+                            <button @click="alpineListeners('Shop.post_carts', $event)" keyname="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="w-full py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all duration-300 ">
+                                <i class="fa-regular  fa-shopping-cart mr-2"></i>
+                                Thêm
+                            </button>
+                        </div>
+
+                    </article>
+                </template>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+<!-- Desktop Header -->
+<!-- <template x-if="data.screenWidth >= 1024"> -->
+
+<div class="desktop-header  bg-gradient-to-r from-red-600 via-[#cb11ab] to-red-700 text-white shadow-lg" apidata="get.cart">
+    <div class="container mx-auto px-4">
+
+        <!-- Main header -->
+        <div class="flex flex-col lg:flex-row items-between lg:items-end justify-between pb-4 pt-4 lg:pt-0">
+
+            <!-- Logo + menu -->
+            <div class="flex items-center justify-between lg:justify-start  space-x-6">
+                <img @click="href('/')" :src="data.settings.logo" alt="Expozy Logo" class="h-12 w-auto cursor-pointer">
+
+                <button @click="data.openMobileMenu = !data.openMobileMenu" class="menu-btn-styled menu-btn hover:bg-white/20 hover:shadow-lg transition-all px-2 py-1.5 rounded-lg">
+                    <i class="fa-regular  fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Search bar -->
+            <div class="desktop-search-container flex-1 max-w-2xl lg:mx-8">
+
+                <!-- Top navigation bar -->
+                <div class="flex items-center justify-start py-2 text-sm text-white/90">
+                    <div class="desktop-nav-links hidden lg:flex items-center gap-4">
+                        <a href="/mk/registration-as-seller" class="hover:text-[#ff4081] transition-colors">За бизнис</a>
+                        <a href="/mk/about" class="hover:text-[#ff4081] transition-colors">За нас</a>
+                        <a href="/mk/contacts" class="hover:text-[#ff4081] transition-colors">Контакти</a>
+
+                        <a @click="callModal($el)" data-modal="currency" x-text="data.currency.code" class="hover:text-[#ff4081] transition-colors">USD</a>
+
+                        <div @click="callModal($el)" data-modal="lang" class="relative">
+                            <div class="cursor-pointer">
+                                <i class="fa-solid fa-globe text-lg text-white hover:text-[#ff4081] "></i>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="desktop-search px-2 py-1 rounded-xl bg-white shadow-md hover:shadow-lg transition-all w-full">
+                    <div class="flex items-center gap-3">
+
+                        <!-- Input + dropdown wrapper -->
+                        <div class="relative flex-1 min-w-0">
+                            <form class="w-full">
+                                <input type="text" name="search" data-sort="relevant" @input.debounce.1000="data.searchWord = $el.value; if(data.searchWord != ''){ alpineListeners('Search.get_search', $event);data.openSearchBar = true}else{data.openSearchBar = false} " @click="if(data.searchResults){data.openSearchBar = true}" keyName="searchResults" data-show_filters="1" data-filter="1" data-limit="6" placeholder="Што барате?" class="w-full text-gray-700 placeholder-gray-400 focus:outline-none">
+                            </form>
+
+                            <!-- Results dropdown (under the input) -->
+                            <div x-show="data.openSearchBar" @click.outside="data.openSearchBar = false" x-cloak x-transition class="hidden md:block absolute left-0 top-full mt-4 w-full bg-white dark:bg-gray-900 border-2 border-slate-200 dark:border-gray-700 z-50 p-6 rounded-xl shadow-2xl" style="display: none;">
+                                <template x-if="!data.searchResults || data.searchResults.products.result.length == 0">
+                                    <div class="flex flex-col items-center justify-center py-8">
+                                        <i class="fa-solid fa-search text-4xl text-slate-300 dark:text-gray-600 mb-3"></i>
+                                        <p class="text-slate-500 dark:text-gray-400">Нема пронајдени резултати</p>
+                                    </div>
+                                </template>
+
+                                <template x-if="data.searchResults && data.searchResults.products.result.length > 0">
+                                    <div class="space-y-4">
+                                        <ul class="grid grid-cols-2 gap-4">
+                                            <template x-for="product in data.searchResults.products.result" :key="product.id">
+                                                <li class="flex gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors border border-slate-200 dark:border-gray-700">
+                                                    <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-200 dark:border-gray-700">
+                                                        <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="data.openSearchBar = false; href(product.url)" class="h-full w-full object-cover object-center cursor-pointer hover:scale-110 transition-transform">
+                                                    </div>
+
+                                                    <div class="flex-1 flex flex-col justify-between min-w-0">
+                                                        <div>
+                                                            <p @click="data.openSearchBar = false; href(product.url)" class="text-sm font-medium text-slate-900 dark:text-white line-clamp-2 hover:text-red-600 dark:hover:text-red-500 cursor-pointer transition-colors" :title="product.title" x-text="product.title"></p>
+
+                                                            <p @click="data.openSearchBar = false; href(product.categories[0].url)" class="text-xs text-slate-500 dark:text-gray-400 line-clamp-1 hover:text-red-600 cursor-pointer transition-colors mt-1" :title="product.categories[0].title" x-text="product.categories[0].title"></p>
+                                                        </div>
+
+                                                        <div class="flex items-center gap-1 mt-2">
+                                                            <p x-amount="product.variations[0].selling_price" class="text-base font-bold text-red-600"></p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </template>
+                                        </ul>
+
+                                        <button @click="data.openSearchBar = false; data.searchWord != undefined && data.searchWord != '' ? href('/mk/search?search='+data.searchWord) : ''" class="w-full py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all duration-300">
+                                            <i class="fa-regular fa-shopping-cart mr-2"></i>
+                                            Сите производи
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Search button -->
+                        <button @click="data.openSearchBar = false; data.searchWord != undefined && data.searchWord != '' ? href('/mk/search?search='+data.searchWord) : ''" class="search-btn bg-red-600 hover:bg-[#cb11ab] rounded-lg px-3 py-2 shadow-md text-white transition-all">
+                            <i class="fa-regular fa-search text-base"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right buttons -->
+            <div class="hidden lg:flex items-center space-x-4 text-white">
+
+                <!-- Sign In -->
+                <template x-if="!data.user.logged_in">
+                    <button type="button" @click="href('/mk/login')" class="header-button hover:bg-white/20 hover:shadow-lg transition-all rounded-lg px-2 py-1.5 flex flex-col">
+                        <i class="far fa-user text-lg"></i>
+                        <span class="text-xs">Најава</span>
+                    </button>
+                </template>
+
+                <template x-if="data.user.logged_in">
+                    <button type="button" @click="href('/mk/wishlist')" class="header-button hover:bg-white/20 hover:shadow-lg transition-all rounded-lg px-2 py-1.5 flex flex-col">
+                        <i class="far fa-user text-lg"></i>
+                        <span class="text-xs">Омилени</span>
+                    </button>
+                </template>
+
+                <template x-if="data.user.logged_in">
+                    <button type="button" @click="href('/mk/userpage')" class="header-button hover:bg-white/20 hover:shadow-lg transition-all rounded-lg px-2 py-1.5 flex flex-col">
+                        <i class="far fa-user text-lg"></i>
+                        <span class="text-xs">Профил</span>
+                    </button>
+                </template>
+
+                <!-- Cart -->
+                <button type="button" class="  relative hover:bg-white/20 hover:shadow-lg transition-all  px-2 py-1.5 rounded-lg" @click="data.openCart =! data.openCart">
+                    <div class="relative flex flex-col">
+                        <i class="fa-regular  fa-shopping-cart text-lg"></i>
+                        <span class="text-xs">Кошничка</span>
+
+                        <div class="cart-counter rounded-full absolute -top-[2px] -right-[4px] bg-red-600 shadow-lg p-1 text-xs h-[16px] w-[16px] flex items-center justify-center" x-text="data.cart.total_quantity" x-show="data.cart.total_quantity > 0"></div>
+                    </div>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- </template> -->
