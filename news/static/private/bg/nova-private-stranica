@@ -1,0 +1,14 @@
+<div class="is-section is-box is-section-100 type-poppins box-autofit last-box scroll-target">
+    <div class="is-overlay"></div>
+    <div class="is-container v2 is-content-700 leading-14 size-18">
+
+        <div class="row">
+            <div class="column">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.c 11111&nbsp;<i class="bi bi-align-end"></i></p><img src="https://r2.expozy.com/frontend/contbuilder/index/check.webp" alt="" data-filename="check.svg">
+                <p><br></p>
+            </div>
+        </div>
+    </div>
+</div>

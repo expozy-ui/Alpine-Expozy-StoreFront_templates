@@ -1,0 +1,414 @@
+<!-- Cart sidebar with premium design and improved spacing -->
+<div x-show="data.openCart" x-transition="" class="is-section fixed inset-y-0 right-0 w-full lg:!w-[400px] z-50 lock" x-cloak="" apidata="get.cart" @click.outside="data.openCart = false">
+    <div class="flex h-full flex-col bg-white shadow-2xl dark:!bg-gray-900">
+        <div class="flex-1 px-4 py-2 md:py-6 sm:px-6 w-full lg:!w-[400px] overflow-y-auto">
+            <!-- Cart header with better visual hierarchy -->
+            <div class="flex items-start justify-between  pb-2 md:pb-4">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white" id="slide-over-title">Warenkorb</h2>
+                <div class="ml-3 flex h-7 items-center">
+                    <button type="button" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800" @click="data.openCart = false">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:mt-6">
+                <div class="flow-root">
+                    <ul role="list">
+                        <template x-if="data.cart.total == 0">
+                            <li class="h-[300px] flex flex-col justify-center items-center">
+                                <i class="fa-solid fa-cart-shopping text-6xl text-slate-300 dark:text-gray-600 mb-4"></i>
+                                <p class="text-lg text-center text-slate-500 dark:text-gray-400">Ihr Warenkorb ist leer</p>
+                            </li>
+                        </template>
+
+                        <div class="divide-y divide-slate-200 dark:divide-gray-700">
+                            <template x-for="(product,index) in data.cart.products" key="index">
+                                <!-- Product card with enhanced design -->
+                                <li class="flex py-6 gap-4 hover:bg-slate-50 dark:hover:bg-gray-800 px-2 rounded-lg transition-colors">
+                                    <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-200 dark:border-gray-700">
+                                        <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="h-full w-full object-cover object-center cursor-pointer hover:scale-105 transition-transform">
+                                    </div>
+
+                                    <div class="flex flex-1 flex-col justify-between">
+                                        <div>
+                                            <p class="text-sm font-medium text-slate-900 dark:text-white line-clamp-2 cursor-pointer hover:text-amber-600 dark:hover:text-amber-500 transition-colors" @click="href(product.url)" :title="product.title" x-text="product.title">Salmon</p>
+                                        </div>
+
+                                        <!-- Quantity controls with modern design -->
+                                        <form>
+                                            <input type="hidden" name="variation_id" :value="product.id" value="2503">
+                                            <div x-data="{quantity: product.quantity}" keyName="cart" x-init="$watch('quantity', value => alpineListeners('Shop.put_carts', $el))">
+                                                <div class="flex w-fit items-center border-2 border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+                                                    <p @click="if(product.quantity > 1){product.quantity--; quantity--; }" type="button" class="bg-slate-50 dark:bg-gray-700 dark:text-white rounded-l-md px-3 py-1 text-slate-700 transition hover:bg-slate-200 dark:hover:bg-gray-600 font-bold"><i class="fa-solid fa-minus"></i></p>
+                                                    <input type="number" name="quantity" :value="product.quantity" class="h-8 w-12 border-0 bg-transparent dark:text-white text-center text-sm [-moz-appearance:_textfield] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none">
+                                                    <p @click="product.quantity++; quantity++; " type="button" class="bg-slate-50 dark:bg-gray-700 dark:text-white rounded-r-md px-3 py-1 text-slate-700 transition hover:bg-slate-200 dark:hover:bg-gray-600 font-bold"><i class="fa-solid fa-plus"></i></p>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!-- Price and remove button with better layout -->
+                                        <div class="flex items-center justify-between text-sm mt-2">
+                                            <div class="flex items-center gap-1">
+                                                <p x-text="product.quantity" class="text-slate-600 dark:text-gray-300 font-medium"></p>
+                                                <p class="text-slate-600 dark:text-gray-300">×</p>
+                                                <p x-amount="product.variation.selling_price" class="text-slate-900 dark:text-white font-bold"></p>
+                                            </div>
+                                            <button type="button" @click="alpineListeners('Shop.delete_carts', $event)" keyName="cart" :data-id="product.id" class="font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart footer with promocode and totals -->
+        <template x-if="data.cart.products[0]">
+            <div class="border-t-2 border-slate-200 dark:border-gray-700 px-6 py-2 md:py-6 bg-slate-50 dark:bg-gray-800">
+                <!-- Promocode section with improved styling -->
+                <div class="mb-2 md:mb-6">
+                    <template x-if="data.cart.promocode_id == 0">
+                        <form class="flex flex-col gap-1 md:gap-3">
+                            <p class="text-sm font-semibold text-slate-700 dark:text-gray-200">Gutscheincode</p>
+                            <div class="flex gap-2">
+                                <input type="text" name="promocode" value="" placeholder="Gutscheincode eingeben" class="flex-1 px-4 py-2 text-sm text-slate-900 bg-white border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-900 dark:text-white dark:border-gray-600">
+                                <button @click="alpineListeners('Shop.post_promocode', $event)" keyName="cart" type="button" class="px-4 py-2 text-sm font-semibold text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition-colors shadow-md">Anwenden</button>
+                            </div>
+                        </form>
+                    </template>
+
+                    <template x-if="data.cart.promocode_id != 0">
+                        <form class="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-700 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-tag text-green-600 dark:text-green-400"></i>
+                                <p class="font-semibold text-green-700 dark:text-green-300" x-text="data.cart.promocode_info.promocode"></p>
+                            </div>
+                            <button @click="alpineListeners('Shop.delete_promocode', $event)" keyName="cart" type="button" class="px-3 py-1 text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400 transition-colors">Entfernen</button>
+                        </form>
+                    </template>
+                </div>
+
+                <!-- Totals with clean hierarchy -->
+                <div class="space-y-1 md:space-y-3 mb-2 md:mb-6">
+                    <div class="flex justify-between text-sm text-slate-600 dark:text-gray-300">
+                        <p>Alle Produkte</p>
+                        <p x-amount="data.cart.subtotal" class="font-medium"></p>
+                    </div>
+                    <div class="flex justify-between text-sm text-green-600 dark:text-green-400">
+                        <p>Rabatt</p>
+                        <p x-amount="data.cart.discount" class="font-medium"></p>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold text-slate-900 dark:text-white border-t-2 border-slate-200 dark:border-gray-700 ">
+                        <p>Gesamt</p>
+                        <p x-amount="data.cart.total" class="text-amber-600"></p>
+                    </div>
+                </div>
+
+                <!-- Checkout button with premium styling -->
+                <div class="space-y-1 md:space-y-3">
+                    <a href="/bg/checkout" @click="data.openCart = false" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-bold bg-amber-600 text-white shadow-lg hover:bg-amber-700 transition-all transform hover:scale-105">
+                        Zur Kasse
+                    </a>
+                    <button type="button" class="w-full text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors" @click="data.openCart = false">
+                        Weiter einkaufen →
+                    </button>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+<!-- Main header with improved layout and premium styling -->
+<div class="is-section w-full lock bg-white dark:!bg-gray-900 shadow-md" apidata="get.menu" keyname="menu">
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center py-4 px-4 lg:px-0">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a @click="href('/')">
+                    <img src="/placeholder.svg" :src="data.settings.logo" alt="" class="!m-0 h-[40px] max-h-[60px] w-auto rounded-xl hover:scale-105 transition-transform cursor-pointer">
+                </a>
+            </div>
+
+            <!-- Search bar with enhanced design -->
+            <div class="flex-1 max-w-2xl mx-8 hidden lg:block" x-data="{openSearchBar: false}">
+                <form class="w-full">
+                    <div class="flex items-center">
+                        <div class="relative w-full">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                            </div>
+                            <input name="search" @input.debounce.1000="alpineListeners('Search.get_search', $event); openSearchBar = true" @click="if(data.searchResults){openSearchBar = true}" keyName="searchResults" data-show_filters="1" data-filter="1" placeholder="Produkte suchen..." class="block w-full pl-12 pr-4 py-3 text-sm text-slate-900 bg-slate-50 rounded-l-lg border-2 border-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-800 dark:text-white dark:border-gray-700 transition-all">
+
+                            <!-- Search dropdown with premium card design -->
+                            <div x-show="openSearchBar" @click.outside="openSearchBar = false" x-cloak="" x-transition="" class="hidden md:block w-[200%] bg-white dark:bg-gray-900 border-2 border-slate-200 dark:border-gray-700 h-auto z-50 p-6 rounded-xl shadow-2xl absolute mt-2">
+                                <template x-if="data.searchResults.products.result.length == 0">
+                                    <div class="flex flex-col items-center justify-center py-8">
+                                        <i class="fa-solid fa-search text-4xl text-slate-300 dark:text-gray-600 mb-3"></i>
+                                        <p class="text-slate-500 dark:text-gray-400">Keine Ergebnisse gefunden</p>
+                                    </div>
+                                </template>
+
+                                <ul class="grid grid-cols-2 gap-4">
+                                    <template x-for="product in data.searchResults.products.result">
+                                        <li class="flex gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-800 transition-colors border border-slate-200 dark:border-gray-700">
+                                            <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-200 dark:border-gray-700">
+                                                <img :src="product.images[0]? product.images[0].url : Helpers.image('product')" @click="openSearchBar = false ; href(product.url)" class="h-full w-full object-cover object-center cursor-pointer hover:scale-110 transition-transform">
+                                            </div>
+
+                                            <div class="flex-1 flex flex-col justify-between min-w-0">
+                                                <div>
+                                                    <p @click="openSearchBar = false ; href(product.url)" class="text-sm font-medium text-slate-900 dark:text-white line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 cursor-pointer transition-colors" :title="product.title" x-text="product.title">Salmon</p>
+                                                    <p @click="openSearchBar = false ; href(product.categories[0].url)" class="text-xs text-slate-500 dark:text-gray-400 line-clamp-1 hover:text-amber-600 cursor-pointer transition-colors mt-1" :title="product.categories[0].title" x-text="product.categories[0].title">Category</p>
+                                                </div>
+                                                <div class="flex items-center gap-1 mt-2">
+                                                    <p x-amount="product.variations[0].selling_price" class="text-base font-bold text-amber-600"></p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                        <button type="button" @click="if(data.searchResults){href('/bg/search?search=' + data.searchResults.search)}" class="px-6 py-3 text-sm font-bold text-white bg-amber-600 rounded-r-lg border-2 border-amber-600 hover:bg-amber-700 transition-colors shadow-md">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Header icons with improved design -->
+            <div class="flex items-center gap-4">
+                <ul class="flex items-center ">
+                    <!-- User account -->
+                    <li class="cursor-pointer hidden lg:block">
+                        <div class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors" @click="data.user.logged_in ? href('/bg/userpage') : href('/bg/login')">
+                            <template x-if="data.user.logged_in">
+                                <p class="text-sm font-medium text-slate-700 dark:text-gray-200" x-text="data.user.first_name"></p>
+                            </template>
+                            <i class="fa-solid fa-circle-user text-2xl text-slate-700 dark:text-gray-200"></i>
+                        </div>
+                    </li>
+
+                    <!-- Wishlist -->
+                    <li class="hidden lg:block">
+                        <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="href('/bg/wishlist')">
+                            <i class="fa-solid fa-heart text-xl text-slate-700 dark:text-gray-200"></i>
+                        </div>
+                    </li>
+
+                    <!-- Mobile menu -->
+                    <li class="lg:hidden">
+                        <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="data.openMobileMenu = ! data.openMobileMenu">
+                            <i class="fa-solid fa-bars text-xl text-slate-700 dark:text-gray-200"></i>
+                        </div>
+                    </li>
+
+                    <!-- Dark mode toggle -->
+                    <li>
+                        <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="data.darkMode =! data.darkMode">
+                            <i :class="data.darkMode ? 'fa-sun' : 'fa-moon'" class="fa-solid text-xl text-slate-700 dark:text-gray-200"></i>
+                        </div>
+                    </li>
+
+                    <!-- Language switcher -->
+                    <li>
+                        <div x-data="{openLang:false}" class="relative">
+                            <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="openLang =! openLang">
+                                <i class="fa-solid fa-globe text-xl text-slate-700 dark:text-gray-200"></i>
+                            </div>
+                            <div x-show="openLang" x-cloak @click.outside="openLang = false" class="absolute right-0 mt-2 w-48 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-slate-200 dark:border-gray-700 z-50">
+                                <ul class="divide-y divide-slate-200 dark:divide-gray-700">
+                                    <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('en'); openLang = false">
+                                        <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">English</a>
+                                    </li>
+                                    <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('bg'); openLang = false">
+                                        <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">Български</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Cart -->
+                    <li class="cursor-pointer">
+                        <div class="relative p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors" @click="data.openCart =! data.openCart">
+                            <i class="fa-solid fa-cart-shopping text-xl text-slate-700 dark:text-gray-200"></i>
+                            <span class="absolute -top-1 -right-1 bg-amber-600 rounded-full text-white text-xs font-bold flex items-center justify-center w-5 h-5 shadow-md" x-text="data.cart.total_quantity"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation menu with premium styling -->
+<div class="is-section w-full" apidata="get.categories" keyname="categories" data-dropList="true">
+    <template x-if="data.screenWidth >= 1024">
+        <div class="is-section bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900  shadow-lg hidden lg:block lock border-b-2 border-amber-900" x-data="{activeCategory: 0, tempCategory: 0}" @mouseleave="activeCategory = 0">
+            <div class="container mx-auto">
+                <ul class="flex py-4 gap-1 justify-start flex-wrap">
+                    <template x-for="category in data.categories">
+                        <div>
+                            <li @mouseenter="if(category.children != undefined){ tempCategory = category.id; setTimeout(() => { if(tempCategory == category.id) {activeCategory = category.id}  }, 200)}" @mouseleave="tempCategory = 0" class="px-4 py-2 rounded-lg hover:bg-slate-800 dark:hover:bg-gray-900 transition-colors">
+                                <div class="flex items-center gap-2">
+                                    <p x-text="category.title" @click="href(category.url)" class="text-white uppercase font-bold text-xs tracking-wide hover:text-amber-400 cursor-pointer transition-colors"></p>
+                                    <template x-if="category.children">
+                                        <i class="fa-solid fa-chevron-down text-xs text-white"></i>
+                                    </template>
+                                </div>
+                            </li>
+                        </div>
+                    </template>
+
+                    <template x-for="menu in data.menu">
+                        <div>
+                            <li @mouseleave="tempCategory = 0" class="px-4 py-2 rounded-lg hover:bg-slate-800 dark:hover:bg-gray-900 transition-colors">
+                                <p x-text="menu.title" @click="href(menu.link)" class="text-white uppercase font-bold text-xs tracking-wide hover:text-amber-400 cursor-pointer transition-colors"></p>
+                            </li>
+                        </div>
+                    </template>
+                </ul>
+            </div>
+
+            <!-- Dropdown menu with enhanced card design -->
+            <template x-for="category in data.categories">
+                <div x-show="activeCategory == category.id" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" class="absolute left-0 w-full bg-white dark:bg-gray-900 shadow-2xl z-40 border-t-4 border-amber-600">
+                    <div class="container mx-auto py-8 px-4">
+                        <div class="grid grid-cols-4 gap-8">
+                            <template x-for="child in category.children">
+                                <div class="space-y-3">
+                                    <h3 @click="href(child.url)" class="font-bold text-base text-slate-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-500 cursor-pointer transition-colors border-b-2 border-amber-600 pb-2" x-text="child.title"></h3>
+                                    <ul class="space-y-2">
+                                        <template x-for="subchild in child.children">
+                                            <li @click="href(subchild.url)" class="text-sm text-slate-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-500 cursor-pointer transition-colors hover:translate-x-1 transform" x-text="subchild.title"></li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+</div>
+
+<template x-if="data.openMobileMenu">
+    <div class="is-section bg-slate-900/95 dark:bg-gray-950 lg:hidden fixed top-0 left-0 w-full h-full z-40 lock" x-show="data.openMobileMenu" style="display:none" x-cloack="">
+        <div class="text-center h-full">
+
+            <!-- Updated mobile menu header with premium design -->
+            <div class="relative bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-700 shadow-lg dark:bg-gray-900">
+                <p class="py-4 text-white font-bold text-lg tracking-wide dark:text-gray-200">Menü</p>
+
+                <div class="h-full absolute right-0 top-0 w-fit">
+                    <span class="flex justify-center items-center h-full gap-3 px-4 cursor-pointer hover:bg-slate-700/50 transition-colors" @click="data.openMobileMenu = false">
+                        <i class="fa-solid fa-x text-[14px] text-white"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="container h-full">
+
+                <!-- Enhanced profile and wishlist cards with modern styling -->
+                <ul class="flex pt-4 px-3 gap-3">
+
+                    <li class="cursor-pointer bg-white py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow min-w-[100px] dark:bg-gray-900 border border-slate-200 dark:border-gray-800">
+                        <div class="flex flex-col items-center gap-2" @click="data.user.logged_in ? href('/bg/userpage') : href('/bg/login'); data.openMobileMenu = false">
+                            <i class="fa-solid fa-circle-user text-[28px] text-amber-600 dark:text-amber-500"></i>
+                            <template x-if="data.user.logged_in">
+                                <p class="dark:text-gray-200 text-sm font-medium" x-text="data.user.first_name"></p>
+                            </template>
+                            <template x-if="!data.user.logged_in">
+                                <p class="dark:text-gray-200 text-sm font-medium">Profil</p>
+                            </template>
+                        </div>
+                    </li>
+
+                    <li class="cursor-pointer bg-white py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow min-w-[100px] dark:bg-gray-900 border border-slate-200 dark:border-gray-800" @click="href('/bg/wishlist'); data.openMobileMenu = false">
+                        <div class="flex flex-col items-center gap-2">
+                            <i class="fa-solid fa-heart text-[28px] text-amber-600 dark:text-amber-500"></i>
+                            <p class="dark:text-gray-200 text-sm font-medium">Wunschliste</p>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <!-- Modern search bar with improved styling -->
+                <div>
+                    <div class="flex justify-center items-center col-span-2" x-data="{openSearchBar: false}">
+                        <form class="w-full">
+                            <div class="flex items-center py-4 px-3">
+                                <div class="relative w-full">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                                    </div>
+                                    <input name="search" @input.debounce.1000="alpineListeners('Search.get_search', $event);" data-sort="relevant" keyname="searchResults" placeholder="Suchen..." class="block dark:bg-gray-900 dark:text-gray-200 p-3 pl-10 w-full text-sm text-gray-900 bg-white rounded-l-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                </div>
+                                <div>
+                                    <a @click="if(data.searchResults){href('/bg/search'); data.openMobileMenu = false}" class="dark:text-white dark:bg-gray-900 py-3.5 px-5 w-full text-sm font-medium text-center text-white rounded-r-lg border cursor-pointer bg-amber-600 border-amber-600 hover:bg-amber-700 focus:ring-4 focus:ring-amber-300 transition-colors">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Enhanced categories and menu with premium accordion design -->
+                <div class="h-full overflow-scroll pb-[220px]" x-data="{activeCategory: 0}">
+                    <template x-for="category in data.categories">
+
+                        <ul class="">
+                            <li class="py-1">
+                                <div class="flex items-center justify-between gap-3 bg-white dark:bg-gray-900 py-3 px-5 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-slate-200 dark:border-gray-800 mx-3">
+
+                                    <p x-text="category.title" @click="href(category.url); data.openMobileMenu = false" class="dark:text-gray-200 text-slate-900 text-left uppercase font-bold text-[13px] hover:text-amber-600 cursor-pointer transition-colors"></p>
+                                    <template x-if="category.children">
+                                        <div class="bg-amber-600 dark:bg-amber-700 rounded-full h-[28px] w-[28px] flex justify-center items-center cursor-pointer hover:bg-amber-700 transition-colors" @click="activeCategory != category.id ? activeCategory = category.id : activeCategory = 0">
+                                            <i class="fa-solid fa-arrow-down text-white text-[12px] dark:text-gray-200"></i>
+                                        </div>
+                                    </template>
+
+                                </div>
+
+                                <div class="" x-show="activeCategory == category.id">
+                                    <ul class="bg-slate-50 dark:bg-gray-800 px-5 py-2 mx-3 rounded-b-lg flex flex-col items-start justify-start divide-y divide-slate-200 dark:divide-gray-700 border-x border-b border-slate-200 dark:border-gray-800">
+                                        <template x-for="subCategory in category.children">
+                                            <li class="text-start w-full py-2.5">
+                                                <p @click="href(subCategory.url); data.openMobileMenu = false" x-text="subCategory.title" class="dark:text-gray-300 text-slate-700 text-[13px] float-left hover:text-amber-600 cursor-pointer transition-colors font-medium"></p>
+                                            </li>
+
+                                        </template>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </template>
+
+                    <template x-for="menu in data.menu">
+                        <ul class="">
+                            <li class="py-1">
+                                <div class="flex items-center justify-between gap-3 bg-white dark:bg-gray-900 py-3 px-5 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-slate-200 dark:border-gray-800 mx-3">
+                                    <p x-text="menu.title" @click="href(menu.link); data.openMobileMenu = false" class="dark:text-gray-200 text-slate-900 text-left uppercase font-bold text-[13px] hover:text-amber-600 cursor-pointer transition-colors"></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </template>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</template>

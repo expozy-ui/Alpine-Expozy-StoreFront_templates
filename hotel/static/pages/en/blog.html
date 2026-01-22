@@ -1,5 +1,5 @@
 <!-- Updated main container with better spacing -->
-<div class="w-full flex py-10 bg-slate-50 dark:bg-gray-900 lock" apiData="get.blogPosts_filters">
+<div class="w-full flex py-10 bg-slate-50 dark:bg-gray-900" apiData="get.blogPosts_filters">
 
     <!-- Enhanced sidebar with premium design -->
     <div class="lg:w-2/5 xl:w-1/5 hidden lg:block min-w-[450px] px-10 py-5 bg-white dark:bg-gray-800 shadow-lg mx-5 h-fit rounded-xl" apiData="get.blogCategories" keyName="blogCategories">
@@ -14,7 +14,7 @@
                         </svg>
                     </div>
                     <form class="w-full h-full">
-                        <input class="peer h-full w-full outline-none text-sm text-slate-700 dark:text-gray-200 pr-3 bg-transparent placeholder:text-slate-400" @input="alpineListeners('get.blogPosts', $event)" name="search" type="text" placeholder="Търсене..." />
+                        <input class="peer h-full w-full outline-none text-sm text-slate-700 dark:text-gray-200 pr-3 bg-transparent placeholder:text-slate-400" @input="alpineListeners('get.blogPosts', $event)" name="search" type="text" placeholder="Search..." />
                     </form>
                 </div>
             </div>
@@ -22,11 +22,11 @@
 
         <!-- Enhanced categories section with better typography -->
         <div class="py-5 mb-6">
-            <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-[#c3a460]">Categories</h3>
+            <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-amber-600">Categories</h3>
             <ul class="divide-y divide-slate-200 dark:divide-gray-700 py-2">
                 <template x-for="category in data.blogCategories">
-                    <li @click="!window.location.href.includes(category.url) ? href(category.url) : href('/en/blog')" class="w-full">
-                        <div :class="window.location.href.includes(category.url) ? 'bg-gradient-to-r from-[#c3a460] to-amber-500 text-white shadow-md' : 'bg-slate-50 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800'" class="w-full px-4 py-3 flex items-center justify-between cursor-pointer my-2 rounded-lg transition-all duration-200 group">
+                    <li @click="!window.location.href.includes(category.url) ? href(category.url) : href('/bg/blog')" class="w-full">
+                        <div :class="window.location.href.includes(category.url) ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md' : 'bg-slate-50 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800'" class="w-full px-4 py-3 flex items-center justify-between cursor-pointer my-2 rounded-lg transition-all duration-200 group">
                             <a x-text="category.title" class="font-medium text-sm group-hover:translate-x-1 transition-transform duration-200"></a>
                             <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
                         </div>
@@ -37,12 +37,12 @@
 
         <!-- Enhanced tags section with modern badge design -->
         <div>
-            <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-[#c3a460]">Tags</h3>
+            <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-amber-600">Tags</h3>
             <form>
                 <div class="flex flex-wrap gap-2 pt-4">
 
                     <template x-for="tag in data.blogPosts_filters.tags">
-                        <button type="button" x-text="tag" @click="alpineListeners('get.blogPosts', $event)" keyname="blogPosts" :data-tag="tag" class="rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer" :class=" data.pageUrl.tag == tag ? 'bg-gradient-to-r from-[#c3a460] to-amber-500 text-white' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-800'"></button>
+                        <button type="button" x-text="tag" @click="alpineListeners('get.blogPosts', $event)" keyname="blogPosts" :data-tag="tag" class="rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer" :class=" data.pageUrl.tag == tag ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-800'"></button>
                     </template>
                 </div>
             </form>
@@ -66,11 +66,11 @@
                             <div class="p-6 flex flex-col flex-1">
 
                                 <div class="flex items-center gap-2 mb-3">
-                                    <span class="text-xs font-semibold text-[#c3a460] bg-amber-100 dark:bg-amber-900/40 px-3 py-1 rounded-full" x-text="blog.category.title ?? 'Категория'"></span>
+                                    <span class="text-xs font-semibold text-amber-600 bg-amber-100 dark:bg-amber-900/40 px-3 py-1 rounded-full" x-text="blog.category.title ?? 'Category'"></span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400" x-text="blog.created_at ?? ''"></span>
                                 </div>
 
-                                <h3 @click="href(blog.url)" class="text-xl font-bold text-gray-900 dark:text-gray-200 mb-3 group-hover:text-[#c3a460] transition-colors line-clamp-2 cursor-pointer" x-text="blog.title"></h3>
+                                <h3 @click="href(blog.url)" class="text-xl font-bold text-gray-900 dark:text-gray-200 mb-3 group-hover:text-amber-600 transition-colors line-clamp-2 cursor-pointer" x-text="blog.title"></h3>
 
                                 <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 flex-1" x-text="blog.seo_description"></p>
 
@@ -85,7 +85,7 @@
                                     </span>
                                 </div>
 
-                                <a @click.prevent="href(blog.url)" class="inline-flex items-center gap-2 text-[#c3a460] font-semibold hover:text-amber-700 transition-colors cursor-pointer">Read more<i class="fa-solid fa-arrow-right text-sm"></i></a>
+                                <a @click.prevent="href(blog.url)" class="inline-flex items-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors cursor-pointer">Read more<i class="fa-solid fa-arrow-right text-sm"></i></a>
 
                             </div>
                         </article>
@@ -99,7 +99,7 @@
                             <ul class="inline-flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md">
                                 <template x-for="(page,index) in data.blogPosts.pagination.total_pages" :key="index">
                                     <li>
-                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-[#c3a460] to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
+                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
                                     </li>
                                 </template>
                             </ul>

@@ -99,7 +99,7 @@
                             <ul class="inline-flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md">
                                 <template x-for="(page,index) in data.blogPosts.pagination.total_pages" :key="index">
                                     <li>
-                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100' dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
+                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
                                     </li>
                                 </template>
                             </ul>

@@ -1,0 +1,79 @@
+<div class="is-section is-section-auto section">
+    <div class="is-overlay"></div>
+    <div class="!container is-container v2 container">
+        <div class="relative py-6 px-4 lg:py-[50px] text-gray-900">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-[30px] 2xl:gap-[60px]">
+                <div class="content lg:p-[75px_0] md:p-[0]">
+                    <span class="relative mb-[15px] left-[65px] text-gray-900 text-2xl font-semibold inline-block
+                before:absolute before:left-[-65px] before:bottom-[50%] before:w-[52px] before:h-[12px]
+                before:bg-no-repeat before:bg-[url('https://moonlit-tailwind.netlify.app/assets/images/shape/section__style__two.svg')] before:transform before:translate-y-2/4">Hotel Expozy</span>
+                    <div class="space-y-2.5">
+                        <p>Hotel Expozy ist ein neues 4-Sterne-Hotel</p>
+                        <p>Dies ist Ihr Ort für Komfort und Eleganz im Herzen von Sofia. Mit Liebe zum Detail gestaltet, bietet das Hotel modernes Design, eine gemütliche Atmosphäre und professionellen Service. In der Nähe der wichtigsten Sehenswürdigkeiten der Stadt gelegen, ist es ideal sowohl für Geschäftsreisen als auch für einen erholsamen Urlaub. Ob Sie für eine Nacht oder einen längeren Aufenthalt hier sind, wir garantieren Komfort und Fürsorge, die Ihr Erlebnis unvergesslich machen werden.</p>
+                        <p>Es befindet sich im zentralen Teil von Sofia und ist in unmittelbarer Nähe zu zahlreichen architektonischen Sehenswürdigkeiten und kulturhistorischen Denkmälern.</p>
+                        <p>„Expozy" verfügt über 60 elegant und stilvoll eingerichtete Zimmer, 2 Konferenzräume, eine Lobby-Bar, ein Restaurant und eine Tiefgarage für PKWs.</p>
+                    </div>
+                </div>
+                <div class="w-full relative">
+                    <div class="left">
+                        <img class="rounded-md w-full h-auto" src="/static/images/product.webp" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="w-full py-6 lg:pb-24 px-4 container lock" apiData="get.gallery_categories" keyName="gallery">
+    <template x-if="data.gallery">
+        <div x-init="data.selectedGallery = data.gallery.result[0]"></div>
+    </template>
+
+    <div class=" w-full">
+        <ul class="mt-7 flex justify-center flex-row gap-1 overflow-auto whitespace-nowrap pb-2.5 pl-1">
+            <template x-for="category in data.gallery.result">
+                <li>
+                    <button x-text="category.title" @click="data.selectedGallery = category" type="button" :class="data.selectedGallery.id == category.id ? 'bg-black text-white' : 'border border-black text-black' " class="w-fit min-w-unset px-4 text-xs lg:text-base md:min-w-[150px] py-2 rounded-xl capitalize text-gray-900 hover:text-white hover:bg-black">Lobby</button>
+                </li>
+            </template>
+        </ul>
+
+        <div class="projects mt-4 lg:mt-8 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 aos-init aos-animate" data-aos="fade-up" :data-aos-duration="data.screenWidth > 1024 ? '1000' : '300' ">
+            <template x-for="image in data.selectedGallery.gallery">
+                <div data-aos="zoom-in-up" class="project group relative overflow-hidden rounded-xl block shadow-xl border border-slate-500">
+
+                    <img :src="image.image.url != '' ? 'image.image.url' : Helpers.image('product')" class="h-full w-full object-cover" alt="">
+                </div>
+            </template>
+
+        </div>
+    </div>
+</section>
+
+<div class="lg:mt-28 px-4 sm:px-10 py-6 lg:py-12 space-y-6 lock" apidata="get.faq" keyName="faq">
+    <div class="md:text-center max-w-4xl mx-auto mb-14">
+        <h2 class="text-2xl md:text-4xl font-bold mb-6">Fragen und Antworten</h2>
+        <p class="text-sm md:text-base">In diesem Bereich finden Sie Antworten auf die häufigsten Fragen zum Hotel Expozy. Wenn Sie weitere Fragen haben, zögern Sie nicht, uns zu kontaktieren – wir stehen Ihnen jederzeit gerne zur Verfügung!</p>
+    </div>
+
+    <div x-data="{selected : 0}" class="mx-auto container">
+        <ul class="space-y-2">
+            <template x-for="faq in data.faq">
+                <li @click="active =! active" x-data="{active: false}" class="bg-white shadow border border-gray-200 mt-5 w-full rounded-lg flex flex-col justify-between hover:shadow-lg">
+                    <div :class="active ? 'bg-gray-50 ' : 'bg-whtie' " class="flex items-center justify-between p-4 rounded-lg" @click="selected !== faq.id ? selected = faq.id : selected = 0">
+                        <div>
+                            <p x-text="faq.question" :class="active ? 'text-gray-900' : 'text-gray-800' " class="text-sm md:text-base lg:text-lg font-semibold">Wie wird man Gastgeber? Ist mein Ort geeignet?</p>
+                        </div>
+                        <i :class="active ? 'fa-minus' : 'fa-plus' " class="fa-solid" aria-hidden="true"></i>
+                    </div>
+                    <div class="relative overflow-hidden transition-all duration-300" x-ref="container1" :style="active ? 'max-height: ' + $refs.container1.scrollHeight + 100 + 'px' : 'max-height:0px'" style="max-height:0px">
+                        <div class="p-4">
+                            <p x-text="faq.answer" class="text-sm md:text-base"></p>
+                        </div>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+</div>

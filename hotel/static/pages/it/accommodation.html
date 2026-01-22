@@ -1,0 +1,135 @@
+<div class="is-section is-box  is-section-50   min-height-60 last-box !p-0">
+    <div class="is-overlay">
+        <div class="is-overlay-bg brightness-50" style="background-image: url(&quot;/static/images/1920x1080.webp&quot;); background-position: 50% 60%;"></div>
+    </div>
+    <div class="!container is-container v2">
+        <div class="text-center">
+            <h2 class="mb-[12px] 2xl:text-[40px] xl:text-[38px] lg:text-[36px] md:text-[34px] sm:text-[30px] text-[28px] font-bold text-white">Alloggio</h2>
+            <h5 class="text-[16px]">
+                <span>
+                    <a href="index.html" class="text-[#fff] hover:text-[#fff]">Home</a>
+                </span>
+                <span class="font-bold text-white"> / </span>
+                <span>
+                    <a href="javascript:void(0)" class="text-[#fff] hover:text-[#fff]">Alloggio</a>
+                </span>
+            </h5>
+        </div>
+    </div>
+</div>
+
+<div class="is-section is-section-auto section overflow-visible">
+    <div class="is-overlay"></div>
+    <div class="!container is-container v2">
+        <div class=" w-full">
+
+            <div class="container !mt-[-50px]  px-4 overflow-visible">
+
+                <form>
+                    <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 shadow hover:shadow-md p-5 bg-white rounded-xl  gap-2 ">
+
+                        <div class="relative flatpickr-input active" init="initCalendar($el)" readonly="readonly">
+
+                            <div class="border border-gray-200 rounded-md">
+                                <div x-data="DateHelper.dateRange()" class="grid grid-cols-2 gap-2  disabled block rounded-md  w-full text-sm text-gray-900 bg-white  ">
+                                    <input type="text" :value="data.date_start" name="date_start" class="block  px-4 py-4 w-full text-sm  text-gray-900 bg-white rounded-l-lg  appearance-none focus:outline-none focus:ring-0 focus:border-black peer" placeholder="Arrivo">
+                                    <input type="text" :value="data.date_end" name="date_end" class="block  px-4 py-4 w-full text-sm  text-gray-900 bg-white rounded-l-lg  appearance-none focus:outline-none focus:ring-0 focus:border-black peer" placeholder="Partenza">
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <input type="hidden" name="errDate">
+                            </div>
+                        </div>
+
+                        <div class="h-full flex items-center border border-gray-200 rounded-md">
+                            <div class="flex justify-center items-center px-4">
+                                <span> Ospiti:</span>
+                                <input type="number" min="1" name="guests" class=" bg-transparent h-full w-full outline-none px-4 py-2" value="1" />
+                            </div>
+                        </div>
+
+                        <!-- <div class="h-full flex items-center border border-gray-200 rounded-md">
+                            <div class="flex justify-center items-center px-4">
+                                <span> Bambini:</span>
+                                <input type="number" min="0" name="child" class=" bg-transparent h-full w-full outline-none px-4 py-2" value="0" />
+                            </div>
+                        </div> -->
+
+                        <button @click="alpineListeners('Hotel.setDates', $event)" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3.5 h-fit bg-black ">
+                            <span class="absolute left-0 top-0 h-32 w-32 -translate-y-2 translate-x-12 rotate-45 bg-gray-800 opacity-[3%]"></span>
+                            <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-white opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8"></span>
+                            <span class="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black font-normal uppercase"><i class="fa-solid fa-magnifying-glass mr-2"></i> Cerca</span>
+                            <span class="absolute inset-0 rounded-md border border-gray-800"></span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <section class="relative w-full py-10 px-4">
+                <div class="container">
+                    <div class="grid grid-cols-1 gap-[30px]" apidata="Hotel.get_hotel_room_types" keyname="rooms">
+                        <template x-for="room in data.rooms">
+
+                            <div class="group rounded-xl bg-white dark:bg-slate-900 shadow hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-800 dark:hover:shadow-gray-700 overflow-hidden ease-in-out duration-500 ">
+                                <div class="md:flex">
+                                    <div class="relative md:shrink-0">
+                                        <img :src="room.images[0] ? room.images[0].url : Helpers.image('product')" class="w-full md:w-[300px] h-full object-cover" alt="">
+                                    </div>
+                                    <div class="p-6 w-full">
+                                        <div class="md:flex justify-between items-center ">
+                                            <div>
+                                                <p x-text="room.title" class="text-xl font-bold">Camera </p>
+                                                <p class="text-base"> Ospiti Max.: <span x-text="room.guests" class="font-semibold"></span></p>
+
+                                            </div>
+                                            <div>
+                                                <p class="text-2xl font-bold " x-amount="room.price">26</p>
+                                                <p class="text-sm mb-5"> a notte</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span x-html="room.short_description" class="flex text-slate-400 "></span>
+                                        </div>
+
+                                        <div class="md:flex items-end justify-between pt-6 md:pt-10 gap-4">
+                                            <ul class="list-none flex-grow border-y border-gray-200 pt-6 pb-2 flex flex-wrap gap-4 justify-center md:justify-start">
+                                                <template x-for="amenitie in room.amenities">
+                                                    <li :title="amenitie.title" class="flex items-center me-4">
+                                                        <span x-html="amenitie.icon" class="[&>svg]:w-5 "></span>
+                                                        <span x-text="amenitie.title" class="ms-2 text-base text-slate-700 dark:text-white hidden md:block"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                            <div class="flex flex-col items-center md:items-end gap-2 pt-4 md:pt-0">
+                                                <p @click="href(room.url)" class="cursor-pointer text-sm font-bold underline">
+                                                    Dettagli
+                                                </p>
+                                                <button @click="data.addRoom = room" class="group/btn relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3.5 h-fit bg-black ">
+                                                    <span class="absolute left-0 top-0 h-32 w-32 -translate-y-2 translate-x-12 rotate-45 bg-gray-800 opacity-[3%]"></span>
+                                                    <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-white opacity-100 transition-all duration-500 ease-in-out group-hover/btn:-translate-x-8"></span>
+                                                    <span class="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover/btn:text-black font-normal uppercase"><i class="fa-solid fa-calendar-days mr-2"></i> Prenota ora</span>
+                                                    <span class="absolute inset-0 rounded-md border border-gray-800"></span>
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </template>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+</div>

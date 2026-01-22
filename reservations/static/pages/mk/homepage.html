@@ -1,0 +1,129 @@
+<!-- <div apiData="Hotel.get_hotel_room_types"></div> -->
+<div class="w-full">
+
+    <div class="w-full bg-gray-50 h-fit py-4 md:py-[70px] px-4">
+        <ol class="md:flex space-y-4 justify-between w-full md:w-2/4 mx-auto">
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse gap-">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold bg-black text-white border rounded-full shrink-0 border-black">
+                    1
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">Избор на датуми</h3>
+                    <p class="text-sm">Наведете го периодот на престој.</p>
+                </span>
+            </li>
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                    2
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">Избор на соба</h3>
+                    <p class="text-sm">Изберете најсоодветна опција.</p>
+                </span>
+            </li>
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                    3
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">Плаќање и резервација</h3>
+                    <p class="text-sm">Потврдете и завршете го процесот.</p>
+                </span>
+            </li>
+        </ol>
+    </div>
+
+    <p class="text-gray-900 text-base md:text-xl py-5 lg:py-14 text-center">Изберете ги датумите за престој.</p>
+
+    <div class="w-full relative  z-1 lg:mt-10">
+        <div class="grid grid-cols-1">
+            <form>
+                <div class="flex justify-center items-center">
+                    <div class="col-span-3 relative flatpickr-input active" x-init="initCalendar($el)" readonly="readonly"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    @media (max-width: 768px) {
+        .flatpickr-calendar {
+            transform: scale(1) !important;
+        }
+
+        .numInputWrapper,
+        .cur-month {
+            font-size: 12px !important;
+        }
+    }
+
+    .flatpickr-day {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 12px;
+    }
+
+    .flatpickr-calendar {
+        transform: scale(1.4);
+        /* transform-origin: top left; */
+    }
+
+    .numInputWrapper,
+    .cur-month {
+        font-size: 14px;
+    }
+</style>
+<script>
+
+
+
+    async function initCalendar(el) {
+        await Helpers.loadFile(`/assets/plugins/flatpicker/flatpicker.css`);
+        await Helpers.loadFile(`/assets/plugins/flatpicker/flatpicker.js`);
+
+
+        let flatpickrInstance = flatpickr(el, {
+            dateFormat: 'Y-m-d',
+            minDate: 'today',
+            mode: "range",
+            inline: true,
+            showMonths: window.innerWidth <= 768 ? 1 : 2,
+            locale: {
+                firstDayOfWeek: 1, // Понеделник како прв ден
+                weekdays: {
+                    shorthand: ["Нед", "Пон", "Вто", "Сре", "Чет", "Пет", "Саб"],
+                    longhand: ["Недела", "Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота"]
+                },
+                months: {
+                    shorthand: ["Јан", "Фев", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Ное", "Дек"],
+                    longhand: ["Јануари", "Февруари", "Март", "Април", "Мај", "Јуни", "Јули", "Август", "Септември", "Октомври", "Ноември", "Декември"]
+                }
+            },
+            onChange: function (selectedDates, dateStr, instance) {
+                let datesSplit = dateStr.split(' ');
+                if (datesSplit.length >= 2) {
+                    // document.getElementById('date_start').value = datesSplit[0];
+                    // document.getElementById('date_end').value = datesSplit[2];
+
+                    localStorage.setItem('date_start', datesSplit[0]);
+                    localStorage.setItem('date_end', datesSplit[2]);
+
+                    data.date_start = datesSplit[0];
+                    data.date_end = datesSplit[2];
+                    href(`/${LANG}/accommodation`);
+                    // alpineListeners('Hotel.get_hotel_room_types', document.getElementById('date_start'));
+
+                } else {
+                    // document.getElementById('date_start').value = '';
+                    // document.getElementById('date_end').value = '';
+
+                }
+
+            },
+        });
+    }
+</script>

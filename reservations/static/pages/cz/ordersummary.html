@@ -1,0 +1,165 @@
+<div class="is-section is-section-auto section  !items-center">
+
+    <div class="!container is-container v2">
+
+        <div class="container  relative">
+            <h1 class="mb-4 w-2/3 mx-auto  text-black center font-Cardo wordspac_15 2xl:text-[48px] xl:text-[42px] lg:text-[38px] md:text-[35px] sm:text-[30px] text-[24px] md:leading-[1.2857em] sm:leading-[42px] leading-[36px] font-bold sm:tracking-[2px] tracking-[1px] uppercase text-[#fff] aos-init aos-animate" data-aos="fade-up" data-aos-duration="1500">VASE REZERVACE V </br>HOTELU EXPOZY</h1>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="container text-gray-900 text-sm py-[30px] space-y-1 px-4" apiData="Hotel.get_hotel_reservations" keyName="order" data-summary="1" :data-last_name="data.pageUrl.last_name" :data-date="data.pageUrl.date">
+
+    <p> Cislo objednavky <span x-text="data.order.id"></span></p>
+    <p> Zakaznik: <span x-text="data.pageUrl.last_name"></span></p>
+    <template x-if="data.order">
+        <p>Datum objednavky: <span x-text="Helpers.formatCalendarDate(data.order.date_created)"></span></p>
+    </template>
+    <p>Rezervovano pres oficialni web Hotel Expozy</p>
+
+    <hr>
+
+    <div class="w-full md:w-1/2">
+        <div class="mb-2 md:mb-0 md:space-y-2">
+            <p class="font-semibold text-base !mt-4 ">Hotel Expozy</p>
+            <div class="md:flex justify-between mt-2 md:mt-0">
+                <p class="font-medium md:font-normal py-0.5">Adresa</p>
+                <p>Praha centrum, ul. Vaclavske namesti 30, 110 00 Praha</p>
+            </div>
+
+            <div class="md:flex justify-between mt-2 md:mt-0">
+                <span class="font-medium md:font-normal py-0.5">Telefon</span>
+                <div>
+                    <p> <a href="tel:+02 437 2586">+02 437 2586</a></p>
+                    <p> <a href="tel:+420 56940783">+420 56940783</a></p>
+                </div>
+            </div>
+
+            <div class="md:flex justify-between mt-2 md:mt-0">
+                <span class="font-medium md:font-normal py-0.5">E-mail</span>
+
+                <div>
+                    <p class="md:text-right"> <a href="mailto:info@studioweb.bg">info@studioweb.bg</a></p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <p class="font-semibold text-base !mt-4 ">Detaily rezervace</p>
+    <div class="md:flex gap-12 w-fit py-4 rounded-md">
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>Check-in</p>
+            <div>
+                <p x-text="Helpers.formatCalendarDate(data.order.reservations[0].date_start)">20 led 2025, </p>
+                <p class="font-medium"> Od 14:00 do 00:00 hodin</p>
+            </div>
+        </div>
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>Check-out</p>
+            <div>
+                <p x-text="Helpers.formatCalendarDate(data.order.reservations[0].date_end)">20 led 2025, </p>
+                <p class="font-medium"> Do 12:00</p>
+            </div>
+        </div>
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>Noci </p>
+            <p x-text="data.order.reservations[0].nights" class="grow md:flex items-center justify-center font-medium">1 </p>
+        </div>
+
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>Hostu </p>
+            <p x-text="data.order.reservations.reduce((sum, item) => sum + item.guests, 0)" class="grow md:flex items-center justify-center font-medium">1 </p>
+        </div>
+        <div class="flex flex-col justify-between">
+            <p>Pokoju </p>
+            <p x-text="data.order.reservations.length" class="grow md:flex items-center justify-center font-medium">1 </p>
+        </div>
+    </div>
+
+    <div class="w-1/2 text-gray-900 space-y-1">
+        <template x-for="room in data.order.reservations">
+            <div class="border border-gray-300 p-1.5 rounded-md">
+                <div class="w-full  flex justify-between items-center ">
+                    <p class="font-semibold" x-text="data.hotel_room_types.find(obj=>obj.id == room.type_id).title">No.1: Dvojity premiovy pokoj</p>
+
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div>
+                        <p>Rezervace c. <span x-text="room.id">1024</span></p>
+
+                    </div>
+
+                    <!-- <div>
+                        <p>2 hoste</p>
+                    </div> -->
+                    <div>
+                        <p class="text-base text-right" x-amount="room.price_total"></p>
+
+                    </div>
+                </div>
+
+            </div>
+        </template>
+
+        <div class="w-full border border-gray-300 bg-black text-white flex justify-between items-center p-1.5 py-2.5 text-base rounded-sm">
+            <p>Konecna cena</p>
+            <div>
+                <p x-amount="data.order.price" class="font-semibold">438 CZK</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="font-semibold text-base !mt-4 ">Popis tarifu</p>
+    <p>Ubytovani v
+        <template x-for="room in data.order.reservations">
+            <span x-text="room.room_id + ', ' "></span>
+        </template>
+    </p>
+    <p>Cena zahrnuje noclehy, 21% DPH a turistickou taxu. Pristup do lobby baru, parkovani a Wi-Fi jsou take zahrnuty.</p>
+
+    <p class="font-semibold text-base !mt-4 ">Storno podminky</p>
+    <p>Bezplatne zruseni rezervace neni mozne. Pri zruseni rezervace vam bude uctovana cena prvni noci.</p>
+
+    <p apiData="Payments.get_payment_methods" keyName="payment_methods" class="font-semibold text-base !mt-4 ">Zpusob platby</p>
+    <p x-text="data.payment_methods.find(obj => obj.code == data.order.reservations[0].payment_code).title"></p>
+    <template x-if="data.order.reservations[0].payment_code == 'bank_transfer'">
+        <div>
+            <P>
+
+                <span>Expozy s.r.o.</span>
+            </P>
+
+            <P>
+                <span>IBAN </span>
+                <span>CZ06 BPBI 9999 9999 9999 99</span>
+            </P>
+            <P>
+                <span>BIC </span>
+                <span>BPBOCZSF</span>
+            </P>
+
+        </div>
+
+    </template>
+    <!-- <p>Udaje o vasi karte jsou pouzity pouze jako zaruka vasi rezervace. Vase karta nebude uctovana, pokud nezrusite rezervaci po obdobi bezplatneho zruseni nebo v pripade nedostaveni se.</p> -->
+
+    <p class="font-semibold text-base !mt-4 ">Poloha Hotel Expozy </p>
+    <div>
+        <p>Hotel Expozy </p>
+        <p>Praha centrum, Vaclavske namesti 30, 110 00 Praha</p>
+        <p>50.0755381, 14.4378005</p>
+    </div>
+
+    <div id="map" class="w-full my-10">
+        <iframe class="w-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.349731066782!2d14.4252461!3d50.0847127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94e8e7f8c0f1%3A0x400af0f66164090!2sV%C3%A1clavsk%C3%A9%20n%C3%A1m%C4%9Bst%C3%AD%2C%20Praha!5e0!3m2!1scs!2scz!4v1739449568217!5m2!1scs!2scz" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+</div>

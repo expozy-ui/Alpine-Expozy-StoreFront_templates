@@ -1,0 +1,201 @@
+<div class="w-full dark:bg-gray-900 min-h-screen py-8">
+
+    <!-- Updated container with premium card design and better spacing -->
+    <div class="container mx-auto px-4 md:my-12" apidata="Shop.get_orders" keyName="order" :data-id="data.pageUrl.id">
+
+        <!-- Enhanced success message with gradient background -->
+        <div class="w-full bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900 rounded-t-xl shadow-lg p-8 flex items-center justify-center">
+            <div class="flex items-center gap-4">
+                <div class="p-2 rounded-full bg-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-check text-green-600 text-2xl"></i>
+                </div>
+                <p class="text-lg md:text-2xl font-bold text-white uppercase tracking-wide">Diŋga lea lihkostuvvan!</p>
+            </div>
+        </div>
+
+        <!-- Improved grid layout with premium cards -->
+        <div class="w-full bg-white dark:bg-gray-800 shadow-xl rounded-b-xl overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-gray-700">
+
+                <!-- Order Information Card -->
+                <div class="w-full flex flex-col p-6 space-y-3">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-file-invoice text-white text-lg"></i>
+                        </div>
+                        <p class="text-lg font-bold text-slate-800 dark:text-gray-200 uppercase">Dieđut</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Diŋganummar:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.number"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Beaivi:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.date_created"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Dilli:</span>
+                            <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 rounded text-xs font-medium" x-text="data.order.status.title"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Customer Data Card -->
+                <div class="w-full flex flex-col p-6 space-y-3">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-user text-white text-lg"></i>
+                        </div>
+                        <p class="text-lg font-bold text-slate-800 dark:text-gray-200 uppercase">Geavaheaddji</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Namma:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.first_name + ' ' + data.order.last_name"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Telefovdna:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.phone"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">E-poasta:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.email"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Shipping Data Card -->
+                <div class="w-full flex flex-col p-6 space-y-3">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-truck-fast text-white text-lg"></i>
+                        </div>
+                        <p class="text-lg font-bold text-slate-800 dark:text-gray-200 uppercase">Doaibma</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Čujuhus:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.address.shipping_address"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Gávpot:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.address.city"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Postanummar:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.address.post_code"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Payment Card -->
+                <div class="w-full flex flex-col p-6 space-y-3">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-credit-card text-white text-lg"></i>
+                        </div>
+                        <p class="text-lg font-bold text-slate-800 dark:text-gray-200 uppercase">Máksit</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Vuohki:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.payment_method.title"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Доставка:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.shipping_price"></span>
+                            <span x-text="data.order.currency.symbol"></span>
+                        </p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold">Buktagat:</span>
+                            <span class="ml-2 text-slate-800 dark:text-gray-200" x-text="data.order.price.toFixed(2)"></span>
+                            <span x-text="data.order.currency.symbol"></span>
+                        </p>
+
+                        <div class="pt-2 mt-2 border-t border-gray-200 dark:border-gray-700">
+                            <p class="text-base font-bold text-slate-800 dark:text-gray-200">
+                                <span>Oktiibuot:</span>
+                                <span class="ml-2 text-amber-600 dark:text-amber-500" x-text="data.order.total_price.toFixed(2)"></span>
+                                <span x-text="data.order.currency.symbol"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced products section with better collapse functionality -->
+            <div class="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                <div class="flex h-full flex-col" x-data="{cartCheckoutShow: true}">
+                    <div class="px-6 py-5">
+                        <div class="flex items-center justify-between cursor-pointer group" @click="cartCheckoutShow = !cartCheckoutShow">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg flex items-center justify-center group-hover:from-slate-600 group-hover:to-slate-700 transition-all">
+                                    <i class="fa-solid fa-shopping-bag text-white text-lg"></i>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-200">Buktagat diŋggas</h2>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-500 dark:text-gray-400" x-text="data.order.products.length + ' buktagat'"></span>
+                                <i :class="cartCheckoutShow ? 'fa-chevron-up' : 'fa-chevron-down'" class="fa-solid text-gray-600 dark:text-gray-400 transition-transform"></i>
+                            </div>
+                        </div>
+
+                        <!-- Improved product list with better styling -->
+                        <div x-show="cartCheckoutShow" x-transition class="mt-6">
+                            <ul role="list" class="space-y-4">
+                                <template x-for="product in data.order.products">
+                                    <li class="flex gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
+                                        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-200 dark:border-gray-600">
+                                            <img :src="product.images[0] ? product.images[0].url_10x10 : Helpers.image('product')" alt="Product image" class="h-full w-full object-cover object-center">
+                                        </div>
+
+                                        <div class="flex flex-1 flex-col justify-between">
+                                            <div>
+                                                <p class="text-base font-semibold text-slate-800 dark:text-gray-200 line-clamp-2 mb-2" :title="product.title" x-text="product.title"></p>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                                    <span class="font-medium" x-text="product.quantity"></span>
+                                                    <span>×</span>
+                                                    <span class="font-semibold text-slate-800 dark:text-gray-200" x-text="product.variation.selling_price.toFixed(2)"></span>
+                                                    <span x-text="product.variation.currency"></span>
+                                                </div>
+                                                <div class="text-base font-bold text-amber-600 dark:text-amber-500">
+                                                    <span x-text="(product.quantity * product.variation.selling_price).toFixed(2)"></span>
+                                                    <span x-text="product.variation.currency"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Enhanced back button with better styling -->
+    <div class="container mx-auto my-10 px-4">
+        <button @click="href('/')" class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium">
+            <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+            <span>Ruovttoluotta álgosii</span>
+        </button>
+    </div>
+
+</div>

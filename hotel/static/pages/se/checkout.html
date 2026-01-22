@@ -1,0 +1,211 @@
+<section class=" w-full" apiData="Countries.get_countries" keyName="countries">
+    <div class=" flex flex-wrap w-full justify-center sm:h-[400px] h-[300px] m-0 bg-[url('/static/images/product.webp')] bg-cover bg-center">
+        <div class="w-full sm:h-[400px] h-[300px] absolute bg-[#000000bf]"></div>
+        <div class="flex items-center justify-center text-center z-2">
+            <div class="mt-[65px] z-10">
+                <h2 class="mb-[12px] 2xl:text-[40px] xl:text-[38px] lg:text-[36px] md:text-[34px] sm:text-[30px] text-[28px] font-bold text-white">Bokning</h2>
+                <h5 class="text-[16px]">
+                    <span>
+                        <a href="index.html" class="text-[#fff] hover:text-[#fff]">Hem</a>
+                    </span>
+                    <span class="font-bold text-white"> / </span>
+                    <span>
+                        <a href="javascript:void(0)" class="text-[#fff] hover:text-[#fff]">Bokning</a>
+                    </span>
+                </h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+<form class="">
+    <div apiData="Hotel.post_hotel_calculate" keyName="hotelCart" class="lg:mt-[50px] my-6 px-4">
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <div class="col-span-2">
+                <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Ange din e-post:</label>
+                <!-- <input @input.debounce.1000="alpineListeners('Hotel.post_hotel_calculate', $event); document.getElementById('email_0').value = $el.value" keyName="hotelCart" type="text" name="owner_email" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> -->
+            </div>
+            <p class=" mt-2">Rabatter och kampanjer kopplade till användaren tillämpas efter att e-postadressen har angetts. </p>
+        </div>
+
+        <template x-for="(room, indexRoom) in data.hotelCart.rooms" :key="indexRoom">
+            <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4">
+
+                <div class="py-3 border-b border-gray-200">
+                    <p class="text-lg px-4">
+                        <span>Rum #</span>
+                        <span x-text="indexRoom + 1"></span>
+                    </p>
+                    <p x-text="room.title"></p>
+                </div>
+
+                <div class="p-4">
+                    <div class="grid md:grid-cols-3 gap-10">
+                        <div class="col-span-2 space-y-0.5">
+                            <p class="text-base font-semibold">Bokningsuppgifter</p>
+                            <p class="text-sm">
+                                <span x-text="Helpers.formatDate(room.date_start)">20 jan 2025</span>
+                                <span> - </span>
+                                <span x-text="Helpers.formatDate(room.date_end)">22 jan 2025</span>
+                            </p>
+                            <!-- <p class="text-sm">Boende med frukost inkluderad</p> -->
+                            <p class="text-sm">Vuxna: <span x-text="room.guests"></span></p>
+
+                            <!-- <p class="text-sm">Garantipolicy: Garantipolicy </p> -->
+                        </div>
+
+                        <div class="space-y-0.5">
+                            <p class="text-base font-semibold">Pris</p>
+                            <p class="flex justify-between items-center text-sm">
+                                <span>Rum</span>
+                                <span x-amount="room.price_base_no_discount">BGN 243.60</span>
+                            </p>
+                            <template x-for="discount in room.discounts">
+                                <p class="flex justify-between items-center text-sm">
+                                    <span x-text="discount.title">Rum</span>
+                                    <span x-amount="discount.amount">BGN 243.60</span>
+                                </p>
+                            </template>
+                            <p class="flex justify-between items-center text-sm">
+                                <span>Moms ( inkluderat i priset )</span>
+                                <span x-amount="(room.price_total * 0.2)">BGN 20.11</span>
+                            </p>
+
+                            <div class="flex justify-between items-center mt-2 pt-1 border-t border-gray-300 text-base font-semibold">
+                                <span>Totalt</span>
+                                <div>
+                                    <p x-amount="room.price_total">BGN 243.60</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-base font-semibold mt-4">Gästuppgifter</p>
+
+                        <template x-for="(i,indexGuests) in room.guests" :key="indexGuests">
+                            <div>
+                                <p class="font-semibold text-sm mt-4 mb-2">Gäst <span x-text="indexGuests + 1"></span> </p>
+                                <div class="grid sm:grid-cols-3 gap-4">
+
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Förnamn</label>
+                                        <input type="text" :name="`first_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Mellannamn</label>
+                                        <input type="text" :name="`middle_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Efternamn</label>
+                                        <input type="text" :name="`last_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div class="">
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">E-post</label>
+                                        <input type="text" :id="`email_${indexGuests}`" :name="`email[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div class="">
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Telefon</label>
+                                        <input type="text" :name="`phone[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Nationalitet</label>
+
+                                        <select :name="`nationality[${indexRoom}][${indexGuests}]`" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="">
+                                            <template x-for="country in data.countries">
+                                                <option :value="country.title" x-text="country.title"></option>
+                                            </template>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </template>
+
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <div>
+                <p class="text-base font-medium">Behöver du fler rum?</p>
+                <p class="text-base font-medium"> Lägg till fler!</p>
+                <p @click="href('/se/accommodation')" class="bg-black btn mt-2  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">Lägg till rum</p>
+            </div>
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <lebal class="">Betalningsmetod</lebal>
+
+            <div class="flex items-center my-2">
+                <input id="link-radio" type="radio" name="payment_code" checked value="mypos" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm  text-gray-900 ">Med kort</label>
+            </div>
+
+            <div class="flex items-center my-2">
+                <input id="link-radio" type="radio" name="payment_code" value="bank_transfer" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm  text-gray-900 ">Banköverföring</label>
+            </div>
+
+            <!-- <template x-for="(payment, index) in data.payment_methods" :key="index" apidata="Payments.get_payment_methods">
+                <div class="flex items-center my-2">
+                    <input id="link-radio" type="radio" name="payment_code" :checked="index == 0" :value="payment.code" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                    <label for="link-radio" class="ml-2 text-sm  text-gray-900 " x-text="payment.title">Postförskott</label>
+                </div>
+            </template> -->
+
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <p class="flex justify-between">
+                <span>Totalt att betala</span>
+                <span x-amount="data.hotelCart.price_total" class="text-lg font-semibold">BGN 550.20</span>
+            </p>
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4 space-y-3 mb-[100px]">
+            <div>
+                <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Kommentarer</label>
+                <textarea rows="4" name="note" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id=""></textarea>
+            </div>
+
+            <!-- <div class="flex items-start ">
+                <div class="flex items-center h-5">
+                    <input id="terms" name="emails" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                </div>
+                <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jag samtycker till att ta emot marknadsföringsmeddelanden</label>
+            </div> -->
+
+            <div>
+                <div class="flex items-start ">
+                    <div class="h-5">
+                        <input id="terms" name="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                    </div>
+                    <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jag godkänner <a href="/se/terms-conditions" class="underline" target="_blank"> bokningsvillkoren och hotellpolicyn </a></label>
+                </div>
+                <div name="termAgreeError"></div>
+            </div>
+
+            <div class="py-6 !cursor-pointer">
+
+                <p @click="alpineListeners('Hotel.post_hotel_reservations', $event)" keyName="checkout" class="bg-black btn  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">
+                    Boka
+                </p>
+            </div>
+
+        </div>
+    </div>
+</form>

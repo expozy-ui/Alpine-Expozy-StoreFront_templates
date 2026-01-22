@@ -3,7 +3,7 @@
     <div class="flex h-full flex-col bg-white shadow-2xl dark:!bg-gray-900">
         <div class="flex-1 px-4 py-2 md:py-6 sm:px-6 w-full lg:!w-[400px] overflow-y-auto">
             <!-- Cart header with better visual hierarchy -->
-            <div class="flex items-start justify-between pb-2 md:pb-4">
+            <div class="flex items-start justify-between  pb-2 md:pb-4">
                 <h2 class="text-xl font-bold text-slate-900 dark:text-white" id="slide-over-title">Cart</h2>
                 <div class="ml-3 flex h-7 items-center">
                     <button type="button" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800" @click="data.openCart = false">
@@ -78,7 +78,7 @@
                         <form class="flex flex-col gap-1 md:gap-3">
                             <p class="text-sm font-semibold text-slate-700 dark:text-gray-200">Promo code</p>
                             <div class="flex gap-2">
-                                <input type="text" name="promocode" value="" placeholder="Enter promocode" class="flex-1 px-4 py-2 text-sm text-slate-900 bg-white border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-900 dark:text-white dark:border-gray-600">
+                                <input type="text" name="promocode" value="" placeholder="Enter promo code" class="flex-1 px-4 py-2 text-sm text-slate-900 bg-white border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-900 dark:text-white dark:border-gray-600">
                                 <button @click="alpineListeners('Shop.post_promocode', $event)" keyName="cart" type="button" class="px-4 py-2 text-sm font-semibold text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition-colors shadow-md">Apply</button>
                             </div>
                         </form>
@@ -113,8 +113,8 @@
 
                 <!-- Checkout button with premium styling -->
                 <div class="space-y-1 md:space-y-3">
-                    <a href="/en/checkout" @click="data.openCart = false" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-bold bg-amber-600 text-white shadow-lg hover:bg-amber-700 transition-all transform hover:scale-105">
-                        Continue to order
+                    <a href="/bg/checkout" @click="data.openCart = false" class="flex items-center justify-center rounded-lg px-6 py-3 text-base font-bold bg-amber-600 text-white shadow-lg hover:bg-amber-700 transition-all transform hover:scale-105">
+                        Proceed to checkout
                     </a>
                     <button type="button" class="w-full text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-gray-300 dark:hover:text-white transition-colors" @click="data.openCart = false">
                         Continue shopping →
@@ -176,7 +176,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <button type="button" @click="if(data.searchResults){href('/en/search?search=' + data.searchResults.search)}" class="px-6 py-3 text-sm font-bold text-white bg-amber-600 rounded-r-lg border-2 border-amber-600 hover:bg-amber-700 transition-colors shadow-md">
+                        <button type="button" @click="if(data.searchResults){href('/bg/search?search=' + data.searchResults.search)}" class="px-6 py-3 text-sm font-bold text-white bg-amber-600 rounded-r-lg border-2 border-amber-600 hover:bg-amber-700 transition-colors shadow-md">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
@@ -185,10 +185,10 @@
 
             <!-- Header icons with improved design -->
             <div class="flex items-center gap-4">
-                <ul class="flex items-center">
+                <ul class="flex items-center ">
                     <!-- User account -->
                     <li class="cursor-pointer hidden lg:block">
-                        <div class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors" @click="data.user.logged_in ? href('/en/userpage') : href('/en/login')">
+                        <div class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors" @click="data.user.logged_in ? href('/bg/userpage') : href('/bg/login')">
                             <template x-if="data.user.logged_in">
                                 <p class="text-sm font-medium text-slate-700 dark:text-gray-200" x-text="data.user.first_name"></p>
                             </template>
@@ -198,7 +198,7 @@
 
                     <!-- Wishlist -->
                     <li class="hidden lg:block">
-                        <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="href('/en/wishlist')">
+                        <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="href('/bg/wishlist')">
                             <i class="fa-solid fa-heart text-xl text-slate-700 dark:text-gray-200"></i>
                         </div>
                     </li>
@@ -229,7 +229,7 @@
                                         <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">English</a>
                                     </li>
                                     <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('bg'); openLang = false">
-                                        <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">Bulgarian</a>
+                                        <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">Български</a>
                                     </li>
                                 </ul>
                             </div>
@@ -252,12 +252,12 @@
 <!-- Navigation menu with premium styling -->
 <div class="is-section w-full" apidata="get.categories" keyname="categories" data-dropList="true">
     <template x-if="data.screenWidth >= 1024">
-        <div class="is-section bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900 shadow-lg hidden lg:block lock border-b-2 border-amber-900" x-data="{activeCategory: 0, tempCategory: 0}" @mouseleave="activeCategory = 0">
+        <div class="is-section bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900  shadow-lg hidden lg:block lock border-b-2 border-amber-900" x-data="{activeCategory: 0, tempCategory: 0}" @mouseleave="activeCategory = 0">
             <div class="container mx-auto">
                 <ul class="flex py-4 gap-1 justify-start flex-wrap">
                     <template x-for="category in data.categories">
                         <div>
-                            <li @mouseenter="if(category.children != undefined){ tempCategory = category.id; setTimeout(() => { if(tempCategory == category.id) {activeCategory = category.id} }, 200)}" @mouseleave="tempCategory = 0" class="px-4 py-2 rounded-lg hover:bg-slate-800 dark:hover:bg-gray-900 transition-colors">
+                            <li @mouseenter="if(category.children != undefined){ tempCategory = category.id; setTimeout(() => { if(tempCategory == category.id) {activeCategory = category.id}  }, 200)}" @mouseleave="tempCategory = 0" class="px-4 py-2 rounded-lg hover:bg-slate-800 dark:hover:bg-gray-900 transition-colors">
                                 <div class="flex items-center gap-2">
                                     <p x-text="category.title" @click="href(category.url)" class="text-white uppercase font-bold text-xs tracking-wide hover:text-amber-400 cursor-pointer transition-colors"></p>
                                     <template x-if="category.children">
@@ -322,7 +322,7 @@
                 <ul class="flex pt-4 px-3 gap-3">
 
                     <li class="cursor-pointer bg-white py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow min-w-[100px] dark:bg-gray-900 border border-slate-200 dark:border-gray-800">
-                        <div class="flex flex-col items-center gap-2" @click="data.user.logged_in ? href('/en/userpage') : href('/en/login'); data.openMobileMenu = false">
+                        <div class="flex flex-col items-center gap-2" @click="data.user.logged_in ? href('/bg/userpage') : href('/bg/login'); data.openMobileMenu = false">
                             <i class="fa-solid fa-circle-user text-[28px] text-amber-600 dark:text-amber-500"></i>
                             <template x-if="data.user.logged_in">
                                 <p class="dark:text-gray-200 text-sm font-medium" x-text="data.user.first_name"></p>
@@ -333,10 +333,10 @@
                         </div>
                     </li>
 
-                    <li class="cursor-pointer bg-white py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow min-w-[100px] dark:bg-gray-900 border border-slate-200 dark:border-gray-800" @click="href('/en/wishlist'); data.openMobileMenu = false">
+                    <li class="cursor-pointer bg-white py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow min-w-[100px] dark:bg-gray-900 border border-slate-200 dark:border-gray-800" @click="href('/bg/wishlist'); data.openMobileMenu = false">
                         <div class="flex flex-col items-center gap-2">
                             <i class="fa-solid fa-heart text-[28px] text-amber-600 dark:text-amber-500"></i>
-                            <p class="dark:text-gray-200 text-sm font-medium">Favorites</p>
+                            <p class="dark:text-gray-200 text-sm font-medium">Wishlist</p>
                         </div>
                     </li>
 
@@ -354,7 +354,7 @@
                                     <input name="search" @input.debounce.1000="alpineListeners('Search.get_search', $event);" data-sort="relevant" keyname="searchResults" placeholder="Search..." class="block dark:bg-gray-900 dark:text-gray-200 p-3 pl-10 w-full text-sm text-gray-900 bg-white rounded-l-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
                                 </div>
                                 <div>
-                                    <a @click="if(data.searchResults){href('/en/search'); data.openMobileMenu = false}" class="dark:text-white dark:bg-gray-900 py-3.5 px-5 w-full text-sm font-medium text-center text-white rounded-r-lg border cursor-pointer bg-amber-600 border-amber-600 hover:bg-amber-700 focus:ring-4 focus:ring-amber-300 transition-colors">
+                                    <a @click="if(data.searchResults){href('/bg/search'); data.openMobileMenu = false}" class="dark:text-white dark:bg-gray-900 py-3.5 px-5 w-full text-sm font-medium text-center text-white rounded-r-lg border cursor-pointer bg-amber-600 border-amber-600 hover:bg-amber-700 focus:ring-4 focus:ring-amber-300 transition-colors">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </a>
                                 </div>

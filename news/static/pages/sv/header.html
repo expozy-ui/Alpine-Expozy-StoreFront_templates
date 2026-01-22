@@ -1,0 +1,113 @@
+<header class="w-full bg-gradient-to-r from-slate-950 to-slate-700 via-slate-800   border-b border-slate-800 sticky top-0 z-50">
+    <div class="container mx-auto ">
+        <nav class="flex justify-between items-center py-4 px-2 md:px-0">
+
+            <img @click="href('/')" :src="data.settings.logo" alt="Logo" class="h-12 md:h-16 cursor-pointer hover:opacity-80 transition-opacity">
+
+            <!-- Right: Search -->
+            <div class="flex items-center gap-3" x-data="{ open: false }" @click.outside="open = false">
+
+                <div class="hidden md:flex items-center h-10 md:h-12 gap-3 px-4 py-2.5 rounded-xl transition-all duration-300" :class="open ? 'bg-white shadow-lg w-64 lg:w-80' : 'bg-slate-800 hover:bg-slate-700'">
+                    <template x-if="open">
+                        <button @click="open = false" class="text-slate-400 hover:text-red-600 transition-colors">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </template>
+                    <input type="text" name="search" x-trap="open" @input="data.searchWord = $el.value" value="" :class="open ? 'block' : 'hidden'" placeholder="Sök..." class="flex-1 bg-transparent outline-none text-slate-700 placeholder-slate-400 text-sm">
+                    <button @click="if(!open){ open = true } else { if(data.searchWord != ''){ href('/sv/search?search='+data.searchWord) } }" class="transition-colors" :class="open ? 'text-slate-600 hover:text-red-600' : 'text-slate-400 hover:text-white'">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+
+                <button @click="data.openMobileMenu = true" class="flex items-center h-10 md:h-12 gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div x-show="data.openMobileMenu" x-cloak class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 transition-opacity" @click="data.openMobileMenu = false"></div>
+
+    <!-- Mobile Menu Sidebar -->
+    <div x-show="data.openMobileMenu" x-cloak @mousedown.outside="data.openMobileMenu = false" class="fixed top-0 left-0 h-full z-50 w-80 lg:w-96 bg-white shadow-2xl transform transition-transform duration-300 ease-out overflow-y-auto" :class="data.openMobileMenu ? 'translate-x-0' : '-translate-x-full'">
+        <!-- Menu Header -->
+        <div class="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex justify-between items-center">
+            <img :src="data.settings.logo" alt="Logo" class="h-10">
+            <button @click="data.openMobileMenu = false" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-red-600 hover:text-white transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Search in Menu -->
+        <div class="px-6 py-4" x-data="{ open: false }" @click.outside="open = false">
+            <div class="flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus-within:border-red-500 focus-within:bg-white transition-all">
+                <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                <input type="text" @input="data.searchWord = $el.value" name="search" value="" placeholder="Vad söker du?" class="flex-1 bg-transparent outline-none text-slate-700 placeholder-slate-400">
+                <button @click="if(data.searchWord != ''){ href('/sv/search?search='+data.searchWord); data.openMobileMenu = false }" class="text-slate-400 hover:text-red-600 transition-colors">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Items -->
+        <nav class="px-6" apidata="Blog.get_blogCategories" keyName="blogCategories">
+            <ul class="space-y-1">
+                <li>
+                    <a @click="href('/'); data.openMobileMenu = false" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-red-50 hover:text-red-600 cursor-pointer transition-all group">
+                        <i class="fa-solid fa-house text-slate-400 group-hover:text-red-600 transition-colors"></i>
+                        <span class="font-medium">Hem</span>
+                    </a>
+                </li>
+                <template x-for="category in data.blogCategories">
+                    <li>
+                        <a @click="href(category.url); data.openMobileMenu = false" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-red-50 hover:text-red-600 cursor-pointer transition-all group">
+                            <i class="fa-solid fa-folder text-slate-400 group-hover:text-red-600 transition-colors"></i>
+                            <span class="font-medium" x-text="category.title"></span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+
+        <!-- Social Links -->
+        <div class="px-6 py-6 mt-4 border-t border-slate-100">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Följ oss</p>
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Facebook -->
+                <a href="#" target="_blank" rel="noopener" aria-label="Facebook" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-blue-600 hover:text-white transition-all">
+                    <i class="fa-brands fa-facebook-f text-lg"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a href="#" target="_blank" rel="noopener" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-pink-600 hover:text-white transition-all">
+                    <i class="fa-brands fa-instagram text-lg"></i>
+                </a>
+
+                <!-- X (Twitter) -->
+                <a href="#" target="_blank" rel="noopener" aria-label="X" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-900 hover:text-white transition-all">
+                    <i class="fa-brands fa-x-twitter text-lg"></i>
+                </a>
+
+                <!-- YouTube -->
+                <a href="#" target="_blank" rel="noopener" aria-label="YouTube" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-red-600 hover:text-white transition-all">
+                    <i class="fa-brands fa-youtube text-lg"></i>
+                </a>
+
+                <!-- TikTok -->
+                <a href="#" target="_blank" rel="noopener" aria-label="TikTok" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-black hover:text-white transition-all">
+                    <i class="fa-brands fa-tiktok text-lg"></i>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-sky-700 hover:text-white transition-all">
+                    <i class="fa-brands fa-linkedin-in text-lg"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,263 @@
+<div class="w-full">
+
+    <div class="w-full bg-white" apidata="Blog.get_blogPosts" :data-category_id="data.corePage.target_id != 1 ? data.corePage.target_id : 'empty'" data-limit="17" keyname="currentCategoryBlogPosts">
+
+        <div class="w-full  border-b border-slate-200 lock" apidata="Blog.get_blogCategories" :data-id="data.corePage.target_id" keyname="currentCategory">
+            <nav class="container mx-auto py-4 px-4 lg:px-0" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2 text-sm">
+                    <li class="flex items-center">
+                        <a @click="href('/')" class="flex items-center text-slate-500 hover:text-red-600 transition-colors cursor-pointer">
+                            <i class="fa-solid fa-house text-xs mr-2"></i>
+                            <span>होम</span>
+                        </a>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 mx-2"></i>
+                        <span class="text-slate-900 font-medium" x-text="data.currentCategory.title"></span>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="container mx-auto px-4 lg:px-0 py-8 lg:py-12">
+            <div class="flex flex-col lg:flex-row gap-8">
+
+                <!-- Left Content -->
+                <div class="flex-1 lg:w-3/4">
+
+                    <!-- Featured Article -->
+                    <article class="group relative rounded-2xl overflow-hidden cursor-pointer h-80 lg:h-[420px] mb-8 shadow-xl">
+                        <img @click="href(data.currentCategoryBlogPosts.result[0].url)" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="" :src="data.currentCategoryBlogPosts.result[0].images[0] ? data.currentCategoryBlogPosts.result[0].images[0].url_10x10 : data.settings.logo" :alt="data.currentCategoryBlogPosts.result[0].title">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
+                                <i class="fa-solid fa-fire text-[10px]"></i>
+                                <span>फीचर्ड</span>
+                            </span>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+                            <div class="flex flex-wrap items-center gap-3 text-sm text-slate-300 mb-3">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full">
+                                    <i class="fa-solid fa-folder text-red-400 text-xs"></i>
+                                    <span @click.stop="href(data.currentCategoryBlogPosts.result[0].category.url)" x-text="data.currentCategoryBlogPosts.result[0].category.title" class="hover:text-red-400 transition-colors"></span>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <span x-text="Helpers.formatDate(data.currentCategoryBlogPosts.result[0].date_publish)"></span>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span x-text="data.currentCategoryBlogPosts.result[0].read_time + ' मिनट'"></span>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span x-text="data.currentCategoryBlogPosts.result[0].views"></span>
+                                </span>
+                            </div>
+
+                            <h2 @click="href(data.currentCategoryBlogPosts.result[0].url)" class="text-white text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight mb-3 hover:text-red-400 transition-colors line-clamp-2" x-text="data.currentCategoryBlogPosts.result[0].title"></h2>
+
+                            <p class="hidden md:block text-slate-300 text-base leading-relaxed line-clamp-2 mb-4" x-text="data.currentCategoryBlogPosts.result[0].description_short"></p>
+
+                            <div @click="href(data.currentCategoryBlogPosts.result[0].url)" class="flex items-center gap-2 text-red-400 font-semibold hover:text-red-300 transition-colors">
+                                <span>लेख पढ़ें</span>
+                                <i class="fa-solid fa-arrow-right transform hover:translate-x-2 transition-transform"></i>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Grid Articles (1-6) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <template x-for="(blog, index) in data.currentCategoryBlogPosts.result" :key="index">
+                            <template x-if="index > 0 && index < 7">
+                                <article class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                                    <div class="relative h-48 overflow-hidden">
+                                        <img @click="href(blog.url)" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" :src="blog.images[0] ? blog.images[0].url_10x10 : data.settings.logo" :alt="blog.title">
+                                        <div class="absolute top-3 left-3">
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-red-600 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-md">
+                                                <i class="fa-solid fa-tag text-[8px]"></i>
+                                                <span @click.stop="href(blog.category.url)" x-text="blog.category.title"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-5">
+                                        <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 mb-3">
+                                            <span class="inline-flex items-center gap-1">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <span x-text="Helpers.formatDate(blog.date_publish)"></span>
+                                            </span>
+                                            <span class="w-1 h-1 bg-red-500 rounded-full"></span>
+                                            <span class="inline-flex items-center gap-1">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span x-text="blog.read_time + ' मिनट'"></span>
+                                            </span>
+                                            <span class="w-1 h-1 bg-red-500 rounded-full"></span>
+                                            <span class="inline-flex items-center gap-1">
+                                                <i class="fa-regular fa-eye"></i>
+                                                <span x-text="blog.views"></span>
+                                            </span>
+                                        </div>
+
+                                        <h3 @click="href(blog.url)" class="text-slate-900 text-lg font-bold leading-snug line-clamp-2 hover:text-red-600 transition-colors mb-2" x-text="blog.title"></h3>
+
+                                        <p class="text-slate-600 text-sm leading-relaxed line-clamp-2" x-text="blog.description_short"></p>
+                                    </div>
+                                </article>
+                            </template>
+                        </template>
+                    </div>
+
+                    <!-- Second Featured Article -->
+                    <article class="group relative rounded-2xl overflow-hidden cursor-pointer h-72 lg:h-80 mb-8 shadow-xl">
+                        <img @click="href(data.currentCategoryBlogPosts.result[7].url)" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="" :src="data.currentCategoryBlogPosts.result[7].images[0] ? data.currentCategoryBlogPosts.result[7].images[0].url_10x10 : data.settings.logo" :alt="data.currentCategoryBlogPosts.result[7].title">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+                            <div class="flex flex-wrap items-center gap-3 text-sm text-slate-300 mb-3">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full">
+                                    <i class="fa-solid fa-folder text-red-400 text-xs"></i>
+                                    <span @click.stop="href(data.currentCategoryBlogPosts.result[7].category.url)" x-text="data.currentCategoryBlogPosts.result[7].category.title" class="hover:text-red-400 transition-colors"></span>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <span x-text="Helpers.formatDate(data.currentCategoryBlogPosts.result[7].date_publish)"></span>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <span x-text="data.currentCategoryBlogPosts.result[7].views"></span>
+                                </span>
+                            </div>
+
+                            <h2 @click="href(data.currentCategoryBlogPosts.result[7].url)" class="text-white text-2xl lg:text-3xl font-bold leading-tight mb-3 hover:text-red-400 transition-colors line-clamp-2" x-text="data.currentCategoryBlogPosts.result[7].title"></h2>
+
+                            <p class="hidden md:block text-slate-300 text-base leading-relaxed line-clamp-2" x-text="data.currentCategoryBlogPosts.result[7].description_short"></p>
+                        </div>
+                    </article>
+
+                    <!-- Grid Articles (8+) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <template x-for="(blog, index) in data.currentCategoryBlogPosts.result" :key="index">
+                            <template x-if="index > 7">
+                                <article class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                                    <div class="relative h-48 overflow-hidden">
+                                        <img @click="href(blog.url)" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" :src="blog.images[0] ? blog.images[0].url_10x10 : data.settings.logo" :alt="blog.title">
+                                        <div class="absolute top-3 left-3">
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-red-600 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-md">
+                                                <i class="fa-solid fa-tag text-[8px]"></i>
+                                                <span @click.stop="href(blog.category.url)" x-text="blog.category.title"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-5">
+                                        <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 mb-3">
+                                            <span class="inline-flex items-center gap-1">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <span x-text="Helpers.formatDate(blog.date_publish)"></span>
+                                            </span>
+                                            <span class="w-1 h-1 bg-red-500 rounded-full"></span>
+                                            <span class="inline-flex items-center gap-1">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span x-text="blog.read_time + ' मिनट'"></span>
+                                            </span>
+                                            <span class="w-1 h-1 bg-red-500 rounded-full"></span>
+                                            <span class="inline-flex items-center gap-1">
+                                                <i class="fa-regular fa-eye"></i>
+                                                <span x-text="blog.views"></span>
+                                            </span>
+                                        </div>
+
+                                        <h3 @click="href(blog.url)" class="text-slate-900 text-lg font-bold leading-snug line-clamp-2 hover:text-red-600 transition-colors mb-2" x-text="blog.title"></h3>
+
+                                        <p class="text-slate-600 text-sm leading-relaxed line-clamp-2" x-text="blog.description_short"></p>
+                                    </div>
+                                </article>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="w-full lg:w-80 flex-shrink-0 space-y-6">
+
+                    <!-- Most Read -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden" apidata="Blog.get_blogPosts" data-limit="5" data-order="top" keyname="mostReadedBlogPosts">
+                        <div class="bg-slate-900 px-5 py-4 flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-fire-flame-curved text-white"></i>
+                            </div>
+                            <h2 class="text-white text-lg font-bold">सबसे अधिक पढ़े गए</h2>
+                        </div>
+                        <ul class="divide-y divide-slate-100">
+                            <template x-for="(blog, index) in data.mostReadedBlogPosts.result">
+                                <li class="group cursor-pointer hover:bg-slate-50 transition-colors" @click="href(blog.url)">
+                                    <div class="px-5 py-4 flex items-start gap-4">
+                                        <span class="flex-shrink-0 w-8 h-8 bg-slate-100 group-hover:bg-red-600 rounded-lg flex items-center justify-center text-slate-500 group-hover:text-white font-bold text-sm transition-all" x-text="index + 1"></span>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-slate-900 font-semibold leading-snug line-clamp-2 group-hover:text-red-600 transition-colors" x-text="blog.title"></p>
+                                            <div class="flex items-center gap-2 mt-2 text-xs text-slate-500">
+                                                <i class="fa-regular fa-eye"></i>
+                                                <span x-text="blog.views + ' व्यूज'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <!-- Latest News -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden" apidata="Blog.get_blogPosts" data-limit="5" keyname="latestBlogPosts">
+                        <div class="bg-gradient-to-r from-slate-800 to-slate-900 px-5 py-4 flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center">
+                                <i class="fa-regular fa-clock text-white"></i>
+                            </div>
+                            <h2 class="text-white text-lg font-bold">ताज़ा खबरें</h2>
+                        </div>
+                        <ul class="divide-y divide-slate-100">
+                            <template x-for="(blog, index) in data.latestBlogPosts.result">
+                                <li class="group cursor-pointer hover:bg-slate-50 transition-colors" @click="href(blog.url)">
+                                    <div class="px-5 py-4 flex items-start gap-4">
+                                        <span class="flex-shrink-0 w-8 h-8 bg-slate-100 group-hover:bg-red-600 rounded-lg flex items-center justify-center text-slate-500 group-hover:text-white font-bold text-sm transition-all" x-text="index + 1"></span>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-slate-900 font-semibold leading-snug line-clamp-2 group-hover:text-red-600 transition-colors" x-text="blog.title"></p>
+                                            <div class="flex items-center gap-2 mt-2 text-xs text-slate-500">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <span x-text="Helpers.formatDate(blog.date_publish)"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full  py-8 lg:py-12">
+        <div class="container mx-auto px-4 lg:px-0">
+            <nav aria-label="पेजिनेशन" class="flex justify-center">
+                <ul class="inline-flex items-center gap-2">
+                    <template x-for="(page, index) in data.currentCategoryBlogPosts.pagination.pagesArray" :key="index">
+                        <li>
+                            <template x-if="page == '...'">
+                                <span class="w-10 h-10 flex items-center justify-center text-slate-400 font-medium">...</span>
+                            </template>
+                            <template x-if="page != '...'">
+                                <a @click="alpineListeners('Blog.get_blogPosts', $event)" keyname="currentCategoryBlogPosts" :data-page="page" options-scroll="true" x-text="page" :class="page == data.currentCategoryBlogPosts.pagination.current_page
+                                    ? 'bg-red-600 text-white border-red-600 shadow-lg shadow-red-600/30'
+                                    : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-900 hover:text-white hover:border-slate-900'" class="w-10 h-10 flex items-center justify-center font-semibold rounded-xl border-2 cursor-pointer transition-all duration-300"></a>
+                            </template>
+                        </li>
+                    </template>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

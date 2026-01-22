@@ -25,7 +25,7 @@
             <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-amber-600">Categories</h3>
             <ul class="divide-y divide-slate-200 dark:divide-gray-700 py-2">
                 <template x-for="category in data.blogCategories">
-                    <li @click="!window.location.href.includes(category.url) ? href(category.url) : href('/en/blog')" class="w-full">
+                    <li @click="!window.location.href.includes(category.url) ? href(category.url) : href('/bg/blog')" class="w-full">
                         <div :class="window.location.href.includes(category.url) ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md' : 'bg-slate-50 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800'" class="w-full px-4 py-3 flex items-center justify-between cursor-pointer my-2 rounded-lg transition-all duration-200 group">
                             <a x-text="category.title" class="font-medium text-sm group-hover:translate-x-1 transition-transform duration-200"></a>
                             <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
@@ -99,7 +99,7 @@
                             <ul class="inline-flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md">
                                 <template x-for="(page,index) in data.blogPosts.pagination.total_pages" :key="index">
                                     <li>
-                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100' dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
+                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
                                     </li>
                                 </template>
                             </ul>

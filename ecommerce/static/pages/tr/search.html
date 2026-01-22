@@ -1,0 +1,210 @@
+<div class="w-full dark:bg-gray-900 dark:text-gray-200 bg-white">
+    <div class="flex items-center flex-col p-2 bg-gradient-to-r from-slate-50 to-white dark:from-gray-900 dark:to-gray-800 border-b border-slate-200 dark:border-gray-700">
+        <div class="  w-full container mx-auto">
+            <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                <a href="/" class="hover:text-amber-600 transition-colors">Ana Sayfa</a>
+                <span class="text-slate-400">/</span>
+                <a href="#" class="hover:text-amber-600 transition-colors">Ara</a>
+                <span class="text-slate-400">/</span>
+                <a x-text="data.pageUrl.search" class="hover:text-amber-600 transition-colors"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-full bg-white dark:bg-gray-900 dark:text-gray-200 py-2 border-b border-slate-200 dark:border-gray-700 px-4 md:px-0">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="hidden md:block text-lg md:text-4xl font-bold text-slate-900 dark:text-white text-center">Ara</h1>
+
+        <div class="flex flex-row lg:gap-6 justify-between md:justyify-end gap-4">
+
+            <div class="flex flex-col md:flex-row gap-1 md:gap-3 items-center">
+                <p class="text-sm md:font-semibold text-slate-700 dark:text-slate-300">Sırala:</p>
+                <select class="text-xs border border-slate-300 dark:border-gray-600 py-2 px-4 rounded-lg dark:bg-gray-800 dark:text-gray-200 hover:border-amber-500 transition-colors focus:ring-2 focus:ring-amber-500 focus:border-transparent" @change="alpineListeners('get.search', $event)">
+                    <option data-sort="newest" keyname="searchResults" :selected="data.pageUrl.sort == 'newest'" data-filter="1" value="">En yeni</option>
+                    <option data-sort="min_price" keyname="searchResults" :selected="data.pageUrl.sort == 'min_price'" data-filter="1" value="">Fiyat artan</option>
+                    <option data-sort="max_price" keyname="searchResults" :selected="data.pageUrl.sort == 'max_price'" data-filter="1" value="">Fiyat azalan</option>
+                    <option data-sort="discount" keyname="searchResults" :selected="data.pageUrl.sort == 'discount'" data-filter="1" value="">İndirimde</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-1 md:gap-3 items-center">
+                <p class="text-sm md:font-semibold text-slate-700 dark:text-slate-300">Sayfa başına ürün:</p>
+                <select class="text-xs border border-slate-300 dark:border-gray-600 py-2 px-4 rounded-lg dark:bg-gray-800 dark:text-gray-200 hover:border-amber-500 transition-colors focus:ring-2 focus:ring-amber-500 focus:border-transparent" @change="alpineListeners('get.search', $event)">
+                    <option data-limit="12" keyname="searchResults" :selected="data.pageUrl.limit == 10" data-filter="1" value="" selected="selected">10</option>
+                    <option data-limit="20" keyname="searchResults" :selected="data.pageUrl.limit == 20" data-filter="1" value="">20</option>
+                    <option data-limit="52" keyname="searchResults" :selected="data.pageUrl.limit == 50" data-filter="1" value="">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+
+<!-- Updated main content with improved sidebar and product grid -->
+<div class="container pt-8 mx-auto  flex gap-8">
+
+    <!-- Premium sidebar with improved filters -->
+    <div class="hidden lg:block w-80 flex-shrink-0 pb-20">
+        <div class=" py-10 px-5 bg-white dark:bg-slate-800 rounded-lg shadow-lg">
+
+            <p class="text-xl font-bold pb-3 text-slate-800 dark:text-white uppercase border-b-2 border-amber-600">Kategoriler</p>
+
+            <select class="border border-slate-300 dark:border-slate-600 px-4 my-5 rounded-lg w-full py-3 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" @change="alpineListeners('get.search', $event)">
+                <option data-category_id="empty" value="empty">Tümü</option>
+                <template x-for="category in data.searchResults.filters.categories">
+                    <option :data-category_id="category.id" :selected="data.pageUrl.category_id == category.id" :value="category.id" data-filter="1" x-text="category.title"></option>
+                </template>
+            </select>
+
+            <p class="text-xl font-bold pb-3 text-slate-800 dark:text-white uppercase border-b-2 border-amber-600 mt-8">Marka</p>
+
+            <select class="border border-slate-300 dark:border-slate-600 px-4 my-5 rounded-lg w-full py-3 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" @change="alpineListeners('get.search', $event)">
+                <option data-brands="empty" value="">Tümü</option>
+                <template x-for="brand in data.searchResults.filters.brands">
+                    <option data-filter="1" :data-brands="brand.id" :selected="data.pageUrl.brands == brand.id" x-text="brand.title">10</option>
+                </template>
+            </select>
+
+            <form>
+                <div class="border-t border-slate-300 dark:border-slate-600 pt-6 mt-8">
+                    <p class="text-lg font-bold text-slate-800 dark:text-white mb-4">Fiyat aralığı</p>
+                    <div class="flex justify-between gap-3">
+                        <div class="w-full">
+                            <label class="text-sm text-slate-600 dark:text-slate-400 mb-1 block">Min</label>
+                            <input @input.debounce.500="alpineListeners('get.search', $event)" data-filter="1" type="number" keyName="searchResults" name="price_from" :value="data.pageUrl.price_from" class="block p-3 w-full text-sm text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all">
+                        </div>
+                        <div class="w-full">
+                            <label class="text-sm text-slate-600 dark:text-slate-400 mb-1 block">Max</label>
+                            <input @input.debounce.500="alpineListeners('get.search', $event)" data-filter="1" type="number" keyName="searchResults" name="price_to" :value="data.pageUrl.price_to" class="block p-3 w-full text-sm text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700 rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Updated product grid with premium cards -->
+    <div class="flex-1 pb-12">
+
+        <div class="mb-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-3 gap-6" apidata="get.search" keyName="searchResults" :data-search="data.pageUrl.search" data-filter="1" options-pushurl="true">
+                <template x-for="product in data.searchResults.products.result">
+                    <div class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer">
+
+                        <!-- Image section with fixed height -->
+                        <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
+                            <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+
+                            <template x-if="!product.isWishlisted">
+                                <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                    <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                </button>
+                            </template>
+
+                            <template x-if="product.isWishlisted">
+                                <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                    <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                </button>
+                            </template>
+
+                            <!-- Sale badge showing discount percentage -->
+                            <template x-if="product.variations[0].promoprice != 0">
+                                <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                    <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                                        <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- New badge positioned below Sale badge if both exist -->
+                            <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
+                                NEW
+                            </div>
+                        </div>
+
+                        <!-- Content section with flex-grow and line-clamp for text truncation -->
+                        <div class="p-6 flex flex-col flex-grow">
+
+                            <!-- Title with line-clamp-2 to truncate long titles -->
+                            <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
+
+                            <!-- Description with line-clamp-3 to truncate long descriptions -->
+                            <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
+
+                            <!-- Price section with strikethrough original price and promo price -->
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <div class="flex flex-col gap-1">
+                                    <!-- Show both prices when promo price exists -->
+                                    <template x-if="product.variations[0].promoprice != 0">
+                                        <div class="flex flex-col">
+                                            <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
+                                            <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
+                                        </div>
+                                    </template>
+
+                                    <!-- Show only regular price when no promo -->
+                                    <template x-if="product.variations[0].promoprice == 0">
+                                        <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
+                                    </template>
+                                </div>
+
+                                <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template x-if="!data.searchResults.products.result[0]">
+                    <div class="col-span-full text-center py-20">
+                        <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-10 max-w-md mx-auto">
+                            <i class="fa-regular fa-heart text-6xl text-slate-400 dark:text-slate-600 mb-4"></i>
+                            <p class="text-lg font-medium text-slate-600 dark:text-slate-400">Favorilerde ürün yok</p>
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+        </div>
+
+        <template x-if="data.searchResults.products.pagination.pagesArray">
+            <div class="flex justify-center py-8">
+                <ul class="flex items-center gap-1">
+                    <template x-for="(page,index) in data.searchResults.products.pagination.pagesArray" :key="index">
+                        <li>
+                            <button @click="alpineListeners('get.search', $event)" :data-page="page" options-scroll="true" keyname="searchResults" x-text="page" :class="page == data.searchResults.products.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </template>
+
+        <!-- Premium pagination with improved design -->
+        <!-- <div class="grid md:grid-cols-12 grid-cols-1 py-12">
+            <div class="md:col-span-12 text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="inline-flex items-center gap-2">
+                        <template x-for="(page,index) in data.searchResults.products.pagination.pagesArray" :key="index">
+                            <li>
+                                <template x-if="page == '...'">
+                                    <span class="w-10 h-10 inline-flex justify-center items-center text-slate-600 dark:text-slate-400">...</span>
+                                </template>
+                                <template x-if="page != '...'">
+                                    <button @click="alpineListeners('get.search', $event)" :data-page="page" options-scroll="true" keyname="searchResults" x-text="page" :class="page == data.searchResults.pagination.current_page ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg scale-110' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" class="w-10 h-10 inline-flex justify-center items-center rounded-lg border border-slate-200 dark:border-slate-700 transition-all duration-300 font-medium hover:scale-105"></button>
+                                </template>
+                            </li>
+                        </template>
+                    </ul>
+                </nav>
+            </div>
+        </div> -->
+
+    </div>
+
+</div>
+
+<!-- ================================================================ -->

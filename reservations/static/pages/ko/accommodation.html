@@ -1,0 +1,488 @@
+<div apiData="Hotel.get_hotel_room_types" keyName="hotel_room_types"></div>
+<div apiData="Hotel.post_hotel_calculate" keyName="hotelCart"></div>
+<!-- <div apiData="Currencies.get_currencies" keyName="currencies" data-default="1"></div> -->
+
+<div class="w-full">
+    <div class="w-full">
+        <div class="w-full bg-gray-50 h-fit py-4 md:py-[70px] px-4">
+            <ol @click="href('/')" class="md:flex space-y-4 justify-between w-full md:w-2/4 mx-auto cursor-pointer">
+                <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse gap-">
+                    <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold  border rounded-full shrink-0 border-black">
+                        1
+                    </span>
+                    <span>
+                        <h3 class="font-medium leading-tight lg:text-lg">날짜 선택</h3>
+                        <p class="text-sm">숙박 기간을 지정하세요.</p>
+                    </span>
+                </li>
+                <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                    <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold bg-black text-white border border-black rounded-full shrink-0 ">
+                        2
+                    </span>
+                    <span>
+                        <h3 class="font-medium leading-tight lg:text-lg">객실 선택</h3>
+                        <p class="text-sm">가장 적합한 옵션을 선택하세요.</p>
+                    </span>
+                </li>
+                <li @click="if(data.hotelCart.price_total != 0){href('/ko/checkout')}" class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                    <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                        3
+                    </span>
+                    <span>
+                        <h3 class="font-medium leading-tight lg:text-lg">결제 및 예약</h3>
+                        <p class="text-sm">확인하고 절차를 완료하세요.</p>
+                    </span>
+                </li>
+            </ol>
+        </div>
+
+        <div class="text-center py-10 w-full">
+
+            <p class="text-gray-900 text-xl">객실 선택 </p>
+
+            <p class="text-gray-900 text-base"> <span x-text="Helpers.formatDate(localStorage.getItem('date_start')) "></span> - <span x-text="Helpers.formatDate(data.date_end)"></span> </p>
+        </div>
+
+    </div>
+
+    <section class="section-room-detsils xl:py-[40px] py-[20px] w-full">
+        <div class="flex flex-wrap justify-between items-start mx-auto container">
+            <div :class="data.hotelCart.rooms != undefined ? 'lg:w-9/12' : 'lg:w-full' " class="w-full px-[12px] mb-[24px] ">
+                <div class="">
+                    <div class="container ">
+
+                        <div :class="data.hotelCart.rooms != undefined ? 'lg:!grid-cols-2' : 'lg:!grid-cols-3' " class=" lg:grid-cols-3 grid items-center grid-cols-1   gap-5 md:gap-[30px]">
+                            <template x-for="room in data.hotel_room_types">
+
+                                <div class="overflow-x-hidden h-full border-[1px] border-[#e8e8e8] flex flex-col  ">
+                                    <div class="relative group">
+                                        <div class="overflow-hidden rounded-lg">
+                                            <img :src="room.images[0] ? room.images[0].url : Helpers.image('product')" class="w-full h-full object-cover aspect-square group-group-hover:scale-110 transition-all duration-300" alt="">
+                                        </div>
+                                        <template x-if="room.price">
+                                            <div class="px-5 3xl:px-6 py-2 inline-flex bg-accent text-sm rounded-lg  items-center justify-center text-white  absolute top-[10px] right-[10px] ">
+                                                <span class="mr-1">부터 </span>
+                                                <span x-amount="room.price">120 </span>
+                                                <span class="mx-2">|</span>
+                                                <span>1박</span>
+                                            </div>
+                                        </template>
+
+                                        <button @click="data.room = room" :class="data.screenWidth < 1024 && '!left-0'" class="flex items-center justify-center text-[15px] rounded-r-lg leading-[38px] bg-black hover:bg-accent  absolute bottom-0 -left-40 px-6 py-1 text-white  group-hover:left-0 transition-all duration-300">더 보기
+                                            <i class="fa-thin fa-arrow-right-long ml-2 mt-1"></i>
+                                        </button>
+
+                                    </div>
+
+                                    <div class="p-2  rounded-b-lg grow flex flex-col justify-between border-t-0">
+                                        <div class="">
+                                            <h4 x-text="room.title" class="text-lg leading-[26px]  uppercase font-semibold">더블 스탠다드 룸</h4>
+
+                                            <div class="">
+
+                                                <span class=" text-xs font-normal text-gray mt-2  flex gap-1 ">
+                                                    <i class="fa-solid fa-user-vneck-hair text-xs"></i>
+                                                    <span class="ml-[5px]  ">최대 <span x-text="room.guests"> </span> 명</span>
+                                                </span>
+
+                                                <span class=" text-xs font-normal text-gray mt-2  flex gap-1 ">
+                                                    <i class="fa-regular fa-bed-front text-xs"></i>
+                                                    <span x-text="room.desc_bed" class="ml-[5px]  ">더블 베드 2개</span>
+                                                </span>
+
+                                                <p class="text-sm font-normal text-gray mt-2  flex gap-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16.442" height="16.441" viewBox="0 0 16.442 16.441" tabindex="-1" role="none" focusable="false" aria-hidden="true">
+                                                        <path d="M16.289,15.56.883.153A.518.518,0,0,0,0,.519V15.926a.517.517,0,0,0,.517.517H15.924a.518.518,0,0,0,.366-.883ZM1.034,15.408V1.768L3.025,3.758l-.371.371a.517.517,0,1,0,.731.731l.371-.371,1.5,1.5-.371.371a.517.517,0,0,0,.731.731l.371-.371,1.5,1.5-.371.371a.517.517,0,0,0,.731.731l.371-.371,1.5,1.5-.371.371a.517.517,0,0,0,.731.731l.371-.371,1.5,1.5-.371.371a.517.517,0,0,0,.731.731l.371-.371,1.991,1.991Z" transform="translate(0 -0.001)"></path>
+                                                        <path d="M103.133,258.2a.966.966,0,0,0-1.648.683v2.892a.967.967,0,0,0,.966.966h2.892a.966.966,0,0,0,.683-1.648Zm-.614,3.506v-2.657l2.657,2.657Z" transform="translate(-98.205 -249.582)"></path>
+                                                    </svg>
+                                                    <span x-text="room.quadrature" class="text-xs">40 </span>
+                                                    <span>㎡</span>
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <p class="text-sm pt-4 pb-2 font-semibold text-gray-800">객실 편의시설 </p>
+                                            <div class="flex gap-2 flex-wrap pb-4">
+                                                <template x-for="prop in room.properties.filter(obj=> obj.property.show_on_checkout == true) ">
+                                                    <div class="flex gap-1 items-center">
+                                                        <p class="icon" x-html="prop.property.icon"></p>
+                                                        <p class="text-xs" x-text="prop.property.title"></p>
+                                                    </div>
+                                                </template>
+
+                                            </div>
+                                        </div>
+
+                                        <style>
+                                            .icon svg {
+                                                width: 20px !important;
+                                            }
+                                        </style>
+
+                                        <!-- <div>
+                                            <p class="text-gray-800 text-sm flex gap-1 pb-4 items-center">더 알아보기 <i class="fa-thin fa-arrow-right-long text-gray-800"></i></p>
+                                        </div> -->
+
+                                        <div class="  border-t-[1px]  border-[#e8e8e8]  "> </div>
+                                        <p class="text-gray-800 text-sm flex gap-1 pb-1 items-center"><i class="fa-light fa-retweet"></i> 무료 취소</p>
+                                        <p class="text-gray-800 text-sm flex gap-1 pb-1 items-start"><i class="fa-regular fa-credit-card"></i>은행 송금 결제</p>
+
+                                        <template x-if="!room.price">
+                                            <p @click="data.room = room" class="hover:bg-black border border-gray-400 text-gray-800 hover:text-white rounded-lg w-full btn py-1">더 보기</p>
+                                        </template>
+
+                                        <template x-if="room.price">
+                                            <p @click="data.addRoom = room;" class="hover:bg-black border border-gray-400 text-gray-800 hover:text-white rounded-lg w-full btn py-1">선택</p>
+                                        </template>
+
+                                    </div>
+
+                                </div>
+
+                            </template>
+
+                            <template x-if="data.hotel_room_types.length == 0">
+                                <p class="text-lg">이용 가능한 객실이 없습니다</p>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <template x-if="data.hotelCart.rooms != undefined && ((data.openCart && data.screenWidth < 1024) || data.screenWidth > 1024)">
+
+                <div x-show="data.hotelCart.rooms != undefined && ((data.openCart && data.screenWidth < 1024) || data.screenWidth > 1024)" x-transition x-cloak class="lg:w-3/12 w-full  px-0 lg:px-[12px] mb-[24px] aos-init aos-animate  lg:order-last fixed lg:relative top-0  lg:block z-50 lg:z-10 h-full lg:h-fit overflow-y-auto">
+                    <div class=" shadow-lg border border-gray-200 rounded-lg    ">
+
+                        <h4 class=" p-[20px] text-2xl font-semibold  uppercase bg-white shadow-lg text-black rounded-t-lg  text-center  border-b border-solid border-gray-200 flex justify-between lg:justify-center items-center">
+                            내 예약
+                            <template x-if="data.screenWidth < 1024">
+                                <i @click="data.openCart = false " class="fa-solid fa-xmark cursor-pointer  text-[24px]" aria-hidden="true"></i>
+                            </template>
+
+                        </h4>
+
+                        <div class="   pt-0 pr-[24px] pl-[24px] pb-[24px] divide-y divide-gray-200  bg-white text-gray-800 text-lg  ">
+
+                            <template x-if="data.hotelCart.rooms != undefined">
+                                <div class=" text-center py-4 text-lg">
+                                    <p class="pt-2 text-sm text-center  ">
+                                        <span x-text="data.hotelCart.rooms[0].nights_count"></span>
+                                        <span>박</span>
+                                    </p>
+
+                                    <span x-text="Helpers.formatDate(data.hotelCart.rooms[0].date_start)" x-text2="data.hotelCart.rooms[0].date_start">8월 22일</span>
+                                    <span>-</span>
+                                    <span x-text="Helpers.formatDate(data.hotelCart.rooms[0].date_end)" x-text2="data.hotelCart.rooms[0].date_end">8월 24일</span>
+                                </div>
+                            </template>
+
+                            <template x-for="(room, index) in data.hotelCart.rooms" :key="index">
+                                <div class="py-4">
+                                    <div class="flex justify-center items-center">
+                                        <div class="text-xs text-center">
+                                            <span class=" ">객실 </span>
+                                            <span x-text="index + 1"></span>
+                                            <span> : </span>
+                                        </div>
+                                    </div>
+
+                                    <p x-text="Object.values(data.hotel_room_types).find(obj => obj.id == room.type_id).title" class="text-base">공원 전망 디럭스 룸</p>
+                                    <p class="text-xs text-red-600 cursor-pointer font-semibold" @click="alpineListeners('Hotel.post_hotel_calculate', $event)" data-delete="1" :data-index="index">삭제</p>
+
+                                    <p class="text-right">
+
+                                        <span x-amount="room.price_total" class="text-base font-semibold">600 원</span>
+                                    </p>
+
+                                </div>
+                            </template>
+
+                            <div class="py-2 text-center mt-4">
+                                <p class="text-right text-2xl pt-2 pb-8 font-semibold flex justify-between ">
+                                    <span>총액</span>
+                                    <span x-amount="data.hotelCart.price_totall"></span>
+                                </p>
+
+                                <button @click="href('/ko/checkout')" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 w-2/3 py-3 ">
+                                    <span class="absolute left-0 top-0 h-32 w-32 -translate-y-2 translate-x-12 rotate-45 bg-gray-800 opacity-[3%]"></span>
+                                    <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-gray-800 opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8"></span>
+                                    <span class="relative w-full text-left text-gray-800 transition-colors duration-200 ease-in-out group-hover:text-white font-normal uppercase"> 계속하기</span>
+                                    <span class="absolute inset-0 rounded-md border border-gray-800"></span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+</div>
+
+<!-- MODAL ROOM INFO -->
+
+<template x-if="data.addRoom">
+
+    <div x-show="data.addRoom" x-cloak x-transition:enter.duration.500ms x-transition:leave.duration.100ms class=" backdrop-blur bg-[#0000008a] fixed block sm:flex items-center top-0 left-0 w-full h-full z-50  ">
+        <div class="flex flex-row justify-center items-center w-full max-h-full  h-full">
+            <div class="  w-full  md:w-fit lg:h-fit max-h-[300px]  p-4 overflow-auto relative   bg-white rounded-md text-black">
+                <div class="flex justify-between items-center pb-2 ">
+                    <h4 x-text="data.addRoom.title" class=" text-lg leading-[26px]  uppercase font-semibold"></h4>
+                    <p @click="data.addRoom = '' " class=" cursor-pointer  text-[24px] "><i class="fa-solid fa-xmark" aria-hidden="true"></i></p>
+                </div>
+
+                <div class="overflow-y-auto h-full">
+
+                    <form>
+                        <input type="hidden" name="newRoom" value="1">
+                        <input type="hidden" name="type" :value="data.addRoom.id">
+
+                        <div class="grid grid-cols-3 gap-4" x-data="{roomsCount: 1}">
+
+                            <div class=" mt-1">
+                                <label for="" class="block text-xs  text-gray-900 dark:text-white">객실 수</label>
+                                <select @change="roomsCount = parseInt($el.value)" name="roomsCount" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <template x-for="i in data.addRoom.room_count">
+                                        <option :value="i" x-text="i"></option>
+                                    </template>
+                                </select>
+                            </div>
+
+                            <div class="col-span-2 ">
+                                <template x-for="i in roomsCount">
+
+                                    <div class="grid grid-cols-2 gap-4 mt-1">
+                                        <div>
+                                            <label for="" class="block text-xs  text-gray-900 dark:text-white">게스트</label>
+                                            <select :name="'guests[]'" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <template x-for="i in data.addRoom.guests">
+                                                    <option :value="i" x-text="i">1</option>
+                                                </template>
+                                            </select>
+                                        </div>
+
+                                        <!-- <div>
+                                            <label for="" class="block text-xs  text-gray-900 dark:text-white">어린이</label>
+                                            <input :name="'child[]'" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        </div> -->
+                                    </div>
+
+                                </template>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-900 py-4">
+                            <span class="text-lg font-semibold" x-amount="data.addRoom.price">121.80</span>
+                            <span> 세금 포함 1박 요금</span>
+                        </p>
+
+                        <button @click="await alpineListeners('Hotel.post_hotel_calculate', $event); " @success="console.log('tuk'); href('/ko/checkout')" keyName="hotelCart" class="group relative inline-flex items-center justify-start overflow-hidden rounded-md px-5 py-3.5 h-fit bg-black ">
+                            <span class="absolute left-0 top-0 h-32 w-32 -translate-y-2 translate-x-12 rotate-45 bg-gray-800 opacity-[3%]"></span>
+                            <span class="absolute left-0 top-0 -mt-1 h-48 w-48 -translate-x-56 -translate-y-24 rotate-45 bg-white opacity-100 transition-all duration-500 ease-in-out group-hover:-translate-x-8"></span>
+                            <span class="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black font-normal uppercase"><i class="fa-solid fa-calendar-days mr-2"></i> 지금 예약하기</span>
+                            <span class="absolute inset-0 rounded-md border border-gray-800"></span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<!-- END MODAL ADD ROOM  -->
+
+<template x-if="data.room">
+
+    <div x-show="data.room" x-cloak x-transition:enter.duration.500ms x-transition:leave.duration.100ms class=" backdrop-blur bg-[#0000008a] fixed block sm:flex items-center top-0 left-0 w-full h-full z-50  ">
+        <div class="flex flex-row justify-center items-center w-full max-h-full  h-full">
+            <div class="  w-full  md:w-fit lg:h-fit max-h-[96%]  p-4 overflow-auto relative   bg-white rounded-md text-black">
+
+                <div class="w-full text-right">
+                    <p @click="data.room = '' " class=" cursor-pointer  text-[24px] "><i class="fa-solid fa-xmark" aria-hidden="true"></i></p>
+                </div>
+
+                <div class="overflow-y-auto h-full">
+                    <section class="section-room-detsils ">
+                        <div class="flex flex-wrap justify-between items-start mx-auto container">
+
+                            <div class=" w-full px-[12px] mb-[24px] ">
+                                <div class="lh-room-details">
+
+                                    <div class="container mt-2 h-[300px] lg:h-[500px] ">
+
+                                        <div @click="alpineListeners('Gallery.open', $event)" :data-images="JSON.stringify(data.room.images)" class="grid grid-cols-2 lg:grid-cols-4 grid-rows-2 gap-2 w-full  cursor-pointer h-[300px] lg:h-[500px] " @click="alpineListeners('Gallery.open', $event)">
+                                            <div class="lg:col-span-2 row-span-2 hover:brightness-50 transition-all relative">
+                                                <img alt="rental image" :src="data.room.images[0] ? data.room.images[0].url_10x10 : Helpers.image('product') " class="w-full h-full object-cover rounded-lg">
+                                            </div>
+
+                                            <div class="hover:brightness-50 transition-all">
+                                                <img alt="rental image" :src="data.room.images[1] ? data.room.images[1].url_10x10 : Helpers.image('product') " class="w-full h-full object-cover rounded-lg">
+                                            </div>
+
+                                            <div class="hover:brightness-50 transition-all">
+                                                <img alt="rental image" :src="data.room.images[2] ? data.room.images[2].url_10x10 : Helpers.image('product') " class="w-full h-full object-cover rounded-lg">
+                                            </div>
+
+                                            <div class="hover:brightness-50 transition-all hidden lg:block">
+                                                <img alt="rental image" :src="data.room.images[3] ? data.room.images[3].url_10x10 : Helpers.image('product') " class="w-full h-full object-cover rounded-lg">
+                                            </div>
+
+                                            <div class="relative  hidden lg:block">
+                                                <img alt="rental image" :src="data.room.images[4] ? data.room.images[4].url_10x10 : Helpers.image('product') " class="w-full h-full object-cover rounded-lg hover:brightness-50 transition-all">
+                                                <div class="flex bg-gray-950  gap-1 text-white btn absolute bottom-5 right-5 items-center rounded-lg text-lg ">
+                                                    <i class="fa-regular fa-images mr-2"></i>
+                                                    <p x-text="data.room.images.length">5</p>
+                                                    <p>사진</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="gallery" class="hidden">
+                                        <template x-for="image in data.rental.images">
+                                            <img :src="image.url" alt="">
+                                        </template>
+                                    </div>
+
+                                    <div class="lh-room-details-contain pt-0">
+                                        <h4 x-text="data.room.title" class=" text-gray-900 py-[10px] font-semibold lg:text-[30px] md:text-[28px] sm:text-[26px] text-[24px]">
+                                            럭셔리 룸</h4>
+                                        <div class="!text-xs lg:!text-base" x-html="data.room.description">
+
+                                        </div>
+                                        <div class="lh-room-details-amenities pt-[24px]">
+                                            <h4 class="text-[18px] text-gray-900 font-medium border-b border-solid border-[#e3e1e1] pb-[10px]">편의시설</h4>
+                                            <div class="gap-1 lg:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-1 lg:py-4">
+                                                <template x-for="prop in data.room.properties.filter(obj=> obj.property.show_on_checkout == true) ">
+                                                    <div class="flex gap-1 items-center">
+                                                        <p class="text-2xl" x-html="prop.property.icon"></p>
+                                                        <p class="text-xs lg:text-base ml-2" x-text="prop.property.title"></p>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <div class="lh-room-details-amenities pt-[24px]">
+                                            <h4 class="text-[18px] text-gray-900 font-medium border-b border-solid border-[#e3e1e1] pb-[10px]">객실 및 호텔 추가 편의시설</h4>
+                                            <div class="gap-1 lg:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-1 lg:py-4">
+                                                <template x-for="prop in data.room.properties ">
+                                                    <div class="flex gap-1 items-center">
+                                                        <i class="fa-light fa-check"></i>
+                                                        <p class="text-xs lg:text-base ml-2" x-text="prop.property.title"></p>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <div class="lh-room-details-rules pt-[24px]">
+                                            <div class="lh-room-rules">
+                                                <h4 class="text-[18px] text-gray-900 font-medium   pb-[10px]">
+                                                    규칙 및 제한사항</h4>
+
+                                                <div class=" text-gray-900 text-sm p-4 border border-gray-300 rounded-md divide-y">
+                                                    <div class="grid grid-cols-1 gap-2 lg:gap-0 lg:grid-cols-5 py-4">
+                                                        <div class=" flex gap-2 items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="30px">
+                                                                <path d="M87.33 66.22c.06-.1.11-.2.16-.3q.115-.188.2-.39a3 3 0 0 0 .13-.41q.06-.168.1-.34c.1-.515.1-1.045 0-1.56a3 3 0 0 0-.1-.34 3 3 0 0 0-.13-.41 3 3 0 0 0-.2-.39c0-.1-.1-.2-.16-.3a5 5 0 0 0-.5-.61l-24-24a4.002 4.002 0 1 0-5.66 5.66L74.34 60H20a4 4 0 0 0 0 8h54.34L57.17 85.17a4.002 4.002 0 1 0 5.66 5.66l24-24q.275-.285.5-.61M92 0h-8a4 4 0 0 0 0 8h8c6.627 0 12 5.373 12 12v88c0 6.627-5.373 12-12 12h-8a4 4 0 0 0 0 8h8c11.046 0 20-8.954 20-20V20c0-11.046-8.954-20-20-20"></path>
+                                                            </svg>
+                                                            <p class="font-medium">체크인</p>
+                                                        </div>
+                                                        <div class="col-span-4">
+                                                            <p> 14:00 ~ 00:00</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 gap-2 lg:gap-0 lg:grid-cols-5 py-4">
+                                                        <div class="flex gap-2 items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="30px">
+                                                                <path d="M111.33 66.22c.06-.1.11-.2.16-.3s.15-.25.21-.39.08-.27.12-.41a3 3 0 0 0 .1-.34c.1-.515.1-1.045 0-1.56a3 3 0 0 0-.1-.34c0-.14-.07-.28-.12-.41s-.14-.26-.21-.39-.1-.2-.16-.3a5 5 0 0 0-.5-.61l-24-24a4.002 4.002 0 1 0-5.66 5.66L98.34 60H44a4 4 0 0 0 0 8h54.34L81.17 85.17a4.002 4.002 0 1 0 5.66 5.66l24-24q.275-.285.5-.61M44 120h-8c-6.627 0-12-5.373-12-12V20c0-6.627 5.373-12 12-12h8a4 4 0 0 0 0-8h-8C24.954 0 16 8.954 16 20v88c0 11.046 8.954 20 20 20h8a4 4 0 0 0 0-8"></path>
+                                                            </svg>
+                                                            <p class="font-medium">체크아웃</p>
+                                                        </div>
+                                                        <div class="col-span-4">
+                                                            <p> 12:00까지</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 gap-2 lg:gap-0 lg:grid-cols-5 py-4">
+                                                        <div class="flex gap-2 items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px">
+                                                                <path d="M21.75 5.25a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0m1.5 0a3.75 3.75 0 1 0-7.5 0 3.75 3.75 0 0 0 7.5 0m-6.182 15.093.188 1.5A.75.75 0 0 0 18 22.5h3a.75.75 0 0 0 .744-.657l.75-6-.744.657h1.5a.75.75 0 0 0 .75-.75V13.5a4.5 4.5 0 0 0-7.2-3.6.75.75 0 1 0 .9 1.2 3 3 0 0 1 4.8 2.4v2.25l.75-.75h-1.5a.75.75 0 0 0-.744.657l-.75 6L21 21h-3l.744.657-.188-1.5a.75.75 0 0 0-1.488.186M6.75 5.25a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0m1.5 0a3.75 3.75 0 1 0-7.5 0 3.75 3.75 0 0 0 7.5 0M5.444 20.157l-.188 1.5L6 21H3l.744.657-.75-6A.75.75 0 0 0 2.25 15H.75l.75.75V13.5a3 3 0 0 1 4.8-2.4.75.75 0 1 0 .9-1.2A4.5 4.5 0 0 0 0 13.5v2.25c0 .414.336.75.75.75h1.5l-.744-.657.75 6A.75.75 0 0 0 3 22.5h3a.75.75 0 0 0 .744-.657l.188-1.5a.75.75 0 0 0-1.488-.186M13.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M15 9a3 3 0 1 0-6 0 3 3 0 0 0 6 0m-3 3a4.5 4.5 0 0 0-4.5 4.5v.75c0 .414.336.75.75.75h1.5l-.74-.627.75 4.5a.75.75 0 0 0 .74.627H12a.75.75 0 0 0 0-1.5h-1.5l.74.627-.75-4.5a.75.75 0 0 0-.74-.627h-1.5l.75.75v-.75a3 3 0 0 1 3-3 .75.75 0 0 0 0-1.5m0 1.5a3 3 0 0 1 3 3v.75l.75-.75h-1.5a.75.75 0 0 0-.74.627l-.75 4.5.74-.627H12a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 .74-.627l.75-4.5-.74.627h1.5a.75.75 0 0 0 .75-.75v-.75A4.5 4.5 0 0 0 12 12a.75.75 0 0 0 0 1.5"></path>
+                                                            </svg>
+                                                            <p class="font-medium"> 어린이 및 침대</p>
+                                                        </div>
+
+                                                        <div class="col-span-4 space-y-1.5">
+                                                            <p class="font-semibold"> 어린이 정책</p>
+                                                            <p>만 2세 이상 어린이 환영합니다.</p>
+                                                            <p>정확한 가격과 투숙 정보를 확인하시려면 검색 시 그룹 내 어린이 수와 연령을 추가해 주세요.</p>
+                                                            <p class="font-semibold">유아용 침대 및 추가 침대 정책</p>
+                                                            <p>허용되는 유아용 침대 수는 선택한 옵션에 따라 다릅니다. 자세한 내용은 선택한 옵션을 확인해 주세요.</p>
+                                                            <p>본 숙소에서는 추가 침대를 사용할 수 없습니다.</p>
+                                                            <p>모든 유아용 침대는 이용 가능 여부에 따라 달라집니다.</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 gap-2 lg:gap-0 lg:grid-cols-5 py-4">
+                                                        <div class="flex gap-2 items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px">
+                                                                <path d="M14.25 3.75a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0m1.5 0a3.75 3.75 0 1 0-7.5 0 3.75 3.75 0 0 0 7.5 0M18 13.5a6 6 0 0 0-12 0v2.25c0 .414.336.75.75.75H9l-.746-.675.75 7.5A.75.75 0 0 0 9.75 24h4.5a.75.75 0 0 0 .746-.675l.75-7.5L15 16.5h2.25a.75.75 0 0 0 .75-.75zm-1.5 0v2.25l.75-.75H15a.75.75 0 0 0-.746.675l-.75 7.5.746-.675h-4.5l.746.675-.75-7.5A.75.75 0 0 0 9 15H6.75l.75.75V13.5a4.5 4.5 0 1 1 9 0"></path>
+                                                            </svg>
+                                                            <p class="font-medium">연령 제한 없음</p>
+                                                        </div>
+                                                        <div class="col-span-4">
+                                                            <p> 체크인 연령 제한이 없습니다</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 gap-2 lg:gap-0 lg:grid-cols-5 py-4">
+                                                        <div class="flex gap-2 items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px">
+                                                                <path d="M16.01 15a4.5 4.5 0 1 0-9 0l.75-.75a3.75 3.75 0 1 0 0 7.5 4.96 4.96 0 0 0 2.245-.59 3.28 3.28 0 0 1 3.018.005c.677.365 1.44.567 2.22.585a3.75 3.75 0 1 0 .018-7.5zm-1.5 0c0 .414.336.75.75.75a2.25 2.25 0 0 1 0 4.5 3.4 3.4 0 0 1-1.536-.41 4.79 4.79 0 0 0-4.42-.005 3.46 3.46 0 0 1-1.562.415A2.247 2.247 0 0 1 5.51 18a2.25 2.25 0 0 1 2.25-2.25.75.75 0 0 0 .75-.75 3 3 0 1 1 6 0m-9.75-3.75a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0m3-6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0m6 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0m3.75 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0"></path>
+                                                            </svg>
+                                                            <p class="font-medium">반려동물</p>
+                                                        </div>
+                                                        <div class="col-span-4">
+                                                            <p> 2.5kg 이하 소형 반려동물 허용</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 gap-2 lg:gap-0 lg:grid-cols-5 py-4">
+                                                        <div class="flex gap-2 items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px">
+                                                                <path d="M6.75 7.5h10.5a.75.75 0 0 0 0-1.5H6.75a.75.75 0 0 0 0 1.5m4.35-1.2-2.25-3a.75.75 0 1 0-1.2.9l2.25 3a.75.75 0 1 0 1.2-.9m2.775-1.8a.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5 1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5m2.25-2.25a.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5 1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5m-4.5-.75a.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5 1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5m-3.21 4.782L5.742 9.62a2.25 2.25 0 0 0-.493 1.406v9.52c0 .444.132.878.378 1.248l.8 1.2A2.25 2.25 0 0 0 8.298 24H15.7a2.25 2.25 0 0 0 1.872-1.002l.8-1.2a2.25 2.25 0 0 0 .378-1.254v-9.518a2.25 2.25 0 0 0-.494-1.406l-2.67-3.338a.75.75 0 0 0-1.172.936l2.671 3.34a.75.75 0 0 1 .165.468v9.52c0 .15-.044.296-.126.42l-.8 1.2a.75.75 0 0 1-.624.334H8.3a.75.75 0 0 1-.623-.336l-.801-1.202a.75.75 0 0 1-.126-.416v-9.52a.75.75 0 0 1 .165-.468l2.67-3.34a.75.75 0 0 0-1.17-.936"></path>
+                                                            </svg>
+                                                            <p class="font-medium">파티</p>
+                                                        </div>
+                                                        <div class="col-span-4">
+                                                            <p>
+                                                                파티/이벤트 불허</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>

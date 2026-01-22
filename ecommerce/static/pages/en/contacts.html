@@ -11,22 +11,22 @@
     </div>
 </div>
 
-<!-- Enhanced contact info and form section with premium design -->
-<div class="is-section is-section-auto !py-16 dark:bg-slate-950">
-    <div class="is-container !container v2 ">
+<div class="is-section is-section-auto section last-box">
+    <div class="is-overlay"></div>
+    <div class="!container is-container v2">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
             <!-- Contact info cards with modern styling -->
             <div class="space-y-6">
                 <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Contact us</h2>
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Contact Us</h2>
                     <p class="text-slate-600 dark:text-slate-400">We will be happy to answer your questions</p>
                 </div>
 
                 <!-- Phone -->
                 <div class="flex items-start gap-4 p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200 dark:border-slate-800">
                     <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600">
-                        <i class="fa-solid fa-phone text-xl text-white"></i>
+                        <i class="fa-solid fa-phone text-xl text-white" aria-hidden="true"></i>
                     </div>
                     <div>
                         <p class="text-lg font-bold text-slate-900 dark:text-white mb-1">Phone</p>
@@ -37,7 +37,7 @@
                 <!-- Email -->
                 <div class="flex items-start gap-4 p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200 dark:border-slate-800">
                     <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600">
-                        <i class="fa-regular fa-envelope text-xl text-white"></i>
+                        <i class="fa-regular fa-envelope text-xl text-white" aria-hidden="true"></i>
                     </div>
                     <div>
                         <p class="text-lg font-bold text-slate-900 dark:text-white mb-1">Email</p>
@@ -48,7 +48,7 @@
                 <!-- Address 1 -->
                 <div class="flex items-start gap-4 p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200 dark:border-slate-800">
                     <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600">
-                        <i class="fa-solid fa-location-dot text-xl text-white"></i>
+                        <i class="fa-solid fa-location-dot text-xl text-white" aria-hidden="true"></i>
                     </div>
                     <div>
                         <p class="text-lg font-bold text-slate-900 dark:text-white mb-1">Address</p>
@@ -60,7 +60,7 @@
                 <!-- Address 2 -->
                 <div class="flex items-start gap-4 p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200 dark:border-slate-800">
                     <div class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-amber-600">
-                        <i class="fa-solid fa-location-dot text-xl text-white"></i>
+                        <i class="fa-solid fa-location-dot text-xl text-white" aria-hidden="true"></i>
                     </div>
                     <div>
                         <p class="text-lg font-bold text-slate-900 dark:text-white mb-1">Address</p>
@@ -71,8 +71,8 @@
             </div>
 
             <!-- Contact form with premium styling -->
-            <div class="bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 p-8">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send a message</h2>
+            <div class="bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 p-8 ">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send a Message</h2>
 
                 <form class="space-y-5">
                     <div>
@@ -91,7 +91,7 @@
                     </div>
 
                     <div>
-                        <label for="subject" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">About</label>
+                        <label for="subject" class="block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Subject</label>
                         <input type="text" name="subject" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors">
                     </div>
 
@@ -101,7 +101,7 @@
                     </div>
 
                     <button @click="alpineListeners('Contacts.post_contacts', $event)" type="button" class="w-full py-3 px-6 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
-                        Send message
+                        Send Message
                     </button>
                 </form>
             </div>

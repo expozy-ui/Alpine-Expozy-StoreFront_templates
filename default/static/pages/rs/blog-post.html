@@ -1,0 +1,229 @@
+<div class="w-full dark:bg-gray-900 dark:text-gray-200" apidata="get.blogPosts" keyname="post" :data-id="data.corePage.target_id">
+
+    <!-- Enhanced hero section with better overlay and positioning -->
+    <div class="w-full  relative">
+        <img :src="data.post.images[0] ? data.post.images[0].url_10x10 : Helpers.image('product')" class="w-full h-[500px] object-cover" style="filter: brightness(0.5);" alt="">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
+    </div>
+
+    <!-- Improved header section with better contrast and spacing -->
+    <div class="mt-[-350px] container mx-auto px-4 relative z-10">
+        <div class=" space-y-2">
+            <div class="flex gap-3 items-center ">
+                <div class="bg-amber-600 rounded-lg p-2">
+                    <i class="fa-regular fa-folder-closed text-white text-sm"></i>
+                </div>
+                <p x-text="data.post.category.title" class="text-white font-semibold cursor-pointer hover:text-amber-400 transition-colors" @click="href(data.post.category.url)"></p>
+            </div>
+            <div>
+                <h1 x-text="data.post.title" class=" text-white font-bold text-4xl md:text-5xl leading-tight"></h1>
+                <p x-text="data.post.seo_description" class=" text-slate-200 text-lg leading-relaxed"></p>
+            </div>
+        </div>
+
+        <!-- Modern content card with improved layout -->
+        <div class="mt-20 bg-white dark:bg-slate-800 rounded-xl shadow-2xl overflow-hidden">
+            <div class="flex flex-wrap">
+
+                <!-- Main Content -->
+                <div class="w-full lg:w-2/3 p-6 md:p-10">
+
+                    <!-- Enhanced meta information bar with better icons and spacing -->
+                    <div class="flex flex-col md:flex-row justify-between gap-4 pb-6 mb-8 border-b border-slate-200 dark:border-slate-700">
+
+                        <div class="flex gap-4">
+                            <a href="#" class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                                <i class="fa-brands fa-facebook text-lg"></i>
+                                <span class="text-sm font-medium">Facebook</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                                <i class="fa-brands fa-x-twitter text-lg"></i>
+                                <span class="text-sm font-medium">Twitter</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                                <i class="fa-brands fa-linkedin text-lg"></i>
+                                <span class="text-sm font-medium">LinkedIn</span>
+                            </a>
+                        </div>
+
+                        <div class="flex gap-4 text-sm">
+                            <span class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                                <i class="fa-regular fa-clock text-amber-600"></i>
+                                <span x-text="data.post.read_time != 0 ? data.post.read_time : '1'"></span>
+                                <span>мин.</span>
+                            </span>
+                            <span class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                                <i class="fa-regular fa-eye text-amber-600"></i>
+                                <span x-text="data.post.views"></span>
+                            </span>
+                            <span class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                                <i class="fa-regular fa-calendar-days text-amber-600"></i>
+                                <span x-text="new Date(data.post.date_created).toLocaleDateString('sr-RS')"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Article content with better typography -->
+                    <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-amber-600 hover:prose-a:text-amber-700" x-html="data.post.description"></div>
+
+                    <!-- Related posts section with modern card design -->
+                    <div class="mt-12 p-6 bg-slate-50 dark:bg-slate-900 rounded-lg">
+                        <template x-if="data.post">
+                            <div x-init="alpineListeners('get.blogPosts', $el)" keyName="sameCategoryPosts">
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">
+                                    На тему
+                                    <span class="text-amber-600">.</span>
+                                </h3>
+
+                                <div class="space-y-3">
+                                    <template x-for="sameCategoryPosts in data.sameCategoryPosts.result">
+                                        <template x-if="sameCategoryPosts.id != data.corePage.target_id">
+                                            <div class="group">
+                                                <p @click="href(sameCategoryPosts.url)" class="text-base text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-500 cursor-pointer transition-colors group-hover:translate-x-2 duration-200 flex items-center gap-2" x-text="sameCategoryPosts.title">
+                                                </p>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Modern tags section with badge design -->
+                    <template x-if="data.post.tags[0]">
+                        <div class="mt-10">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4">Ознаке</h3>
+                            <div class="flex gap-2 flex-wrap">
+                                <template x-for="tag in data.post.tags">
+                                    <span @click="href('/sr/blog?tags[]='+tag)" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium hover:bg-amber-600 hover:text-white cursor-pointer transition-all duration-200 hover:scale-105" x-text="tag">
+                                    </span>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Enhanced comments section with better structure -->
+                    <div class="mt-12">
+                        <div apidata="Reviews.get_blog_comments" :data-subject_id="data.corePage.target_id" keyname="blogReviews">
+
+                            <div class="mb-10">
+                                <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">Коментари</h3>
+
+                                <template x-for="review in data.blogReviews">
+                                    <div class="flex flex-col md:flex-row gap-6 border-b border-slate-200 dark:border-slate-700 py-6 last:border-0">
+                                        <div class="md:w-64 shrink-0">
+                                            <p class="font-semibold text-slate-900 dark:text-slate-100 mb-1" x-text="review.user_name"></p>
+                                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-1" x-text="review.email"></p>
+                                            <p class="text-sm text-slate-500 dark:text-slate-500" x-text="review.date"></p>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex mb-2">
+                                                <template x-for="item in review.rating">
+                                                    <span class="text-yellow-400 text-xl">★</span>
+                                                </template>
+                                            </div>
+                                            <p class="text-slate-700 dark:text-slate-300 leading-relaxed" x-text="review.comment"></p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <!-- Modern comment form with better styling -->
+                            <div class="p-6 rounded-lg bg-slate-50 dark:bg-slate-900 shadow-md" x-data="{reviewOpen:false}">
+                                <h3 @click="reviewOpen = !reviewOpen" class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 cursor-pointer flex justify-between items-center group">
+                                    Оставите коментар
+                                    <i class="fa-solid fa-circle-plus text-2xl text-amber-600 group-hover:text-amber-700 transition-colors"></i>
+                                </h3>
+
+                                <form x-show="reviewOpen" class="space-y-4">
+                                    <input type="hidden" name="subject_id" :value="data.corePage.target_id">
+
+                                    <div>
+                                        <label class="block text-slate-700 dark:text-slate-300 font-medium mb-2" for="email">Е-пошта</label>
+                                        <input name="email" :value="data.user.email" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all" type="email" placeholder="example@email.com">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-slate-700 dark:text-slate-300 font-medium mb-2" for="name">Име</label>
+                                        <input name="user_name" :value="data.user.names" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all" type="text" placeholder="Ваше име">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-slate-700 dark:text-slate-300 font-medium mb-2" for="comment">Коментар</label>
+                                        <textarea rows="4" name="comment" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all" placeholder="Напишите ваш коментар..."></textarea>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-slate-700 dark:text-slate-300 font-medium mb-3">Оцените овај производ</label>
+                                        <div x-data="{ temp: 0, orig: 0 }" class="flex cursor-pointer text-4xl mb-4" @click="orig = temp">
+                                            <input type="number" name="rating" :value="orig" class="hidden">
+                                            <template x-for="item in [1,2,3,4,5]">
+                                                <span @mouseenter="temp = item" @mouseleave="temp = orig" class="transition-colors duration-150" :class="temp >= item ? 'text-yellow-400' : 'text-slate-300 dark:text-slate-600'">★</span>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button @click="alpineListeners('Reviews.post_blog_comments', $event)" :data-product_id="data.product.id" options-clear="true" class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all duration-200 hover:scale-105 shadow-lg">
+                                            Објави
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced sidebar with modern card designs -->
+                <div class="w-full lg:w-1/3 p-6 md:p-10 bg-slate-50 dark:bg-slate-900/50">
+
+                    <!-- Related Posts -->
+                    <template x-if="data.post.related_posts[0]">
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">Повезани чланци</h3>
+                            <div class="space-y-4">
+                                <template x-for="related in data.post.related_posts">
+                                    <div @click="href(related.url)" class="bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                                        <img class="w-full h-40 object-cover" :src="related.images[0] ? related.images[0].url_10x10 : Helpers.image('product')" alt="">
+                                        <div class="p-4">
+                                            <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2 group-hover:text-amber-600 transition-colors" x-text="related.title"></h4>
+                                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-3 line-clamp-2" x-text="related.seo_description"></p>
+                                            <div class="flex items-center gap-2 text-xs text-slate-500">
+                                                <i class="fa-regular fa-calendar-days text-amber-600"></i>
+                                                <span x-text="related.date_publish"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Newest Posts -->
+                    <template x-if="data.post">
+                        <div x-init="alpineListeners('get.blogPosts', $el)" data-sort="newest" keyName="newestPosts">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">Недавно додато</h3>
+                            <div class="space-y-4">
+                                <template x-for="newestPosts in data.newestPosts.result">
+                                    <template x-if="newestPosts.id != data.corePage.target_id">
+                                        <div @click="href(newestPosts.url)" class="bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                                            <img class="w-full h-40 object-cover" :src="newestPosts.images[0] ? newestPosts.images[0].url_10x10 : Helpers.image('product')" alt="">
+                                            <div class="p-4">
+                                                <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2 group-hover:text-amber-600 transition-colors" x-text="newestPosts.title"></h4>
+                                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-3 line-clamp-2" x-text="newestPosts.seo_description"></p>
+                                                <div class="flex items-center gap-2 text-xs text-slate-500">
+                                                    <i class="fa-regular fa-calendar-days text-amber-600"></i>
+                                                    <span x-text="newestPosts.date_publish"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

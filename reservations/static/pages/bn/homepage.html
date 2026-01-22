@@ -1,0 +1,105 @@
+<div class="w-full">
+    <div class="w-full bg-gray-50 h-fit py-4 md:py-[70px] px-4">
+        <ol class="md:flex space-y-4 justify-between w-full md:w-2/4 mx-auto">
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse gap-">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold bg-black text-white border rounded-full shrink-0 border-black">
+                    1
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">তারিখ নির্বাচন</h3>
+                    <p class="text-sm">থাকার সময়কাল নির্দিষ্ট করুন।</p>
+                </span>
+            </li>
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                    2
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">কক্ষ নির্বাচন</h3>
+                    <p class="text-sm">সবচেয়ে উপযুক্ত বিকল্প বেছে নিন।</p>
+                </span>
+            </li>
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                    3
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">পেমেন্ট এবং বুকিং</h3>
+                    <p class="text-sm">নিশ্চিত করুন এবং প্রক্রিয়া সম্পন্ন করুন।</p>
+                </span>
+            </li>
+        </ol>
+    </div>
+
+    <p class="text-gray-900 text-base md:text-xl py-5 lg:py-14 text-center">আপনার থাকার তারিখ নির্বাচন করুন।</p>
+
+    <div class="w-full relative  z-1 lg:mt-10">
+        <div class="grid grid-cols-1">
+            <form>
+                <div class="flex justify-center items-center">
+                    <div class="col-span-3 relative flatpickr-input active" x-init="initCalendar($el)" readonly="readonly"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media (max-width: 768px) {
+        .flatpickr-calendar {
+            transform: scale(1) !important;
+        }
+        .numInputWrapper,
+        .cur-month {
+            font-size: 12px !important;
+        }
+    }
+    .flatpickr-day {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 12px;
+    }
+    .flatpickr-calendar {
+        transform: scale(1.4);
+    }
+    .numInputWrapper,
+    .cur-month {
+        font-size: 14px;
+    }
+</style>
+<script>
+    async function initCalendar(el) {
+        await Helpers.loadFile(`/assets/plugins/flatpicker/flatpicker.css`);
+        await Helpers.loadFile(`/assets/plugins/flatpicker/flatpicker.js`);
+
+        let flatpickrInstance = flatpickr(el, {
+            dateFormat: 'Y-m-d',
+            minDate: 'today',
+            mode: "range",
+            inline: true,
+            showMonths: window.innerWidth <= 768 ? 1 : 2,
+            locale: {
+                firstDayOfWeek: 0,
+                weekdays: {
+                    shorthand: ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহ", "শুক্র", "শনি"],
+                    longhand: ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"]
+                },
+                months: {
+                    shorthand: ["জানু", "ফেব্রু", "মার্চ", "এপ্রি", "মে", "জুন", "জুলা", "আগ", "সেপ্টে", "অক্টো", "নভে", "ডিসে"],
+                    longhand: ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"]
+                }
+            },
+            onChange: function (selectedDates, dateStr, instance) {
+                let datesSplit = dateStr.split(' ');
+                if (datesSplit.length >= 2) {
+                    localStorage.setItem('date_start', datesSplit[0]);
+                    localStorage.setItem('date_end', datesSplit[2]);
+                    data.date_start = datesSplit[0];
+                    data.date_end = datesSplit[2];
+                    href(`/${LANG}/accommodation`);
+                }
+            },
+        });
+    }
+</script>

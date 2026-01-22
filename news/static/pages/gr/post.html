@@ -1,0 +1,382 @@
+<!-- Post Page -->
+<div class="w-full" apidata="Blog.get_blogPosts" keyname="post" :data-id="data.corePage.target_id" data-test="true">
+
+    <!-- Hero Section with Featured Image -->
+    <div class="relative w-full h-[550px] overflow-hidden">
+        <img :src="data.post.images[0] ? data.post.images[0].url_10x10 : data.settings.logo" class="absolute inset-0 w-full h-full object-cover" alt="">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-slate-900/30"></div>
+
+        <!-- Hero Content -->
+        <div class="absolute bottom-0 left-0 right-0 pb-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl">
+                    <!-- Category Badge -->
+                    <a @click="href(data.post.category.url)" class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-red-700 transition-colors cursor-pointer mb-4">
+                        <i class="fa-solid fa-folder"></i>
+                        <span x-text="data.post.category.title"></span>
+                    </a>
+
+                    <!-- Title -->
+                    <h1 x-text="data.post.title" class="text-white text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4"></h1>
+
+                    <!-- SEO Description -->
+                    <p x-text="data.post.seo_description" class="text-slate-300 text-lg sm:text-xl leading-relaxed max-w-3xl"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="w-full bg-slate-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="-mt-16 relative z-10">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
+
+                        <!-- Main Content Column -->
+                        <div class="w-full lg:w-2/3 p-6 sm:p-8 lg:p-12">
+
+                            <!-- Meta Bar -->
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 mb-8 border-b border-slate-200">
+                                <!-- Share Buttons -->
+                                <div x-data="shareButtons()" x-init="init()" class="flex items-center gap-1">
+                                    <span class="text-sm text-slate-500 mr-2">Κοινοποίηση:</span>
+
+                                    <!-- Facebook -->
+                                    <button type="button" @click="open('facebook')" class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors" :title="`Κοινοποίηση στο Facebook`">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                    </button>
+
+                                    <!-- X -->
+                                    <button type="button" @click="open('x')" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 text-white hover:bg-slate-800 transition-colors" :title="`Κοινοποίηση στο X`">
+                                        <i class="fa-brands fa-x-twitter"></i>
+                                    </button>
+
+                                    <!-- LinkedIn -->
+                                    <button type="button" @click="open('linkedin')" class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors" :title="`Κοινοποίηση στο LinkedIn`">
+                                        <i class="fa-brands fa-linkedin-in"></i>
+                                    </button>
+
+                                    <!-- Copy link -->
+                                    <button type="button" @click="copy()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-200 text-slate-600 hover:bg-red-600 hover:text-white transition-colors" title="Αντιγραφή συνδέσμου">
+                                        <i class="fa-solid fa-link"></i>
+                                    </button>
+
+                                    <!-- Native share (optional) -->
+                                    <button type="button" @click="nativeShare()" x-show="canNativeShare" x-cloak class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-200 text-slate-600 hover:bg-slate-300 transition-colors" title="Κοινοποίηση (native)">
+                                        <i class="fa-solid fa-share-nodes"></i>
+                                    </button>
+
+                                    <!-- Minimal feedback -->
+                                    <span x-show="toast.show" x-transition.opacity.duration.150ms class="ml-2 text-xs text-slate-500" x-text="toast.text"></span>
+                                </div>
+
+                                <script>
+                                    function shareButtons() {
+                                        return {
+                                            url: '',
+                                            title: '',
+                                            canNativeShare: false,
+                                            toast: { show: false, text: '' },
+                                            toastTimer: null,
+
+                                            init() {
+                                                // Prefer canonical / og:url for cleaner shared URLs
+                                                const canonical = document.querySelector('link[rel="canonical"]')?.href;
+                                                const ogUrl = document.querySelector('meta[property="og:url"]')?.content;
+
+                                                this.url = ogUrl || canonical || window.location.href;
+                                                this.title =
+                                                    document.querySelector('meta[property="og:title"]')?.content ||
+                                                    document.title ||
+                                                    '';
+
+                                                this.canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
+                                            },
+
+                                            shareLinks() {
+                                                const u = encodeURIComponent(this.url);
+                                                const t = encodeURIComponent(this.title);
+
+                                                return {
+                                                    facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+                                                    x: `https://twitter.com/intent/tweet?url=${u}&text=${t}`,
+                                                    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+                                                };
+                                            },
+
+                                            open(type) {
+                                                const links = this.shareLinks();
+                                                const shareUrl = links[type];
+                                                if (!shareUrl) return;
+
+                                                // Popup window with reasonable defaults
+                                                const w = 720, h = 520;
+                                                const left = Math.round((window.screen.width - w) / 2);
+                                                const top = Math.round((window.screen.height - h) / 3);
+
+                                                window.open(
+                                                    shareUrl,
+                                                    'share',
+                                                    `width=${w},height=${h},left=${left},top=${top},noopener,noreferrer`
+                                                );
+                                            },
+
+                                            async copy() {
+                                                try {
+                                                    if (navigator.clipboard?.writeText) {
+                                                        await navigator.clipboard.writeText(this.url);
+                                                    } else {
+                                                        // Fallback
+                                                        const input = document.createElement('input');
+                                                        input.value = this.url;
+                                                        input.style.position = 'fixed';
+                                                        input.style.left = '-9999px';
+                                                        document.body.appendChild(input);
+                                                        input.select();
+                                                        document.execCommand('copy');
+                                                        input.remove();
+                                                    }
+                                                    this.showToast('Ο σύνδεσμος αντιγράφηκε');
+                                                } catch (e) {
+                                                    this.showToast('Αποτυχία αντιγραφής');
+                                                }
+                                            },
+
+                                            async nativeShare() {
+                                                if (!navigator.share) {
+                                                    // fallback
+                                                    return this.copy();
+                                                }
+                                                try {
+                                                    await navigator.share({ title: this.title, url: this.url });
+                                                } catch (e) {
+                                                    // user cancel -> ignore; other errors -> fallback
+                                                    // If you want fallback always:
+                                                    // return this.copy();
+                                                }
+                                            },
+
+                                            showToast(text) {
+                                                this.toast.text = text;
+                                                this.toast.show = true;
+
+                                                clearTimeout(this.toastTimer);
+                                                this.toastTimer = setTimeout(() => {
+                                                    this.toast.show = false;
+                                                }, 1800);
+                                            },
+                                        };
+                                    }
+                                </script>
+
+                                <!-- Post Stats -->
+                                <div class="flex items-center gap-4 text-sm text-slate-500">
+                                    <span class="inline-flex items-center gap-1.5">
+                                        <i class="fa-regular fa-eye"></i>
+                                        <span x-text="data.post.views"></span>
+                                    </span>
+                                    <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                    <span class="inline-flex items-center gap-1.5">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span x-text="(data.post.read_time != 0 ? data.post.read_time : '1') + ' λεπτά'"></span>
+                                    </span>
+                                    <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                    <span class="inline-flex items-center gap-1.5">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        <span x-text="new Date(data.post.date_created).toLocaleDateString('el-GR')"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Article Content -->
+                            <article class="prose prose-lg prose-slate max-w-none prose-headings:text-slate-900 prose-a:text-red-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl" x-html="data.post.description"></article>
+
+                            <!-- Same Category Posts -->
+                            <template x-if="data.post">
+                                <div class="mt-12 p-6 bg-slate-50 rounded-2xl" x-init="alpineListeners('Blog.get_blogPosts', $el)" keyName="sameCategoryPosts">
+                                    <div class="flex items-center gap-3 mb-6">
+                                        <div class="w-1 h-8 bg-red-600 rounded-full"></div>
+                                        <h3 class="text-xl font-bold text-slate-900">Σχετικά με το θέμα</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <template x-for="sameCategoryPosts in data.sameCategoryPosts.result">
+                                            <template x-if="sameCategoryPosts.id != data.corePage.target_id">
+                                                <a @click="href(sameCategoryPosts.url)" class="block p-4 bg-white rounded-xl hover:shadow-md hover:border-red-200 border border-transparent cursor-pointer transition-all group">
+                                                    <p class="text-slate-800 font-medium group-hover:text-red-600 transition-colors" x-text="sameCategoryPosts.title"></p>
+                                                </a>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Tags Section -->
+                            <div class="mt-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i class="fa-solid fa-tags text-slate-400"></i>
+                                    <h3 class="text-lg font-bold text-slate-900">Ετικέτες</h3>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <template x-for="tag in data.post.tags">
+                                        <button @click="href('/gr/blog?tag='+tag)" class="px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-full border border-slate-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all cursor-pointer" x-text="tag"></button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- Comments Section -->
+                            <div class="mt-12" apidata="Reviews.get_blog_comments" :data-subject_id="data.corePage.target_id" keyname="blogReviews">
+                                <div class="flex items-center gap-3 mb-8">
+                                    <div class="w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl">
+                                        <i class="fa-solid fa-comments"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-900">Σχόλια</h3>
+                                </div>
+
+                                <!-- Comments List -->
+                                <div class="space-y-6">
+                                    <template x-for="review in data.blogReviews">
+                                        <div class="p-6 bg-slate-50 rounded-2xl">
+                                            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                                                <div class="w-12 h-12 flex-shrink-0 bg-slate-200 rounded-full flex items-center justify-center">
+                                                    <i class="fa-solid fa-user text-slate-500"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
+                                                        <span class="font-semibold text-slate-900" x-text="review.user_name"></span>
+                                                        <span class="hidden sm:block w-1 h-1 bg-slate-300 rounded-full"></span>
+                                                        <span class="text-sm text-slate-500" x-text="review.date"></span>
+                                                    </div>
+                                                    <p class="text-slate-700 mb-3" x-text="review.comment"></p>
+                                                    <div class="flex">
+                                                        <template x-for="item in review.rating">
+                                                            <i class="fa-solid fa-star text-amber-400"></i>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Comment Form -->
+                                <div class="mt-8 p-6 bg-white border border-slate-200 rounded-2xl" x-data="{reviewOpen: false}">
+                                    <button @click="reviewOpen = !reviewOpen" class="w-full flex items-center justify-between text-lg font-semibold text-slate-900">
+                                        <span>Αφήστε σχόλιο</span>
+                                        <span class="w-8 h-8 flex items-center justify-center bg-red-600 text-white text-sm rounded-full transition-transform" :class="reviewOpen ? 'rotate-45' : ''">
+                                            <i class="fa-solid fa-plus "></i>
+                                        </span>
+
+                                    </button>
+
+                                    <form x-show="reviewOpen" x-transition class="mt-6 space-y-5">
+                                        <input type="hidden" name="subject_id" :value="data.corePage.target_id">
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                                                <input name="email" :value="data.user.email" type="email" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Όνομα</label>
+                                                <input name="user_name" :value="data.user.names" type="text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-2">Σχόλιο</label>
+                                            <textarea name="comment" rows="4" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all resize-none"></textarea>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-3">Βαθμολογία</label>
+                                            <div x-data="{ temp: 0, orig: 0 }" class="flex gap-1" @click="orig = temp">
+                                                <input type="hidden" name="rating" :value="orig">
+                                                <template x-for="item in [1,2,3,4,5]">
+                                                    <button type="button" @mouseenter="temp = item" @mouseleave="temp = orig" class="text-3xl transition-colors" :class="temp >= item ? 'text-amber-400' : 'text-slate-300'">
+                                                        <i class="fa-solid fa-star"></i>
+                                                    </button>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <button type="button" @click="alpineListeners('Reviews.post_blog_comments', $event)" :data-product_id="data.product.id" class="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-red-600 transition-colors">
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                            <span>Δημοσίευση</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="w-full lg:w-1/3 p-6 sm:p-8 lg:p-10 bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200">
+
+                            <!-- Related Posts -->
+                            <template x-if="data.post.related_posts[0]">
+                                <div class="mb-10">
+                                    <div class="flex items-center gap-3 mb-6">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-xl">
+                                            <i class="fa-solid fa-link"></i>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-slate-900">Σχετικά άρθρα</h3>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <template x-for="related in data.post.related_posts">
+                                            <article @click="href(related.url)" class="group flex gap-4 p-3 bg-white rounded-xl cursor-pointer hover:shadow-lg transition-all border border-slate-100 hover:border-red-200">
+                                                <div class="relative w-24 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+                                                    <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" :src="related.images[0] ? related.images[0].url_10x10 : data.settings.logo" alt="">
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <h4 class="text-sm font-semibold text-slate-900 line-clamp-2 group-hover:text-red-600 transition-colors" x-text="related.title"></h4>
+                                                    <p class="mt-1 text-xs text-slate-500 flex items-center gap-1">
+                                                        <i class="fa-regular fa-calendar"></i>
+                                                        <span x-text="related.date_publish"></span>
+                                                    </p>
+                                                </div>
+                                            </article>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Newest Posts -->
+                            <template x-if="data.post">
+                                <div x-init="alpineListeners('Blog.get_blogPosts', $el)" :data-sort="newest" keyName="newestPosts">
+                                    <div class="flex items-center gap-3 mb-6">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl">
+                                            <i class="fa-solid fa-newspaper"></i>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-slate-900">Πρόσφατες προσθήκες</h3>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <template x-for="newestPosts in data.newestPosts.result">
+                                            <template x-if="newestPosts.id != data.corePage.target_id">
+                                                <article @click="href(newestPosts.url)" class="group flex gap-4 p-3 bg-white rounded-xl cursor-pointer hover:shadow-lg transition-all border border-slate-100 hover:border-red-200">
+                                                    <div class="relative w-24 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+                                                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" :src="newestPosts.images[0] ? newestPosts.images[0].url_10x10 : data.settings.logo" alt="">
+                                                    </div>
+                                                    <div class="flex-1 min-w-0">
+                                                        <h4 class="text-sm font-semibold text-slate-900 line-clamp-2 group-hover:text-red-600 transition-colors" x-text="newestPosts.title"></h4>
+                                                        <p class="mt-1 text-xs text-slate-500 flex items-center gap-1">
+                                                            <i class="fa-regular fa-calendar"></i>
+                                                            <span x-text="newestPosts.date_publish"></span>
+                                                        </p>
+                                                    </div>
+                                                </article>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Spacer -->
+    <div class="w-full h-16 bg-slate-100"></div>
+</div>

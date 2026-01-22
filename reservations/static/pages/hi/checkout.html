@@ -1,0 +1,223 @@
+<div class="w-full bg-gray-50 h-fit py-4 md:py-[70px] px-4" apiData="Countries.get_countries">
+
+    <ol class="md:flex space-y-4 justify-between w-full md:w-2/4 mx-auto">
+        <li @click="href('/')" class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse gap-">
+            <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold  border rounded-full shrink-0 border-black cursor-pointer">
+                1
+            </span>
+            <span>
+                <h3 class="font-medium leading-tight lg:text-lg">तारीख चुनें</h3>
+                <p class="text-sm">ठहरने की अवधि बताएं।</p>
+            </span>
+        </li>
+        <li @click="href('/hi/accommodation')" class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse cursor-pointer">
+            <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold  border border-black rounded-full shrink-0 ">
+                2
+            </span>
+            <span>
+                <h3 class="font-medium leading-tight lg:text-lg">कमरा चुनें</h3>
+                <p class="text-sm">सबसे उपयुक्त विकल्प चुनें।</p>
+            </span>
+        </li>
+        <li @click="if(data.hotelCart.price_total != 0){href('/hi/checkout')}" class="flex items-center    space-x-2.5 rtl:space-x-reverse">
+            <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold bg-black text-white border border-black rounded-full shrink-0 ">
+                3
+            </span>
+            <span>
+                <h3 class="font-medium leading-tight lg:text-lg">भुगतान और बुकिंग</h3>
+                <p class="text-sm">पुष्टि करें और प्रक्रिया पूरी करें।</p>
+            </span>
+        </li>
+    </ol>
+</div>
+
+<form class="">
+    <div apiData="Hotel.post_hotel_calculate" keyName="hotelCart" class="lg:mt-[50px] my-6 px-4">
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <div class="col-span-2">
+                <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">अपना ईमेल दर्ज करें:</label>
+            </div>
+            <p class=" mt-2">उपयोगकर्ता से संबंधित छूट और प्रचार ईमेल दर्ज करने के बाद लागू होंगे। </p>
+        </div>
+
+        <template x-for="(room, indexRoom) in data.hotelCart.rooms" :key="indexRoom">
+            <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4">
+
+                <div class="py-3 border-b border-gray-200">
+                    <p class="text-lg px-4">
+                        <span>कमरा #</span>
+                        <span x-text="indexRoom + 1"></span>
+                    </p>
+                    <p x-text="room.title"></p>
+                </div>
+
+                <div class="p-4">
+                    <div class="grid md:grid-cols-3 gap-10">
+                        <div class="col-span-2 space-y-0.5">
+                            <p class="text-base font-semibold">बुकिंग विवरण</p>
+                            <p class="text-sm">
+                                <span x-text="Helpers.formatDate(room.date_start)">20 जन 2025</span>
+                                <span> - </span>
+                                <span x-text="Helpers.formatDate(room.date_end)">22 जन 2025</span>
+                            </p>
+                            <!-- <p class="text-sm">नाश्ते के साथ आवास</p> -->
+                            <p class="text-sm">वयस्क: <span x-text="room.guests"></span></p>
+
+                            <!-- <p class="text-sm">गारंटी नीति: गारंटी नीति </p> -->
+                        </div>
+
+                        <div class="space-y-0.5">
+                            <p class="text-base font-semibold">मूल्य</p>
+                            <p class="flex justify-between items-center text-sm">
+                                <span>कमरा</span>
+                                <span x-amount="room.price_base_no_discount">INR 243.60</span>
+                            </p>
+                            <template x-for="discount in room.discounts">
+                                <p class="flex justify-between items-center text-sm">
+                                    <span x-text="discount.title">कमरा</span>
+                                    <span x-amount="discount.amount">INR 243.60</span>
+                                </p>
+                            </template>
+                            <p class="flex justify-between items-center text-sm">
+                                <span>GST (मूल्य में शामिल)</span>
+                                <span x-amount="(room.price_total * 0.2)">INR 20.11</span>
+                            </p>
+
+                            <div class="flex justify-between items-center mt-2 pt-1 border-t border-gray-300 text-base font-semibold">
+                                <span>कुल</span>
+                                <div>
+                                    <p x-amount="room.price_total">INR 243.60</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-base font-semibold mt-4">मेहमान विवरण</p>
+
+                        <template x-for="(i,indexGuests) in room.guests" :key="indexGuests">
+                            <div>
+                                <p class="font-semibold text-sm mt-4 mb-2">मेहमान <span x-text="indexGuests + 1"></span> </p>
+                                <div class="grid sm:grid-cols-3 gap-4">
+
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">पहला नाम</label>
+                                        <input type="text" :name="`first_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">मध्य नाम</label>
+                                        <input type="text" :name="`middle_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">अंतिम नाम</label>
+                                        <input type="text" :name="`last_name[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div class="">
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">ईमेल</label>
+                                        <input type="text" :id="`email_${indexGuests}`" :name="`email[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div class="">
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">फ़ोन</label>
+                                        <input type="text" :name="`phone[${indexRoom}][${indexGuests}]`" class="req bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+
+                                    <div>
+                                        <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">राष्ट्रीयता</label>
+
+                                        <select :name="`nationality[${indexRoom}][${indexGuests}]`" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="">
+                                            <template x-for="country in data.countries">
+                                                <option :value="country.title" x-text="country.title"></option>
+                                            </template>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </template>
+
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <div>
+                <p class="text-base font-medium">और कमरे चाहिए?</p>
+                <p class="text-base font-medium"> और जोड़ें!</p>
+                <p @click="href('/hi/accommodation')" class="bg-black btn mt-2  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">कमरा जोड़ें</p>
+            </div>
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <lebal class="">भुगतान का तरीका</lebal>
+
+            <div class="flex items-center my-2">
+                <input id="link-radio" type="radio" name="payment_code" value="bank_transfer" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm  text-gray-900 ">बैंक ट्रांसफर</label>
+            </div>
+
+            <div class="flex items-center my-2">
+                <input id="link-radio" type="radio" name="payment_code" checked value="mypos" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                <label for="link-radio" class="ml-2 text-sm  text-gray-900 ">कार्ड</label>
+            </div>
+
+            <!-- <template x-for="(payment, index) in data.payment_methods" :key="index" apidata="Payments.get_payment_methods">
+                <div class="flex items-center my-2">
+                    <input id="link-radio" type="radio" name="payment_code" :checked="index == 0" :value="payment.code" class="w-4 h-4  bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-sky-700 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600">
+                    <label for="link-radio" class="ml-2 text-sm  text-gray-900 " x-text="payment.title">कैश ऑन डिलीवरी</label>
+                </div>
+            </template> -->
+
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4">
+
+            <p class="flex justify-between">
+                <span>भुगतान योग्य कुल</span>
+                <span x-amount="data.hotelCart.price_total" class="text-lg font-semibold">INR 550.20</span>
+            </p>
+        </div>
+
+        <div class="border border-gray-200 shadow rounded-md overflow-hidden text-gray-900 text-sm mt-4 p-4 space-y-3 mb-[100px]">
+            <div>
+                <label for="" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">टिप्पणियां</label>
+                <textarea rows="4" name="note" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id=""></textarea>
+            </div>
+
+            <!-- <div class="flex items-start ">
+                <div class="flex items-center h-5">
+                    <input id="terms" name="emails" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                </div>
+                <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">मैं मार्केटिंग ईमेल प्राप्त करने के लिए सहमत हूं</label>
+            </div> -->
+
+            <div>
+                <div class="flex items-start ">
+                    <div class="h-5">
+                        <input id="terms" name="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required="">
+                    </div>
+                    <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">मैं <a href="/hi/terms-conditions" class="underline" target="_blank"> बुकिंग शर्तों और होटल नीति </a> से सहमत हूं</label>
+                </div>
+                <div name="termAgreeError"></div>
+            </div>
+
+            <div class="py-6 !cursor-pointer">
+
+                <p @click="alpineListeners('Hotel.post_hotel_reservations', $event)" keyName="checkout" class="bg-black btn  border border-gray-400 hover:text-gray-800 hover:bg-white text-white rounded-lg w-fit px-20 btn py-1 cursor-pointer">
+                    बुक करें
+                </p>
+            </div>
+
+        </div>
+    </div>
+</form>

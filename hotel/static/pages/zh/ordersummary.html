@@ -1,0 +1,173 @@
+<div class="is-section is-box  is-section-70   min-height-60 last-box !p-0">
+    <div class="is-overlay">
+        <div class="is-overlay-bg brightness-50" style="background-image: url(&quot;/static/images/1920x1080.webp&quot;); background-position: 50% 60%;"></div>
+    </div>
+    <div class="!container is-container v2">
+        <div class="text-center">
+            <h2 class="mb-[12px] 2xl:text-[40px] xl:text-[38px] lg:text-[36px] md:text-[34px] sm:text-[30px] text-[28px] font-bold text-white">住宿</h2>
+            <h5 class="text-[16px]">
+                <span>
+                    <a href="index.html" class="text-[#fff] hover:text-[#fff]">首頁</a>
+                </span>
+                <span class="font-bold text-white"> / </span>
+                <span>
+                    <a href="javascript:void(0)" class="text-[#fff] hover:text-[#fff]">預訂確認</a>
+                </span>
+            </h5>
+        </div>
+    </div>
+</div>
+
+<div class="container text-gray-900 text-sm py-[30px] space-y-1 px-4" apiData="Hotel.get_hotel_reservations" keyName="order" data-summary="1" :data-last_name="data.pageUrl.last_name" :data-date="data.pageUrl.date">
+
+    <p> 訂單編號 <span x-text="data.order.id"></span></p>
+    <p> 客戶：<span x-text="data.pageUrl.last_name"></span></p>
+    <template x-if="data.order">
+        <p>訂單日期：<span x-text="Helpers.formatCalendarDate(data.order.date_created)"></span></p>
+    </template>
+    <p>透過 Expozy 酒店官方網站預訂</p>
+
+    <hr>
+
+    <div class="w-full md:w-1/2">
+        <div class="mb-2 md:mb-0 md:space-y-2">
+            <p class="font-semibold text-base !mt-4 ">Expozy 酒店</p>
+            <div class="md:flex justify-between mt-2 md:mt-0">
+                <p class="font-medium md:font-normal py-0.5">地址</p>
+                <p>索菲亞市中心，喬治·S·拉科夫斯基街30號，1202 索菲亞</p>
+            </div>
+
+            <div class="md:flex justify-between mt-2 md:mt-0">
+                <span class="font-medium md:font-normal py-0.5">電話</span>
+                <div>
+                    <p> <a href="tel:+02 437 2586">+02 437 2586</a></p>
+                    <p> <a href="tel:+359 56940783">+359 56940783</a></p>
+                </div>
+            </div>
+
+            <div class="md:flex justify-between mt-2 md:mt-0">
+                <span class="font-medium md:font-normal py-0.5">電子郵件</span>
+
+                <div>
+                    <p class="md:text-right"> <a href="mailto:info@studioweb.bg">info@studioweb.bg</a></p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <p class="font-semibold text-base !mt-4 ">預訂詳情</p>
+    <div class="md:flex gap-12 w-fit py-4 rounded-md">
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>入住</p>
+            <div>
+                <p x-text="Helpers.formatCalendarDate(data.order.reservations[0].date_start)">2025年1月20日，</p>
+                <p class="font-medium"> 從14:00到00:00</p>
+            </div>
+        </div>
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>退房</p>
+            <div>
+                <p x-text="Helpers.formatCalendarDate(data.order.reservations[0].date_end)">2025年1月20日，</p>
+                <p class="font-medium"> 至12:00</p>
+            </div>
+        </div>
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>住宿晚數</p>
+            <p x-text="data.order.reservations[0].nights" class="grow md:flex items-center justify-center font-medium">1 </p>
+        </div>
+
+        <div class="flex flex-col justify-between mb-2 md:mb-0 md:space-y-2">
+            <p>旅客人數</p>
+            <p x-text="data.order.reservations.reduce((sum, item) => sum + item.guests, 0)" class="grow md:flex items-center justify-center font-medium">1 </p>
+        </div>
+        <div class="flex flex-col justify-between">
+            <p>房間數</p>
+            <p x-text="data.order.reservations.length" class="grow md:flex items-center justify-center font-medium">1 </p>
+        </div>
+    </div>
+
+    <div class="w-1/2 text-gray-900 space-y-1">
+        <template x-for="room in data.order.reservations">
+            <div class="border border-gray-300 p-1.5 rounded-md">
+                <div class="w-full  flex justify-between items-center ">
+                    <p class="font-semibold" x-text="data.hotel_room_types.find(obj=>obj.id == room.type_id).title">No.1: 豪華雙人房</p>
+
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div>
+                        <p>預訂編號 <span x-text="room.id">1024</span></p>
+
+                    </div>
+
+                    <!-- <div>
+                        <p>2 gosti</p>
+                    </div> -->
+                    <div>
+                        <p class="text-base text-right" x-amount="room.price_total"></p>
+
+                    </div>
+                </div>
+
+            </div>
+        </template>
+
+        <div class="w-full border border-gray-300 bg-black text-white flex justify-between items-center p-1.5 py-2.5 text-base rounded-sm">
+            <p>總價</p>
+            <div>
+                <p x-amount="data.order.price" class="font-semibold">438 BGN</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="font-semibold text-base !mt-4 ">房價說明</p>
+    <p>住宿於
+        <template x-for="room in data.order.reservations">
+            <span x-text="room.room_id + ', ' "></span>
+        </template>
+    </p>
+    <p>價格包含住宿、9%增值稅和旅遊稅。同時包含大廳酒吧、停車場和無線網路的使用權。</p>
+
+    <p class="font-semibold text-base !mt-4 ">取消條款</p>
+    <p>不提供免費取消預訂。如取消預訂，將收取第一晚住宿費用。</p>
+
+    <p apiData="Payments.get_payment_methods" keyName="payment_methods" class="font-semibold text-base !mt-4 ">付款方式</p>
+    <p x-text="data.payment_methods.find(obj => obj.code == data.order.reservations[0].payment_code).title"></p>
+    <template x-if="data.order.reservations[0].payment_code == 'bank_transfer'">
+        <div>
+            <P>
+
+                <span>Expozy 有限公司</span>
+            </P>
+
+            <P>
+                <span>IBAN </span>
+                <span>BG06 BPBI 9999 9999 9999 99</span>
+            </P>
+            <P>
+                <span>BIC </span>
+                <span>BPBOBGSF</span>
+            </P>
+
+        </div>
+
+    </template>
+    <!-- <p>您的信用卡資料僅作為預訂擔保。除非您在免費取消期限後取消預訂或未能入住，否則不會向您收費。</p> -->
+
+    <p class="font-semibold text-base !mt-4 ">Expozy 酒店位置</p>
+    <div>
+        <p>Expozy 酒店</p>
+        <p>索菲亞市中心，喬治·S·拉科夫斯基街30號，1202 索菲亞</p>
+        <p>42.6017321, 25.1304293</p>
+    </div>
+
+    <div id="map" class="w-full my-10">
+        <iframe class="w-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.001844463037!2d23.326171676697456!3d42.70368171332249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa8564775b00eb%3A0xabb16929d7efcc72!2z0KHQvtGE0LjRjyDRhtC10L3RgtGK0YAsINGD0LsuIOKAntCT0LXQvtGA0LPQuCDQoS4g0KDQsNC60L7QstGB0LrQuOKAnCAzMCwgMTIwMiDQodC-0YTQuNGP!5e0!3m2!1sbg!2sbg!4v1739449568217!5m2!1sbg!2sbg" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+</div>

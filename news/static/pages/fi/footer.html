@@ -1,0 +1,148 @@
+<!-- Google News Subscribe Section -->
+<section class="w-full bg-slate-200 py-12 lg:py-16">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="inline-flex items-center justify-center w-14 h-14 bg-slate-900 rounded-2xl mb-5">
+                <i class="fa fa-paper-plane text-white text-2xl"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 mb-2">Tilaa uutiskirjeemme</h2>
+            <p class="text-slate-600 mb-6">Saat uutisemme ensimmäisenä.</p>
+            <form>
+                <input type="hidden" name="agree" value="1">
+                <div class="items-start mx-auto mb-4 space-y-4 max-w-screen-sm sm:flex sm:space-y-0 sm:gap-3">
+                    <div class="relative w-full">
+                        <label for="email" class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">Email address</label>
+                        <div class="flex absolute top-4 h-fit inset-y-0 left-0 items-center pl-4 pointer-events-none">
+                            <svg class="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <input class="block p-4 pl-12 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all sm:rounded-l-lg sm:rounded-r-none" placeholder="Syötä sähköposti" type="email" name="email">
+                        </div>
+                    </div>
+                    <div class="w-1/2 sm:w-auto">
+                        <button @click="alpineListeners('Newsletter.post_newsletter', $event)" options-clear="true" class="py-4 px-8 w-full text-sm font-semibold text-white rounded-lg cursor-pointer bg-red-600 hover:bg-red-500 focus:ring-4 focus:ring-red-300 transition-all sm:rounded-r-lg sm:rounded-l-none">Tilaa</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<!-- Main Footer -->
+<footer class="w-full bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950">
+    <!-- Top Footer -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+
+            <!-- Logo & About -->
+            <div class="lg:col-span-5">
+                <div class="mb-5">
+                    <template x-if="new Date().getMonth() === 11">
+                        <img @click="href('/')" src="/assets/images/uniconbg - christmas logo.png" alt="" class="h-10 cursor-pointer hover:opacity-80 transition-opacity">
+                    </template>
+                    <template x-if="new Date().getMonth() !== 11">
+                        <img :src="data.settings.logo" src="" alt="" class="h-10 cursor-pointer hover:opacity-80 transition-opacity" @click="href('/')">
+                    </template>
+                </div>
+                <p class="text-slate-400 leading-relaxed text-sm mb-5">
+                    Expozy aloitti motivoituneen tiimin ideana, joka keskittyi laatuun ja hyvään verkkoelämykseen. Ajan myötä projekti kehittyi itsenäiseksi digitaaliseksi alustaksi, joka on luotu joustavaksi ja luotettavaksi.
+                </p>
+                <!-- Social Icons -->
+                <div class="flex items-center gap-2">
+                    <!-- Facebook -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-facebook-f text-sm"></i>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-instagram text-sm"></i>
+                    </a>
+
+                    <!-- X (Twitter) -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="X" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-x-twitter text-sm"></i>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-youtube text-sm"></i>
+                    </a>
+
+                    <!-- TikTok -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="TikTok" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-tiktok text-sm"></i>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-linkedin-in text-sm"></i>
+                    </a>
+
+                    <!-- Telegram -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="Telegram" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-telegram text-sm"></i>
+                    </a>
+
+                    <!-- Pinterest -->
+                    <a href="#" target="_blank" rel="noopener" aria-label="Pinterest" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-red-600 hover:text-white transition-all duration-300">
+                        <i class="fa-brands fa-pinterest-p text-sm"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Categories - Multi Column -->
+            <div class="lg:col-span-7">
+                <h3 class="text-white font-bold text-base mb-4 flex items-center gap-2">
+                    <span class="w-7 h-7 flex items-center justify-center bg-red-600 rounded-lg">
+                        <i class="fa-solid fa-folder text-white text-xs"></i>
+                    </span>
+                    Kategoriat
+                </h3>
+                <ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1">
+                    <template x-for="category in data.blogCategories">
+                        <li>
+                            <a @click="href(category.url)" class="flex items-center gap-1.5 text-slate-400 hover:text-red-500 cursor-pointer transition-colors group py-1.5 text-sm">
+                                <i class="fa-solid fa-chevron-right text-[10px] text-slate-600 group-hover:text-red-500 group-hover:translate-x-0.5 transition-all"></i>
+                                <span x-text="category.title"></span>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="border-t border-slate-700/50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+
+                <!-- Copyright -->
+                <p class="text-slate-500 text-sm text-center md:text-left">
+                    Kaikki oikeudet pidätetään © <span x-text="new Date().getFullYear()"></span> <span class="text-slate-400">Expozy </span>
+                </p>
+
+                <!-- Credits -->
+                <div class="flex flex-wrap items-center justify-center gap-3 text-sm text-slate-500">
+                    <span>
+                        Kehitys:
+                        <a href="http://www.studioweb.bg" target="_blank" class="text-slate-400 hover:text-red-500 transition-colors">Studioweb.bg</a>
+                    </span>
+                    <span class="hidden sm:inline text-slate-600">|</span>
+                    <span>
+                        Ohjelmisto:
+                        <a href="https://expozy.com/" target="_blank" class="text-slate-400 hover:text-red-500 transition-colors">Expozy</a>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>

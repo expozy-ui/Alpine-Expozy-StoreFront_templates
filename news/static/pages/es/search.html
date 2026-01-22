@@ -1,0 +1,255 @@
+<div x-init="delete data.search" class="last-box"></div>
+
+<div class="w-full last-box" apidata="Blog.get_blogCategories" :data-id="data.corePage.target_id" keyname="currentCategory">
+    <!-- Breadcrumb -->
+    <div class="w-full bg-slate-100 border-b border-slate-200">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4" aria-label="Breadcrumb">
+            <ol class="flex items-center gap-2 text-sm">
+                <li>
+                    <p @click="href('/')" class="flex items-center gap-2 text-slate-600 hover:text-red-600 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-house text-xs"></i>
+                        <span>Inicio</span>
+                    </p>
+                </li>
+                <li class="text-slate-400">
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </li>
+                <li>
+                    <span class="text-slate-600">Búsqueda</span>
+                </li>
+                <li class="text-slate-400">
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </li>
+                <li>
+                    <span class="text-slate-900 font-medium" x-text="data.pageUrl.search"></span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Search Results Section -->
+<div class="is-section is-box is-section-100 type-poppins box-autofit last-box scroll-target">
+    <div class="is-overlay"></div>
+    <div class="is-container v2 container" style="padding:0px!important;">
+        <div apidata="Blog.get_blogPosts" :data-search="data.pageUrl.search" data-limit="17" keyname="search" :data-tag="data.pageUrl.tag">
+
+            <div class="w-full bg-white py-10 ">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+                    <!-- Search Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-6 border-b border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-500 mb-1">Resultados de búsqueda para</p>
+                                <h1 class="text-2xl lg:text-3xl font-bold text-slate-900" x-text="data.pageUrl.search"></h1>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-slate-500">
+                            <i class="fa-regular fa-file-lines"></i>
+                            <span>Artículos encontrados</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+
+                        <!-- Main Content -->
+                        <div class="flex-1 lg:w-2/3">
+
+                            <!-- No Results -->
+                            <template x-if="!data.search.result[0]">
+                                <div class="bg-slate-50 rounded-2xl p-8 lg:p-12 text-center">
+                                    <div class="w-20 h-20 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <i class="fa-solid fa-face-sad-tear text-3xl text-slate-400"></i>
+                                    </div>
+                                    <h2 class="text-xl font-bold text-slate-900 mb-2">No se encontraron resultados</h2>
+                                    <p class="text-slate-600">
+                                        No encontramos artículos para "<span class="font-medium text-slate-900" x-text="data.pageUrl.search"></span>"
+                                    </p>
+                                    <p class="text-slate-500 text-sm mt-2">Intenta con otras palabras clave</p>
+                                </div>
+                            </template>
+
+                            <!-- Results Found -->
+                            <template x-if="data.search.result[0]">
+                                <div class="space-y-8">
+
+                                    <!-- Featured Result -->
+                                    <article class="group relative h-80 lg:h-96 rounded-2xl overflow-hidden cursor-pointer" @click="href(data.search.result[0].url)">
+                                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" :src="data.search.result[0].images[0].url_10x10" :alt="data.search.result[0].title">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+
+                                        <div class="absolute top-4 left-4">
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full cursor-pointer hover:bg-red-700 transition-colors" @click.stop="href(data.search.result[0].category.url)" x-text="data.search.result[0].category.title"></span>
+                                        </div>
+
+                                        <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+                                            <div class="flex items-center gap-3 text-white/80 text-sm mb-3">
+                                                <span class="flex items-center gap-1.5">
+                                                    <i class="fa-regular fa-calendar"></i>
+                                                    <span x-text="Helpers.formatDate(data.search.result[0].date_publish) "></span>
+                                                </span>
+                                                <span class="w-1 h-1 bg-red-500 rounded-full"></span>
+                                                <span class="flex items-center gap-1.5">
+                                                    <i class="fa-regular fa-clock"></i>
+                                                    <span x-text="data.search.result[0].read_time + ' min'"></span>
+                                                </span>
+                                            </div>
+                                            <h2 class="text-2xl lg:text-3xl font-bold text-white leading-tight line-clamp-2 group-hover:text-red-400 transition-colors" x-text="data.search.result[0].title"></h2>
+                                            <p class="hidden sm:block mt-3 text-white/70 line-clamp-2" x-text="data.search.result[0].description_short"></p>
+                                        </div>
+                                    </article>
+
+                                    <!-- Grid Results (1-6) -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        <template x-for="(blog, index) in data.search.result" :key="index">
+                                            <template x-if="index > 0 && index < 7">
+                                                <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:-translate-y-1" @click="href(blog.url)">
+                                                    <div class="relative h-44 overflow-hidden">
+                                                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" :src="blog.images[0].url_10x10" :alt="blog.title">
+                                                        <div class="absolute top-3 left-3">
+                                                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-red-600 text-white text-[10px] font-semibold uppercase rounded-md" x-text="blog.category.title"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-4">
+                                                        <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                                                            <span class="flex items-center gap-1">
+                                                                <i class="fa-regular fa-calendar"></i>
+                                                                <span x-text="Helpers.formatDate(blog.date_publish) "></span>
+                                                            </span>
+                                                            <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                                            <span class="flex items-center gap-1">
+                                                                <i class="fa-regular fa-eye"></i>
+                                                                <span x-text="blog.views"></span>
+                                                            </span>
+                                                        </div>
+                                                        <h3 class="font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors" x-text="blog.title"></h3>
+                                                    </div>
+                                                </article>
+                                            </template>
+                                        </template>
+                                    </div>
+
+                                    <!-- Second Featured (index 7) -->
+                                    <template x-if="data.search.result[7]">
+                                        <article class="group relative h-72 lg:h-80 rounded-2xl overflow-hidden cursor-pointer" @click="href(data.search.result[7].url)">
+                                            <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" :src="data.search.result[7].images[0].url_10x10" :alt="data.search.result[7].title">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+
+                                            <div class="absolute top-4 left-4">
+                                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full" x-text="data.search.result[7].category.title"></span>
+                                            </div>
+
+                                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                                <h2 class="text-xl lg:text-2xl font-bold text-white leading-tight line-clamp-2 group-hover:text-red-400 transition-colors" x-text="data.search.result[7].title"></h2>
+                                            </div>
+                                        </article>
+                                    </template>
+
+                                    <!-- Remaining Results (8+) -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        <template x-for="(blog, index) in data.search.result" :key="index">
+                                            <template x-if="index > 7">
+                                                <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-100 hover:-translate-y-1" @click="href(blog.url)">
+                                                    <div class="relative h-44 overflow-hidden">
+                                                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" :src="blog.images[0].url_10x10" :alt="blog.title">
+                                                        <div class="absolute top-3 left-3">
+                                                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-red-600 text-white text-[10px] font-semibold uppercase rounded-md" x-text="blog.category.title"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-4">
+                                                        <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                                                            <span class="flex items-center gap-1">
+                                                                <i class="fa-regular fa-calendar"></i>
+                                                                <span x-text="Helpers.formatDate(blog.date_publish)"></span>
+                                                            </span>
+                                                            <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                                            <span class="flex items-center gap-1">
+                                                                <i class="fa-regular fa-eye"></i>
+                                                                <span x-text="blog.views"></span>
+                                                            </span>
+                                                        </div>
+                                                        <h3 class="font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors" x-text="blog.title"></h3>
+                                                    </div>
+                                                </article>
+                                            </template>
+                                        </template>
+                                    </div>
+
+                                </div>
+                            </template>
+
+                            <!-- Pagination -->
+                            <div class="mt-12 flex justify-center">
+                                <nav aria-label="Pagination">
+                                    <ul class="flex items-center gap-2">
+                                        <template x-for="(page, index) in data.search.pagination.pagesArray" :key="index">
+                                            <li>
+                                                <template x-if="page == '...'">
+                                                    <span class="w-10 h-10 flex items-center justify-center text-slate-400">...</span>
+                                                </template>
+                                                <template x-if="page != '...'">
+                                                    <a @click="alpineListeners('Blog.get_blogPosts', $event)" keyname="search" :data-search="data.pageUrl.search" data-limit="17" :data-page="page" options-scroll="true" class="w-10 h-10 flex items-center justify-center rounded-xl font-medium cursor-pointer transition-all duration-200" :class="page == data.search.pagination.current_page
+                                                            ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
+                                                            : 'bg-white text-slate-700 border border-slate-200 hover:border-red-600 hover:text-red-600'" x-text="page"></a>
+                                                </template>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <aside class="lg:w-80 flex-shrink-0 space-y-6">
+
+                            <!-- Most Read -->
+                            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden" apidata="Blog.get_blogPosts" data-limit="5" data-order="top" keyname="mostReadedBlogPosts">
+                                <div class="bg-slate-900 px-5 py-4">
+                                    <h2 class="text-white font-bold flex items-center gap-2">
+                                        <i class="fa-solid fa-fire text-red-500"></i>
+                                        Más leídos
+                                    </h2>
+                                </div>
+                                <ul class="divide-y divide-slate-100">
+                                    <template x-for="(blog, index) in data.mostReadedBlogPosts.result">
+                                        <li class="group px-5 py-4 hover:bg-slate-50 cursor-pointer transition-colors flex items-start gap-4" @click="href(blog.url)">
+                                            <span class="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-lg flex items-center justify-center text-sm font-bold" x-text="index + 1"></span>
+                                            <p class="text-sm font-medium text-slate-700 leading-snug group-hover:text-red-600 transition-colors line-clamp-2" x-text="blog.title"></p>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+
+                            <!-- Latest News -->
+                            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden" apidata="Blog.get_blogPosts" data-limit="5" keyname="latestBlogPosts">
+                                <div class="bg-slate-900 px-5 py-4">
+                                    <h2 class="text-white font-bold flex items-center gap-2">
+                                        <i class="fa-regular fa-clock text-red-500"></i>
+                                        Últimas noticias
+                                    </h2>
+                                </div>
+                                <ul class="divide-y divide-slate-100">
+                                    <template x-for="(blog, index) in data.latestBlogPosts.result">
+                                        <li class="group px-5 py-4 hover:bg-slate-50 cursor-pointer transition-colors" @click="href(blog.url)">
+                                            <p class="text-sm font-medium text-slate-700 leading-snug group-hover:text-red-600 transition-colors line-clamp-2" x-text="blog.title"></p>
+                                            <div class="flex items-center gap-2 mt-2 text-xs text-slate-400">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <span x-text="Helpers.formatDate(blog.date_publish)"></span>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+
+                        </aside>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+<!-- <div apiData="Hotel.get_hotel_room_types"></div> -->
+<div class="w-full">
+
+    <div class="w-full bg-gray-50 h-fit py-4 md:py-[70px] px-4">
+        <ol class="md:flex space-y-4 justify-between w-full md:w-2/4 mx-auto">
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse gap-">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold bg-black text-white border rounded-full shrink-0 border-black">
+                    1
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">Chọn ngày</h3>
+                    <p class="text-sm">Chỉ định thời gian lưu trú.</p>
+                </span>
+            </li>
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                    2
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">Chọn phòng</h3>
+                    <p class="text-sm">Chọn tùy chọn phù hợp nhất.</p>
+                </span>
+            </li>
+            <li class="flex items-center text-black  space-x-2.5 rtl:space-x-reverse">
+                <span class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 text-base font-semibold border border-black rounded-full shrink-0 ">
+                    3
+                </span>
+                <span>
+                    <h3 class="font-medium leading-tight lg:text-lg">Thanh toán và đặt phòng</h3>
+                    <p class="text-sm">Xác nhận và hoàn tất quy trình.</p>
+                </span>
+            </li>
+        </ol>
+    </div>
+
+    <p class="text-gray-900 text-base md:text-xl py-5 lg:py-14 text-center">Chọn ngày lưu trú của bạn.</p>
+
+    <div class="w-full relative  z-1 lg:mt-10">
+        <div class="grid grid-cols-1">
+            <form>
+                <div class="flex justify-center items-center">
+                    <div class="col-span-3 relative flatpickr-input active" x-init="initCalendar($el)" readonly="readonly"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    @media (max-width: 768px) {
+        .flatpickr-calendar {
+            transform: scale(1) !important;
+        }
+
+        .numInputWrapper,
+        .cur-month {
+            font-size: 12px !important;
+        }
+    }
+
+    .flatpickr-day {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 12px;
+    }
+
+    .flatpickr-calendar {
+        transform: scale(1.4);
+        /* transform-origin: top left; */
+    }
+
+    .numInputWrapper,
+    .cur-month {
+        font-size: 14px;
+    }
+</style>
+<script>
+
+
+
+    async function initCalendar(el) {
+        await Helpers.loadFile(`/assets/plugins/flatpicker/flatpicker.css`);
+        await Helpers.loadFile(`/assets/plugins/flatpicker/flatpicker.js`);
+
+
+        let flatpickrInstance = flatpickr(el, {
+            dateFormat: 'Y-m-d',
+            minDate: 'today',
+            mode: "range",
+            inline: true,
+            showMonths: window.innerWidth <= 768 ? 1 : 2,
+            locale: {
+                firstDayOfWeek: 1, // Thứ Hai là ngày đầu tuần
+                weekdays: {
+                    shorthand: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+                    longhand: ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"]
+                },
+                months: {
+                    shorthand: ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"],
+                    longhand: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"]
+                }
+            },
+            onChange: function (selectedDates, dateStr, instance) {
+                let datesSplit = dateStr.split(' ');
+                if (datesSplit.length >= 2) {
+                    // document.getElementById('date_start').value = datesSplit[0];
+                    // document.getElementById('date_end').value = datesSplit[2];
+
+                    localStorage.setItem('date_start', datesSplit[0]);
+                    localStorage.setItem('date_end', datesSplit[2]);
+
+                    data.date_start = datesSplit[0];
+                    data.date_end = datesSplit[2];
+                    href(`/${LANG}/accommodation`);
+                    // alpineListeners('Hotel.get_hotel_room_types', document.getElementById('date_start'));
+
+                } else {
+                    // document.getElementById('date_start').value = '';
+                    // document.getElementById('date_end').value = '';
+
+                }
+
+            },
+        });
+    }
+</script>

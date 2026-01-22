@@ -1,0 +1,66 @@
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-50 w-full shadow-sm" apiData="get.menu" keyName="menu">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex-shrink-0">
+                <a href="/" class="text-2xl font-bold text-gray-900 hover:text-gray-700 transition">Service</a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition border-b-2 border-transparent hover:border-gray-300">Почетна</a>
+
+                <template x-for="menu in data.menu">
+                    <a :href="menu.link" x-text="menu.title" :class="" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition border-b-2 border-transparent hover:border-gray-300">Почетна</a>
+                </template>
+
+                <div x-data="{openLang:false}" class="relative">
+                    <div class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors cursor-pointer" @click="openLang =! openLang">
+                        <i class="fa-solid fa-globe text-xl text-slate-700 dark:text-gray-200"></i>
+                    </div>
+                    <div x-show="openLang" x-cloak @click.outside="openLang = false" class="absolute right-0 mt-2 w-48 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-slate-200 dark:border-gray-700 z-50">
+                        <ul class="divide-y divide-slate-200 dark:divide-gray-700">
+                            <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('en'); openLang = false">
+                                <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">English</a>
+                            </li>
+                            <li class="px-4 py-2 hover:bg-slate-50 dark:hover:bg-gray-700 cursor-pointer transition-colors" @click="changeLang('bg'); openLang = false">
+                                <a class="text-sm font-medium text-slate-700 dark:text-white hover:text-amber-600 dark:hover:text-amber-500">Български</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden md:block">
+                <a href="/mk/contacts" class="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition shadow-md hover:shadow-lg">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Контактирајте нè
+                </a>
+            </div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button type="button" class="text-gray-600 hover:text-gray-900 p-2 rounded-md hover:bg-gray-100 transition" @click="data.openMobileMenu =! data.openMobileMenu">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div :class="!data.openMobileMenu ? 'hidden' : 'block' " id="mobile-menu" class=" md:hidden border-t border-gray-200 bg-white">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition">Почетна</a>
+
+            <template x-for="menu in data.menu">
+                <a :href="menu.link" x-text="menu.title" :class="" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition">Почетна</a>
+            </template>
+
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Контактирајте нè
+            </a>
+        </div>
+    </div>
+
+</nav>

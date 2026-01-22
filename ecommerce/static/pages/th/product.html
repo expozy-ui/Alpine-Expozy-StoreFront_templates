@@ -1,0 +1,583 @@
+<section class="py-12 sm:py-16 w-full bg-gradient-to-b from-slate-50 to-white dark:!bg-gradient-to-b dark:from-gray-900 dark:to-gray-950" apidata="Shop.get_products" :data-id="data.corePage.target_id" keyname="product">
+    <div apidata="Reviews.get_product_comments" :data-product_id="data.corePage.target_id" keyname="productReviews">
+
+        <div class="container mx-auto px-4">
+
+            <div class="gap-8 grid grid-cols-1 lg:grid-cols-6 mt-8">
+                <template x-if="data.product">
+                    <!-- Enhanced image gallery with modern styling -->
+                    <div class="lg:col-span-3" x-data="{ mainImage: data.product.images?.length ? data.product.images[0].url : Helpers.image('product')}">
+
+                        <div class="lg:flex lg:items-start">
+                            <div class="lg:order-2 lg:ml-5 flex-1">
+                                <div class="overflow-hidden rounded-2xl shadow-2xl border-4 border-white dark:border-gray-800">
+                                    <img class="h-full w-full max-w-full object-cover hover:scale-105 transition-transform duration-500" :src="mainImage" alt="Product Image">
+                                </div>
+                            </div>
+
+                            <!-- Styled thumbnail grid -->
+                            <div class="lg:w-[200px] mt-4 lg:mt-0">
+                                <div class="flex flex-wrap gap-2 md:grid md:grid-cols-2 md:gap-3 max-h-[600px] overflow-y-auto">
+                                    <template x-for="(image, index) in data.product.images" :key="index">
+                                        <button @click="mainImage = image.url" type="button" class="flex-0 aspect-square h-20 overflow-hidden rounded-xl border-3 transition-all duration-300 hover:border-amber-500 hover:shadow-lg" :class="mainImage === image.url ? 'border-amber-600 shadow-lg ring-2 ring-amber-400' : 'border-slate-200 dark:border-gray-700'">
+                                            <img class="h-full w-full object-cover" :src="image.url" alt="Thumbnail">
+                                        </button>
+                                    </template>
+                                    <template x-if="!data.product.images[0]">
+                                        <button type="button" class="flex-0 aspect-square h-20 overflow-hidden rounded-xl border-3 border-slate-200 dark:border-gray-700">
+                                            <img class="h-full w-full object-cover" :src="Helpers.image('product')" alt="Default">
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <div class="col-span-1 md:block hidden"></div>
+
+                <!-- Enhanced product info card with premium design -->
+                <div class="lg:col-span-2 bg-white dark:bg-gray-800 h-fit shadow-2xl rounded-2xl p-6 border border-slate-100 dark:border-gray-700">
+                    <form x-data="{selectedVariation: 0}">
+
+                        <h1 class="text-3xl font-bold text-slate-900 dark:text-white leading-tight" x-text="data.product.title"></h1>
+
+                        <template x-if="data.product.categories[0]">
+                            <h2 class="py-2">
+                                <a class="inline-flex items-center text-sm font-semibold text-slate-600 hover:text-amber-600 dark:text-gray-400 dark:hover:text-amber-500 transition-colors" :href="data.product.categories[0].url">
+                                    <i class="fa-solid fa-folder mr-2"></i>
+                                    <span x-text="data.product.categories[0].title"></span>
+                                </a>
+                            </h2>
+                        </template>
+
+                        <!-- Improved pricing section -->
+                        <div class="py-4 border-y border-slate-200 dark:border-gray-700 my-4">
+                            <template x-if="data.product.variations[selectedVariation].promoprice != 0">
+                                <div class="flex items-baseline gap-3">
+                                    <p class="text-4xl font-bold bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent" x-amount="data.product.variations[selectedVariation].selling_price"></p>
+                                    <p class="text-lg font-medium text-slate-400 dark:text-gray-500 line-through" x-amount="data.product.variations[selectedVariation].price"></p>
+                                    <span class="px-3 py-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold rounded-full">SALE</span>
+                                </div>
+                            </template>
+
+                            <template x-if="data.product.variations[selectedVariation].promoprice == 0">
+                                <div class="flex items-end">
+                                    <p class="text-4xl font-bold text-slate-900 dark:text-white" x-amount="data.product.variations[selectedVariation].selling_price"></p>
+                                </div>
+                            </template>
+
+                            <!-- Styled variation selector -->
+                            <template x-if="data.product.variations[1]">
+                                <select class="mt-4 w-full border-2 border-slate-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-3 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all cursor-pointer hover:border-amber-400" @change="selectedVariation = $event.target.value">
+                                    <template x-for="(variation, index) in data.product.variations" :key="index">
+                                        <option :value="index">
+                                            <template x-for="attr in variation.attributes">
+                                                <span x-text="attr.title + ' ' + attr.values[0].value + '  '"></span>
+                                            </template>
+                                        </option>
+                                    </template>
+                                </select>
+                            </template>
+                        </div>
+
+                        <!-- Modern tags display -->
+                        <template x-if="data.product.tags != ''">
+                            <div class="mb-4">
+                                <p class="text-sm font-semibold text-slate-600 dark:text-gray-400 mb-2">แท็ก:</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <template x-for="tag in data.product.tags.split(',')">
+                                        <span class="px-3 py-1 bg-slate-100 dark:bg-gray-700 text-slate-700 dark:text-gray-300 text-sm rounded-full hover:bg-amber-100 hover:text-amber-700 dark:hover:bg-amber-900 dark:hover:text-amber-200 cursor-pointer transition-all duration-200 hover:scale-105" @click="href('/bg/products?tags[]='+tag)" x-text="tag"></span>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Enhanced rating display -->
+                        <template x-if="data.productReviews[0]">
+                            <div class="py-4 border-t border-slate-200 dark:border-gray-700">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="flex">
+                                        <template x-for="item in parseInt(data.product.rating)">
+                                            <span class="text-amber-400 text-xl">★</span>
+                                        </template>
+                                    </div>
+                                    <span class="text-sm text-slate-600 dark:text-gray-400" x-text="'(' + data.productReviews.length + ' коментара)'"></span>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Premium add to cart button -->
+                        <div class="mt-6">
+                            <input type="hidden" name="variation_id" :value="data.product.variations[selectedVariation].id">
+
+                            <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="data.product.id" class="w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-slate-900 to-slate-800 dark:from-gray-950 dark:to-gray-900 px-8 py-4 text-base font-bold text-white transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl focus:ring-4 focus:ring-amber-300 dark:focus:ring-amber-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                                Добави в количка
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Enhanced tabs section -->
+            <div class="lg:col-span-6 mt-12" x-data="{tab : 'description'}">
+                <div class="border-b-2 border-slate-200 dark:border-gray-700">
+                    <nav class="flex gap-1">
+                        <button @click="tab = 'description'" :class="tab == 'description' ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white' : 'text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white'" class="px-6 py-3 text-sm font-bold rounded-t-lg transition-all duration-200">
+                            <i class="fa-solid fa-file-lines mr-2"></i>รายละเอียด
+                        </button>
+
+                        <button @click="tab = 'reviews'" :class="tab == 'reviews' ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white' : 'text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white'" class="px-6 py-3 text-sm font-bold rounded-t-lg transition-all duration-200">
+                            <i class="fa-solid fa-comments mr-2"></i>ความคิดเห็น
+                        </button>
+
+                        <button @click="tab = 'qa'" :class="tab == 'qa' ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white' : 'text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white'" class="px-6 py-3 text-sm font-bold rounded-t-lg transition-all duration-200">
+                            <i class="fa-solid fa-circle-question mr-2"></i>สอบถาม
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Enhanced description tab -->
+                <div x-show="tab == 'description'" class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-slate-100 dark:border-gray-700">
+                    <div class="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-gray-300" x-html="data.product.description"></div>
+                </div>
+
+                <!-- Enhanced reviews tab -->
+                <div x-show="tab == 'reviews'" class="mt-8">
+                    <div class="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-lg border border-slate-100 dark:border-gray-700 max-w-2xl" x-data="{reviewOpen:false}">
+                        <h2 @click="reviewOpen =! reviewOpen" class="text-xl font-bold mb-4 cursor-pointer flex justify-between items-center text-slate-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-500 transition-colors">
+                            <span><i class="fa-solid fa-pen-to-square mr-2"></i>แสดงความคิดเห็น</span>
+                            <i class="fa-solid transition-transform duration-300" :class="reviewOpen ? 'fa-circle-minus' : 'fa-circle-plus'"></i>
+                        </h2>
+
+                        <form x-show="reviewOpen" class="space-y-4" x-transition>
+                            <div>
+                                <label class="block text-slate-700 dark:text-gray-300 font-semibold mb-2" for="email">อีเมล</label>
+                                <input name="email" :value="data.user.email" class="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" type="email" placeholder="your@email.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-700 dark:text-gray-300 font-semibold mb-2" for="name">ชื่อ</label>
+                                <input name="user_name" :value="data.user.names" class="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" type="text" placeholder="ชื่อของคุณ">
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-700 dark:text-gray-300 font-semibold mb-2" for="comment">ความคิดเห็น</label>
+                                <textarea rows="4" name="comment" class="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" placeholder="แบ่งปันความคิดเห็นของคุณ..."></textarea>
+                            </div>
+
+                            <div class="space-y-4">
+                                <label class="block text-sm font-semibold text-slate-700">เพิ่มรูปภาพ</label>
+
+                                <label class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 hover:border-slate-400 transition text-center">
+                                    <div class="text-slate-400 mb-2">
+                                        <i class="fa fa-cloud-upload text-3xl"></i>
+                                    </div>
+
+                                    <p class="text-sm text-slate-600 font-medium">วางรูปภาพที่นี่หรือคลิก</p>
+                                    <p class="text-xs text-slate-500 mt-1">สูงสุด 5 รูป</p>
+
+                                    <input type="file" name="images[]" multiple accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleFiles(this)">
+                                </label>
+
+                                <div id="preview" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+                            </div>
+
+                            <script>
+                                const MAX_FILES = 5;
+
+                                function handleFiles(input) {
+                                    const files = Array.from(input.files);
+                                    const preview = document.getElementById('preview');
+
+                                    preview.innerHTML = '';
+
+                                    if (files.length > MAX_FILES) {
+                                        alert(`Можете да качите максимум ${MAX_FILES} снимки.`);
+                                        input.value = '';
+                                        return;
+                                    }
+
+                                    files.forEach(file => {
+                                        if (!file.type.startsWith('image/')) return;
+
+                                        const reader = new FileReader();
+                                        reader.onload = e => {
+                                            const div = document.createElement('div');
+                                            div.className = 'relative aspect-square rounded-lg overflow-hidden border bg-slate-100';
+                                            div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                                            preview.appendChild(div);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    });
+                                }
+                            </script>
+
+                            <div>
+                                <label class="block text-slate-700 dark:text-gray-300 font-semibold mb-3">ให้คะแนนสินค้านี้</label>
+                                <div x-data="{ temp: 0, orig: 0 }" class="flex cursor-pointer text-4xl mb-4" @click="orig = temp">
+                                    <input type="number" name="rating" :value="orig" class="hidden">
+
+                                    <template x-for="item in [1,2,3,4,5]">
+                                        <span @mouseenter="temp = item" @mouseleave="temp = orig" class="transition-all duration-200 hover:scale-110" :class="temp >= item ? 'text-amber-400' : 'text-slate-300 dark:text-gray-600'">★</span>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <button @click="alpineListeners('Reviews.post_product_comments', $event)" :data-product_id="data.product.id" :options-clearForm="true" class="w-full inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-slate-900 to-slate-800 px-6 py-3 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                                <i class="fa-solid fa-paper-plane mr-2"></i>เผยแพร่
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Enhanced reviews display -->
+                    <template x-if="data.productReviews[0]">
+                        <div class="my-10">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="h-1 flex-1 bg-gradient-to-r from-amber-500 to-slate-300 dark:to-gray-700 rounded"></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white uppercase">รีวิว</h3>
+                                <div class="h-1 flex-1 bg-gradient-to-l from-amber-500 to-slate-300 dark:to-gray-700 rounded"></div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <template x-for="review in data.productReviews">
+                                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-100 dark:border-gray-700 p-6 hover:shadow-xl transition-shadow">
+                                        <div class="flex flex-col lg:flex-row gap-6">
+                                            <div class="lg:w-64 flex-shrink-0 p-4 bg-slate-50 dark:bg-gray-900 rounded-lg">
+                                                <div class="flex mb-3">
+                                                    <template x-for="item in review.rating">
+                                                        <span class="text-yellow-400 text-xl">★</span>
+                                                    </template>
+                                                </div>
+                                                <p class="font-bold text-slate-900 dark:text-white mb-1" x-text="review.user_name"></p>
+                                                <p class="text-xs text-slate-500 dark:text-gray-500" x-text="review.date"></p>
+                                            </div>
+
+                                            <div class="flex-1">
+
+                                                <template x-if="review.images[0]">
+
+                                                    <div class=" flex flex-wrap gap-2 border-b border-gray-300  pb-4">
+                                                        <template x-for="image in review.images">
+                                                            <img :src="image.url_10x10" class="h-24  !w-24 shadow object-cover rounded-lg" alt="">
+                                                        </template>
+                                                    </div>
+                                                </template>
+
+                                                <p class="text-slate-700 dark:text-gray-300 leading-relaxed pt-2" x-text="review.comment"></p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Enhanced Q&A tab -->
+                <div x-show="tab == 'qa'" x-cloak class="mt-8">
+                    <div class="max-w-2xl bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-100 dark:border-gray-700">
+                        <div class="p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg">
+                                    <i class="fa-solid fa-circle-question text-2xl text-white"></i>
+                                </div>
+                                <h1 class="text-2xl font-bold text-slate-900 dark:text-white">
+                                    Направи Запитване
+                                </h1>
+                            </div>
+
+                            <form class="space-y-4">
+                                <input type="hidden" name="product_id" :value="data.corePage.target_id">
+
+                                <div>
+                                    <label class="block mb-2 text-sm font-semibold text-slate-700 dark:text-gray-300">Email</label>
+                                    <input type="email" :value="data.user.email" name="email" class="w-full px-4 py-3 bg-slate-50 dark:bg-gray-700 border-2 border-slate-200 dark:border-gray-600 text-slate-900 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" required>
+                                </div>
+
+                                <div>
+                                    <label class="block mb-2 text-sm font-semibold text-slate-700 dark:text-gray-300">ชื่อ</label>
+                                    <input type="text" :value="data.user.names" name="user_name" class="w-full px-4 py-3 bg-slate-50 dark:bg-gray-700 border-2 border-slate-200 dark:border-gray-600 text-slate-900 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" required>
+                                </div>
+
+                                <div>
+                                    <label class="block mb-2 text-sm font-semibold text-slate-700 dark:text-gray-300">เรื่อง</label>
+                                    <input type="text" name="subject" class="w-full px-4 py-3 bg-slate-50 dark:bg-gray-700 border-2 border-slate-200 dark:border-gray-600 text-slate-900 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all" required>
+                                </div>
+
+                                <div>
+                                    <label class="block mb-2 text-sm font-semibold text-slate-700 dark:text-gray-300">ข้อความ</label>
+                                    <textarea name="text" rows="5" class="w-full px-4 py-3 bg-slate-50 dark:bg-gray-700 border-2 border-slate-200 dark:border-gray-600 text-slate-900 dark:text-white rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all resize-none" required></textarea>
+                                </div>
+
+                                <button @click="alpineListeners('Qa.post_qa', $event)" class="w-full bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold rounded-lg text-base px-6 py-4 transition-all duration-300 hover:scale-105 hover:shadow-xl focus:ring-4 focus:ring-amber-300 dark:focus:ring-amber-800">
+                                    <i class="fa-solid fa-paper-plane mr-2"></i>ส่งคำถาม
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="pb-16 w-full">
+    <template x-if="data.product">
+
+        <div class="w-full" x-data="{tab : 'promo'}">
+            <div class="">
+                <nav class="container px-4 border-b border-gray-300 mb-10 flex gap-4 sm:mt-12">
+                    <a @click="tab = 'promo'" :class="tab == 'promo' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class="py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800 dark:text-gray-200">โปรโมชั่น </a>
+                    <a @click="tab = 'similar'" :class="tab == 'similar' ? 'border-b-2 border-gray-900 dark:border-gray-200' : ''" class=" py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800 dark:text-gray-200"> สินค้าใกล้เคียง </a>
+                </nav>
+            </div>
+
+            <template x-if="tab == 'promo'">
+                <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyName="discountProducts" data-sort="discount" data-subcategories="true" data-only_instock="0" data-category_id="0">
+                    <template x-if="data.discountProducts">
+                        <div x-data="{
+                        async init() {
+
+                            // 2. Чакаш Alpine да рендерира x-for
+                            await this.$nextTick();
+
+                            // 3. Инициализираш Glide, след като DOM е готов
+                            this.glide = new Glide('#discountProductsGlide', {
+                                type: 'slide',
+                                startAt: 0,
+                                perView: 6,
+                                autoplay: false,
+                                animationDuration: 1500,
+                                perTouch: 4,
+                                breakpoints: {
+                                    1630: {
+                                        perView: 4
+                                    },
+                                    886: {
+                                        perView: 3
+                                    },
+                                    600: {
+                                        perView: 2
+                                    },
+                                    440: {
+                                        perView: 1
+                                    }
+                                }
+                            });
+
+                            this.glide.mount();
+                        }
+                    }" x-init="init()" class="glide !h-fit !w-full" id="discountProductsGlide">
+                            <div class="glide__track " data-glide-el="track">
+                                <ul class="glide__slides">
+                                    <template x-for="item in data.discountProducts.result" :key="item.id">
+                                        <li class="glide__slide py-5 px-2 ">
+                                            <div x-data="{product:item}" class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer !h-[450px]">
+
+                                                <!-- Image section with fixed height -->
+                                                <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
+                                                    <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+
+                                                    <template x-if="!product.isWishlisted">
+                                                        <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                            <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                        </button>
+                                                    </template>
+
+                                                    <template x-if="product.isWishlisted">
+                                                        <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                            <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                        </button>
+                                                    </template>
+
+                                                    <!-- Sale badge showing discount percentage -->
+                                                    <template x-if="product.variations[0].promoprice != 0">
+                                                        <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                                            <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                                                                <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+
+                                                    <!-- New badge positioned below Sale badge if both exist -->
+                                                    <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
+                                                        NEW
+                                                    </div>
+                                                </div>
+
+                                                <!-- Content section with flex-grow and line-clamp for text truncation -->
+                                                <div class="p-6 flex flex-col flex-grow">
+
+                                                    <!-- Title with line-clamp-2 to truncate long titles -->
+                                                    <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
+
+                                                    <!-- Description with line-clamp-3 to truncate long descriptions -->
+                                                    <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
+
+                                                    <!-- Price section with strikethrough original price and promo price -->
+                                                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                                        <div class="flex flex-col gap-1">
+                                                            <!-- Show both prices when promo price exists -->
+                                                            <template x-if="product.variations[0].promoprice != 0">
+                                                                <div class="flex flex-col">
+                                                                    <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
+                                                                    <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
+                                                                </div>
+                                                            </template>
+
+                                                            <!-- Show only regular price when no promo -->
+                                                            <template x-if="product.variations[0].promoprice == 0">
+                                                                <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
+                                                            </template>
+                                                        </div>
+
+                                                        <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                            <div class="glide__arrows" data-glide-el="controls">
+                                <button class="glide__arrow glide__arrow--left !left-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir="<"><i class="fa-solid fa-circle-arrow-left text-stone-900 text-[32px] rounded-full"></i></button>
+                                <button class="glide__arrow glide__arrow--right bg-unset text-unset !right-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir=">"><i class="fa-solid fa-circle-arrow-right text-stone-900 text-[32px] rounded-full"></i></button>
+                            </div>
+
+                        </div>
+                    </template>
+
+                </div>
+            </template>
+
+            <template x-if="tab == 'similar'">
+                <div class="container px-3" x-init="alpineListeners('Shop.get_products', $el)" data-limit="20" keyname="similarProducts" data-only_instock="0" :data-category_id="data.product.categories[0].id">
+                    <div x-data="{
+                        async init() {
+
+                            // 2. Чакаш Alpine да рендерира x-for
+                            await this.$nextTick();
+
+                            // 3. Инициализираш Glide, след като DOM е готов
+                            this.glide = new Glide('#similarProductsGlide', {
+                                type: 'slide',
+                                startAt: 0,
+                                perView: 6,
+                                autoplay: false,
+                                animationDuration: 1500,
+                                perTouch: 4,
+                                breakpoints: {
+                                    1630: {
+                                        perView: 4
+                                    },
+                                    886: {
+                                        perView: 3
+                                    },
+                                    600: {
+                                        perView: 2
+                                    },
+                                    440: {
+                                        perView: 1
+                                    }
+                                }
+                            });
+
+                            this.glide.mount();
+                        }
+                    }" x-init="init()" id="similarProductsGlide" class="glide !h-fit">
+                        <div class="glide__track " data-glide-el="track">
+                            <ul class="glide__slides">
+                                <template x-for="item in data.similarProducts.result">
+                                    <li class="glide__slide py-5 px-2 ">
+                                        <div x-data="{product:item}" class="relative rounded-xl flex flex-col bg-white dark:bg-gray-900 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden group cursor-pointer !h-[450px]">
+
+                                            <!-- Image section with fixed height -->
+                                            <div class="relative overflow-hidden bg-gray-200 h-64 flex-shrink-0">
+                                                <img :src="product.images[0] ? product.images[0].url : Helpers.image('product')" @click="href(product.url)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+
+                                                <template x-if="!product.isWishlisted">
+                                                    <button @click="alpineListeners('Shop.post_wishlist', $event)" @success="product.isWishlisted = true;" keyName="wishlist" :data-object_id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                        <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                    </button>
+                                                </template>
+
+                                                <template x-if="product.isWishlisted">
+                                                    <button @click="alpineListeners('Shop.delete_wishlist', $event)" @success="product.isWishlisted = false;" keyName="wishlist" :data-id="product.id" class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-10">
+                                                        <i :class="product.isWishlisted ? 'fa-solid text-red-600' : 'fa-regular' " class=" fa-heart"></i>
+                                                    </button>
+                                                </template>
+
+                                                <!-- Sale badge showing discount percentage -->
+                                                <template x-if="product.variations[0].promoprice != 0">
+                                                    <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                                        <div class="bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                                                            <span x-text="'-' + Math.round((1 - product.variations[0].promoprice / product.variations[0].price) * 100) + '%'">-30%</span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+
+                                                <!-- New badge positioned below Sale badge if both exist -->
+                                                <div x-show="product.isNew" x-cloak class="absolute left-4 bg-gradient-to-r from-green-600 to-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg top-16" :class="product.variations[0].promoprice != 0 ? 'top-16' : 'top-4'">
+                                                    NEW
+                                                </div>
+                                            </div>
+
+                                            <!-- Content section with flex-grow and line-clamp for text truncation -->
+                                            <div class="p-6 flex flex-col flex-grow">
+
+                                                <!-- Title with line-clamp-2 to truncate long titles -->
+                                                <h3 x-text="product.title" @click="href(product.url)" class="text-base tracking-wide font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-amber-600 dark:hover:text-amber-500 transition-colors"></h3>
+
+                                                <!-- Description with line-clamp-3 to truncate long descriptions -->
+                                                <p x-text="product.seo_description" class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 "></p>
+
+                                                <!-- Price section with strikethrough original price and promo price -->
+                                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                                    <div class="flex flex-col gap-1">
+                                                        <!-- Show both prices when promo price exists -->
+                                                        <template x-if="product.variations[0].promoprice != 0">
+                                                            <div class="flex flex-col">
+                                                                <span x-amount="product.variations[0].price" class="text-sm text-gray-500 dark:text-gray-400 line-through"></span>
+                                                                <span x-amount="product.variations[0].promoprice" class="text-2xl font-bold text-amber-600"></span>
+                                                            </div>
+                                                        </template>
+
+                                                        <!-- Show only regular price when no promo -->
+                                                        <template x-if="product.variations[0].promoprice == 0">
+                                                            <span x-amount="product.variations[0].price" class="text-2xl font-bold text-amber-600"></span>
+                                                        </template>
+                                                    </div>
+
+                                                    <button @click="alpineListeners('Shop.post_carts', $event)" keyName="cart" :data-product_id="product.id" :data-variation_id="product.variations[0].id" :data-qty="1" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg flex-shrink-0">
+                                                        <i class="fa-solid fa-cart-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div class="glide__arrows" data-glide-el="controls">
+                            <button class="glide__arrow glide__arrow--left !left-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir="<"><i class="fa-solid fa-circle-arrow-left text-stone-900 text-[32px] rounded-full"></i></button>
+                            <button class="glide__arrow glide__arrow--right bg-unset text-unset !right-[-4em]" style="color: unset !important;background-color: unset !important;" data-glide-dir=">"><i class="fa-solid fa-circle-arrow-right text-stone-900 text-[32px] rounded-full"></i></button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </template>
+        </div>
+
+    </template>
+</div>

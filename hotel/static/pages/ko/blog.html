@@ -1,0 +1,113 @@
+<!-- Updated main container with better spacing -->
+<div class="w-full flex py-10 bg-slate-50 dark:bg-gray-900 lock" apiData="get.blogPosts_filters">
+
+    <!-- Enhanced sidebar with premium design -->
+    <div class="lg:w-2/5 xl:w-1/5 hidden lg:block min-w-[450px] px-10 py-5 bg-white dark:bg-gray-800 shadow-lg mx-5 h-fit rounded-xl" apiData="get.blogCategories" keyName="blogCategories">
+
+        <!-- Improved search bar with modern styling -->
+        <div class="mb-6">
+            <div class='max-w-md mx-auto'>
+                <div class="relative flex items-center w-full h-12 rounded-lg bg-slate-100 dark:bg-gray-950 border-2 border-slate-200 dark:border-gray-700 focus-within:border-amber-500 transition-colors overflow-hidden">
+                    <div class="grid place-items-center h-full w-12 text-slate-400 dark:text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <form class="w-full h-full">
+                        <input class="peer h-full w-full outline-none text-sm text-slate-700 dark:text-gray-200 pr-3 bg-transparent placeholder:text-slate-400" @input="alpineListeners('get.blogPosts', $event)" name="search" type="text" placeholder="검색..." />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced categories section with better typography -->
+        <div class="py-5 mb-6">
+            <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-[#c3a460]">카테고리</h3>
+            <ul class="divide-y divide-slate-200 dark:divide-gray-700 py-2">
+                <template x-for="category in data.blogCategories">
+                    <li @click="!window.location.href.includes(category.url) ? href(category.url) : href('/ko/blog')" class="w-full">
+                        <div :class="window.location.href.includes(category.url) ? 'bg-gradient-to-r from-[#c3a460] to-amber-500 text-white shadow-md' : 'bg-slate-50 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800'" class="w-full px-4 py-3 flex items-center justify-between cursor-pointer my-2 rounded-lg transition-all duration-200 group">
+                            <a x-text="category.title" class="font-medium text-sm group-hover:translate-x-1 transition-transform duration-200"></a>
+                            <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <!-- Enhanced tags section with modern badge design -->
+        <div>
+            <h3 class="text-lg font-bold pb-3 text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b-2 border-[#c3a460]">태그</h3>
+            <form>
+                <div class="flex flex-wrap gap-2 pt-4">
+
+                    <template x-for="tag in data.blogPosts_filters.tags">
+                        <button type="button" x-text="tag" @click="alpineListeners('get.blogPosts', $event)" keyname="blogPosts" :data-tag="tag" class="rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer" :class=" data.pageUrl.tag == tag ? 'bg-gradient-to-r from-[#c3a460] to-amber-500 text-white' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-800'"></button>
+                    </template>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Updated main content area -->
+    <div class="w-full lg:w-3/5 xl:w-4/5 px-3 lg:px-10">
+        <section class="relative w-full" apidata="get.blogPosts" :data-category_id="data.corePage.target_id != 0 ? data.corePage.target_id : 'empty'" keyname="blogPosts" options-pushurl="true">
+            <div class="container">
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-[30px]">
+                    <template x-for="blog in data.blogPosts.result">
+                        <article class="bg-white dark:bg-gray-950 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden group flex flex-col">
+
+                            <div class="relative overflow-hidden h-64 bg-gray-200">
+                                <img :src="blog.images[0] ? blog.images[0].url : Helpers.image('product')" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            </div>
+
+                            <div class="p-6 flex flex-col flex-1">
+
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-xs font-semibold text-[#c3a460] bg-amber-100 dark:bg-amber-900/40 px-3 py-1 rounded-full" x-text="blog.category.title ?? '카테고리'"></span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400" x-text="blog.created_at ?? ''"></span>
+                                </div>
+
+                                <h3 @click="href(blog.url)" class="text-xl font-bold text-gray-900 dark:text-gray-200 mb-3 group-hover:text-[#c3a460] transition-colors line-clamp-2 cursor-pointer" x-text="blog.title"></h3>
+
+                                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 flex-1" x-text="blog.seo_description"></p>
+
+                                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fa-regular fa-eye"></i>
+                                        <span x-text="blog.views"></span>
+                                    </span>
+                                    <span class="flex items-center gap-2">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span x-text="(blog.read_time != 0 ? blog.read_time : '1') + ' 분'"></span>
+                                    </span>
+                                </div>
+
+                                <a @click.prevent="href(blog.url)" class="inline-flex items-center gap-2 text-[#c3a460] font-semibold hover:text-amber-700 transition-colors cursor-pointer">더 읽기<i class="fa-solid fa-arrow-right text-sm"></i></a>
+
+                            </div>
+                        </article>
+                    </template>
+                </div>
+
+                <!-- Enhanced pagination with modern button design -->
+                <div class="grid md:grid-cols-12 grid-cols-1 mt-12">
+                    <div class="md:col-span-12 text-center">
+                        <nav aria-label="Page navigation" class="inline-block">
+                            <ul class="inline-flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md">
+                                <template x-for="(page,index) in data.blogPosts.pagination.total_pages" :key="index">
+                                    <li>
+                                        <button @click="alpineListeners('get.blogPosts', $event)" :data-page="page" keyname="blogPosts" x-text="page" :class="page == data.blogPosts.pagination.current_page ? 'bg-gradient-to-r from-[#c3a460] to-amber-500 text-white shadow-md scale-110' : 'bg-slate-100 dark:bg-gray-900 text-slate-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700'" class="min-w-[40px] h-[40px] inline-flex justify-center items-center cursor-pointer rounded-lg font-semibold text-sm transition-all duration-200 hover:scale-105"></button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
